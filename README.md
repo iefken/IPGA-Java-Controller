@@ -36,3 +36,30 @@ THEN Choose:
 
 => On error, go to Main.java and ReceiverPlanning.java en manually click the 'green run'-button once...
 
+## Open the project on your server
+
+Make sure your the file you want to push to the server works local!
+
+### 1. Create the .jar file:
+a. follow https://www.jetbrains.com/help/idea/creating-and-running-your-first-java-application.html#package
+
+OR in IntelliJ:
+
+#### 1. Prepare the .jar:
+ Select File | Project Structure.
+   => New window: Under 'Project Settings' click 'Artifacts'.
+      => Click the upper left 'green +' , click JAR, click 'From modules with dependies'. 
+         => New window: Select class with main class (receiver) click oke. 
+           => New window: You'll see the depencies you'll include, click oke again.
+#### 2. Build the .jar: Select Build | Build Artifacts. Select theJarYouPrepared:jar and select 'Build'. This should start the build process into the "/out/" folder.
+#### 3. Make .jar runnable: select Run | Edit Configurations. New window: click new (green +) and select JAR Application.
+
+#### ! Intermezzo ! TEST your .jar file in terminal: 'java -jar jarFileName.jar'
+
+==> If your .jar files runs successfully (it does the same as running the file/project does/what you want it does...)
+
+#### 4. For putting the jar easily on your server I recommend you putting it on your github
+#### 5. On your remote server, in the directory you want to push it: 'git clone https://github.com/your-github-nickname/your-github-project-name git-files/' (the 'git-files' parameter is optional for naming the new repo the github-project will be pushed in, if it's empty, your-github-project-name will be used)
+
+#### 6. Navigate to the .jar directory and run it with: 'java -jar yourJarFileName.jar'
+
