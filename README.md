@@ -69,13 +69,12 @@ select Run | Edit Configurations.
 
 ### 4. Get the .jar on your server
 
-#### a. 
+#### a. Put your .jar on your Git(hub)
 For putting the jar easily on your server I recommend you putting it on your github first
-#### b. 
-On your remote server, in the directory you want to push it: 
-'git clone https://github.com/your-github-nickname/your-github-project-name git-files/' 
+#### b. On your remote server
+In the directory you want to push it: 'git clone https://github.com/your-github-nickname/your-github-project-name git-files/' 
 (the 'git-files' parameter is optional for naming the new repo the github-project will be pushed in, if it's empty, your-github-project-name will be used)
 
-#### 6. Navigate to your .jar directory
+#### c. Navigate to your .jar directory
 and run this line: 'java -jar yourJarFileName.jar'
 
