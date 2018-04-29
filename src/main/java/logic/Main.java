@@ -1,7 +1,7 @@
 package logic;//import GoogleCalendarApi.Quickstart;
 
 import GoogleCalendarApi.Quickstart;
-
+import logic.Helper;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.util.Arrays;
