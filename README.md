@@ -34,16 +34,19 @@ THEN Choose:
 
 6. Run ReceiverPlanning.java for registering Receiver to server, run Main.java for a CLI sender
 
-=> On error, go to Main.java and ReceiverPlanning.java en manually click the 'green run'-button once...
+=> On error, go to Main.java and ReceiverPlanning.java and manually click the 'green run'-button once...
 
 ## Open the project on your server
 
 Make sure your the file you want to push to the server works local!
 
 ### 1. Create the .jar file:
-follow https://www.jetbrains.com/help/idea/creating-and-running-your-first-java-application.html#package
+Follow the directives on this link: 
+https://www.jetbrains.com/help/idea/creating-and-running-your-first-java-application.html#package
 
-OR in IntelliJ:
+OR
+ 
+in IntelliJ:
 
 #### a. Prepare the .jar:
 

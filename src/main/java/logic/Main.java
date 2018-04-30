@@ -1,5 +1,9 @@
 package logic;//import GoogleCalendarApi.Quickstart;
 
+// if you're running this on a remote server:
+// https://stackoverflow.com/questions/15869784/how-to-run-a-maven-created-jar-file-using-just-the-command-line
+// running the project .jar files: java -jar <jarfilename>.jar
+
 import GoogleCalendarApi.Quickstart;
 import logic.Helper;
 

@@ -7,24 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db237b9e-8fc3-4c1c-9d5e-805ef2e29b7e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/SessionMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/SessionStructure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/cli_java_controller_jar/cli-java-controller.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/cli_java_receiver_planning_jar/cli-java-receiver-planning.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationStructure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationStructure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/logic/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/logic/Helper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/logic/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/logic/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/logic/ReceiverPlanning.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/logic/ReceiverPlanning.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/logic/Sender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/logic/Sender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/XmlMessage/ReservationStructure.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/XmlMessage/ReservationStructure.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/logic/Helper$EntityType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/logic/Helper$EntityType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/logic/Helper$SourceType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/logic/Helper$SourceType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/logic/Helper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/logic/Helper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/logic/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/logic/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/logic/ReceiverPlanning$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/logic/ReceiverPlanning$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/logic/ReceiverPlanning.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/logic/ReceiverPlanning.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/logic/Sender.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/logic/Sender.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,11 +26,35 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Sender.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Sender.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/logic/Sender.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="83">
+            <state relative-caret-position="161">
               <caret line="213" column="20" lean-forward="true" selection-start-line="213" selection-start-column="20" selection-end-line="213" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/logic/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="15" column="64" lean-forward="true" selection-start-line="15" selection-start-column="64" selection-end-line="15" selection-end-column="64" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="214">
+                <caret line="44" selection-start-line="44" selection-end-line="44" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -85,10 +93,11 @@
         <option value="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationStructure.java" />
         <option value="$PROJECT_DIR$/src/main/java/XmlMessage/SessionMessage.java" />
         <option value="$PROJECT_DIR$/src/main/java/XmlMessage/SessionStructure.java" />
-        <option value="$PROJECT_DIR$/src/main/java/logic/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/logic/Helper.java" />
         <option value="$PROJECT_DIR$/src/main/java/logic/ReceiverPlanning.java" />
         <option value="$PROJECT_DIR$/src/main/java/logic/Sender.java" />
+        <option value="$PROJECT_DIR$/src/main/java/logic/Main.java" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -336,12 +345,12 @@
       <option name="presentableId" value="Default" />
       <updated>1525024772417</updated>
       <workItem from="1525024776675" duration="632000" />
-      <workItem from="1525026194093" duration="36039000" />
+      <workItem from="1525026194093" duration="36804000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36671000" />
+    <option name="totallyTimeSpent" value="37436000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3528" y="-8" width="1936" height="1056" extended-state="6" />
@@ -431,16 +440,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/logic/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="540" lean-forward="true" selection-start-line="540" selection-end-line="540" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/logic/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -476,8 +475,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/logic/Sender.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="83">
+        <state relative-caret-position="161">
           <caret line="213" column="20" lean-forward="true" selection-start-line="213" selection-start-column="20" selection-end-line="213" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/logic/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="64" lean-forward="true" selection-start-line="15" selection-start-column="64" selection-end-line="15" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="214">
+            <caret line="44" selection-start-line="44" selection-end-line="44" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
