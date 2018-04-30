@@ -7,12 +7,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db237b9e-8fc3-4c1c-9d5e-805ef2e29b7e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/cli_java_controller_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/slf4j_simple_1_7_22.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/SessionMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/SessionStructure.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/cli_java_controller_jar/cli-java-controller.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/cli_java_receiver_planning_jar/cli-java-receiver-planning.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationStructure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationStructure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/logic/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/logic/Helper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/logic/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/logic/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/logic/ReceiverPlanning.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/logic/ReceiverPlanning.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/logic/Sender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/logic/Sender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/XmlMessage/ReservationStructure.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/XmlMessage/ReservationStructure.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/logic/Helper$EntityType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/logic/Helper$EntityType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/logic/Helper$SourceType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/logic/Helper$SourceType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/logic/Helper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/logic/Helper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/logic/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/logic/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/logic/ReceiverPlanning$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/logic/ReceiverPlanning$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/logic/ReceiverPlanning.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/logic/ReceiverPlanning.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/logic/Sender.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/logic/Sender.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,17 +42,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Sender.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Sender.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/logic/Sender.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="197" selection-start-line="197" selection-end-line="197" />
-              <folding>
-                <element signature="method#sendMessage1#0;class#Sender#0" />
-                <element signature="method#sendMessage2#0;class#Sender#0" />
-                <element signature="method#sendMessage3#0;class#Sender#0" />
-                <element signature="method#sendMessage4#0;class#Sender#0" />
-              </folding>
+            <state relative-caret-position="83">
+              <caret line="213" column="20" lean-forward="true" selection-start-line="213" selection-start-column="20" selection-end-line="213" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -48,24 +54,8 @@
       <file leaf-file-name="ReceiverPlanning.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/logic/ReceiverPlanning.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1554" />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/logic/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="19" lean-forward="true" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+            <state relative-caret-position="1032">
+              <caret line="100" selection-start-line="100" selection-end-line="100" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -75,14 +65,30 @@
       </file>
     </leaf>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>xml</find>
+      <find>getOurXml2</find>
+      <find>not</find>
+      <find>END OF s</find>
+      <find>responseFromSender</find>
+      <find>wa</find>
+      <find>new m</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/logic/Sender.java" />
+        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationStructure.java" />
+        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/SessionMessage.java" />
+        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/SessionStructure.java" />
         <option value="$PROJECT_DIR$/src/main/java/logic/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/logic/Helper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/logic/ReceiverPlanning.java" />
+        <option value="$PROJECT_DIR$/src/main/java/logic/Sender.java" />
       </list>
     </option>
   </component>
@@ -103,7 +109,7 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="288" />
+    <option name="x" value="-3352" />
     <option name="y" value="-8" />
     <option name="width" value="1616" />
     <option name="height" value="876" />
@@ -144,6 +150,13 @@
             <path>
               <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
               <item name="IPGA-Java-Controller" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
+              <item name="cli_java_receiver_planning_jar" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IPGA-Java-Controller" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -169,6 +182,14 @@
             </path>
             <path>
               <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IPGA-Java-Controller" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="XmlMessage" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
@@ -182,12 +203,17 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/out/artifacts/cli_java_controller_jar/cli-java-controller.jar" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/out/artifacts/cli_java_receiver_planning_jar/cli-java-receiver-planning.jar" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="XmlMessage" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -201,7 +227,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JAR Application.cli-java-controller-test-01">
+  <component name="RunManager" selected="JAR Application.cli-java-receiver-planning">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="logic.Main" />
       <module name="cli-java-controller" />
@@ -253,6 +279,17 @@
         </option>
       </method>
     </configuration>
+    <configuration name="cli-java-receiver-planning" type="JarApplication" factoryName="JAR Application">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/cli_java_receiver_planning_jar/cli-java-receiver-planning.jar" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\ief.falot\IdeaProjects\lastTest\IPGA-Java-Controller" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
+      <method>
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="cli-java-receiver-planning:jar" />
+        </option>
+      </method>
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -277,13 +314,14 @@
     </configuration>
     <list>
       <item itemvalue="JAR Application.cli-java-controller-test-01" />
+      <item itemvalue="JAR Application.cli-java-receiver-planning" />
       <item itemvalue="Application.ReceiverPlanning" />
       <item itemvalue="Application.Main" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
         <item itemvalue="Application.ReceiverPlanning" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -298,40 +336,40 @@
       <option name="presentableId" value="Default" />
       <updated>1525024772417</updated>
       <workItem from="1525024776675" duration="632000" />
-      <workItem from="1525026194093" duration="5828000" />
+      <workItem from="1525026194093" duration="36039000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6460000" />
+    <option name="totallyTimeSpent" value="36671000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <frame x="-3528" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" order="3" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32897604" />
+      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="right" id="Maven Projects" order="5" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3292683" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32352942" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25321338" />
-      <window_info anchor="right" id="Database" order="3" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18923241" />
+      <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.19281046" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="UI Designer" order="2" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -342,42 +380,104 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="3" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/logic/Sender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="197" selection-start-line="197" selection-end-line="197" />
-          <folding>
-            <element signature="method#sendMessage1#0;class#Sender#0" />
-            <element signature="method#sendMessage2#0;class#Sender#0" />
-            <element signature="method#sendMessage3#0;class#Sender#0" />
-            <element signature="method#sendMessage4#0;class#Sender#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/logic/ReceiverPlanning.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1554" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/logic/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/MessageMessage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="19" lean-forward="true" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+        <state relative-caret-position="595">
+          <caret line="63" column="8" lean-forward="true" selection-start-line="63" selection-start-column="8" selection-end-line="63" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/ReservationMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="610">
+          <caret line="44" column="40" selection-start-line="44" selection-start-column="40" selection-end-line="44" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/ReservationStructure.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding>
+            <element signature="e#1298#1299#0" expanded="true" />
+            <element signature="e#1321#1322#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/SessionMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="47" column="49" selection-start-line="47" selection-start-column="49" selection-end-line="47" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/Header.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="14" column="28" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/logic/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="540" lean-forward="true" selection-start-line="540" selection-end-line="540" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/logic/Helper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="42" column="22" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="22" />
+          <folding>
+            <element signature="method#httpGetAllRecords#0;class#Helper#0" />
+            <element signature="method#httpPostCreateUuidRecord#0;class#Helper#0" />
+            <element signature="method#httpPostInsertUuidRecord#0;class#Helper#0" />
+            <element signature="method#httpPutUpdateUuidRecordVersion#0;class#Helper#0" />
+            <element signature="method#httpPutUpdateUuidRecordVersionB#0;class#Helper#0" />
+            <element signature="method#doHttpRequest#0;class#Helper#0" />
+            <element signature="method#getOurXml2#0;class#Helper#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/SessionStructure.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="18" column="28" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/logic/ReceiverPlanning.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1032">
+          <caret line="100" selection-start-line="100" selection-end-line="100" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/logic/Sender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="213" column="20" lean-forward="true" selection-start-line="213" selection-start-column="20" selection-end-line="213" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -387,7 +487,7 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>cli-java-receiver-planning:jar</last-edited>
+          <last-edited>cli-java-controller:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

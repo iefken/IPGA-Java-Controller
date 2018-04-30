@@ -5,22 +5,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "reservationmessage")
-@XmlType(propOrder = { "userUUID", "sessionUUID", "status", "type", "timestamp" })
+@XmlType(propOrder = { "userUUID", "sessionUUID", "status", "timestamp", "type" })
 public class ReservationStructure {
 
 	private String UserUUID;
 	private String SessionUUID;
 	private String Status;
-	private String Type;
 	private String Timestamp;
+	private String Type;
 
-	public ReservationStructure(String UserUUID, String SessionUUID, String Status, String Type, String Timestamp) {
+	public ReservationStructure(String UserUUID, String SessionUUID, String Status, String Timestamp, String Type) {
 		super();
 		this.UserUUID = UserUUID;
 		this.SessionUUID = SessionUUID;
 		this.Status = Status;
-		this.Type = Type;
 		this.Timestamp = Timestamp;
+		this.Type = Type;
 	}
 
 	public ReservationStructure() {
@@ -54,6 +54,13 @@ public class ReservationStructure {
 		Status = status;
 	}
 
+	@XmlElement(name = "timestamp")
+	public String getTimestamp() {
+		return Timestamp;
+	}
+	public void setTimestamp(String timestamp) {
+		Timestamp = timestamp;
+	}
 	@XmlElement(name = "type")
 	public String getType() {
 		return Type;
@@ -63,12 +70,4 @@ public class ReservationStructure {
 		Type = type;
 	}
 
-	@XmlElement(name = "timestamp")
-	public String getTimestamp() {
-		return Timestamp;
-	}
-
-	public void setTimestamp(String timestamp) {
-		Timestamp = timestamp;
-	}
 }

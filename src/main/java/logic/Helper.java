@@ -1,5 +1,6 @@
 package logic;
 
+import com.google.api.client.util.DateTime;
 import okhttp3.*;
 import HttpRequest.*;
 
@@ -10,8 +11,13 @@ import java.util.Date;
 
 public interface Helper {
 
-    enum EntityType {Visitor, Admin, Responsible};
-    enum SourceType {Front_End, Planning, Monitoring, Kassa, CRM, Facturatie};
+    enum EntityType {Visitor, Admin, Responsible}
+
+    ;
+
+    enum SourceType {Front_End, Planning, Monitoring, Kassa, CRM, Facturatie}
+
+    ;
 
     String TASK_QUEUE_NAME = "planning-queue";
     String EXCHANGE_NAME = "rabbitexchange";
@@ -23,15 +29,26 @@ public interface Helper {
 
         //Add CLI options here (a.b. : a: choice, b: sort of message
         String[] options = {
-                "1.1. New Event object without UUID",
-                "2.2. New Event object with UUID: after create / update entity: normally when a new message from another team is received",
-                "3.1. New session object without UUID",
-                "4.2. New session object with UUID: after create / update entity:  normally when a new message from another team is received",
-                "5.3. Alter existing entity and update UUID mgr: update event, update session, add User to session,...",
-                "6.4. Alter record directly in UUID (select on UUID and SOURCE)",
-                "7o. Get all UUID's from UUID manager",
-                "8x. Fill in a (test message)",
-                "9x. Prefab UUID message: list events (doesn't work)"
+                "[01.x] Create new Event without UUID (createUuidRecord,EventMessage)",
+                "[02.V] Create new Session without UUID (createUuidRecord,SessionMessage)",
+                "[03.x] Create new User without UUID (createUuidRecord,UserMessage)",
+                "[04.x] Create new Event with UUID (insertUuidRecord,EventMessage)",
+                "[05.V] Create new Session with UUID (insertUuidRecord,SessionMessage)",
+                "[06.x] Create new User with UUID (insertUuidRecord,UserMessage)",
+                "[07.x] Update Event (UpdateUuidRecordVersion,EventMessage)",
+                "[08.V] Update Session (UpdateUuidRecordVersion,SessionMessage)",
+                "[09.x] Update User (UpdateUuidRecordVersion,UserMessage)",
+                "[10.x] Add User to Event",
+                "[11.V] Add User to Session",
+                "[12.V] Get all UUID's from UUID manager",
+                "[13.x] Fill in a (test message)",
+                "[14.1.old.v] New Reservation object without UUID",
+                "[15.2.old.v] New Reservation object with UUID: after create / update entity: normally when a new message from another team is received",
+                "[16.1.old.v] New Session object without UUID",
+                "[17.2.old.v] New Session object with UUID: after create / update entity:  normally when a new message from another team is received",
+                "[18.3.old.v] Alter existing entity and update UUID mgr: update event, update session, add User to session,...",
+                "[19.4.old.v] Alter record directly in UUID (select on UUID and SOURCE)"
+
         };
         return options;
     }
@@ -45,7 +62,7 @@ public interface Helper {
 
         String url = "http://" + HOST_NAME_LINK + ":8010/public/index.php/getall";
         String json = "";
-                //myLocalUUID_createUuidRecordObject.toJSONString();
+        //myLocalUUID_createUuidRecordObject.toJSONString();
 
         String myLocalUUID_Response_JSON_String = doHttpRequest(url, json, "get");
 
@@ -145,21 +162,20 @@ public interface Helper {
 
         Request request = null;
 
-        if(method=="post")
-        {
+        if (method == "post") {
             request = new Request.Builder()
                     .url(myUrl)
                     .post(body)
                     .build();
 
-        }else if(method=="put") {
+        } else if (method == "put") {
 
             request = new Request.Builder()
                     .url(myUrl)
                     .put(body)
                     .build();
 
-        }else if(method=="get"){
+        } else if (method == "get") {
 
             request = new Request.Builder()
                     .url(myUrl)
@@ -185,12 +201,13 @@ public interface Helper {
 
     }
 
-    static String getOurXml(String messageType, String description, SourceType Source_type, String userUUID, String sessionUUID) throws JAXBException {
+    //reservationMessage: User- UUID, Session-UUID, Status(isActive), Timestamp
+    static String getXmlForReservation(String messageType, String description, SourceType Source_type, String userUUID, String sessionUUID) throws JAXBException {
 
         // form xml
-        XmlMessage.Header header = new XmlMessage.Header(messageType, description+", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
+        XmlMessage.Header header = new XmlMessage.Header(messageType, description + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
-        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(userUUID, sessionUUID, "1", messageType, Helper.getCurrentDateTimeStamp());
+        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(userUUID, sessionUUID, "1", Helper.getCurrentDateTimeStamp(), messageType.split("Message")[0]);
         // steek header en datastructure (Reservationstructure) in message klasse
         XmlMessage.ReservationMessage xmlReservationMessage = new XmlMessage.ReservationMessage(header, reservationStructure);
         // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)
@@ -200,12 +217,31 @@ public interface Helper {
         return xmlTotalMessage;
     }
 
-    static String getOurXml2(String messageType, String description, SourceType Source_type, String UUID) throws JAXBException {
+    //sessionMessage: UUID, Name, Date, Start-time, End-time, Speaker, Local, Type (workshop, speech,..), Timestamp
+    static String getXmlForSession(String messageType, String description, SourceType Source_type, String UUID, String name, String dateTimeStart, String dateTimeEnd, String speaker, String local, String type, int sessionStatus)throws JAXBException
+    {
 
         // form xml
-        XmlMessage.Header header = new XmlMessage.Header(messageType, description+", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
+        XmlMessage.Header header = new XmlMessage.Header(messageType, description + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
-        XmlMessage.MessageStructure messageStructure = new XmlMessage.MessageStructure(UUID,"1", messageType, Helper.getCurrentDateTimeStamp());
+        XmlMessage.SessionStructure sessionStructure = new XmlMessage.SessionStructure(UUID, name, dateTimeStart, dateTimeEnd, speaker, local, type, sessionStatus, Helper.getCurrentDateTimeStamp());
+        // steek header en datastructure (SessionStructure) in message klasse
+        XmlMessage.SessionMessage sessionMessage = new XmlMessage.SessionMessage(header, sessionStructure);
+        // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)
+        String xmlTotalMessage = sessionMessage.generateXML();
+
+        //System.out.println("xmlTotalMessage: "+xmlTotalMessage);
+        return xmlTotalMessage;
+    }
+    //eventMessage: UUID, Name, Start-dateTime, End-dateTime, Location, Timestamp
+
+
+    static String getOurXmlMessage(String messageType, String description, SourceType Source_type, String UUID) throws JAXBException {
+
+        // form xml
+        XmlMessage.Header header = new XmlMessage.Header(messageType, description + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
+        // set datastructure
+        XmlMessage.MessageStructure messageStructure = new XmlMessage.MessageStructure(UUID, "1", messageType, Helper.getCurrentDateTimeStamp());
         // steek header en datastructure (Reservationstructure) in message klasse
         XmlMessage.MessageMessage xmlReservationMessage = new XmlMessage.MessageMessage(header, messageStructure);
         // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)

@@ -20,7 +20,7 @@ public class Sender {
 
     // 1=createUuidRecord
     // no UUID given so ask for a new one, message will contain the json string containing the UUID
-    public static String sendMessage1(String messageType, int Entity_sourceId, Helper.EntityType Entity_type, Helper.SourceType Source_type) throws IOException, TimeoutException, JAXBException {
+    public static String createUuidRecord(String messageType, int Entity_sourceId, Helper.EntityType Entity_type, Helper.SourceType Source_type) throws IOException, TimeoutException, JAXBException {
 
         // NIEUW OBJECT ZONDER UUID (POST)
 
@@ -28,7 +28,7 @@ public class Sender {
         String message = "";
 
         //set xml header description for message here with timestamp
-        String description = "Standard description set in sendMessage1()";
+        String description = "Standard description for '"+messageType+"' set in sendMessage1()";
 
         String newUUID = "";
 
@@ -36,12 +36,13 @@ public class Sender {
 
         //System.out.println("Post returned msg:\n" + message);
 
-        // process UUID from message
-
         //cut away the outer [ and ] from the retrieved json string
         message = message.substring(1, message.length() - 1);
 
         System.out.println("\nMessage From UUID server: " + message);
+
+        // try to parse retrieved object to our own UUID_insertUuidRecord class
+        // (since this actually the same as our createUuidRecord response)
         UUID_insertUuidRecord obj = null;
         try {
             Gson gson = new Gson();
@@ -54,21 +55,22 @@ public class Sender {
             System.out.println(e);
             System.out.println(newUUID);
         }
+
+        return newUUID;
         //Process xml
 
-        xmlTotalMessage = Helper.getOurXml2(messageType, description, Source_type,newUUID);
         //System.out.println("Generated XML: " + xmlTotalMessage);
 
         //Send message
 
-        return sendMessage(xmlTotalMessage);
+        //return sendMessage(xmlTotalMessage);
 
     }
 
 
     // 2=insertUuidRecord
     // for registering an object to the UUID manager to let it know your local id of it
-    public static String sendMessage2(String messageType, int Entity_sourceId, Helper.EntityType Entity_type, Helper.SourceType Source_type, String UUID) throws IOException, TimeoutException, JAXBException {
+    public static String insertUuidRecord(String messageType, int Entity_sourceId, Helper.EntityType Entity_type, Helper.SourceType Source_type, String UUID) throws IOException, TimeoutException, JAXBException {
 
         // NIEUW OBJECT MET UUID (POST)
 
@@ -80,14 +82,13 @@ public class Sender {
 
         message = Helper.httpPostInsertUuidRecord(UUID, Entity_sourceId, Entity_type, Source_type);
 
-        if(message=="")
-        {
+        if (message == "") {
 
-            return "Entity with UUID: "+UUID+" should be updated!";
+            return "Entity with UUID: " + UUID + " should be updated!";
 
-        }else{
+        } else {
 
-            return "Something could have gone wrong updating entity with UUID: "+UUID+"...\nError: "+message;
+            return "Something could have gone wrong updating entity with UUID: " + UUID + "...\nError: " + message;
         }
         /*
         This message is only to let UUID know you got the object locally, no need to send this to the exchange...
@@ -108,27 +109,21 @@ public class Sender {
 
     // 3=updateUuidRecord
     // for letting the UUID manager know you changed something in your own database so this Source_type should be yours
-    public static String sendMessage3(String messageType, Helper.SourceType Source_type, String UUID) throws IOException, TimeoutException, JAXBException {
+    public static int updateUuidRecordVersion(String messageType, Helper.SourceType Source_type, String UUID) throws IOException, TimeoutException, JAXBException {
 
         // BESTAAND OBJECT AANPASSEN (PUT)
 
-        String xmlTotalMessage = "";
         String message = "";
-
-        String description = "Standard description set in sendMessage3()";
-
         int newEntity_version = 1;
 
-        String userUUID = "7f0f6e64-f9c8-40d1-90a1-42813446221a";
-        String sessionUUID = "931fc55f-309a-49df-b628-1cf831996f82";
-
         message = Helper.httpPutUpdateUuidRecordVersion(UUID, Source_type);
+
 
         // process UUID from message
         //cut away the outer [ and ] from the retrieved json string
         message = message.substring(1, message.length() - 1);
 
-        System.out.println("\nMessage From UUID server: " + message+" .\n");
+        System.out.println("\nMessage From UUID server: " + message + " .\n");
 
         UUID_updateUuidRecordVersionResponse obj = null;
         try {
@@ -143,14 +138,8 @@ public class Sender {
             System.out.println(e);
 
         }
-        //Process xml
 
-        xmlTotalMessage = Helper.getOurXml2(messageType, description, Source_type,UUID);
-        //System.out.println("Generated XML: " + xmlTotalMessage);
-
-        //Send message
-
-        return sendMessage(xmlTotalMessage);
+        return newEntity_version;
 
 
     }
@@ -158,7 +147,7 @@ public class Sender {
 
     //4=updateUuidRecordOnChanged
     // for changing the Entity_version of a certain record // doesn't seem to work yet
-    public static String sendMessage4(String messageType, Helper.SourceType Source_type, String UUID, int Entity_version) throws IOException, TimeoutException, JAXBException {
+    public static String updateUuidRecordVersionB(String messageType, Helper.SourceType Source_type, String UUID, int Entity_version) throws IOException, TimeoutException, JAXBException {
 
 
         String xmlTotalMessage = "";
@@ -168,11 +157,10 @@ public class Sender {
 
         message = Helper.httpPutUpdateUuidRecordVersionB(UUID, Entity_version, Source_type);
 
-        if(message=="")
-        {
+        if (message == "") {
             //Process xml
 
-            xmlTotalMessage = Helper.getOurXml2(messageType, description, Source_type,UUID);
+            xmlTotalMessage = Helper.getOurXmlMessage(messageType, description, Source_type, UUID);
             //System.out.println("Generated XML: " + xmlTotalMessage);
 
             //Send message
@@ -181,10 +169,34 @@ public class Sender {
 
             //return "Entity with UUID: "+UUID+" should be updated!";
 
-        }else{
+        } else {
 
-            return "Something could have gone wrong updating entity with UUID: "+UUID+"...\n -*- Error starts here: -*-\n"+message+"\n -*- Error ends here -*-";
+            return "Something could have gone wrong updating entity with UUID: " + UUID + "...\n -*- Error starts here: -*-\n" + message + "\n -*- Error ends here -*-";
         }
+
+    }
+
+    //4=updateUuidRecordOnChanged
+    // for changing the Entity_version of a certain record // doesn't seem to work yet
+    public static String sendReservationMessage(String messageType, Helper.SourceType Source_type, String userUUID, String sessionUUID) throws IOException, TimeoutException, JAXBException {
+
+
+        String xmlTotalMessage = "";
+        String message = "";
+
+        String description = "Standard Reservation description set in sendReservationMessage()";
+
+        //message = Helper.httpPutUpdateUuidRecordVersionB(UUID, Entity_version, Source_type);
+
+        //Process xml
+
+        xmlTotalMessage = Helper.getXmlForReservation(messageType, description, Source_type, userUUID, sessionUUID);
+        //System.out.println("Generated XML in send reservation message: " + xmlTotalMessage);
+
+        //Send message
+
+        return sendMessage(xmlTotalMessage);
+
 
     }
 
@@ -211,22 +223,29 @@ public class Sender {
         Channel channel = connection.createChannel();
 
         //publish to exchange
-        //channel.basicPublish(EXCHANGE_NAME, "", null, message.getBytes());
-        //System.out.println(" [x] Sending to exchange:   '" + EXCHANGE_NAME + "' message: '" + message + "'");
+        try {
+            channel.basicPublish(Helper.EXCHANGE_NAME, "", null, xmlMessage.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //System.out.println(" [.x.] Sending to exchange:   '" + Helper.EXCHANGE_NAME + "'@ '" + Helper.getCurrentDateTimeStamp() + "'");
 
         //publish to channel
+/*
 
         try {
             channel.basicPublish("", Helper.TASK_QUEUE_NAME, null, xmlMessage.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+*/
 
         channel.close();
         connection.close();
 
-        return " [x] Sending to queue:   '" + Helper.TASK_QUEUE_NAME + "' message with length: '" + xmlMessage.length() + "'";
+        return " [.x.] Sending to exchange:   '" + Helper.EXCHANGE_NAME + "' @ '" + Helper.getCurrentDateTimeStamp() + "' message with '" + xmlMessage.length()+"' characters.";
+
+        //return " [x] Sending to queue:   '" + Helper.TASK_QUEUE_NAME + "' message with length: '" + xmlMessage.length() + "'";
 
         //channel.exchangeDeclare(EXCHANGE_NAME, "fanout"); // other options: direct, topic, headers and fanout
         //channel.queueDeclare(TASK_QUEUE_NAME, false, false, false, null);

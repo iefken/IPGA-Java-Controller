@@ -2,6 +2,7 @@ package logic;//import GoogleCalendarApi.Quickstart;
 
 import GoogleCalendarApi.Quickstart;
 import logic.Helper;
+
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.util.Arrays;
@@ -14,6 +15,11 @@ public class Main {
 
     public static void main(String[] argv) throws Exception {
 
+        System.out.println(" [ooo] _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_ [ooo]");
+        System.out.println(" [ooo] _________________________________________________________________________________________________________________ [ooo]");
+        System.out.println(" [ooo] _____________________________________________IPGA-JAVA-CONTROLLER-v.1____________________________________________ [ooo]");
+        System.out.println(" [ooo] _________________________________________________________________________________________________________________ [ooo]");
+        System.out.println(" [ooo] -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- [ooo]");
         //cli interface
 
         try {
@@ -37,16 +43,42 @@ public class Main {
 
     }//end main
 
-    public static boolean startCliInterface() {
+    public static boolean startCliInterface() throws JAXBException {
 
         int choser = 999;
         String responseFromSender = "";
         String[] senderOptions = Helper.getOptions();
 
+        //initialize possible variables
+        boolean inputSucces = true;
+        int Entity_sourceId = 420;
+
+        //preset most used variables
+        String UUID = "da4bc50d-9268-4cf6-bb52-24f7917d31fa";
+        String userUUID = "e0e7e624-ea01-410b-8a8f-25c551d43c25";
+        String sessionUUID = "da4bc50d-9268-4cf6-bb52-24f7917d31fa";
+        String eventUUID = "da4bc50d-9268-4cf6-bb52-24f7917d31fa";
+        String messageType = "TestMessage";
+        String headerDescription = "Standard header description";
+        String xmlTotalMessage = "<test>testertester</test>";
+
+        Helper.EntityType Entity_type = Helper.EntityType.Admin;
+        Helper.SourceType Source_type = Helper.SourceType.Planning;
+        int Entity_version = 1;
+
+        //preset new session variables
+        String sessionName = "Session name test";
+        String dateTimeStart = "30/05/2018 20:00:00";
+        String dateTimeEnd = "31/05/2018 08:00:00";
+        String speaker = "Mr. President";
+        String local = "Oval office dept.1 Room 420";
+        String type = "Speech";
+
         //do{}while(choser > 0 && choser <= senderOptions.length + 1);
         do {
 
-            System.out.println("\n [.i.] What do you want to do?");
+            System.out.println("------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("\n [.i.] What do you want to do?\n");
 
             // print options
             for (String option : senderOptions) {
@@ -61,156 +93,301 @@ public class Main {
 
             // get input from command-line
             String choice = scanner.next();
-            System.out.print(" [.i.] You've chosen '" + choice + "' ...");
+            System.out.print(" [.i.] You've chosen '" + choice + "' ...\n");
 
-            //initialize possible variables
-            boolean inputSucces = true;
-            int Entity_sourceId = 420;
-            String UUID = "da4bc50d-9268-4cf6-bb52-24f7917d31fa";
-            String messageType = "TestMessage";
-            Helper.EntityType Entity_type = Helper.EntityType.Admin;
-            Helper.SourceType Source_type = Helper.SourceType.Planning;
 
             //Populate CLI options here
             switch (choice) {
 
                 // 1.1. New object without UUID:
-                // create event
+                // create Reservation
                 case "1":
 
-                    messageType = "EventMessage";
+                    System.out.println("\nCase '" + choice + "' not worked out yet!");
+
+                    break;
+
+                //2. Create new Session without UUID (1)
+                case "2":
+
+                    // create new SessionUUID
+                    System.out.println("\nCase " + choice + ": message for letting UUID manager know of a new session object without a UUID with messageType: '" + messageType + "' and with Entity_sourceId = '" + Entity_sourceId + "'");
+
+                    // preset variables (should be set later)
+                    messageType = "SessionMessage";
                     Entity_sourceId = 100;
-                    Entity_type=Helper.EntityType.Admin;
-                    Source_type=Helper.SourceType.Planning;
+                    Entity_type = Helper.EntityType.Admin;
+
+                    //new session will be set in Front_End
+                    Source_type = Helper.SourceType.Front_End;
+
+                    // variables for session
+                    sessionName = "Session name test";
+                    dateTimeStart = "30/05/2018 20:00:00";
+                    dateTimeEnd = "31/05/2018 08:00:00";
+                    speaker = "Mr. President";
+                    local = "Oval office dept.1 Room 420";
+                    type = "Speech";
 
                     UUID = "";
 
-                    System.out.println("\nCase " + choice + ": message for letting UUID manager know of a new object with a UUID (=>'"+UUID+"') with messageType: '"+messageType+"' and with Entity_sourceId = '"+Entity_sourceId+"'\n");
-
                     try {
-                        responseFromSender = Sender.sendMessage1(messageType, Entity_sourceId, Entity_type, Source_type);
+                        UUID = Sender.createUuidRecord(messageType, Entity_sourceId, Entity_type, Source_type);
                     } catch (IOException | TimeoutException | JAXBException e) {
                         e.printStackTrace();
                     }
 
-                    System.out.println("\nResponseFromSender: " + responseFromSender);
-                    break;
+                    System.out.println("\nNew Session made with UUID: " + UUID);
 
-                // 2.2. New object with UUID: normally when a new message from another team is received
-                // update event
-                case "2":
+                    // 2. create xml message
+                    xmlTotalMessage = Helper.getXmlForSession(messageType, headerDescription, Source_type, UUID, sessionName, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
 
-                    messageType = "EventMessage";
-                    Entity_sourceId = 1200;
-                    Entity_type=Helper.EntityType.Admin;
-                    Source_type=Helper.SourceType.Front_End;
+                    // 3. insert to local db
 
-                    UUID = "e0e7e624-ea01-410b-8a8f-25c551d43c25";
-                    //responseFromSender = logic.Helper.httpPutUpdateUuidRecordVersion(UUID, Source_type);
+                    // TO DO
 
-                    System.out.println("\nCase " + choice + ": message for letting UUID manager know of a new local object with a UUID (=>'"+UUID+"') with messageType: '"+messageType+"' and with Entity_sourceId = '"+Entity_sourceId+"'");
+                    // 4. send new object to exchange
 
                     try {
-                        responseFromSender = Sender.sendMessage2(messageType, Entity_sourceId, Entity_type, Source_type, UUID);
-                        System.out.println("\nResponseFromSender: " + responseFromSender);
-                    } catch (IOException | TimeoutException | JAXBException e) {
+                        Sender.sendMessage(xmlTotalMessage);
+                    } catch (TimeoutException e) {
                         e.printStackTrace();
-                        System.out.println("\nERROR IN CASE2: " + e);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
 
                     break;
 
-                // 3.1. New object without UUID
-                // create session for an event
+
+
+                    // 03. Create new User without UUID (1)
+                    // create user
                 case "3":
 
-                    messageType = "SessionMessage";
+                    System.out.println("\nCase '" + choice + "' not worked out yet!");
+
+                    break;
+
+
+                    // 04. Create new Event with UUID (1)
+                    // create event
+                case "4":
+                    messageType = "EventMessage";
                     Entity_sourceId = 300;
-                    Entity_type=Helper.EntityType.Admin;
-                    Source_type=Helper.SourceType.Planning;
+                    Entity_type = Helper.EntityType.Admin;
+                    Source_type = Helper.SourceType.Planning;
 
-                    UUID = null;
+                    UUID = "780df99e-7254-4166-8898-ad31a77eb4be";
 
-                    System.out.println("\nCase " + choice + ": message for letting UUID manager know of a new object with a UUID (=>'"+UUID+"') with messageType: '"+messageType+"' and with Entity_sourceId = '"+Entity_sourceId+"'");
+                    // 1. create new UUID
+                    System.out.println("\nCase " + choice + ": message for letting UUID manager know of a new object with a UUID (=>'" + UUID + "') with messageType: '" + messageType + "' and with Entity_sourceId = '" + Entity_sourceId + "'");
 
                     try {
-                        responseFromSender = Sender.sendMessage1(messageType, Entity_sourceId, Entity_type, Source_type);
+                        responseFromSender = Sender.insertUuidRecord(messageType, Entity_sourceId, Entity_type, Source_type, UUID);
                     } catch (IOException | TimeoutException | JAXBException e) {
                         e.printStackTrace();
                     }
                     System.out.println("\nResponseFromSender: " + responseFromSender);
-                    break;
 
-                // 4.2. New object with UUID: normally when a new message from another team is received
-                // update record
-                case "4":
 
-                    messageType = "SessionMessage";
-                    Entity_sourceId = 1400;
-                    Entity_type=Helper.EntityType.Admin;
-                    Source_type=Helper.SourceType.Front_End;
+                    // 2. no need to send to exchange
 
-                    UUID = "d7842766-922b-45d7-a821-a37274814c5e";
-
-                    System.out.println("\nCase " + choice + ": message for letting UUID manager know of a new local object with a UUID (=>'"+UUID+"') with messageType: '"+messageType+"' and with Entity_sourceId = '"+Entity_sourceId+"'");
-
-                    try {
-                        responseFromSender = Sender.sendMessage2(messageType, Entity_sourceId, Entity_type, Source_type, UUID);
-                    } catch (IOException | TimeoutException | JAXBException e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println("\nresponseFromSender: " + responseFromSender);
 
                     break;
 
-                // 5.3 Add user to certain session (now only updates this record in UUID API)
-                //add user to session
+                    // 05. Create new Session with UUID (insertUuidRecord,SessionMessage)
+                    // normally when a new message from another team is received
                 case "5":
 
-                    messageType = "UpdateLocalMessage";
-                    Entity_sourceId = 200;
-                    //Entity_type=Helper.EntityType.Admin;
-                    Source_type=Helper.SourceType.Planning;
-                    UUID = "e0e7e624-ea01-410b-8a8f-25c551d43c25";
-                    //UUID = "da4bc50d-9268-4cf6-bb52-24f7917d31fa";
+                    System.out.println("\nCase " + choice + ": message for letting UUID manager know of a new object without a UUID with messageType: '" + messageType + "' and with Entity_sourceId = '" + Entity_sourceId + "'");
 
-                    System.out.println("\nCase " + choice + ": message for letting UUID manager know of a local update (=>'Entity_version++') of UUID: "+UUID+" with Entity_sourceId = '"+Entity_sourceId+"'");
+                    // preset variables (should be set later)
+                    messageType = "SessionMessage";
+                    Entity_sourceId = 100;
+                    Entity_type = Helper.EntityType.Admin;
+
+                    Source_type = Helper.SourceType.Planning;
+
+                    // variables for session
+                    sessionName = "Session name test";
+                    dateTimeStart = "30/05/2018 20:00:00";
+                    dateTimeEnd = "31/05/2018 08:00:00";
+                    speaker = "Mr. President";
+                    local = "Oval office dept.1 Room 420";
+                    type = "Speech";
+
+                    UUID = "531f33b6-88d1-406f-b6f3-1a0c0de9a1de";
 
                     try {
-                        responseFromSender = Sender.sendMessage3(messageType, Source_type, UUID);
+
+                        String response = Sender.insertUuidRecord(messageType, Entity_sourceId, Entity_type, Source_type, UUID);
+                        // No answer yet
+                        // System.out.println("\nSession updated with answer: " + response);
+
                     } catch (IOException | TimeoutException | JAXBException e) {
                         e.printStackTrace();
                     }
 
-                    //System.out.println("\nresponseFromSender: " + responseFromSender);
-                    break;
+//                    System.out.println("\nNew Session made with UUID: " + UUID);
 
-                // 6.4 Change entity version of a certain uuid with sourceID
-                // change Entity_version
+                    // 2. create xml message
+                    xmlTotalMessage = Helper.getXmlForSession(messageType, headerDescription, Source_type, UUID, sessionName, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
+
+                    // 3. insert to local db
+
+                    // TO DO
+
+                    // 4. send new object to exchange
+
+                    try {
+                        Sender.sendMessage(xmlTotalMessage);
+                    } catch (TimeoutException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    // 06. create new User with UUID
                 case "6":
 
-                    messageType = "UpdateEntityVersionMessage";
-                    Entity_sourceId = 400;
-                    //Entity_type=Helper.EntityType.Admin;
-                    Source_type=Helper.SourceType.Planning;
-                    UUID = "da4bc50d-9268-4cf6-bb52-24f7917d31fa";
-                    UUID = "d7842766-922b-45d7-a821-a37274814c5e";
-                    int Entity_version = 10;
+                    System.out.println("\nCase '" + choice + "' not worked out yet!");
 
-                    System.out.println("\nCase " + choice + ": change Entity_version (=>'"+Entity_version+"') of UUID: "+UUID+" with Entity_sourceId = '"+Entity_sourceId+"'");
+                    break;
+
+                    // 07. Update Event (UpdateUuidRecordVersion,EventMessage)"
+                case "7":
+
+                    System.out.println("\nCase '" + choice + "' not worked out yet!");
+
+                    break;
+
+                    // 08. Update Session (UpdateUuidRecordVersion,SessionMessage)"
+                case "8":
+
+                    // update session
+                    System.out.println("\nCase " + choice + ": message for letting UUID manager know of a new object without a UUID with messageType: '" + messageType + "' and with Entity_sourceId = '" + Entity_sourceId + "'");
+
+                    // preset variables (should be set later)
+                    messageType = "SessionMessage";
+                    Entity_sourceId = 100;
+                    Entity_type = Helper.EntityType.Admin;
+                    Source_type = Helper.SourceType.Planning;
+
+
+                    // variables for session
+                    sessionName = "Session RENAME test";
+                    dateTimeStart = "30/05/2018 20:00:00";
+                    dateTimeEnd = "31/05/2018 08:00:00";
+                    speaker = "Mr. President2";
+                    local = "Oval office dept.2 Room 1420";
+                    type = "Speech";
+
+                    UUID = "531f33b6-88d1-406f-b6f3-1a0c0de9a1de";
 
                     try {
-                        responseFromSender = Sender.sendMessage4(messageType, Source_type, UUID, Entity_version);
+
+                        Entity_version = Sender.updateUuidRecordVersion(messageType, Source_type, UUID);
+                        // No answer yet
+                        System.out.println("\nSession updated with answer: " + Entity_version);
+
                     } catch (IOException | TimeoutException | JAXBException e) {
                         e.printStackTrace();
                     }
-                    //System.out.println("\nresponseFromSender: " + responseFromSender);
+
+//                    System.out.println("\nNew Session made with UUID: " + UUID);
+
+                    // 2. create xml message
+                    xmlTotalMessage = Helper.getXmlForSession(messageType, headerDescription, Source_type, UUID, sessionName, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
+
+                    // 3. insert to local db
+
+                    // TO DO
+
+                    // 4. send new object to exchange
+
+                    try {
+                        Sender.sendMessage(xmlTotalMessage);
+                    } catch (TimeoutException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     break;
 
-                case "7":
-                    //get All UUID's (limit)
+                    // 09. Update User (UpdateUuidRecordVersion,UserMessage)
+                case "9":
+
+                    System.out.println("\nCase '" + choice + "' not worked out yet!");
+
+                    break;
+
+                    // 10. Add User to Event
+                case "10":
+
+                    // not quiet correct yet
+
+                    //preset variables
+                    messageType = "ReservationMessage";
+                    //Entity_sourceId = 200;
+                    //Entity_type=Helper.EntityType.Visitor;
+                    Source_type = Helper.SourceType.Planning;
+
+
+                    //get userUUID
+                    userUUID = "e0e7e624-ea01-410b-8a8f-25c551d43c25";
+                    //get eventUUID
+                    eventUUID = "da4bc50d-9268-4cf6-bb52-24f7917d31fa";
+
+                    //insert into local db
+
+                    // TO DO
+
+                    // send ReservationMessage to exchange
+                    System.out.println("\nCase " + choice + ": message for adding a userUUID: " + userUUID + " to a sessionUUID = '" + sessionUUID + "'");
+
+                    try {
+                        responseFromSender = Sender.sendReservationMessage(messageType, Source_type, userUUID, sessionUUID);
+                    } catch (IOException | TimeoutException | JAXBException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
+                    //11. Add User to Session
+                case "11":
+
+                    //preset variables
+                    messageType = "ReservationMessage";
+                    //Entity_sourceId = 200;
+                    //Entity_type=Helper.EntityType.Visitor;
+                    Source_type = Helper.SourceType.Planning;
+
+                    //get userUUID
+                    userUUID = "e0e7e624-ea01-410b-8a8f-25c551d43c25";
+                    //get sessionUUID
+                    sessionUUID = "da4bc50d-9268-4cf6-bb52-24f7917d31fa";
+
+                    //insert into local db
+
+                    // TO DO
+
+
+                    // send ReservationMessage to exchange
+                    System.out.println("\nCase " + choice + ": message for adding a userUUID: " + userUUID + " to a sessionUUID = '" + sessionUUID + "'");
+
+                    try {
+                        responseFromSender = Sender.sendReservationMessage(messageType, Source_type, userUUID, sessionUUID);
+                    } catch (IOException | TimeoutException | JAXBException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+
+                //12. get All UUID's (limit)
+                case "12":
+
                     String myRecordsJsonString = "";
-                    UUID="";
+                    UUID = "";
 
                     System.out.println("\nCase " + choice + ": get all UUID's locally\n");
 
@@ -223,10 +400,10 @@ public class Main {
                         e.printStackTrace();
                     }
 
-                    String myJsonStringWithoutEdges=myRecordsJsonString.substring(1,myRecordsJsonString.length()-1);
+                    String myJsonStringWithoutEdges = myRecordsJsonString.substring(1, myRecordsJsonString.length() - 1);
 
                     //System.out.println("myJsonStringWithoutEdges: "+myJsonStringWithoutEdges);
-                    //parse response to differnt lines for readability
+                    //parse response to different lines for readability
                     String[] UUIDRecords = new String[0];
                     try {
                         UUIDRecords = myJsonStringWithoutEdges.split("},");// '}' is deleted due to split
@@ -234,24 +411,21 @@ public class Main {
                         e.printStackTrace();
                     }
 
-                    for(int i = 0; i<UUIDRecords.length; i++)
-                    {
-                        UUIDRecords[i]+="}";// add '}' back here
+                    for (int i = 0; i < UUIDRecords.length; i++) {
+                        UUIDRecords[i] += "}";// add '}' back here
 
                         // for printing all variables on separate lines:
-                        System.out.println(i+". "+UUIDRecords[i]);
+                        System.out.println(i + ". " + UUIDRecords[i]);
                     }
                     // for printing all variables in one line:
                     //System.out.println(Arrays.toString(UUIDRecords));
 
                     System.out.println("END OF UUIDS...\nPs: Nothing send to MQ");
 
-                    break;
+                    //13. Fill in a (test message)
+                case "13":
 
-                case "8":
-                    //Test current message"
-                    // prompt for input
-
+/*
                     do {//id
                         System.out.print("What's the id of your new session?\n");
 
@@ -310,7 +484,8 @@ public class Main {
 
                                     } else {
 
-                                        responseFromSender = Sender.sendMessage3(messageType, Source_type, UUID);
+                                        int newEntity_version = 0;
+                                        newEntity_version = Sender.updateUuidRecordVersion(messageType, Source_type, UUID);
 
 
                                     }
@@ -334,21 +509,210 @@ public class Main {
 
                     } while (!inputSucces);
 
+*/
+                    System.out.println("Not working yet!");
+                    break;
+
+                // 14.1. New Reservation object without UUID:
+                // create Reservation
+                case "14":
+
+                    messageType = "ReservationMessage";
+                    Entity_sourceId = 100;
+                    Entity_type = Helper.EntityType.Admin;
+                    Source_type = Helper.SourceType.Planning;
+
+                    UUID = "";
+
+                    // 1. create new UUID
+                    System.out.println("\nCase " + choice + ": message for letting UUID manager know of a new object with a UUID (=>'" + UUID + "') with messageType: '" + messageType + "' and with Entity_sourceId = '" + Entity_sourceId + "'\n");
+
+
+                    try {
+                        responseFromSender = Sender.createUuidRecord(messageType, Entity_sourceId, Entity_type, Source_type);
+                    } catch (IOException | TimeoutException | JAXBException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    System.out.println("\nResponseFromSender: " + responseFromSender);
+
+                    // 2. send new object to exchange
+
 
                     break;
 
-                case "9":
+                // 15.2. New Reservation object with UUID:
+                // normally when a new message from another team is received
+                case "15":
 
-                    //tests//list events
+                    messageType = "ReservationMessage";
+                    Entity_sourceId = 1200;
+                    Entity_type = Helper.EntityType.Admin;
+                    Source_type = Helper.SourceType.Planning;
+
+                    UUID = "e0e7e624-ea01-410b-8a8f-25c551d43c25";
+                    //responseFromSender = logic.Helper.httpPutUpdateUuidRecordVersion(UUID, Source_type);
+
+                    // 1. create new UUID-record
+                    System.out.println("\nCase " + choice + ": message for letting UUID manager know of a new local object with a UUID (=>'" + UUID + "') with messageType: '" + messageType + "' and with Entity_sourceId = '" + Entity_sourceId + "'");
+
+                    try {
+                        responseFromSender = Sender.insertUuidRecord(messageType, Entity_sourceId, Entity_type, Source_type, UUID);
+                        System.out.println("\nResponseFromSender: " + responseFromSender);
+                    } catch (IOException | TimeoutException | JAXBException e) {
+                        e.printStackTrace();
+                        System.out.println("\nERROR IN CASE2: " + e);
+                    }
+                    // 2. no need to send to exchange
+
+                    break;
+
+                //16. New Session without UUID
+                case "16":
+
+                    System.out.println("\nCase " + choice + ": message for letting UUID manager know of a new session object without a UUID with messageType: '" + messageType + "' and with Entity_sourceId = '" + Entity_sourceId + "'");
+
+                    // preset variables (should be set later)
+                    messageType = "SessionMessage";
+                    Entity_sourceId = 1600;
+                    Entity_type = Helper.EntityType.Admin;
+                    Source_type = Helper.SourceType.Front_End;
+
+                    // variables for session
+                    sessionName = "Session name test";
+                    dateTimeStart = "30/05/2018 20:00:00";
+                    dateTimeEnd = "31/05/2018 08:00:00";
+                    speaker = "Mr. President";
+                    local = "Oval office dept.1 Room 420";
+                    type = "Speech";
+
+                    UUID = "";
+
+                    try {
+                        UUID = Sender.createUuidRecord(messageType, Entity_sourceId, Entity_type, Source_type);
+                    } catch (IOException | TimeoutException | JAXBException e) {
+                        e.printStackTrace();
+                    }
+
+                    System.out.println("\nNew Session made with UUID: " + UUID);
+
+                    // 2. create xml message
+                    xmlTotalMessage = Helper.getXmlForSession(messageType, headerDescription, Source_type, UUID, sessionName, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
+
+                    // 3. insert to local db
+
+                    // TO DO
+
+                    // 4. send new object to exchange
+
+                    try {
+                        Sender.sendMessage(xmlTotalMessage);
+                    } catch (TimeoutException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    break;
+                //17. New Session with UUID: normally when a new message from another team is received
+                case "17":
+
+                    messageType = "SessionMessage";
+                    Entity_sourceId = 1400;
+                    Entity_type = Helper.EntityType.Admin;
+                    Source_type = Helper.SourceType.Planning;
+
+                    UUID = "d7842766-922b-45d7-a821-a37274814c5e";
+
+                    // 1. insert new UUID
+                    System.out.println("\nCase " + choice + ": message for letting UUID manager know of a new local object with a UUID (=>'" + UUID + "') with messageType: '" + messageType + "' and with Entity_sourceId = '" + Entity_sourceId + "'");
+
+                    try {
+                        responseFromSender = Sender.insertUuidRecord(messageType, Entity_sourceId, Entity_type, Source_type, UUID);
+                    } catch (IOException | TimeoutException | JAXBException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("\nresponseFromSender: " + responseFromSender);
+
+                    // 2. no need to send to exchange
+
+                    break;
+
+                // 18.3 Alter existing entity and update UUID mgr
+                // update event, update session, add User to session
+                case "18":
+                    messageType = "UpdateLocalMessage";
+                    Entity_sourceId = 200;
+                    //Entity_type=Helper.EntityType.Admin;
+                    Source_type = Helper.SourceType.Planning;
+                    UUID = "e0e7e624-ea01-410b-8a8f-25c551d43c25";
+                    //UUID = "da4bc50d-9268-4cf6-bb52-24f7917d31fa";
+
+                    xmlTotalMessage = "";
+                    String description = "Standard description set in sendMessage3()";
+
+                    int newEntity_version = 0;
+                    System.out.println("\nCase " + choice + ": message for letting UUID manager know of a local update (=>'Entity_version++') of UUID: " + UUID + " with Entity_sourceId = '" + Entity_sourceId + "'");
+
+                    try {
+                        newEntity_version = Sender.updateUuidRecordVersion(messageType, Source_type, UUID);
+                    } catch (IOException | TimeoutException | JAXBException e) {
+                        e.printStackTrace();
+                    }
+
+                    System.out.println("\nnewEntity_version: " + newEntity_version);
+
+                    //Process xml
+
+                    xmlTotalMessage = Helper.getOurXmlMessage(messageType, description, Source_type, UUID);
+                    //System.out.println("Generated XML: " + xmlTotalMessage);
+
+                    //Send message
+
+                    break;
+
+                // 19.4 Change entity version
+                // Alter record directly in UUID (select on UUID and SOURCE)
+                case "19":
+
+                    messageType = "UpdateEntityVersionMessage";
+                    Entity_sourceId = 424;
+                    //Entity_type=Helper.EntityType.Admin;
+                    Source_type = Helper.SourceType.Planning;
+                    UUID = "da4bc50d-9268-4cf6-bb52-24f7917d31fa";
+                    //UUID = "d7842766-922b-45d7-a821-a37274814c5e";
+                    Entity_version = 20;
+
+                    System.out.println("\nCase " + choice + ": change Entity_version (=>'" + Entity_version + "') of UUID: " + UUID + " with Entity_sourceId = '" + Entity_sourceId + "'");
+
+                    try {
+                        responseFromSender = Sender.updateUuidRecordVersionB(messageType, Source_type, UUID, Entity_version);
+
+                        System.out.println("\nresponseFromSender: " + responseFromSender);
+
+                    } catch (IOException | TimeoutException | JAXBException e) {
+                        e.printStackTrace();
+                    }
+                    //System.out.println("\nresponseFromSender: " + responseFromSender);
+
+                    break;
+
+                case "listEvents":
+                case "20":
+
+
+                    System.out.println("\nCase '" + choice + "' not worked out yet!");
+
+                    break;
+
+                //tests//list events
                     /*com.google.api.services.calendar.Calendar service = getCalendarService();
-
                     System.out.println("Before list events:\n ");
-
                     Quickstart.listEvents(service);
-
                     System.out.println("After list events:\n ");*/
 
-                    //break;
 
                 default:
 
@@ -360,15 +724,15 @@ public class Main {
 
             System.out.println(responseFromSender);
 
-            System.out.println("\n [.i.] End of this loop... \n");
+            System.out.println(" [.i.] End of this loop... ");
 
             try {
                 choser = Integer.parseInt(choice);
                 //System.out.print("You entered '" + choser + "'!");
             } catch (NumberFormatException e) {
 
-                System.out.print("You entered choice: '" + choice + "' and got choser: '"+choser+"'!");
-                System.out.print("ERROR: '" + e );
+                System.out.print("You entered choice: '" + choice + "' and got choser: '" + choser + "'!");
+                System.out.print("ERROR: '" + e);
                 choser = 0;
             }
 
