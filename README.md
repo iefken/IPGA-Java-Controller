@@ -61,20 +61,20 @@ in IntelliJ:
 Select Build | Build Artifacts. Select theJarYouPrepared:jar and select 'Build'. 
 => This should start the build process into the "/out/" folder.
 
-### 2. Make .jar runnable: 
+#### c. Make .jar runnable: 
 
 select Run | Edit Configurations. 
   => New window: click new (green +) and select JAR Application.
 
-#### ! Intermezzo ! TEST your .jar file in terminal: 'java -jar jarFileName.jar'
+### ! Intermezzo ! TEST your .jar file in terminal: 'java -jar jarFileName.jar'
 
 ==> Continue only if your .jar files runs successfully (it does the same as running the file/project does/what you want it does...)
 
-### 4. Get the .jar on your server
+### 2. Get the .jar on your server
 
 #### a. Put your .jar on your Git(hub)
 For putting the jar easily on your server I recommend you putting it on your github first
-#### b. On your remote server
+#### b. Clone it onto your remote server
 In the directory you want to push it: 'git clone https://github.com/your-github-nickname/your-github-project-name git-files/' 
 (the 'git-files' parameter is optional for naming the new repo the github-project will be pushed in, if it's empty, your-github-project-name will be used)
 
