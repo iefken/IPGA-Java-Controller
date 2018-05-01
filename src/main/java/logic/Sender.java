@@ -11,6 +11,7 @@ import HttpRequest.*;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.concurrent.TimeoutException;
 
 
@@ -116,7 +117,11 @@ public class Sender {
         String message = "";
         int newEntity_version = 1;
 
-        message = Helper.httpPutUpdateUuidRecordVersion(UUID, Source_type);
+        try {
+            message = Helper.httpPutUpdateUuidRecordVersion(UUID, Source_type);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         // process UUID from message
@@ -155,7 +160,11 @@ public class Sender {
 
         String description = "Standard description set in sendMessage4()";
 
-        message = Helper.httpPutUpdateUuidRecordVersionB(UUID, Entity_version, Source_type);
+        try {
+            message = Helper.httpPutUpdateUuidRecordVersionB(UUID, Entity_version, Source_type);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         if (message == "") {
             //Process xml
@@ -228,7 +237,7 @@ public class Sender {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //System.out.println(" [.x.] Sending to exchange:   '" + Helper.EXCHANGE_NAME + "'@ '" + Helper.getCurrentDateTimeStamp() + "'");
+        System.out.println(" [.x.] Sending to exchange:   '" + Helper.EXCHANGE_NAME + "'@ '" + Helper.getCurrentDateTimeStamp() + "'");
 
         //publish to channel
 /*

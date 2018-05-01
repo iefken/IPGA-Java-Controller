@@ -25,11 +25,11 @@ public class ReceiverPlanning {
 
     public static void main(String[] argv) throws Exception {
 
-        System.out.println(" [ooo] _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_ [ooo]");
-        System.out.println(" [ooo] _________________________________________________________________________________________________________________ [ooo]");
-        System.out.println(" [ooo] ______________________________________________IPGA-JAVA-RECEIVER-v.1_____________________________________________ [ooo]");
-        System.out.println(" [ooo] _________________________________________________________________________________________________________________ [ooo]");
-        System.out.println(" [ooo] -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- [ooo]");
+        System.out.println(" [ooo] _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_ [ooo]");
+        System.out.println(" [ooo] ___________________________________________________________________ [ooo]");
+        System.out.println(" [ooo] _______________________IPGA-JAVA-RECEIVER-v.1______________________ [ooo]");
+        System.out.println(" [ooo] ___________________________________________________________________ [ooo]");
+        System.out.println(" [ooo] -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- [ooo]");
         ConnectionFactory factory = new ConnectionFactory();
 
         //for localhost
@@ -65,9 +65,10 @@ public class ReceiverPlanning {
         channel.queueBind(Helper.TASK_QUEUE_NAME, Helper.EXCHANGE_NAME, "");
 
 
-        System.out.println(" -----------------------------------------------------------------------------------------------------------------------------");
-        System.out.println(" ----------------- [.w.a.i.t.i.n.g] Waiting with queue for messages. To exit press CTRL+C [.w.a.i.t.i.n.g] -------------------");
-        System.out.println(" -----------------------------------------------------------------------------------------------------------------------------\n");
+        System.out.println(" [ooo] _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_ [ooo]");
+        System.out.println(" -------------------------------------------------------------------------------");
+        System.out.println(" ------ [...] Waiting with queue for messages. To exit press CTRL+C [...] ------");
+        System.out.println(" -------------------------------------------------------------------------------\n");
 
         final Consumer consumer = new DefaultConsumer(channel) {
             @Override
@@ -82,9 +83,10 @@ public class ReceiverPlanning {
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
-                    System.out.println(" -----------------------------------------------------------------------------------------------------------------------------");
-                    System.out.println(" ----------------- [.w.a.i.t.i.n.g] Waiting with queue for messages. To exit press CTRL+C [.w.a.i.t.i.n.g] -------------------");
-                    System.out.println(" -----------------------------------------------------------------------------------------------------------------------------\n");
+
+                    System.out.println(" -------------------------------------------------------------------------------");
+                    System.out.println(" ------ [...] Waiting with queue for messages. To exit press CTRL+C [...] ------");
+                    System.out.println(" -------------------------------------------------------------------------------");
                 }
             }
         };
@@ -96,12 +98,12 @@ public class ReceiverPlanning {
     private static void doWork(String task) throws JAXBException, IOException, ParserConfigurationException, SAXException, Exception {
 
 
-        System.out.println(" [.i.][*************************************************] NEW MESSAGE [*************************************************][.i.]");
-        System.out.println(" -----------------------------------------------------------------------------------------------------------------------------");
+        System.out.println(" -------------------------------------------------------------------------------");
+        System.out.println(" [.i.][**************************] NEW MESSAGE [**************************][.i.]");
+        System.out.println(" -------------------------------------------------------------------------------");
 
-        System.out.println(" [.i.][****************************]@ '" + Helper.getCurrentDateTimeStamp() +"' || message length: '" + task.length() + "' characters [****************************]");
-        System.out.println(" -----------------------------------------------------------------------------------------------------------------------------\n");
-
+        System.out.println(" [.i.][*****]@ '" + Helper.getCurrentDateTimeStamp() +"' || message length: '" + task.length() + "' characters [*****]");
+        System.out.println(" -------------------------------------------------------------------------------");
         //change to true to show full XML message in receiver console when it's received
         boolean showFullXMLMessage = false;
 

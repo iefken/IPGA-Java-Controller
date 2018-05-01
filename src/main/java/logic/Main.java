@@ -303,6 +303,7 @@ public class Main {
                     // 2. create xml message
                     xmlTotalMessage = Helper.getXmlForSession(messageType, headerDescription, Source_type, UUID, sessionName, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
 
+                    System.out.println("\n xmlTotalMessage: \n" + xmlTotalMessage);
                     // 3. insert to local db
 
                     // TO DO
