@@ -232,9 +232,13 @@ public class Sender {
 
         //publish to exchange
         try {
+
             channel.basicPublish(Helper.EXCHANGE_NAME, "", null, xmlMessage.getBytes());
-            System.out.println(" [.x.] Sending to exchange:   '" + Helper.EXCHANGE_NAME + "'@ '" + Helper.getCurrentDateTimeStamp() + "'");
+            //System.out.println(" [.x.] Sending to exchange:   '" + Helper.EXCHANGE_NAME + "'@ '" + Helper.getCurrentDateTimeStamp() + "'");
+            Thread.sleep(1000);
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         //publish to channel

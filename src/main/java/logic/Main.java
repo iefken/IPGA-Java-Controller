@@ -146,10 +146,10 @@ public class Main {
 
                     System.out.println("\nNew Session made with UUID: " + UUID);
 
-                    // 2. create xml message
+                    // 3. create xml message
                     xmlTotalMessage = Helper.getXmlForNewSession(messageType, headerDescription, Source_type, sessionUUID, eventUUID, sessionName, maxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
 
-                    // 3. insert to local db
+                    // 2. insert to local db
 
                     Session case2NewSession = new Session(0,1,"1",Helper.getCurrentDateTimeStamp(),sessionUUID,eventUUID,sessionName,maxAttendees,dateTimeStart,dateTimeEnd,speaker,local,type);
 
@@ -393,19 +393,19 @@ public class Main {
                     //Entity_type=Helper.EntityType.Visitor;
                     Source_type = Helper.SourceType.Planning;
 
+                    String Type = "Reservation";
                     //get userUUID
                     userUUID = "e0e7e624-ea01-410b-8a8f-25c551d43c25";
                     //get sessionUUID
                     sessionUUID = "da4bc50d-9268-4cf6-bb52-24f7917d31fa";
 
+                    String reservationUUID = "da4bc50d-9268-4cf6-bb52-24f7917d31fa";
                     //insert into local db
 
                     System.out.println("\nDATABASE TEST!");
 
-                    String reservationUUID = "a94a0212-3065-426c-b41a-9dd9b46fd861";
-                    userUUID= "e0e7e624-ea01-410b-8a8f-25c551d43c25";
-                    sessionUUID= "1b0993a7-b8d3-411b-80a0-d17f8f700cf0";
-                    String Type="Session";
+                    //push to local db
+
                     int reservationId = 0;
 
                     Reservation_Session newSessionReservation = new Reservation_Session(reservationId, 1, "1", Helper.getCurrentDateTimeStamp(), reservationUUID, userUUID, sessionUUID, Type);
@@ -420,6 +420,16 @@ public class Main {
                     }
 
                     System.out.println("Start printing: # number of insertion: "+insertTest);
+                    reservationUUID = "";
+                    try {
+                        sessionUUID = Sender.insertUuidRecord(messageType, reservationId, Entity_type, Source_type, reservationUUID);
+                    } catch (IOException | TimeoutException | JAXBException e) {
+                        e.printStackTrace();
+                    }
+
+                    userUUID= "e0e7e624-ea01-410b-8a8f-25c551d43c25";
+                    sessionUUID= "d6a953cf-74f3-44d8-b0db-006642395ff9";
+                    Type="Session";
 
                     // send ReservationMessage to exchange
                     System.out.println("\nCase " + choice + ": message for adding a userUUID: " + userUUID + " to a sessionUUID = '" + sessionUUID + "'");
