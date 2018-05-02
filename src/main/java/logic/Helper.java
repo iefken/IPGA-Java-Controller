@@ -201,12 +201,12 @@ public interface Helper {
     }
 
     //reservationMessage: User- UUID, Session-UUID, Status(isActive), Timestamp
-    static String getXmlForReservation(String messageType, String description, SourceType Source_type, String userUUID, String sessionUUID) throws JAXBException {
+    static String getXmlForReservation(String messageType, String description, SourceType Source_type, int reservationId, String reservationUUID, String userUUID, String sessionUUID) throws JAXBException {
 
         // form xml
         XmlMessage.Header header = new XmlMessage.Header(messageType, description + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
-        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(userUUID, sessionUUID, "1", Helper.getCurrentDateTimeStamp(), messageType.split("Message")[0]);
+        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(reservationId,reservationUUID,userUUID, sessionUUID, "1", Helper.getCurrentDateTimeStamp(), messageType.split("Message")[0]);
         // steek header en datastructure (Reservationstructure) in message klasse
         XmlMessage.ReservationMessage xmlReservationMessage = new XmlMessage.ReservationMessage(header, reservationStructure);
         // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)

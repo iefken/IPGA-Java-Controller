@@ -108,16 +108,22 @@ public class BaseEntityDAO extends BaseDAO{
     public static int runInsertQuery(String sqlQuery)
     {
 
-        PreparedStatement preparedStatement = null;
+        Statement statement = null;
         try {
             if (getConnection().isClosed()) {
                 throw new IllegalStateException("ERROR 01: Connection seems to be closed...");
             }
 
-            preparedStatement = getConnection().prepareStatement(sqlQuery);
+            statement = getConnection().createStatement();
             //prepare statement here: preparedStatement.setString(1, f.getProperty());
-
-            return preparedStatement.executeUpdate();
+            statement.execute(sqlQuery,Statement.RETURN_GENERATED_KEYS);
+            ResultSet keyset = statement.getGeneratedKeys();
+            int returnInsertedId=0;
+            if ( keyset.next() ) {
+                // Retrieve the auto generated key(s).
+                returnInsertedId = keyset.getInt(1);
+            }
+            return returnInsertedId;
 
         }catch(SQLException e){
 
@@ -128,8 +134,8 @@ public class BaseEntityDAO extends BaseDAO{
 
             try{
 
-                if(preparedStatement != null)
-                    preparedStatement.close();
+                if(statement != null)
+                    statement.close();
 
             }catch(SQLException e){
 

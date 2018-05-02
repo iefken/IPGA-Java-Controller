@@ -1,5 +1,7 @@
 package Logic;
 
+import DatabaseLogic.Reservation_Session;
+import DatabaseLogic.Reservation_Session_DAO;
 import GoogleCalendarApi.Quickstart;
 import com.rabbitmq.client.*;
 import org.w3c.dom.DOMException;
@@ -14,6 +16,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.StringReader;
+import java.sql.SQLException;
 
 import static GoogleCalendarApi.Quickstart.getCalendarService;
 
@@ -100,7 +103,7 @@ public class ReceiverPlanning {
         System.out.println(" [.i.][**************************] NEW MESSAGE [**************************][.i.]");
         System.out.println(" -------------------------------------------------------------------------------");
 
-        System.out.println(" [.i.][*****]@ '" + Helper.getCurrentDateTimeStamp() +"' || message length: '" + task.length() + "' characters [*****]");
+        System.out.println(" [.i.][*****]@ '" + Helper.getCurrentDateTimeStamp() + "' || message length: '" + task.length() + "' characters [*****]");
         System.out.println(" -------------------------------------------------------------------------------");
         //change to true to show full XML message in receiver console when it's received
         boolean showFullXMLMessage = false;
@@ -131,13 +134,33 @@ public class ReceiverPlanning {
 
         // Check XML for message
 
-        String userUUID="",sessionUUID="",UUID="";
+        String userUUID = "", sessionUUID = "", reservationUUID = "",eventUUID="", UUID = "";
 
         //toLowercase just for catching CaPitAliZatIOn errors...
         switch (messageType.toLowerCase()) {
 
             case "reservationmessage":
 
+                try {
+
+                    reservationUUID = getPropertyFromXml(task, "reservationUUID");
+
+                } catch (ParserConfigurationException | SAXException | IOException e) {
+
+                    System.out.println(" [!!!] ERROR: No reservationUUID found in XML... Looking for UUID...");
+                    try {
+
+                        reservationUUID = getPropertyFromXml(task, "UUID");
+                    }catch (Exception ee)
+                    {
+                        e.printStackTrace();
+                        System.out.println(" [!!!] ERROR: No reservationUUID or UUID found in XML: " + e);
+
+                    }
+
+                    e.printStackTrace();
+                    System.out.println(" [!!!] ERROR: No userUuid found in XML: " + e);
+                }
                 try {
 
                     userUUID = getPropertyFromXml(task, "userUUID");
@@ -148,6 +171,7 @@ public class ReceiverPlanning {
                     System.out.println(" [!!!] ERROR: No userUuid found in XML: " + e);
                 }
 
+
                 try {
 
                     sessionUUID = getPropertyFromXml(task, "sessionUUID");
@@ -155,12 +179,52 @@ public class ReceiverPlanning {
 
                 } catch (ParserConfigurationException | SAXException | IOException e) {
 
+                    System.out.println(" [!!!] ERROR: No sessionUUID found in XML... Looking for eventUUID");
+                    try {
+                        eventUUID = getPropertyFromXml(task, "eventUUID");
+                    } catch (Exception ee) {
+
+                        ee.printStackTrace();
+                        System.out.println(" [!!!] ERROR: No eventUUID or sessionUUID found in XML: " + ee);
+
+                    }
                     e.printStackTrace();
-                    System.out.println(" [!!!] ERROR: No sessionUuid found in XML: " + e);
                 }
 
                 System.out.println(" [.i.] " + messageType + ": userUUID:" + userUUID);
-                System.out.println(" [.i.] " + messageType+": sessionUUID:" + sessionUUID);
+
+                if(sessionUUID!="")
+                {
+
+                    System.out.println(" [.i.] " + messageType + ": sessionUUID:" + sessionUUID);
+                }else{
+
+                    System.out.println(" [.i.] " + messageType + ": eventUUID:" + eventUUID);
+                }
+
+                //save to local database
+
+                System.out.println("\nDATABASE TEST!\n");
+
+                //reservationUUID = "a94a0212-3065-426c-b41a-9dd9b46fd861";
+
+                //String UserUUID= "e0e7e624-ea01-410b-8a8f-25c551d43c25";
+                //String SessionUUID= "e0e7e624-ea01-410b-8a8f-25c551d43c25";
+                String Type = "Session";
+
+                Reservation_Session newSessionReservation = new Reservation_Session(0, 1, "1", Helper.getCurrentDateTimeStamp(), reservationUUID, userUUID, sessionUUID, Type);
+
+                System.out.println("Begin printing:");
+
+                int insertTest = 0;
+                try {
+                    insertTest = new Reservation_Session_DAO().insertIntoReservation_Session(newSessionReservation);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                System.out.println("End of database INSERT...");
+
                 /*
                 System.out.println(" [.!.] START OF TASK:\n\n" + task + " [.!.] \nEND OF TASK\n\n");
                 */
@@ -168,16 +232,16 @@ public class ReceiverPlanning {
 
             case "sessionmessage":
 
-                String fullSession="";
+                String fullSession = "";
                 try {
 
                     sessionUUID = getPropertyFromXml(task, "uuid");
                     //System.out.println(" [i] UUID: " + UUID);
                     fullSession = "\n [.i.] UUID: '" + sessionUUID + "' || sessionName: '" + getPropertyFromXml(task, "sessionName");
-                    fullSession+="' || dateTimeStart: '" + getPropertyFromXml(task, "dateTimeStart") + "' || dateTimeEnd '" + getPropertyFromXml(task, "dateTimeEnd");
-                    fullSession+="' || speaker: '" + getPropertyFromXml(task, "speaker") + "' || local: '" + getPropertyFromXml(task, "local");
-                    fullSession+="' || type: '" + getPropertyFromXml(task, "type") + "' || status: '" + getPropertyFromXml(task, "status");
-                    fullSession+="' || timestamp: '" + getPropertyFromXml(task, "timestamp")+"'";
+                    fullSession += "' || dateTimeStart: '" + getPropertyFromXml(task, "dateTimeStart") + "' || dateTimeEnd '" + getPropertyFromXml(task, "dateTimeEnd");
+                    fullSession += "' || speaker: '" + getPropertyFromXml(task, "speaker") + "' || local: '" + getPropertyFromXml(task, "local");
+                    fullSession += "' || type: '" + getPropertyFromXml(task, "type") + "' || status: '" + getPropertyFromXml(task, "status");
+                    fullSession += "' || timestamp: '" + getPropertyFromXml(task, "timestamp") + "'";
 
                 } catch (ParserConfigurationException | SAXException | IOException e) {
 
@@ -185,7 +249,7 @@ public class ReceiverPlanning {
                     System.out.println(" [!!!] ERROR: No some xml not found: " + e);
                 }
 
-                System.out.println(" [.i.] Full processed sessionmessage: \n" + fullSession+"\n\n [.i.] END of sessionmessage");
+                System.out.println(" [.i.] Full processed sessionmessage: \n" + fullSession + "\n\n [.i.] END of sessionmessage");
 
 
                 break;

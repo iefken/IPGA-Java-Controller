@@ -204,7 +204,7 @@ public class Main {
                     // normally when a new message from another team is received
                 case "5":
 
-                    System.out.println("\nCase " + choice + ": message for letting UUID manager know of a new object without a UUID with messageType: '" + messageType + "' and with Entity_sourceId = '" + Entity_sourceId + "'");
+                    System.out.println("\nCase " + choice + ": message for letting UUID manager know of a new object with a UUID with messageType: '" + messageType + "' and with Entity_sourceId = '" + Entity_sourceId + "'");
 
                     // preset variables (should be set later)
                     messageType = "SessionMessage";
@@ -221,6 +221,8 @@ public class Main {
                     local = "Oval office dept.1 Room 420";
                     type = "Speech";
 
+                    int maxAttendees = 50;
+
                     UUID = "531f33b6-88d1-406f-b6f3-1a0c0de9a1de";
 
                     try {
@@ -236,9 +238,22 @@ public class Main {
 //                    System.out.println("\nNew Session made with UUID: " + UUID);
 
                     // 2. create xml message
-                    xmlTotalMessage = Helper.getXmlForSession(messageType, headerDescription, Source_type, UUID, sessionName, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
+                    xmlTotalMessage = Helper.getXmlForSession(messageType, headerDescription, Source_type, UUID, sessionName,maxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
 
                     // 3. insert to local db
+
+                    Session newSession = new Session(0,1,"1",Helper.getCurrentDateTimeStamp(),sessionUUID,eventUUID,sessionName,maxAttendees,dateTimeStart,dateTimeEnd,speaker,local,type);
+
+                    System.out.println("Begin printing:");
+                    //ArrayList<Reservation_Session> test = new Reservation_Session_DAO().getAllReservation_Sessions();
+
+                    int case5test=0;
+
+                    try {
+                        case5test = new Session_DAO().insertIntoSession(newSession);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
 
                     // TO DO
 
@@ -305,7 +320,7 @@ public class Main {
                     xmlTotalMessage = Helper.getXmlForSession(messageType, headerDescription, Source_type, UUID, sessionName, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
 
                     System.out.println("\n xmlTotalMessage: \n" + xmlTotalMessage);
-                    // 3. insert to local db
+                    // 3. update in local db
 
                     // TO DO
 
@@ -351,12 +366,12 @@ public class Main {
 
                     // send ReservationMessage to exchange
                     System.out.println("\nCase " + choice + ": message for adding a userUUID: " + userUUID + " to a sessionUUID = '" + sessionUUID + "'");
-
+/*
                     try {
                         responseFromSender = Sender.sendReservationMessage(messageType, Source_type, userUUID, sessionUUID);
                     } catch (IOException | TimeoutException | JAXBException e) {
                         e.printStackTrace();
-                    }
+                    }*/
                     break;
 
                     //11. Add User to Session
@@ -375,14 +390,39 @@ public class Main {
 
                     //insert into local db
 
-                    // TO DO
+                    System.out.println("\nDATABASE TEST!");
+
+                    String reservationUUID = "a94a0212-3065-426c-b41a-9dd9b46fd861";
+                    userUUID= "e0e7e624-ea01-410b-8a8f-25c551d43c25";
+                    sessionUUID= "1b0993a7-b8d3-411b-80a0-d17f8f700cf0";
+                    String Type="Session";
+                    int reservationId = 0;
+
+                    Reservation_Session newSessionReservation = new Reservation_Session(reservationId, 1, "1", Helper.getCurrentDateTimeStamp(), reservationUUID, userUUID, sessionUUID, Type);
+
+                    //Reservation_Session_DAO reservation_session_dao = new Reservation_Session_DAO();
+
+                    System.out.println("Begin printing:");
+                    //ArrayList<Reservation_Session> test = new Reservation_Session_DAO().getAllReservation_Sessions();
+
+                    int insertTest=0;
+                    try {
+                        insertTest = new Reservation_Session_DAO().insertIntoReservation_Session(newSessionReservation);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    System.out.println("Start printing: # number of insertion: "+insertTest);
 
 
                     // send ReservationMessage to exchange
                     System.out.println("\nCase " + choice + ": message for adding a userUUID: " + userUUID + " to a sessionUUID = '" + sessionUUID + "'");
 
                     try {
-                        responseFromSender = Sender.sendReservationMessage(messageType, Source_type, userUUID, sessionUUID);
+                        responseFromSender = Sender.sendReservationMessage(messageType, Source_type, reservationId, reservationUUID, userUUID, sessionUUID);
+
+                        System.out.println(responseFromSender);
                     } catch (IOException | TimeoutException | JAXBException e) {
                         e.printStackTrace();
                     }
@@ -708,37 +748,13 @@ public class Main {
                 case "listEvents":
                 case "20":
 
-
-                    System.out.println("\nDATABASE TEST!");
-
-                    String reservationUUID = "a94a0212-3065-426c-b41a-9dd9b46fd861";
-                    String UserUUID= "e0e7e624-ea01-410b-8a8f-25c551d43c25";
-                    String SessionUUID= "e0e7e624-ea01-410b-8a8f-25c551d43c25";
-                    String Type="Session";
-
-                    Reservation_Session newSessionReservation = new Reservation_Session(0, 1, "1", Helper.getCurrentDateTimeStamp(), reservationUUID, UserUUID, SessionUUID, "Session");
-
-                    //Reservation_Session_DAO reservation_session_dao = new Reservation_Session_DAO();
-
-                    System.out.println("Begin printing:");
-                    //ArrayList<Reservation_Session> test = new Reservation_Session_DAO().getAllReservation_Sessions();
-
-                    int insertTest=0;
-                    try {
-                        insertTest = new Reservation_Session_DAO().insertIntoReservation_Session(newSessionReservation);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-
-
-                    System.out.println("Start printing: # number of insertion: "+insertTest);
 /*
                     for(Reservation_Session rs : test)
                     {
                         System.out.println(rs);
                     }
 */
-                    System.out.println("End printing:");
+                    System.out.println("Not working yet!");
 
 
 

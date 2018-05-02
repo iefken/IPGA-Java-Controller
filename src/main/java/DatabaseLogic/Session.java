@@ -4,8 +4,11 @@ import java.util.Objects;
 
 public class Session extends BaseEntity{
 
+    private int sessionId;
     private String sessionUUID;
+    private String eventUUID;
     private String sessionName;
+    private int maxAttendees;
     private String dateTimeStart;
     private String dateTimeEnd;
     private String speaker;
@@ -13,17 +16,35 @@ public class Session extends BaseEntity{
     private String type;
 
     public Session(int SessionId, int Entity_version, String Status, String Timestamp,
-                   String SessionUUID, String SessionName, String DateTimeStart, String DateTimeEnd, String Speaker, String Local, String Type) {
+                   String SessionUUID, String eventUUID, String SessionName, int maxAttendees, String DateTimeStart, String DateTimeEnd, String Speaker, String Local, String Type) {
 
         super(SessionId,Entity_version,Status,Timestamp);
 
+        this.sessionId = SessionId;
         this.sessionUUID = SessionUUID;
+        this.eventUUID=eventUUID;
         this.sessionName = SessionName;
+        this.maxAttendees = maxAttendees;
         this.dateTimeStart = DateTimeStart;
         this.dateTimeEnd = DateTimeEnd;
         this.speaker = Speaker;
         this.local = Local;
         this.type = Type;
+    }
+
+
+    public int getSessionId() {
+        return sessionId;
+    }
+    public void setSessionId(int sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public String getEventUUID() {
+        return eventUUID;
+    }
+    public void setEventUUID(String eventUUID) {
+        this.eventUUID = eventUUID;
     }
 
     public String getSessionUUID() {
@@ -38,6 +59,13 @@ public class Session extends BaseEntity{
     }
     public void setSessionName(String sessionName) {
         this.sessionName = sessionName;
+    }
+
+    public int getMaxAttendees() {
+        return maxAttendees;
+    }
+    public void setMaxAttendees(int maxAttendees) {
+        this.maxAttendees = maxAttendees;
     }
 
     public String getDateTimeStart() {

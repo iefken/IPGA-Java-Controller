@@ -186,7 +186,7 @@ public class Sender {
 
     //4=updateUuidRecordOnChanged
     // for changing the Entity_version of a certain record // doesn't seem to work yet
-    public static String sendReservationMessage(String messageType, Helper.SourceType Source_type, String userUUID, String sessionUUID) throws IOException, TimeoutException, JAXBException {
+    public static String sendReservationMessage(String messageType, Helper.SourceType Source_type, int reservationId, String reservationUUID, String userUUID, String sessionUUID) throws IOException, TimeoutException, JAXBException {
 
 
         String xmlTotalMessage = "";
@@ -198,7 +198,7 @@ public class Sender {
 
         //Process xml
 
-        xmlTotalMessage = Helper.getXmlForReservation(messageType, description, Source_type, userUUID, sessionUUID);
+        xmlTotalMessage = Helper.getXmlForReservation(messageType, description, Source_type, reservationId, reservationUUID, userUUID, sessionUUID);
         //System.out.println("Generated XML in send reservation message: " + xmlTotalMessage);
 
         //Send message
@@ -237,7 +237,6 @@ public class Sender {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         //publish to channel
 /*
 

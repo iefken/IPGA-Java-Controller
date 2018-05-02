@@ -5,22 +5,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "basemessage")
-@XmlType(propOrder = { "uuid","sessionName", "dateTimeStart", "dateTimeEnd", "speaker", "local", "type", "status", "timestamp"})
+@XmlType(propOrder = { "sessionUUID","eventUUID","sessionName", "dateTimeStart", "dateTimeEnd", "speaker", "maxAttendees","local", "type", "status", "timestamp"})
 public class SessionStructure {
 
-	private String Uuid;
+	private String sessionUUID;
+	private String eventUUID;
 	private String sessionName;
 	private String dateTimeStart;
 	private String dateTimeEnd;
 	private String speaker;
+	private int maxAttendees;
 	private String local;
 	private String type;
 	private int status;
 	private String timestamp;
 
-	public SessionStructure(String Uuid, String sessionName, String dateTimeStart, String dateTimeEnd, String speaker, String local, String type, int status, String timestamp) {
+	public SessionStructure(String sessionUUID,String eventUUID, String sessionName, String dateTimeStart, String dateTimeEnd, String speaker, int maxAttendees, String local, String type, int status, String timestamp) {
 		super();
-		this.Uuid = Uuid;
+		this.sessionUUID = sessionUUID;
+		this.eventUUID = eventUUID;
 		this.sessionName = sessionName;
 		this.dateTimeStart = dateTimeStart;
 		this.dateTimeEnd = dateTimeEnd;
@@ -36,12 +39,12 @@ public class SessionStructure {
 	}
 
 
-	@XmlElement(name = "uuid")
-	public String getUuid() {
-		return Uuid;
+	@XmlElement(name = "sessionUUID")
+	public String getSessionUUID() {
+		return sessionUUID;
 	}
-	public void setUuid(String Uuid) {
-		this.Uuid = Uuid;
+	public void setSessionUUID(String Uuid) {
+		this.sessionUUID = Uuid;
 	}
 
 	@XmlElement(name = "sessionName")
