@@ -11,7 +11,6 @@ public class UUID_updateUuidRecordVersionResponse {
 
     //    GETTERS & SETTERS
 
-
     public int getEntity_version() {
         return Entity_version;
     }

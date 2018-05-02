@@ -1,6 +1,5 @@
-package logic;
+package Logic;
 
-import com.google.api.client.util.DateTime;
 import okhttp3.*;
 import HttpRequest.*;
 
@@ -42,8 +41,8 @@ public interface Helper {
                 "[11.V] Add User to Session",
                 "[12.V] Get all UUID's from UUID manager",
                 "[13.x] Fill in a (test message)",
-                "[14.1.old.v] New Reservation object without UUID",
-                "[15.2.old.v] New Reservation object with UUID: after create / update entity: normally when a new message from another team is received",
+                "[14.1.old.v] New Reservation_Session object without UUID",
+                "[15.2.old.v] New Reservation_Session object with UUID: after create / update entity: normally when a new message from another team is received",
                 "[16.1.old.v] New Session object without UUID",
                 "[17.2.old.v] New Session object with UUID: after create / update entity:  normally when a new message from another team is received",
                 "[18.3.old.v] Alter existing entity and update UUID mgr: update event, update session, add User to session,...",

@@ -1,17 +1,18 @@
-package logic;//import GoogleCalendarApi.Quickstart;
+package Logic;//import GoogleCalendarApi.Quickstart;
 
 // if you're running this on a remote server:
 // https://stackoverflow.com/questions/15869784/how-to-run-a-maven-created-jar-file-using-just-the-command-line
 // running the project .jar files: java -jar <jarfilename>.jar
 
-import GoogleCalendarApi.Quickstart;
-import logic.Helper;
-
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
-import java.util.Arrays;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeoutException;
+
+import DatabaseLogic.*;
 
 //import static GoogleCalendarApi.Quickstart.getCalendarService;
 
@@ -51,7 +52,7 @@ public class Main {
 
         int choser = 999;
         String responseFromSender = "";
-        String[] senderOptions = Helper.getOptions();
+        String[] senderOptions = Logic.Helper.getOptions();
 
         //initialize possible variables
         boolean inputSucces = true;
@@ -104,7 +105,7 @@ public class Main {
             switch (choice) {
 
                 // 1.1. New object without UUID:
-                // create Reservation
+                // create Reservation_Session
                 case "1":
 
                     System.out.println("\nCase '" + choice + "' not worked out yet!");
@@ -518,8 +519,8 @@ public class Main {
                     System.out.println("Not working yet!");
                     break;
 
-                // 14.1. New Reservation object without UUID:
-                // create Reservation
+                // 14.1. New Reservation_Session object without UUID:
+                // create Reservation_Session
                 case "14":
 
                     messageType = "ReservationMessage";
@@ -547,7 +548,7 @@ public class Main {
 
                     break;
 
-                // 15.2. New Reservation object with UUID:
+                // 15.2. New Reservation_Session object with UUID:
                 // normally when a new message from another team is received
                 case "15":
 
@@ -708,7 +709,38 @@ public class Main {
                 case "20":
 
 
-                    System.out.println("\nCase '" + choice + "' not worked out yet!");
+                    System.out.println("\nDATABASE TEST!");
+
+                    String reservationUUID = "a94a0212-3065-426c-b41a-9dd9b46fd861";
+                    String UserUUID= "e0e7e624-ea01-410b-8a8f-25c551d43c25";
+                    String SessionUUID= "e0e7e624-ea01-410b-8a8f-25c551d43c25";
+                    String Type="Session";
+
+                    Reservation_Session newSessionReservation = new Reservation_Session(0, 1, "1", Helper.getCurrentDateTimeStamp(), reservationUUID, UserUUID, SessionUUID, "Session");
+
+                    //Reservation_Session_DAO reservation_session_dao = new Reservation_Session_DAO();
+
+                    System.out.println("Begin printing:");
+                    //ArrayList<Reservation_Session> test = new Reservation_Session_DAO().getAllReservation_Sessions();
+
+                    int insertTest=0;
+                    try {
+                        insertTest = new Reservation_Session_DAO().insertIntoReservation_Session(newSessionReservation);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    System.out.println("Start printing: # number of insertion: "+insertTest);
+/*
+                    for(Reservation_Session rs : test)
+                    {
+                        System.out.println(rs);
+                    }
+*/
+                    System.out.println("End printing:");
+
+
 
                     break;
 

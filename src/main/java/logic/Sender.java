@@ -1,4 +1,4 @@
-package logic;
+package Logic;
 
 import JsonMessage.JSONException;
 
@@ -11,7 +11,6 @@ import HttpRequest.*;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.util.concurrent.TimeoutException;
 
 
@@ -193,7 +192,7 @@ public class Sender {
         String xmlTotalMessage = "";
         String message = "";
 
-        String description = "Standard Reservation description set in sendReservationMessage()";
+        String description = "Standard Reservation_Session description set in sendReservationMessage()";
 
         //message = Helper.httpPutUpdateUuidRecordVersionB(UUID, Entity_version, Source_type);
 
@@ -234,10 +233,10 @@ public class Sender {
         //publish to exchange
         try {
             channel.basicPublish(Helper.EXCHANGE_NAME, "", null, xmlMessage.getBytes());
+            System.out.println(" [.x.] Sending to exchange:   '" + Helper.EXCHANGE_NAME + "'@ '" + Helper.getCurrentDateTimeStamp() + "'");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(" [.x.] Sending to exchange:   '" + Helper.EXCHANGE_NAME + "'@ '" + Helper.getCurrentDateTimeStamp() + "'");
 
         //publish to channel
 /*

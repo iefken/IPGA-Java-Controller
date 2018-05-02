@@ -1,6 +1,6 @@
 package HttpRequest;
 
-import logic.Helper;
+import Logic.Helper;
 
 public class UUID_updateUuidRecordVersion {
 

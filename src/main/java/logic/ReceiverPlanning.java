@@ -1,9 +1,7 @@
-package logic;
+package Logic;
 
 import GoogleCalendarApi.Quickstart;
-import XmlMessage.*;
 import com.rabbitmq.client.*;
-import com.rabbitmq.client.impl.ForgivingExceptionHandler;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
