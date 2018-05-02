@@ -38,6 +38,21 @@ public class SessionStructure {
 		
 	}
 
+	public String getEventUUID() {
+		return eventUUID;
+	}
+
+	public void setEventUUID(String eventUUID) {
+		this.eventUUID = eventUUID;
+	}
+
+	public int getMaxAttendees() {
+		return maxAttendees;
+	}
+
+	public void setMaxAttendees(int maxAttendees) {
+		this.maxAttendees = maxAttendees;
+	}
 
 	@XmlElement(name = "sessionUUID")
 	public String getSessionUUID() {

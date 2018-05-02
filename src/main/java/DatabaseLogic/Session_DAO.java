@@ -29,7 +29,7 @@ public class Session_DAO extends BaseDAO {
         String sqlQuery = "";
 
         sqlQuery = "INSERT INTO planningdb.session (`idSession`, `sessionUUID`, `eventUUID`, `sessionName`, `maxAttendees`, `dateTimeStart`, `dateTimeEND`, `speaker`, `local`, `type`) " +
-                "VALUES(" + callbackInsertedInt + ",\"" + session.getSessionUUID() + "\",\"" + session.getEventUUID() + "\",\"" + session.getSessionName() + "\",\"" + session.getMaxAttendees() + "\",\"" + session.getMaxAttendees() + "\",\"" + session.getMaxAttendees() + "\",\"" + session.getMaxAttendees() + "\",\"" + session.getMaxAttendees() + "\",\"" + session.getMaxAttendees() + "\");";
+                "VALUES(" + callbackInsertedInt + ",\"" + session.getSessionUUID() + "\",\"" + session.getEventUUID() + "\",\"" + session.getSessionName() + "\",\"" + session.getMaxAttendees() + "\",\"" + session.getDateTimeStart() + "\",\"" + session.getDateTimeEnd() + "\",\"" + session.getSpeaker() + "\",\"" + session.getLocal() + "\",\"" + session.getType() + "\");";
 
         //INSERT INTO `PlanningDB`.`Session` (`idSession`, `sessionUUID`, `eventUUID`, `sessionName`, `maxAttendees`, `dateTimeStart`, `dateTimeEND`, `speaker`, `local`, `type`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         System.out.println("sqlQuery: "+sqlQuery);

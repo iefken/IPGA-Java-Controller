@@ -2,6 +2,8 @@ package Logic;
 
 import DatabaseLogic.Reservation_Session;
 import DatabaseLogic.Reservation_Session_DAO;
+import DatabaseLogic.Session;
+import DatabaseLogic.Session_DAO;
 import GoogleCalendarApi.Quickstart;
 import com.rabbitmq.client.*;
 import org.w3c.dom.DOMException;
@@ -17,6 +19,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.StringReader;
 import java.sql.SQLException;
+import java.util.concurrent.TimeoutException;
 
 import static GoogleCalendarApi.Quickstart.getCalendarService;
 
@@ -110,7 +113,7 @@ public class ReceiverPlanning {
 
         // XML -> Data
         // get messagetype from XML (set in sender)
-        String messageType = null;
+        String messageType = null, xmlTotalMessage="";
         try {
 
             messageType = getPropertyFromXml(task, "messageType");
@@ -206,24 +209,44 @@ public class ReceiverPlanning {
 
                 System.out.println("\nDATABASE TEST!\n");
 
-                //reservationUUID = "a94a0212-3065-426c-b41a-9dd9b46fd861";
+                String headerDescriptionReservation = "Standard header description for reservation set in receiver";
+                // 2. create xml message
+                //xmlTotalMessage = Helper.getXmlForNewSession(messageType, headerDescriptionReservation, Helper.SourceType.Planning, sessionUUID, eventUUID, sessionName, maxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
 
-                //String UserUUID= "e0e7e624-ea01-410b-8a8f-25c551d43c25";
-                //String SessionUUID= "e0e7e624-ea01-410b-8a8f-25c551d43c25";
-                String Type = "Session";
+                // 3. insert to local db
 
-                Reservation_Session newSessionReservation = new Reservation_Session(0, 1, "1", Helper.getCurrentDateTimeStamp(), reservationUUID, userUUID, sessionUUID, Type);
+                int Entity_version = 1; // should come from xml message
+                String Status = "1"; // should come from xml message
 
-                System.out.println("Begin printing:");
+                Session case2NewSession = new Session(0,1,"1",Helper.getCurrentDateTimeStamp(),sessionUUID,eventUUID,getPropertyFromXml(task, "sessionName"),Integer.parseInt(getPropertyFromXml(task, "maxAttendees")),getPropertyFromXml(task, "dateTimeStart"),getPropertyFromXml(task, "dateTimeEnd"),getPropertyFromXml(task, "speaker"),getPropertyFromXml(task, "local"),getPropertyFromXml(task, "type"));
+/*
 
-                int insertTest = 0;
+                fullSession = "\n [.i.] UUID: '" + sessionUUID + "' || sessionName: '" + getPropertyFromXml(task, "sessionName");
+                fullSession += "' || dateTimeStart: '" + getPropertyFromXml(task, "dateTimeStart") + "' || dateTimeEnd '" + getPropertyFromXml(task, "dateTimeEnd");
+                fullSession += "' || speaker: '" + getPropertyFromXml(task, "speaker") + "' || local: '" + getPropertyFromXml(task, "local");
+                fullSession += "' || type: '" + getPropertyFromXml(task, "type") + "' || status: '" + getPropertyFromXml(task, "status");
+                fullSession += "' || timestamp: '" + getPropertyFromXml(task, "timestamp") + "'";
+*/
+
+
+                int case2test=0;
                 try {
-                    insertTest = new Reservation_Session_DAO().insertIntoReservation_Session(newSessionReservation);
+                    case2test = new Session_DAO().insertIntoSession(case2NewSession);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-
                 System.out.println("End of database INSERT...");
+/*
+
+                //save to UUID
+                try {
+                    sessionUUID = Sender.insertUuidRecord(messageType, Entity_sourceId, Entity_type, Source_type);
+                } catch (IOException | TimeoutException | JAXBException e) {
+                    e.printStackTrace();
+                }
+*/
+
+                System.out.println("\nNew Session made with UUID: " + UUID);
 
                 /*
                 System.out.println(" [.!.] START OF TASK:\n\n" + task + " [.!.] \nEND OF TASK\n\n");

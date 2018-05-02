@@ -70,6 +70,7 @@ public class Main {
         Helper.EntityType Entity_type = Helper.EntityType.Admin;
         Helper.SourceType Source_type = Helper.SourceType.Planning;
         int Entity_version = 1;
+        int maxAttendees = 50;
 
         //preset new session variables
         String sessionName = "Session name test";
@@ -134,10 +135,11 @@ public class Main {
                     local = "Oval office dept.1 Room 420";
                     type = "Speech";
 
-                    UUID = "";
+                    sessionUUID = "";
+                    eventUUID = "e0e7e624-ea01-410b-8a8f-25c551d43c25";
 
                     try {
-                        UUID = Sender.createUuidRecord(messageType, Entity_sourceId, Entity_type, Source_type);
+                        sessionUUID = Sender.createUuidRecord(messageType, Entity_sourceId, Entity_type, Source_type);
                     } catch (IOException | TimeoutException | JAXBException e) {
                         e.printStackTrace();
                     }
@@ -145,10 +147,18 @@ public class Main {
                     System.out.println("\nNew Session made with UUID: " + UUID);
 
                     // 2. create xml message
-                    xmlTotalMessage = Helper.getXmlForSession(messageType, headerDescription, Source_type, UUID, sessionName, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
+                    xmlTotalMessage = Helper.getXmlForNewSession(messageType, headerDescription, Source_type, sessionUUID, eventUUID, sessionName, maxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
 
                     // 3. insert to local db
 
+                    Session case2NewSession = new Session(0,1,"1",Helper.getCurrentDateTimeStamp(),sessionUUID,eventUUID,sessionName,maxAttendees,dateTimeStart,dateTimeEnd,speaker,local,type);
+
+                    int case2test=0;
+                    try {
+                        case2test = new Session_DAO().insertIntoSession(case2NewSession);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                     // TO DO
 
                     // 4. send new object to exchange
@@ -221,7 +231,7 @@ public class Main {
                     local = "Oval office dept.1 Room 420";
                     type = "Speech";
 
-                    int maxAttendees = 50;
+                    maxAttendees = 50;
 
                     UUID = "531f33b6-88d1-406f-b6f3-1a0c0de9a1de";
 
@@ -238,7 +248,7 @@ public class Main {
 //                    System.out.println("\nNew Session made with UUID: " + UUID);
 
                     // 2. create xml message
-                    xmlTotalMessage = Helper.getXmlForSession(messageType, headerDescription, Source_type, UUID, sessionName,maxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
+                    xmlTotalMessage = Helper.getXmlForNewSession(messageType, headerDescription, Source_type, sessionUUID, eventUUID, sessionName,maxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
 
                     // 3. insert to local db
 
@@ -317,7 +327,7 @@ public class Main {
 //                    System.out.println("\nNew Session made with UUID: " + UUID);
 
                     // 2. create xml message
-                    xmlTotalMessage = Helper.getXmlForSession(messageType, headerDescription, Source_type, UUID, sessionName, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
+                    xmlTotalMessage = Helper.getXmlForNewSession(messageType, headerDescription, Source_type, sessionUUID, eventUUID, sessionName, maxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
 
                     System.out.println("\n xmlTotalMessage: \n" + xmlTotalMessage);
                     // 3. update in local db
@@ -374,7 +384,7 @@ public class Main {
                     }*/
                     break;
 
-                    //11. Add User to Session
+                    //11. Add User to Session => new Reservation for Session
                 case "11":
 
                     //preset variables
@@ -400,10 +410,7 @@ public class Main {
 
                     Reservation_Session newSessionReservation = new Reservation_Session(reservationId, 1, "1", Helper.getCurrentDateTimeStamp(), reservationUUID, userUUID, sessionUUID, Type);
 
-                    //Reservation_Session_DAO reservation_session_dao = new Reservation_Session_DAO();
-
                     System.out.println("Begin printing:");
-                    //ArrayList<Reservation_Session> test = new Reservation_Session_DAO().getAllReservation_Sessions();
 
                     int insertTest=0;
                     try {
@@ -412,9 +419,7 @@ public class Main {
                         e.printStackTrace();
                     }
 
-
                     System.out.println("Start printing: # number of insertion: "+insertTest);
-
 
                     // send ReservationMessage to exchange
                     System.out.println("\nCase " + choice + ": message for adding a userUUID: " + userUUID + " to a sessionUUID = '" + sessionUUID + "'");
@@ -644,7 +649,7 @@ public class Main {
                     System.out.println("\nNew Session made with UUID: " + UUID);
 
                     // 2. create xml message
-                    xmlTotalMessage = Helper.getXmlForSession(messageType, headerDescription, Source_type, UUID, sessionName, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
+                    xmlTotalMessage = Helper.getXmlForNewSession(messageType, headerDescription, Source_type, sessionUUID, eventUUID, sessionName, maxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
 
                     // 3. insert to local db
 
