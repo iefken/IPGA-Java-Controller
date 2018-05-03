@@ -1,5 +1,6 @@
 package DatabaseLogic;
 
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class Session extends BaseEntity{
@@ -30,6 +31,8 @@ public class Session extends BaseEntity{
         this.speaker = Speaker;
         this.local = Local;
         this.type = Type;
+
+
     }
 
 

@@ -34,12 +34,9 @@ public class PingSender implements Runnable {
 
         super();
         numberOfPings++;
-        if(idPing==0)
-        {
-            this.idPing=numberOfPings;
-        }else{
-            this.idPing=idPing;
-        }
+
+        this.idPing=idPing;
+
         this.thisSourceType = thisSourceType;
         this.timeBetweenPings = timeBetweenPings;
         this.numberOfPings = 5;

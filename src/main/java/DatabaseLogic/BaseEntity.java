@@ -1,6 +1,8 @@
 package DatabaseLogic;
+
 import Logic.Helper;
 
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class BaseEntity {
@@ -11,17 +13,35 @@ public class BaseEntity {
     private String timestamp;
 
     public BaseEntity(int entityId, int entity_version, String status, String timestamp) {
-        this.entityId = entityId;
+
         this.entity_version = entity_version;
         this.status = status;
+
+        if (entityId == 0) {
+
+            //id=0 => doesn't exit => insert in DB
+
+            BaseEntityDAO thisBaseEntityDAO = new BaseEntityDAO();
+
+            try {
+                entityId = thisBaseEntityDAO.insertIntoBaseEntity(this);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            timestamp = Helper.getCurrentDateTimeStamp();
+
+        }
+        this.entityId = entityId;
         this.timestamp = timestamp;
     }
 
-    public BaseEntity(){}
+    public BaseEntity() {
+    }
 
     public int getEntityId() {
         return entityId;
     }
+
     public void setEntityId(int entityId) {
         this.entityId = entityId;
     }
@@ -29,6 +49,7 @@ public class BaseEntity {
     public int getEntity_version() {
         return entity_version;
     }
+
     public void setEntity_version(int entity_version) {
         this.entity_version = entity_version;
     }
@@ -36,6 +57,7 @@ public class BaseEntity {
     public String getStatus() {
         return status;
     }
+
     public void setStatus(String status) {
         this.status = status;
     }
@@ -43,6 +65,7 @@ public class BaseEntity {
     public String getTimestamp() {
         return this.timestamp;
     }
+
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
