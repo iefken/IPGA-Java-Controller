@@ -34,6 +34,21 @@ public class ReceiverPlanning {
         System.out.println(" [ooo] _______________________IPGA-JAVA-RECEIVER-v.1______________________ [ooo]");
         System.out.println(" [ooo] ___________________________________________________________________ [ooo]");
         System.out.println(" [ooo] -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- [ooo]");
+
+
+        // # Send pingmessage every 'timeBetweenPings' milliseconds
+        int timeBetweenPings = 5000;
+
+        // ## make new pingSender object
+        PingSender pingSender = new PingSender(0, Helper.SourceType.Planning, timeBetweenPings);
+
+        // ## setup new pingSender thread
+        Thread pingThread = new Thread(pingSender);
+
+        // ## start new pingSender thread
+        pingThread.start();
+
+
         ConnectionFactory factory = new ConnectionFactory();
 
         //for localhost
@@ -45,7 +60,7 @@ public class ReceiverPlanning {
         String username = "Planning";
         String password = "planning";
         String virtualHost = "/";
-
+        String TASK_QUEUE_NAME = "planning-queue";
 
         // https://ultratoools.com/tools/ipv4toipv6
 
@@ -66,7 +81,7 @@ public class ReceiverPlanning {
         //channel.exchangeDeclare(EXCHANGE_NAME,"fanout");
         //channel.queueDeclare(TASK_QUEUE_NAME, false, false, false, null);
 
-        channel.queueBind(Helper.TASK_QUEUE_NAME, Helper.EXCHANGE_NAME, "");
+        channel.queueBind(TASK_QUEUE_NAME, Helper.EXCHANGE_NAME, "");
 
 
         System.out.println(" [ooo] _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_ [ooo]");
@@ -95,7 +110,7 @@ public class ReceiverPlanning {
             }
         };
         boolean autoAck = true; // acknowledgment is covered below
-        channel.basicConsume(Helper.TASK_QUEUE_NAME, autoAck, consumer);
+        channel.basicConsume(TASK_QUEUE_NAME, autoAck, consumer);
 
     }
 

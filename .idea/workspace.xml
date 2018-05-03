@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ArtifactsWorkspaceSettings">
-    <artifacts-to-build>
-      <artifact name="cli-java-controller:jar" />
-    </artifacts-to-build>
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="db237b9e-8fc3-4c1c-9d5e-805ef2e29b7e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/Logic/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Logic/Main.java" afterDir="false" />
+    <list default="true" id="eaf3d3ce-2e46-4dcb-a6e7-f8838c44ca1a" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Logic/PingSender.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Logic/ReceiverMonitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Logic/test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/PingMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/PingStructure.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/amqp-client-4.0.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/slf4j-api-1.7.21.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/slf4j-simple-1.7.22.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/cli_java_controller_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/cli_java_receiver_planning_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/amqp_client_4_0_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_5_1_22_bin.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IPGA-Java-Controller.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/cli_java_controller_jar/cli-java-controller.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/cli_java_receiver_planning_jar/cli-java-receiver-planning.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/mysql-connector-java-5.1.22-bin.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/mysql-connector-java-5.1.22-bin.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/logic/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/logic/Helper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/logic/ReceiverPlanning.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/logic/ReceiverPlanning.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/logic/Sender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/logic/Sender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/logic/amqp-client-4.0.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/logic/slf4j-api-1.7.21.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/logic/slf4j-simple-1.7.22.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/mysql-connector-java-5.1.22-bin.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/logic/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/logic/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/logic/Sender.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/logic/Sender.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/logic/amqp-client-4.0.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/logic/slf4j-api-1.7.21.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/logic/slf4j-simple-1.7.22.jar" beforeDir="false" />
     </list>
+    <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,21 +42,33 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExportToHTMLSettings">
-    <option name="printScope" value="1" />
-    <option name="PRINT_LINE_NUMBERS" value="true" />
-    <option name="OPEN_IN_BROWSER" value="true" />
-    <option name="OUTPUT_DIRECTORY" value="C:\Users\ief.falot\IdeaProjects\lastTest\IPGA-Java-Controller\exportToHTML" />
-  </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.8333333">
+    <splitter split-orientation="horizontal" split-proportion="0.5491853">
       <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+        <leaf>
+          <file leaf-file-name="ReceiverPlanning.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/main/java/Logic/ReceiverPlanning.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="85">
+                  <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="48" selection-end-column="27" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/Logic/Main.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="44">
-                  <caret line="148" column="24" selection-start-line="148" selection-start-column="24" selection-end-line="148" selection-end-column="24" />
+                <state relative-caret-position="105">
+                  <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="PingSender.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/Logic/PingSender.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="156">
+                  <caret line="134" column="53" lean-forward="true" selection-start-line="134" selection-start-column="53" selection-end-line="134" selection-end-column="53" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -42,43 +79,8 @@
           <file leaf-file-name="Helper.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/Logic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="316">
-                  <caret line="40" column="45" lean-forward="true" selection-start-line="40" selection-start-column="45" selection-end-line="40" selection-end-column="45" />
-                  <folding>
-                    <element signature="method#httpGetAllRecords#0;class#Helper#0" />
-                    <element signature="method#httpPostCreateUuidRecord#0;class#Helper#0" />
-                    <element signature="method#httpPostInsertUuidRecord#0;class#Helper#0" />
-                    <element signature="method#httpPutUpdateUuidRecordVersion#0;class#Helper#0" />
-                    <element signature="method#httpPutUpdateUuidRecordVersionB#0;class#Helper#0" />
-                    <element signature="method#doHttpRequest#0;class#Helper#0" />
-                    <element signature="method#getXmlForReservation#0;class#Helper#0" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Reservation_Event.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-102">
-                  <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-                  <folding>
-                    <element signature="method#equals#0;class#Reservation_Event#0" />
-                    <element signature="method#hashCode#0;class#Reservation_Event#0" />
-                    <element signature="method#toString#0;class#Reservation_Event#0" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Reservation_Session_DAO.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="384">
-                  <caret line="37" column="66" selection-start-line="37" selection-start-column="66" selection-end-line="37" selection-end-column="66" />
-                  <folding>
-                    <element signature="method#getAllReservation_SessionsFull#0;class#Reservation_Session_DAO#0" />
-                  </folding>
+                <state relative-caret-position="234">
+                  <caret line="232" column="30" lean-forward="true" selection-start-line="232" selection-start-column="30" selection-end-line="232" selection-end-column="30" />
                 </state>
               </provider>
             </entry>
@@ -86,35 +88,14 @@
           <file leaf-file-name="Sender.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/Logic/Sender.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="46">
-                  <caret line="236" column="14" selection-start-line="236" selection-start-column="14" selection-end-line="236" selection-end-column="14" />
+                <state relative-caret-position="133">
+                  <caret line="268" lean-forward="true" selection-start-line="268" selection-end-line="268" />
                   <folding>
                     <element signature="method#createUuidRecord#0;class#Sender#0" />
+                    <element signature="method#insertUuidRecord#0;class#Sender#0" />
                     <element signature="method#updateUuidRecordVersion#0;class#Sender#0" />
                     <element signature="method#updateUuidRecordVersionB#0;class#Sender#0" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Session.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Session.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="238">
-                  <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/User.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="374">
-                  <caret line="22" column="54" selection-start-line="22" selection-start-column="54" selection-end-line="22" selection-end-column="54" />
-                  <folding>
-                    <element signature="method#equals#0;class#User#0" />
-                    <element signature="method#hashCode#0;class#User#0" />
-                    <element signature="method#toString#0;class#User#0" />
+                    <element signature="method#sendReservationMessage#0;class#Sender#0" />
                   </folding>
                 </state>
               </provider>
@@ -123,97 +104,30 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="SessionStructure.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/SessionStructure.java">
+        <leaf>
+          <file leaf-file-name="PingStructure.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/PingStructure.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="33">
-                  <caret line="8" selection-start-line="8" selection-end-line="9" />
-                  <folding>
-                    <element signature="e#1273#1274#0" expanded="true" />
-                    <element signature="e#1296#1297#0" expanded="true" />
-                    <element signature="e#1343#1344#0" expanded="true" />
-                    <element signature="e#1376#1377#0" expanded="true" />
-                    <element signature="e#1409#1410#0" expanded="true" />
-                    <element signature="e#1435#1436#0" expanded="true" />
-                    <element signature="e#1485#1486#0" expanded="true" />
-                    <element signature="e#1524#1525#0" expanded="true" />
-                  </folding>
+                <state relative-caret-position="238">
+                  <caret line="18" selection-start-line="18" selection-end-line="18" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Session_DAO.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java">
+          <file leaf-file-name="ReceiverMonitor.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/main/java/Logic/ReceiverMonitor.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="442">
-                  <caret line="36" selection-start-line="36" selection-end-line="36" />
+                <state relative-caret-position="-460">
+                  <caret line="324" column="22" lean-forward="true" selection-start-line="324" selection-start-column="22" selection-end-line="324" selection-end-column="22" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Reservation_Event_DAO.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event_DAO.java">
+          <file leaf-file-name="PingMessage.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/PingMessage.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="214">
-                  <caret line="16" column="42" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="42" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="method#insertIntoReservation_Event#0;class#Reservation_Event_DAO#0" />
-                    <element signature="method#getAllReservation_Events#0;class#Reservation_Event_DAO#0" />
-                    <element signature="method#getAllReservation_EventsFull#0;class#Reservation_Event_DAO#0" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="dbtestclasse.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/dbtestclasse.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="357">
-                  <caret line="21" selection-start-line="21" selection-end-line="21" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="DatabaseProperties.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseProperties.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="136">
-                  <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="DatabaseSingleton.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseSingleton.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="299">
-                  <caret line="35" column="63" selection-start-line="35" selection-start-column="63" selection-end-line="35" selection-end-column="63" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="ReceiverPlanning.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/Logic/ReceiverPlanning.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2128">
-                  <caret line="259" lean-forward="true" selection-start-line="259" selection-end-line="259" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="ReservationStructure.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/ReservationStructure.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="85">
-                  <caret line="7" selection-start-line="7" selection-end-line="8" />
+                <state relative-caret-position="125">
+                  <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
                 </state>
               </provider>
             </entry>
@@ -231,24 +145,7 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>xml</find>
-      <find>getOurXml2</find>
-      <find>not</find>
-      <find>END OF s</find>
-      <find>responseFromSender</find>
-      <find>wa</find>
-      <find>new m</find>
-      <find>testm</find>
-      <find>message from uu</find>
-      <find>showf</find>
-      <find>auto</find>
-      <find>ReservationUUID</find>
-      <find>event</find>
-      <find>sess</find>
-      <find>sessionm</find>
-      <find>getXmlForSession</find>
-      <find>int maxAttendees</find>
-      <find>case &quot;11</find>
+      <find>ping</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -257,34 +154,14 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/SessionMessage.java" />
-        <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/src/main/java/logic/ReceiverPlanning.java" />
-        <option value="$PROJECT_DIR$/src/main/java/logic/Sender.java" />
-        <option value="$PROJECT_DIR$/src/main/java/logic/Helper.java" />
-        <option value="$PROJECT_DIR$/src/main/java/logic/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation.java" />
-        <option value="$PROJECT_DIR$/src/main/java/HttpRequest/UUID_updateUuidRecordVersionResponse.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntity.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Event.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/User.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/dbtestclasse.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseProperties.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseSingleton.java" />
-        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationStructure.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Session.java" />
-        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/SessionStructure.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Logic/test.java" />
+        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/PingStructure.java" />
+        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/PingMessage.java" />
         <option value="$PROJECT_DIR$/src/main/java/Logic/Helper.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Logic/ReceiverMonitor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Logic/PingSender.java" />
         <option value="$PROJECT_DIR$/src/main/java/Logic/ReceiverPlanning.java" />
         <option value="$PROJECT_DIR$/src/main/java/Logic/Sender.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Logic/Main.java" />
       </list>
     </option>
   </component>
@@ -305,8 +182,8 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="230" />
-    <option name="y" value="82" />
+    <option name="x" value="-2874" />
+    <option name="y" value="-8" />
     <option name="width" value="1044" />
     <option name="height" value="748" />
   </component>
@@ -318,6 +195,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -349,30 +228,48 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="DatabaseLogic" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IPGA-Java-Controller" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="Logic" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IPGA-Java-Controller" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IPGA-Java-Controller" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="XmlMessage" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/out/artifacts/cli_java_receiver_planning_jar/cli-java-receiver-planning.jar" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Artifacts" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="DatabaseLogic" />
       <recent name="XmlMessage" />
+      <recent name="Logic" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -387,9 +284,9 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main (1)">
-    <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Logic.Main" />
+  <component name="RunManager" selected="Application.ReceiverPlanning">
+    <configuration name="PingSender" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Logic.PingSender" />
       <module name="cli-java-controller" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -399,19 +296,8 @@
         </pattern>
       </extension>
     </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="logic.Main" />
-      <module name="cli-java-controller" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="logic.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-    </configuration>
-    <configuration name="ReceiverPlanning (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Logic.ReceiverPlanning" />
+    <configuration name="ReceiverMonitor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Logic.ReceiverMonitor" />
       <module name="cli-java-controller" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -422,18 +308,29 @@
       </extension>
     </configuration>
     <configuration name="ReceiverPlanning" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="logic.ReceiverPlanning" />
+      <option name="MAIN_CLASS_NAME" value="Logic.ReceiverPlanning" />
       <module name="cli-java-controller" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="logic.*" />
+          <option name="PATTERN" value="Logic.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration name="test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Logic.test" />
+      <module name="cli-java-controller" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Logic.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -450,27 +347,6 @@
         <value defaultName="singleModule" />
       </option>
       <patterns />
-    </configuration>
-    <configuration name="cli-java-controller-test-01" type="JarApplication" factoryName="JAR Application">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/cli_java_controller_jar/cli-java-controller.jar" />
-      <option name="WORKING_DIRECTORY" value="C:\Users\ief.falot\IdeaProjects\lastTest\IPGA-Java-Controller" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method>
-        <option name="BuildArtifacts" enabled="true">
-          <artifact name="cli-java-controller:jar" />
-        </option>
-      </method>
-    </configuration>
-    <configuration name="cli-java-receiver-planning" type="JarApplication" factoryName="JAR Application">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/cli_java_receiver_planning_jar/cli-java-receiver-planning.jar" />
-      <option name="WORKING_DIRECTORY" value="C:\Users\ief.falot\IdeaProjects\lastTest\IPGA-Java-Controller" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
-      <method>
-        <option name="BuildArtifacts" enabled="true">
-          <artifact name="cli-java-receiver-planning:jar" />
-        </option>
-      </method>
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -495,19 +371,17 @@
       <listeners />
     </configuration>
     <list>
-      <item itemvalue="JAR Application.cli-java-controller-test-01" />
-      <item itemvalue="JAR Application.cli-java-receiver-planning" />
       <item itemvalue="Application.ReceiverPlanning" />
-      <item itemvalue="Application.Main" />
-      <item itemvalue="Application.Main (1)" />
-      <item itemvalue="Application.ReceiverPlanning (1)" />
+      <item itemvalue="Application.PingSender" />
+      <item itemvalue="Application.test" />
+      <item itemvalue="Application.ReceiverMonitor" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main (1)" />
-        <item itemvalue="Application.ReceiverPlanning (1)" />
         <item itemvalue="Application.ReceiverPlanning" />
-        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.ReceiverMonitor" />
+        <item itemvalue="Application.PingSender" />
+        <item itemvalue="Application.test" />
       </list>
     </recent_temporary>
   </component>
@@ -516,79 +390,47 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="db237b9e-8fc3-4c1c-9d5e-805ef2e29b7e" name="Default" comment="" />
-      <created>1525024772417</created>
+      <changelist id="eaf3d3ce-2e46-4dcb-a6e7-f8838c44ca1a" name="Default" comment="" />
+      <created>1525360229815</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1525024772417</updated>
-      <workItem from="1525024776675" duration="632000" />
-      <workItem from="1525026194093" duration="36804000" />
-      <workItem from="1525090301034" duration="3090000" />
-      <workItem from="1525192759899" duration="772000" />
-      <workItem from="1525213575622" duration="4743000" />
-      <workItem from="1525218662087" duration="21270000" />
-      <workItem from="1525247444922" duration="15924000" />
+      <updated>1525360229815</updated>
+      <workItem from="1525360235307" duration="11349000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="83235000" />
+    <option name="totallyTimeSpent" value="11349000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <frame x="-3528" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Palette" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.32791328" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" order="5" />
-      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.28184283" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14395887" />
-      <window_info anchor="right" id="Database" order="4" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Messages" />
+      <window_info anchor="right" id="Palette&#9;" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="right" id="Maven Projects" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" side_tool="true" visible="true" weight="0.5201306" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info id="Designer" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4988662" visible="true" weight="0.11673774" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
+      <window_info id="Structure" order="1" sideWeight="0.5011338" side_tool="true" visible="true" weight="0.11673774" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info id="UI Designer" />
+      <window_info id="Favorites" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.19281046" />
     </layout>
-    <layout-to-restore>
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14395887" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.16124661" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.19281046" />
-      <window_info id="Designer" order="2" />
-      <window_info id="UI Designer" order="4" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="right" id="Database" order="4" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.32791328" />
-      <window_info anchor="right" id="Maven Projects" order="5" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -598,604 +440,166 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="10" />
+      <option name="time" value="2" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/User.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="32" column="43" lean-forward="true" selection-start-line="32" selection-start-column="43" selection-end-line="33" selection-end-column="45" />
-          <folding>
-            <element signature="method#equals#0;class#User#0" />
-            <element signature="method#hashCode#0;class#User#0" />
-            <element signature="method#toString#0;class#User#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="24" lean-forward="true" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#equals#0;class#BaseEntity#0" />
-            <element signature="method#hashCode#0;class#BaseEntity#0" />
-            <element signature="method#toString#0;class#BaseEntity#0" />
-          </folding>
+        <state relative-caret-position="68">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="76" column="5" selection-start-line="76" selection-start-column="5" selection-end-line="76" selection-end-column="5" />
-          <folding>
-            <element signature="method#equals#0;class#Reservation_Session#0" />
-            <element signature="method#hashCode#0;class#Reservation_Session#0" />
-            <element signature="method#toString#0;class#Reservation_Session#0" />
-          </folding>
+        <state relative-caret-position="68">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/Sender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1207">
-          <caret line="83" column="40" selection-start-line="83" selection-start-column="40" selection-end-line="83" selection-end-column="40" />
-          <folding>
-            <element signature="method#updateUuidRecordVersion#0;class#Sender#0" />
-            <element signature="method#updateUuidRecordVersionB#0;class#Sender#0" />
-            <element signature="method#sendReservationMessage#0;class#Sender#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/Helper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2601">
-          <caret line="153" column="18" selection-start-line="153" selection-start-column="18" selection-end-line="153" selection-end-column="18" />
-          <folding>
-            <element signature="method#httpGetAllRecords#0;class#Helper#0" />
-            <element signature="method#httpPostCreateUuidRecord#0;class#Helper#0" />
-            <element signature="method#httpPostInsertUuidRecord#0;class#Helper#0" />
-            <element signature="method#httpPutUpdateUuidRecordVersion#0;class#Helper#0" />
-            <element signature="method#httpPutUpdateUuidRecordVersionB#0;class#Helper#0" />
-            <element signature="method#doHttpRequest#0;class#Helper#0" />
-            <element signature="method#getXmlForReservation#0;class#Helper#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/HttpRequest/UUID_insertUuidRecord.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1564">
-          <caret line="92" column="18" selection-start-line="92" selection-start-column="18" selection-end-line="92" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5134">
-          <caret line="302" column="36" selection-start-line="302" selection-start-column="26" selection-end-line="302" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="748">
-            <caret line="44" selection-start-line="44" selection-end-line="44" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/ReceiverPlanning.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1819">
-          <caret line="107" column="21" selection-start-line="107" selection-start-column="16" selection-end-line="107" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/Sender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1207">
-          <caret line="83" column="40" selection-start-line="83" selection-start-column="40" selection-end-line="83" selection-end-column="40" />
-          <folding>
-            <element signature="method#updateUuidRecordVersion#0;class#Sender#0" />
-            <element signature="method#updateUuidRecordVersionB#0;class#Sender#0" />
-            <element signature="method#sendReservationMessage#0;class#Sender#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/HttpRequest/UUID_insertUuidRecord.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1564">
-          <caret line="92" column="18" selection-start-line="92" selection-start-column="18" selection-end-line="92" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5134">
-          <caret line="302" column="36" selection-start-line="302" selection-start-column="26" selection-end-line="302" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="748">
-            <caret line="44" selection-start-line="44" selection-end-line="44" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/ReceiverPlanning.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3026">
-          <caret line="178" column="98" selection-start-line="178" selection-start-column="85" selection-end-line="178" selection-end-column="98" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/Helper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2601">
-          <caret line="153" column="18" selection-start-line="153" selection-start-column="18" selection-end-line="153" selection-end-column="18" />
-          <folding>
-            <element signature="method#httpGetAllRecords#0;class#Helper#0" />
-            <element signature="method#httpPostCreateUuidRecord#0;class#Helper#0" />
-            <element signature="method#httpPostInsertUuidRecord#0;class#Helper#0" />
-            <element signature="method#httpPutUpdateUuidRecordVersion#0;class#Helper#0" />
-            <element signature="method#httpPutUpdateUuidRecordVersionB#0;class#Helper#0" />
-            <element signature="method#doHttpRequest#0;class#Helper#0" />
-            <element signature="method#getXmlForReservation#0;class#Helper#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/Sender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3621">
-          <caret line="213" column="20" lean-forward="true" selection-start-line="213" selection-start-column="20" selection-end-line="213" selection-end-column="20" />
-          <folding>
-            <element signature="method#updateUuidRecordVersion#0;class#Sender#0" />
-            <element signature="method#updateUuidRecordVersionB#0;class#Sender#0" />
-            <element signature="method#sendReservationMessage#0;class#Sender#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="64" lean-forward="true" selection-start-line="15" selection-start-column="64" selection-end-line="15" selection-end-column="64" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/ReceiverPlanning.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1700">
-          <caret line="100" selection-start-line="100" selection-end-line="100" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="748">
-            <caret line="44" selection-start-line="44" selection-end-line="44" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1554" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/MessageMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="63" column="8" lean-forward="true" selection-start-line="63" selection-start-column="8" selection-end-line="63" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/ReservationMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="610">
-          <caret line="44" column="40" selection-start-line="44" selection-start-column="40" selection-end-line="44" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/SessionMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="47" column="49" selection-start-line="47" selection-start-column="49" selection-end-line="47" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/Header.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="14" column="28" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="748">
-            <caret line="44" selection-start-line="44" selection-end-line="44" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/HttpRequest/UUID_insertUuidRecord.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1224">
-          <caret line="92" column="18" selection-start-line="92" selection-start-column="18" selection-end-line="92" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/Userstructure.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="27" column="31" selection-end-line="118" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_161/src.zip!/java/lang/Object.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="36" column="13" selection-end-line="556" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/HttpRequest/UUID_updateUuidRecordVersionResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="27" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Event.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="54" selection-start-line="17" selection-start-column="54" selection-end-line="17" selection-end-column="54" />
-          <folding>
-            <element signature="method#equals#0;class#Event#0" />
-            <element signature="method#hashCode#0;class#Event#0" />
-            <element signature="method#toString#0;class#Event#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_161/src.zip!/java/net/URLClassLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5542">
-          <caret line="380" selection-start-line="380" selection-end-line="380" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#equals#0;class#BaseEntity#0" />
-            <element signature="method#hashCode#0;class#BaseEntity#0" />
-            <element signature="method#toString#0;class#BaseEntity#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_161/src.zip!/java/sql/Statement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="42" column="17" selection-start-line="42" selection-start-column="17" selection-end-line="42" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="8" column="49" selection-start-line="8" selection-start-column="49" selection-end-line="8" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#239#240#0" expanded="true" />
-            <element signature="e#298#299#0" expanded="true" />
-            <element signature="e#342#343#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/dbtestclasse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseProperties.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseSingleton.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="35" column="63" selection-start-line="35" selection-start-column="63" selection-end-line="35" selection-end-column="63" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-102">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-          <folding>
-            <element signature="method#equals#0;class#Reservation_Event#0" />
-            <element signature="method#hashCode#0;class#Reservation_Event#0" />
-            <element signature="method#toString#0;class#Reservation_Event#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/ReservationStructure.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="7" selection-start-line="7" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="54" selection-start-line="22" selection-start-column="54" selection-end-line="22" selection-end-column="54" />
-          <folding>
-            <element signature="method#equals#0;class#User#0" />
-            <element signature="method#hashCode#0;class#User#0" />
-            <element signature="method#toString#0;class#User#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="11" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
-          <folding>
-            <element signature="method#equals#0;class#Reservation_Session#0" />
-            <element signature="method#hashCode#0;class#Reservation_Session#0" />
-            <element signature="method#toString#0;class#Reservation_Session#0" />
-          </folding>
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event_DAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="16" column="42" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="42" />
+        <state relative-caret-position="238">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#insertIntoReservation_Event#0;class#Reservation_Event_DAO#0" />
-            <element signature="method#getAllReservation_Events#0;class#Reservation_Event_DAO#0" />
-            <element signature="method#getAllReservation_EventsFull#0;class#Reservation_Event_DAO#0" />
+            <element signature="e#116#117#0" expanded="true" />
+            <element signature="e#145#146#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_161/src.zip!/java/lang/Runnable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="67" column="25" selection-start-line="67" selection-start-column="25" selection-end-line="67" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="127" column="8" lean-forward="true" selection-start-line="127" selection-start-column="8" selection-end-line="127" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#insertIntoBaseEntity#0;class#BaseEntityDAO#0" />
-            <element signature="method#getBaseEntityByEntityId#0;class#BaseEntityDAO#0" />
-            <element signature="method#doesUUIDExist#0;class#BaseEntityDAO#0" />
-          </folding>
+        <state relative-caret-position="-85">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        <state relative-caret-position="105">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Session.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
+          <caret line="14" column="79" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/Header.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/MessageMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
           <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/ReceiverPlanning.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2128">
-          <caret line="259" lean-forward="true" selection-start-line="259" selection-end-line="259" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/SessionStructure.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="8" selection-start-line="8" selection-end-line="9" />
-          <folding>
-            <element signature="e#1273#1274#0" expanded="true" />
-            <element signature="e#1296#1297#0" expanded="true" />
-            <element signature="e#1343#1344#0" expanded="true" />
-            <element signature="e#1376#1377#0" expanded="true" />
-            <element signature="e#1409#1410#0" expanded="true" />
-            <element signature="e#1435#1436#0" expanded="true" />
-            <element signature="e#1485#1486#0" expanded="true" />
-            <element signature="e#1524#1525#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Logic/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="40" column="45" lean-forward="true" selection-start-line="40" selection-start-column="45" selection-end-line="40" selection-end-column="45" />
-          <folding>
-            <element signature="method#httpGetAllRecords#0;class#Helper#0" />
-            <element signature="method#httpPostCreateUuidRecord#0;class#Helper#0" />
-            <element signature="method#httpPostInsertUuidRecord#0;class#Helper#0" />
-            <element signature="method#httpPutUpdateUuidRecordVersion#0;class#Helper#0" />
-            <element signature="method#httpPutUpdateUuidRecordVersionB#0;class#Helper#0" />
-            <element signature="method#doHttpRequest#0;class#Helper#0" />
-            <element signature="method#getXmlForReservation#0;class#Helper#0" />
-          </folding>
+        <state relative-caret-position="234">
+          <caret line="232" column="30" lean-forward="true" selection-start-line="232" selection-start-column="30" selection-end-line="232" selection-end-column="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/PingMessage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="37" column="66" selection-start-line="37" selection-start-column="66" selection-end-line="37" selection-end-column="66" />
+        <state relative-caret-position="125">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="150" column="20" lean-forward="true" selection-start-line="150" selection-start-column="20" selection-end-line="150" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/PingStructure.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/ReceiverMonitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-460">
+          <caret line="324" column="22" lean-forward="true" selection-start-line="324" selection-start-column="22" selection-end-line="324" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/PingSender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="134" column="53" lean-forward="true" selection-start-line="134" selection-start-column="53" selection-end-line="134" selection-end-column="53" />
           <folding>
-            <element signature="method#getAllReservation_SessionsFull#0;class#Reservation_Session_DAO#0" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Logic/Sender.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="236" column="14" selection-start-line="236" selection-start-column="14" selection-end-line="236" selection-end-column="14" />
+        <state relative-caret-position="133">
+          <caret line="268" lean-forward="true" selection-start-line="268" selection-end-line="268" />
           <folding>
             <element signature="method#createUuidRecord#0;class#Sender#0" />
+            <element signature="method#insertUuidRecord#0;class#Sender#0" />
             <element signature="method#updateUuidRecordVersion#0;class#Sender#0" />
             <element signature="method#updateUuidRecordVersionB#0;class#Sender#0" />
+            <element signature="method#sendReservationMessage#0;class#Sender#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Logic/ReceiverPlanning.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="148" column="24" selection-start-line="148" selection-start-column="24" selection-end-line="148" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="85">
+          <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="48" selection-end-column="27" />
         </state>
       </provider>
     </entry>
   </component>
   <component name="masterDetails">
     <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <last-edited>cli-java-controller:jar</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.5" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>cli-java-controller</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.6" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
       <state key="ProjectJDKs.UI">
         <settings>
           <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>amqp-client-4.0.2</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

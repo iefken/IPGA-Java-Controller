@@ -215,7 +215,7 @@ public class Sender {
         //setup RabbitMQ connection, publish message to queue/exchange
 
         ConnectionFactory factory = new ConnectionFactory();
-
+        String TASK_QUEUE_NAME = "planning-queue";
         String username = "Planning";
         String password = "planning";
         String virtualHost = "/";
@@ -245,7 +245,7 @@ public class Sender {
 /*
 
         try {
-            channel.basicPublish("", Helper.TASK_QUEUE_NAME, null, xmlMessage.getBytes());
+            channel.basicPublish("", TASK_QUEUE_NAME, null, xmlMessage.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -256,7 +256,7 @@ public class Sender {
 
         return " [.x.] Sending to exchange:   '" + Helper.EXCHANGE_NAME + "' @ '" + Helper.getCurrentDateTimeStamp() + "' message with '" + xmlMessage.length()+"' characters.";
 
-        //return " [x] Sending to queue:   '" + Helper.TASK_QUEUE_NAME + "' message with length: '" + xmlMessage.length() + "'";
+        //return " [x] Sending to queue:   '" + TASK_QUEUE_NAME + "' message with length: '" + xmlMessage.length() + "'";
 
         //channel.exchangeDeclare(EXCHANGE_NAME, "fanout"); // other options: direct, topic, headers and fanout
         //channel.queueDeclare(TASK_QUEUE_NAME, false, false, false, null);
@@ -264,20 +264,38 @@ public class Sender {
 
     }
 
-}
-/*
-//old
+    //all messages come here to effectively send their message to our RabbitMQ
+    public static String sendPingMessage(String xmlMessage,Helper.SourceType thisSourceType) throws IOException, TimeoutException, JAXBException {
 
-    private static String joinStrings(String[] strings, String delimiter) {
-        int length = strings.length;
+        ConnectionFactory factory = new ConnectionFactory();
+        String TASK_QUEUE_NAME = "monitor-queue";
+        String username = "Planning";
+        String password = "planning";
+        String virtualHost = "/";
 
-        if (length == 0) return "";
+        factory.setUsername(username);
+        factory.setPassword(password);
+        factory.setVirtualHost(virtualHost);
+        factory.setHost(Helper.HOST_NAME_LINK);
+        factory.setPort(Helper.PORT_NUMBER);
 
-        StringBuilder words = new StringBuilder(strings[0]);
+        Connection connection = factory.newConnection();
+        Channel channel = connection.createChannel();
 
-        for (int i = 1; i < length; i++) {
-            words.append(delimiter).append(strings[i]);
+        //publish to queue
+
+        try {
+            channel.basicPublish("", TASK_QUEUE_NAME, null, xmlMessage.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return words.toString();
+
+        channel.close();
+        connection.close();
+
+        return " => Sending as '"+thisSourceType+"' to queue: '" + TASK_QUEUE_NAME + "' with message length: '" + xmlMessage.length() + "'";
+
+
     }
- */
+
+}

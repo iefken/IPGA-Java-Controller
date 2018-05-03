@@ -10,15 +10,10 @@ import java.util.Date;
 
 public interface Helper {
 
-    enum EntityType {Visitor, Admin, Responsible}
+    enum EntityType {Attendant,Speaker,Employee,Sponsor,Admin,Consultant}
+    enum SourceType {Front_End, Planning, Monitor, Kassa, CRM, Facturatie}
 
-    ;
-
-    enum SourceType {Front_End, Planning, Monitoring, Kassa, CRM, Facturatie}
-
-    ;
-
-    String TASK_QUEUE_NAME = "planning-queue";
+    //String TASK_QUEUE_NAME = "planning-queue";
     String EXCHANGE_NAME = "rabbitexchange";
     String HOST_NAME_LINK = "10.3.50.38";
     int PORT_NUMBER = 5672;
@@ -234,6 +229,21 @@ public interface Helper {
     }
     //eventMessage: UUID, Name, Start-dateTime, End-dateTime, Location, Timestamp
 
+    //reservationMessage: User- UUID, Session-UUID, Status(isActive), Timestamp
+    static String getXmlForPingMessage(String messageType, SourceType Source_type) throws JAXBException {
+
+        // form xml
+        XmlMessage.Header header = new XmlMessage.Header(messageType, "", Source_type.toString());
+        // set datastructure
+        XmlMessage.PingStructure pingStructure = new XmlMessage.PingStructure();
+        // steek header en datastructure (Reservationstructure) in message klasse
+        XmlMessage.PingMessage xmlPingMessage = new XmlMessage.PingMessage(header, pingStructure);
+        // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)
+        String xmlTotalMessage = xmlPingMessage.generateXML();
+
+        //System.out.println("xmlTotalMessage: "+xmlTotalMessage);
+        return xmlTotalMessage;
+    }
 
     static String getOurXmlMessage(String messageType, String description, SourceType Source_type, String UUID) throws JAXBException {
 
