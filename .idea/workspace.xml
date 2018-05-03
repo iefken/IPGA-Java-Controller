@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eaf3d3ce-2e46-4dcb-a6e7-f8838c44ca1a" name="Default" comment="" />
+    <list default="true" id="eaf3d3ce-2e46-4dcb-a6e7-f8838c44ca1a" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/AppLogic/readme-pingmessage.txt" beforeDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -12,14 +14,14 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5195489">
+    <splitter split-orientation="horizontal" split-proportion="0.70840335">
       <split-first>
         <leaf>
-          <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="Helper.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="213">
-                  <caret line="231" column="4" selection-start-line="231" selection-start-column="4" selection-end-line="245" selection-end-column="5" />
+                  <caret line="231" column="34" selection-start-line="231" selection-start-column="34" selection-end-line="231" selection-end-column="34" />
                 </state>
               </provider>
             </entry>
@@ -63,11 +65,20 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="PingSender.java" pinned="false" current-in-tab="false">
+          <file leaf-file-name="PingSender.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/PingSender.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="179">
-                  <caret line="121" column="52" selection-start-line="121" selection-start-column="52" selection-end-line="121" selection-end-column="52" />
+                <state relative-caret-position="451">
+                  <caret line="131" column="54" lean-forward="true" selection-start-line="131" selection-start-column="54" selection-end-line="131" selection-end-column="54" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Sender.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Sender.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="51">
+                  <caret line="266" column="3" lean-forward="true" selection-start-line="266" selection-start-column="3" selection-end-line="298" selection-end-column="5" />
                 </state>
               </provider>
             </entry>
@@ -376,16 +387,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1525360229815</updated>
-      <workItem from="1525360235307" duration="14988000" />
+      <workItem from="1525360235307" duration="15790000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14988000" />
+    <option name="totallyTimeSpent" value="15790000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1608" y="-8" width="1616" height="876" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -591,13 +601,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Sender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/HttpRequest/UUID_updateUuidRecordVersionResponse.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -762,17 +765,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/PingSender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="121" column="52" selection-start-line="121" selection-start-column="52" selection-end-line="121" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="213">
-          <caret line="231" column="4" selection-start-line="231" selection-start-column="4" selection-end-line="245" selection-end-column="5" />
+          <caret line="231" column="34" selection-start-line="231" selection-start-column="34" selection-end-line="231" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Sender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="266" column="3" lean-forward="true" selection-start-line="266" selection-start-column="3" selection-end-line="298" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/PingSender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="451">
+          <caret line="131" column="54" lean-forward="true" selection-start-line="131" selection-start-column="54" selection-end-line="131" selection-end-column="54" />
         </state>
       </provider>
     </entry>

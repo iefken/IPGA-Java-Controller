@@ -32,8 +32,8 @@ https://github.com/iefken/IPGA-Java-Controller/tree/master/src/main/java/AppLogi
         String TASK_QUEUE_NAME = "monitor-queue";
 
 	//set your creds here
-        String username = "Planning";
-        String password = "planning";
+        String username = "";
+        String password = "";
         String virtualHost = "/";
 
         factory.setUsername(username);
