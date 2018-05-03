@@ -1,4 +1,4 @@
-package Logic;
+package AppLogic;
 
 import DatabaseLogic.Reservation_Session;
 import DatabaseLogic.Reservation_Session_DAO;

@@ -1,4 +1,4 @@
-package Logic;
+package AppLogic;
 
 public class test implements Runnable {
     private int i;

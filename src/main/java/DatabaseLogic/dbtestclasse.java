@@ -1,6 +1,6 @@
 package DatabaseLogic;
 
-import Logic.Helper;
+import AppLogic.Helper;
 
 public class dbtestclasse {
 

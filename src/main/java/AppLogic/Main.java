@@ -1,4 +1,4 @@
-package Logic;//import GoogleCalendarApi.Quickstart;
+package AppLogic;//import GoogleCalendarApi.Quickstart;
 
 // if you're running this on a remote server:
 // https://stackoverflow.com/questions/15869784/how-to-run-a-maven-created-jar-file-using-just-the-command-line
@@ -52,7 +52,7 @@ public class Main {
 
         int choser = 999;
         String responseFromSender = "";
-        String[] senderOptions = Logic.Helper.getOptions();
+        String[] senderOptions = AppLogic.Helper.getOptions();
 
         //initialize possible variables
         boolean inputSucces = true;

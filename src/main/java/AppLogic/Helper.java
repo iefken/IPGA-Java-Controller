@@ -1,4 +1,4 @@
-package Logic;
+package AppLogic;
 
 import okhttp3.*;
 import HttpRequest.*;
@@ -67,7 +67,7 @@ public interface Helper {
 
     }
 
-    static String httpPostCreateUuidRecord(int Entity_sourceId, EntityType Entity_type, SourceType Source_type) throws IOException {
+    static String httpPostCreateUuidRecord(int Entity_sourceId, AppLogic.Helper.EntityType Entity_type, SourceType Source_type) throws IOException {
 
         //make new object for HttpRequest.UUID_createUuidRecord(int source_id, EntityType thisEntityType, MessageSource thisMessageSource)
         UUID_createUuidRecord myLocalUUID_createUuidRecordObject = new UUID_createUuidRecord(Entity_sourceId, Entity_type, Source_type);

@@ -1,7 +1,7 @@
 package HttpRequest;
 
 import JsonMessage.JSONObject;
-import Logic.Helper;
+import AppLogic.Helper;
 
 public class UUID_createUuidRecord extends JSONObject {
 

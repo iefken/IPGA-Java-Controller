@@ -1,4 +1,4 @@
-package Logic;
+package AppLogic;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;

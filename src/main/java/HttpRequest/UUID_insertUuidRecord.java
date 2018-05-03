@@ -3,7 +3,7 @@ import logic.Helper;*/
 
 //import JsonMessage.JSONObject;
 
-import Logic.Helper;
+import AppLogic.Helper;
 
 public class UUID_insertUuidRecord {
     private int Source_id;

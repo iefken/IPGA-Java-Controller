@@ -1,8 +1,12 @@
 package HttpRequest;
 
-import Logic.Helper;
+//import AppLogic.Helper;
 
-public class UUID_updateUuidRecordVersion {
+//import AppLogic.Helper;
+
+import AppLogic.Helper;
+
+public class UUID_updateUuidRecordVersion implements Helper{
 
     private String UUID;
     private Helper.SourceType Source;

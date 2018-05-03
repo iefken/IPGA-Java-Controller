@@ -1,4 +1,4 @@
-package Logic;
+package AppLogic;
 
 import JsonMessage.JSONException;
 
