@@ -102,14 +102,14 @@ To read and/or see the mysql database: go to the 'db-models' repository and use 
 
 # 4.	Latest releases
 
-03-04-18: v0.8: Added PingMessage
-01-04-18: v0.7: Added some Data and DAO classes
-30-04-18: v0.6: Added CLI for testing purposes
-29-04-18: v0.5: Added .jar instructions for serverdeployment
-28-04-18: v0.4: 	- Added XmlMessage: XML => String
-			- Added HttpRequest: (2,3,4)
-27-04-18: v0.3: Added XmlMessage: String => Xml 
-26-04-18: v0.2: Added HttpRequest: (1)
-24-04-18: v0.1: Sender and receiver classes functional
+	* 03-04-18: v0.8: Added PingMessage
+	* 01-04-18: v0.7: Added some Data and DAO classes
+	* 30-04-18: v0.6: Added CLI for testing purposes
+	* 29-04-18: v0.5: Added .jar instructions for serverdeployment
+	* 28-04-18: v0.4: 	- Added XmlMessage: XML => String
+				- Added HttpRequest: (2,3,4)
+	* 27-04-18: v0.3: Added XmlMessage: String => Xml 
+	* 26-04-18: v0.2: Added HttpRequest: (1)
+	* 24-04-18: v0.1: Sender and receiver classes functional
 
 # Happy queueing!
