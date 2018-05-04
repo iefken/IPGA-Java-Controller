@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "usermessage")
 @XmlType(propOrder = { "UUID", "lastname", "firstname", "phonenumber", "GSMnumber", "email", "address", "company", "type", "paymentStatus", "timestamp" })
 public class Userstructure {
+	private int userId;
 	private String UUID;
 	private String lastname;
 	private String firstname;
@@ -17,10 +18,11 @@ public class Userstructure {
 	private String company;
 	private String type;
 	private String paymentStatus;
+	private int entityVersion;
 	private String timestamp;
 	
 	public Userstructure(String uUID, String lastname, String firstname, String phonenumber, String gSMnumber,
-			String email, String address, String company, String type, String paymentStatus, String timestamp) {
+			String email, String address, String company, String type, String paymentStatus, int entityVersion, String timestamp) {
 		super();
 		UUID = uUID;
 		this.lastname = lastname;
@@ -32,6 +34,7 @@ public class Userstructure {
 		this.company = company;
 		this.type = type;
 		this.paymentStatus = paymentStatus;
+		this.entityVersion = entityVersion;
 		this.timestamp = timestamp;
 	}
 	
@@ -108,6 +111,16 @@ public class Userstructure {
 	public void setPaymentStatus(String paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
+
+	@XmlElement(name = "entityVersion")
+	public int getEntityVersion() {
+		return entityVersion;
+	}
+	public void setEntityVersion(int entityVersion) {
+		this.entityVersion = entityVersion;
+	}
+
+
 	@XmlElement(name = "Timestamp")
 	public String getTimestamp() {
 		return timestamp;

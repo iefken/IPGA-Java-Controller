@@ -147,7 +147,7 @@ public class Main {
                     System.out.println("\nNew Session made with UUID: " + UUID);
 
                     // 3. create xml message
-                    xmlTotalMessage = Helper.getXmlForNewSession(messageType, headerDescription, Source_type, sessionUUID, eventUUID, sessionName, maxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
+                    xmlTotalMessage = Helper.getXmlForNewSession(messageType, headerDescription, Source_type, sessionUUID, eventUUID, sessionName, maxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type, Entity_version,1);
 
                     // 2. insert to local db
 
@@ -248,7 +248,7 @@ public class Main {
 //                    System.out.println("\nNew Session made with UUID: " + UUID);
 
                     // 2. create xml message
-                    xmlTotalMessage = Helper.getXmlForNewSession(messageType, headerDescription, Source_type, sessionUUID, eventUUID, sessionName,maxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
+                    xmlTotalMessage = Helper.getXmlForNewSession(messageType, headerDescription, Source_type, sessionUUID, eventUUID, sessionName,maxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type, Entity_version,1);
 
                     // 3. insert to local db
 
@@ -327,7 +327,7 @@ public class Main {
 //                    System.out.println("\nNew Session made with UUID: " + UUID);
 
                     // 2. create xml message
-                    xmlTotalMessage = Helper.getXmlForNewSession(messageType, headerDescription, Source_type, sessionUUID, eventUUID, sessionName, maxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
+                    xmlTotalMessage = Helper.getXmlForNewSession(messageType, headerDescription, Source_type, sessionUUID, eventUUID, sessionName, maxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type, Entity_version, 1);
 
                     System.out.println("\n xmlTotalMessage: \n" + xmlTotalMessage);
                     // 3. update in local db
@@ -435,7 +435,7 @@ public class Main {
                     System.out.println("\nCase " + choice + ": message for adding a userUUID: " + userUUID + " to a sessionUUID = '" + sessionUUID + "'");
 
                     try {
-                        responseFromSender = Sender.sendReservationMessage(messageType, Source_type, reservationId, reservationUUID, userUUID, sessionUUID);
+                        responseFromSender = Sender.sendReservationMessage(messageType, Source_type, reservationId, reservationUUID, userUUID, sessionUUID,Entity_version);
 
                         System.out.println(responseFromSender);
                     } catch (IOException | TimeoutException | JAXBException e) {
@@ -659,7 +659,7 @@ public class Main {
                     System.out.println("\nNew Session made with UUID: " + UUID);
 
                     // 2. create xml message
-                    xmlTotalMessage = Helper.getXmlForNewSession(messageType, headerDescription, Source_type, sessionUUID, eventUUID, sessionName, maxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
+                    xmlTotalMessage = Helper.getXmlForNewSession(messageType, headerDescription, Source_type, sessionUUID, eventUUID, sessionName, maxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type, Entity_version,1);
 
                     // 3. insert to local db
 

@@ -5,23 +5,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "reservationmessage")
-@XmlType(propOrder = { "reservationId","reservationUUID","userUUID", "sessionUUID", "status", "timestamp", "type" })
+@XmlType(propOrder = { "reservationId","reservationUUID","userUUID", "sessionUUID", "entityVersion", "status", "timestamp", "type" })
 public class ReservationStructure {
 
 	private int reservationId;
 	private String ReservationUUID;
 	private String UserUUID;
 	private String SessionUUID;
+	private int entityVersion;
 	private String Status;
 	private String Timestamp;
 	private String Type;
 
-	public ReservationStructure(int reservationId,  String ReservationUUID, String UserUUID, String SessionUUID, String Status, String Timestamp, String Type) {
+	public ReservationStructure(int reservationId,  String ReservationUUID, String UserUUID, String SessionUUID, int entityVersion, String Status, String Timestamp, String Type) {
 		super();
 		this.reservationId=reservationId;
 		this.ReservationUUID = ReservationUUID;
 		this.UserUUID = UserUUID;
 		this.SessionUUID = SessionUUID;
+		this.entityVersion = entityVersion;
 		this.Status = Status;
 		this.Timestamp = Timestamp;
 		this.Type = Type;
@@ -61,6 +63,14 @@ public class ReservationStructure {
 	}
 	public void setSessionUUID(String sessionUUID) {
 		SessionUUID = sessionUUID;
+	}
+
+	@XmlElement(name = "entityVersion")
+	public int getEntityVersion() {
+		return entityVersion;
+	}
+	public void setEntityVersion(int entityVersion) {
+		this.entityVersion = entityVersion;
 	}
 
 	@XmlElement(name = "status")

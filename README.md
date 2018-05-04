@@ -1,46 +1,56 @@
-# IPGA-Java-Controller
+#Introduction:
 Integration Project Group A: Java Controller
 
-Different options for running this controller on your local computer:
+This project is meant to serve as an 'example' project that should make it clear on how to use senders and receivers with the RabbitMQ protocol.
+(see: https://www.rabbitmq.com/)
+This project is made as part of the 'Integration Project' course at Erasmus Hogeschool Brussel.
+(see: https://www.ehb.be/)
 
-## Get the files
+#Getting Started
 
-### A. With .zip file
+1.	Requirements
 
-1. Download .zip file containing the whole project
-2. Unzip .zip file in a 'new directory'
+	* Make sure to connect to VPN
+	* Make sure to read what every option does and needs 		before executing it!
 
-### B. From github
+2.	Installation process
 
-1. 'git clone https://github.com/iefken/IPGA-Java-Controller.git YOUR_REPO_NAME'
-Or download straight from github/iefken/IPGA-Java-Controller ...
+## 1. Get the files
 
-## Open the project locally
+git clone ssh://TODO
+git clone https://github.com/iefken/IPGA-Java-Controller.git
 
-Open IntelliJ : => import project => select 'new directory' => ...
+### 1.A. Open the project locally
+
+#### 1.A.1.A When opening IntelliJ :
+ => Import project...
+ => select 'new directory'
+ => ...
  
-When already in IntelliJ: => File => New => Project from Existing Sources =>  select 'new directory' => ...
- 
-THEN Choose: 
- 
- Maven external model => "AUTOMATICALLY DOWNLOAD SOURCES" select 'nieuwe directory' 
- => Next (x3) => Set local project name (only change if you know what you're doing...) => FINISH
+#### 1.A.1.B When already in IntelliJ:
+ => File
+ => New
+ => Project from Existing Sources
+ => select 'new directory'
+ => Maven external model
+ => "AUTOMATICALLY DOWNLOAD SOURCES" select 'nieuwe directory' 
+ => Next (x3)
+ => Set local project name (only change if you know what you're doing...)
+ => FINISH
  
  ( => maven depencies should be downloaded automatically... )
  
-4. Add src/main/java/logic/amqp-client... , slf4j-api-..., slf4j-simple... as library => Project Library
+1.A.2. Build project
 
-5. Build project
+1.A.3. Run Receiver.java for registering Receiver to server, run Main.java for a CLI sender
 
-6. Run ReceiverPlanning.java for registering Receiver to server, run Main.java for a CLI sender
+=> On error, go to Main.java and Receiver.java and manually click the 'green run'-button once...
 
-=> On error, go to Main.java and ReceiverPlanning.java and manually click the 'green run'-button once...
-
-## Open the project on your server
+## 1.B. Open the project on your server
 
 Make sure your the file you want to push to the server works local!
 
-### 1. Create the .jar file:
+### 1.B.1.A. Create the .jar file:
 Follow the directives on this link: 
 https://www.jetbrains.com/help/idea/creating-and-running-your-first-java-application.html#package
 
@@ -48,7 +58,7 @@ OR
  
 in IntelliJ:
 
-#### a. Prepare the .jar:
+#### 1.B.1.B.a. Prepare the .jar:
 
  Select File | Project Structure.
    => New window: Under 'Project Settings' click 'Artifacts'.
@@ -56,28 +66,50 @@ in IntelliJ:
          => New window: Select class with main class (receiver) click oke. 
            => New window: You'll see the depencies you'll include, click oke again.
            
-#### b. Build the .jar: 
+#### 1.B.1.B.b. Build the .jar: 
 
 Select Build | Build Artifacts. Select theJarYouPrepared:jar and select 'Build'. 
 => This should start the build process into the "/out/" folder.
 
-#### c. Make .jar runnable: 
+### ! Intermezzo ! TEST your .jar file in terminal: 'java -jar jarFileName.jar'
+
+#### OPTIONAL: 1.B.1.B.c. Make .jar runnable: 
 
 select Run | Edit Configurations. 
   => New window: click new (green +) and select JAR Application.
 
-### ! Intermezzo ! TEST your .jar file in terminal: 'java -jar jarFileName.jar'
-
 ==> Continue only if your .jar files runs successfully (it does the same as running the file/project does/what you want it does...)
 
-### 2. Get the .jar on your server
+### 1.B.2. Get the .jar on your server
 
-#### a. Put your .jar on your Git(hub)
-For putting the jar easily on your server I recommend you putting it on your github first
-#### b. Clone it onto your remote server
-In the directory you want to push it: 'git clone https://github.com/your-github-nickname/your-github-project-name git-files/' 
+#### 1.B.2.a. Put your .jar on your VCS: Git(hub)/TFS
+For putting the jar easily on your server I recommend you putting it on your VCS first
+#### 1.B.2.b. Clone it onto your remote server
+In the directory you want to push it: "git clone https://github.com/your-github-nickname/your-github-project-name git-files/" //"git clone ssh://..."
 (the 'git-files' parameter is optional for naming the new repo the github-project will be pushed in, if it's empty, your-github-project-name will be used)
 
-#### c. Navigate to your .jar directory
+#### 1.B.2.c. Navigate to your .jar directory
 and run this line: 'java -jar yourJarFileName.jar'
 
+
+3.	Software dependencies
+
+To read and change the code any IDE will do if you know how to handle the dependencies.
+This project uses Maven (see: https://mvnrepository.com/) as dependency manager and should work on both Linux (debian) and Windows(10) when developing with the IntelliJ IDE (see: https://www.jetbrains.com/idea/). 
+! If you have instructions for building this project in Eclipse or other IDE's I'll be glad to add them !
+
+To read and/or see the mysql database: go to the 'db-models' repository and use MySQLWorkbench (see: https://www.mysql.com/products/workbench/) to open the file.
+
+4.	Latest releases
+
+03-04-18: v0.8: Added PingMessage
+01-04-18: v0.7: Added some Data and DAO classes
+30-04-18: v0.6: Added CLI for testing purposes
+29-04-18: v0.5: Added .jar instructions for serverdeployment
+28-04-18: v0.4: 	- Added XmlMessage: XML => String
+			- Added HttpRequest: (2,3,4)
+27-04-18: v0.3: Added XmlMessage: String => Xml 
+26-04-18: v0.2: Added HttpRequest: (1)
+24-04-18: v0.1: Sender and receiver classes functional
+
+# Happy queueing!

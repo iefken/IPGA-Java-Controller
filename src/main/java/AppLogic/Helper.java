@@ -196,12 +196,12 @@ public interface Helper {
     }
 
     //reservationMessage: User- UUID, Session-UUID, Status(isActive), Timestamp
-    static String getXmlForReservation(String messageType, String description, SourceType Source_type, int reservationId, String reservationUUID, String userUUID, String sessionUUID) throws JAXBException {
+    static String getXmlForReservation(String messageType, String description, SourceType Source_type, int reservationId, String reservationUUID, String userUUID, String sessionUUID, int entity_version) throws JAXBException {
 
         // form xml
         XmlMessage.Header header = new XmlMessage.Header(messageType, description + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
-        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(reservationId,reservationUUID,userUUID, sessionUUID, "1", Helper.getCurrentDateTimeStamp(), messageType.split("Message")[0]);
+        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(reservationId,reservationUUID,userUUID, sessionUUID, entity_version, "1", Helper.getCurrentDateTimeStamp(), messageType.split("Message")[0]);
         // steek header en datastructure (Reservationstructure) in message klasse
         XmlMessage.ReservationMessage xmlReservationMessage = new XmlMessage.ReservationMessage(header, reservationStructure);
         // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)
@@ -212,13 +212,13 @@ public interface Helper {
     }
 
     //sessionMessage: UUID, Name, Date, Start-time, End-time, Speaker, Local, Type (workshop, speech,..), Timestamp
-    static String getXmlForNewSession(String messageType, String description, SourceType Source_type, String sessionUUID, String eventUUID, String name, int maxAttendees, String dateTimeStart, String dateTimeEnd, String speaker, String local, String type, int sessionStatus)throws JAXBException
+    static String getXmlForNewSession(String messageType, String description, SourceType Source_type, String sessionUUID, String eventUUID, String name, int maxAttendees, String dateTimeStart, String dateTimeEnd, String speaker, String local, String type, int entity_version, int sessionStatus)throws JAXBException
     {
 
         // form xml
         XmlMessage.Header header = new XmlMessage.Header(messageType, description + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
-        XmlMessage.SessionStructure sessionStructure = new XmlMessage.SessionStructure(sessionUUID, eventUUID, name, dateTimeStart, dateTimeEnd, speaker, maxAttendees, local, type, sessionStatus, Helper.getCurrentDateTimeStamp());
+        XmlMessage.SessionStructure sessionStructure = new XmlMessage.SessionStructure(sessionUUID, eventUUID, name, dateTimeStart, dateTimeEnd, speaker, maxAttendees, local, type, entity_version, sessionStatus, Helper.getCurrentDateTimeStamp());
         // steek header en datastructure (SessionStructure) in message klasse
         XmlMessage.SessionMessage sessionMessage = new XmlMessage.SessionMessage(header, sessionStructure);
         // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)

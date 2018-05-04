@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "basemessage")
-@XmlType(propOrder = { "sessionUUID","eventUUID","sessionName", "dateTimeStart", "dateTimeEnd", "speaker", "maxAttendees","local", "type", "status", "timestamp"})
+@XmlType(propOrder = { "sessionUUID","eventUUID","sessionName", "dateTimeStart", "dateTimeEnd", "speaker", "maxAttendees","local", "type", "entityVersion", "status", "timestamp"})
 public class SessionStructure {
 
 	private String sessionUUID;
@@ -17,10 +17,11 @@ public class SessionStructure {
 	private int maxAttendees;
 	private String local;
 	private String type;
+	private int entityVersion;
 	private int status;
 	private String timestamp;
 
-	public SessionStructure(String sessionUUID,String eventUUID, String sessionName, String dateTimeStart, String dateTimeEnd, String speaker, int maxAttendees, String local, String type, int status, String timestamp) {
+	public SessionStructure(String sessionUUID,String eventUUID, String sessionName, String dateTimeStart, String dateTimeEnd, String speaker, int maxAttendees, String local, String type, int entityVersion, int status, String timestamp) {
 		super();
 		this.sessionUUID = sessionUUID;
 		this.eventUUID = eventUUID;
@@ -30,6 +31,7 @@ public class SessionStructure {
 		this.speaker = speaker;
 		this.local = local;
 		this.type = type;
+		this.entityVersion = entityVersion;
 		this.status = status;
 		this.timestamp = timestamp;
 	}
@@ -108,6 +110,14 @@ public class SessionStructure {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	@XmlElement(name = "entityVersion")
+	public int getEntityVersion() {
+		return entityVersion;
+	}
+	public void setEntityVersion(int entityVersion) {
+		this.entityVersion = entityVersion;
 	}
 
 	@XmlElement(name = "status")
