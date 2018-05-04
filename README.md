@@ -1,4 +1,4 @@
-#Introduction:
+# Introduction:
 Integration Project Group A: Java Controller
 
 This project is meant to serve as an 'example' project that should make it clear on how to use senders and receivers with the RabbitMQ protocol.
@@ -6,14 +6,14 @@ This project is meant to serve as an 'example' project that should make it clear
 This project is made as part of the 'Integration Project' course at Erasmus Hogeschool Brussel.
 (see: https://www.ehb.be/)
 
-#Getting Started
+# Getting Started
 
-1.	Requirements
+# 1.	Requirements
 
 	* Make sure to connect to VPN
 	* Make sure to read what every option does and needs 		before executing it!
 
-2.	Installation process
+# 2.	Installation process
 
 ## 1. Get the files
 
@@ -92,7 +92,7 @@ In the directory you want to push it: "git clone https://github.com/your-github-
 and run this line: 'java -jar yourJarFileName.jar'
 
 
-3.	Software dependencies
+# 3.	Software dependencies
 
 To read and change the code any IDE will do if you know how to handle the dependencies.
 This project uses Maven (see: https://mvnrepository.com/) as dependency manager and should work on both Linux (debian) and Windows(10) when developing with the IntelliJ IDE (see: https://www.jetbrains.com/idea/). 
@@ -100,7 +100,7 @@ This project uses Maven (see: https://mvnrepository.com/) as dependency manager 
 
 To read and/or see the mysql database: go to the 'db-models' repository and use MySQLWorkbench (see: https://www.mysql.com/products/workbench/) to open the file.
 
-4.	Latest releases
+# 4.	Latest releases
 
 03-04-18: v0.8: Added PingMessage
 01-04-18: v0.7: Added some Data and DAO classes
