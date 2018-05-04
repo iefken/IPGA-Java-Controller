@@ -40,9 +40,9 @@ git clone https://github.com/iefken/IPGA-Java-Controller.git
  
  ( => maven depencies should be downloaded automatically... )
  
-1.A.2. Build project
+#### 1.A.2. Build project
 
-1.A.3. Run Receiver.java for registering Receiver to server, run Main.java for a CLI sender
+#### 1.A.3. Run Receiver.java or Main.java to test the build
 
 => On error, go to Main.java and Receiver.java and manually click the 'green run'-button once...
 
