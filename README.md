@@ -20,14 +20,14 @@ This project is made as part of the 'Integration Project' course at Erasmus Hoge
 git clone ssh://TODO
 git clone https://github.com/iefken/IPGA-Java-Controller.git
 
-### 1.A. Open the project locally
+## 2.A. Open the project locally
 
-#### 1.A.1.A When opening IntelliJ :
+### 2.A.1.a When opening IntelliJ :
  => Import project...
  => select 'new directory'
  => ...
  
-#### 1.A.1.B When already in IntelliJ:
+### 2.A.1.b When already in IntelliJ:
  => File
  => New
  => Project from Existing Sources
@@ -40,17 +40,17 @@ git clone https://github.com/iefken/IPGA-Java-Controller.git
  
  ( => maven depencies should be downloaded automatically... )
  
-#### 1.A.2. Build project
+### 2.A.2. Build project
 
-#### 1.A.3. Run Receiver.java or Main.java to test the build
+### 2.A.3. Run Receiver.java or Main.java to test the build
 
 => On error, go to Main.java and Receiver.java and manually click the 'green run'-button once...
 
-## 1.B. Open the project on your server
+## 2.B. Open the project on your server (PROJECT MUST BE BUILD AND WORKING BEFORE THIS CAN WORK!)
 
-Make sure your the file you want to push to the server works local!
+Make sure your the files you want to push to the server work local!
 
-### 1.B.1.A. Create the .jar file:
+### 2.B.1. Create the .jar file:
 Follow the directives on this link: 
 https://www.jetbrains.com/help/idea/creating-and-running-your-first-java-application.html#package
 
@@ -58,7 +58,7 @@ OR
  
 in IntelliJ:
 
-#### 1.B.1.B.a. Prepare the .jar:
+#### 2.B.1.1. Prepare the .jar:
 
  Select File | Project Structure.
    => New window: Under 'Project Settings' click 'Artifacts'.
@@ -66,29 +66,29 @@ in IntelliJ:
          => New window: Select class with main class (receiver) click oke. 
            => New window: You'll see the depencies you'll include, click oke again.
            
-#### 1.B.1.B.b. Build the .jar: 
+#### 2.B.1.2. Build the .jar: 
 
 Select Build | Build Artifacts. Select theJarYouPrepared:jar and select 'Build'. 
 => This should start the build process into the "/out/" folder.
 
-### ! Intermezzo ! TEST your .jar file in terminal: 'java -jar jarFileName.jar'
+##### ! Intermezzo ! TEST your .jar file in terminal: 'java -jar jarFileName.jar'
 
-#### OPTIONAL: 1.B.1.B.c. Make .jar runnable: 
+#### 2.B.1.3. Make .jar runnable: (OPTIONAL)
 
 select Run | Edit Configurations. 
   => New window: click new (green +) and select JAR Application.
 
 ==> Continue only if your .jar files runs successfully (it does the same as running the file/project does/what you want it does...)
 
-### 1.B.2. Get the .jar on your server
+### 2.B.2. Get the .jar on your server
 
-#### 1.B.2.a. Put your .jar on your VCS: Git(hub)/TFS
+#### 2.B.2.a. Put your .jar on your VCS: Git(hub)/TFS
 For putting the jar easily on your server I recommend you putting it on your VCS first
-#### 1.B.2.b. Clone it onto your remote server
+#### 2.B.2.b. Clone it onto your remote server
 In the directory you want to push it: "git clone https://github.com/your-github-nickname/your-github-project-name git-files/" //"git clone ssh://..."
 (the 'git-files' parameter is optional for naming the new repo the github-project will be pushed in, if it's empty, your-github-project-name will be used)
 
-#### 1.B.2.c. Navigate to your .jar directory
+#### 2.B.2.c. Navigate to your .jar directory
 and run this line: 'java -jar yourJarFileName.jar'
 
 
