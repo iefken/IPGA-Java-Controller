@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 
-public class Session_DAO extends BaseDAO {
+public class Session_DAO extends BaseEntityDAO {
 
     //CRUD Statements
 
@@ -15,10 +15,10 @@ public class Session_DAO extends BaseDAO {
 
     public int insertIntoSession(Session session) throws SQLException {
 
-        BaseEntity newBaseEntity = new BaseEntity(session.getEntityId(), session.getEntity_version(), session.getStatus(), session.getTimestamp());
+        BaseEntity newBaseEntity = new BaseEntity(session.getEntityId(), session.getEntityVersion(), session.getActive(), session.getTimestamp());
 
         //execute baseEntity Insert
-        int callbackInsertedInt = BaseEntityDAO.insertIntoBaseEntity(newBaseEntity);
+        int callbackInsertedInt = newBaseEntity.getEntityId();
 
         if (session.getEntityId()!=0 && callbackInsertedInt != session.getEntityId()) {
             throw new SQLException("ERROR 05: Given id(" + session.getEntityId() + ") does not correspond to retreived id(" + callbackInsertedInt + ")!");
@@ -28,20 +28,21 @@ public class Session_DAO extends BaseDAO {
         PreparedStatement preparedStatement = null;
         String sqlQuery = "";
 
-        sqlQuery = "INSERT INTO planningdb.session (`idSession`, `sessionUUID`, `eventUUID`, `sessionName`, `maxAttendees`, `dateTimeStart`, `dateTimeEND`, `speaker`, `local`, `type`) " +
-                "VALUES(" + callbackInsertedInt + ",\"" + session.getSessionUUID() + "\",\"" + session.getEventUUID() + "\",\"" + session.getSessionName() + "\",\"" + session.getMaxAttendees() + "\",\"" + session.getDateTimeStart() + "\",\"" + session.getDateTimeEnd() + "\",\"" + session.getSpeaker() + "\",\"" + session.getLocal() + "\",\"" + session.getType() + "\");";
+        sqlQuery = "INSERT INTO PlanningDB.Session (`idSession`, `sessionUUID`, `eventUUID`, `sessionName`, `maxAttendees`, `description`, `summary`, `location`, `speaker`, `dateTimeStart`, `dateTimeEND`, `type`, `price`) " +
+                "VALUES(" + callbackInsertedInt + ",\"" + session.getSessionUUID() + "\",\"" + session.getEventUUID() + "\",\"" + session.getSessionName() + "\"," + session.getMaxAttendees() + ",\"" + session.getDescription() + "\",\"" + session.getSummary() + "\",\"" + session.getLocation() + "\",\"" + session.getSpeaker() + "\",\"" + session.getDateTimeStart() + "\",\"" + session.getDateTimeEnd() + "\",\"" + session.getType() + "\",\"" + session.getPrice() + "\");";
 
         //INSERT INTO `PlanningDB`.`Session` (`idSession`, `sessionUUID`, `eventUUID`, `sessionName`, `maxAttendees`, `dateTimeStart`, `dateTimeEND`, `speaker`, `local`, `type`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         System.out.println("sqlQuery: "+sqlQuery);
 
         int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
         System.out.println("insertSucces: "+insertSucces+", callbackInsertedInt: "+callbackInsertedInt);
-        return insertSucces;
+        return callbackInsertedInt;
 
     }
 
     //READ
 
+/*
 
     public ArrayList<Reservation_Session> getAllReservation_Sessions() {
         ResultSet rs = null;
@@ -80,7 +81,7 @@ public class Session_DAO extends BaseDAO {
             }
 
             while (rs.next()) {
-                sessionReservationsList.add(new Reservation_Session(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8)));
+                sessionReservationsList.add(new Reservation_Session(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8)));
             }
 
             return sessionReservationsList;
@@ -90,6 +91,7 @@ public class Session_DAO extends BaseDAO {
             throw new RuntimeException(e.getMessage());
         }
     }
+*/
 
     //UPDATE
 

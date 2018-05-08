@@ -5,41 +5,38 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "reservationmessage")
-@XmlType(propOrder = { "reservationId","reservationUUID","userUUID", "sessionUUID", "entityVersion", "status", "timestamp", "type" })
+@XmlType(propOrder = { "reservationUUID","userUUID", "eventUUID", "sessionUUID", "type", "paid", "entityVersion", "active", "timestamp" })
 public class ReservationStructure {
 
-	private int reservationId;
+
 	private String ReservationUUID;
 	private String UserUUID;
+	private String EventUUID;
 	private String SessionUUID;
-	private int entityVersion;
-	private String Status;
-	private String Timestamp;
 	private String Type;
+	private float paid;
+	private int entityVersion;
+	private int active;
+	private String Timestamp;
 
-	public ReservationStructure(int reservationId,  String ReservationUUID, String UserUUID, String SessionUUID, int entityVersion, String Status, String Timestamp, String Type) {
+	public ReservationStructure(String ReservationUUID, String UserUUID, String EventUUID, String SessionUUID, String Type, float paid,int entityVersion, int active, String Timestamp) {
+
 		super();
-		this.reservationId=reservationId;
 		this.ReservationUUID = ReservationUUID;
 		this.UserUUID = UserUUID;
+		this.EventUUID = EventUUID;
 		this.SessionUUID = SessionUUID;
-		this.entityVersion = entityVersion;
-		this.Status = Status;
-		this.Timestamp = Timestamp;
 		this.Type = Type;
+		this.paid=paid;
+		this.entityVersion = entityVersion;
+		this.active = active;
+		this.Timestamp = Timestamp;
 	}
 
 	public ReservationStructure() {
 		
 	}
 
-	@XmlElement(name = "reservationId")
-	public int getReservationId() {
-		return reservationId;
-	}
-	public void setReservationId(int reservationId) {
-		this.reservationId = reservationId;
-	}
 
 	@XmlElement(name = "reservationUUID")
 	public String getReservationUUID() {
@@ -57,12 +54,28 @@ public class ReservationStructure {
 		UserUUID = userUUID;
 	}
 
+	@XmlElement(name = "eventUUID")
+	public String getEventUUID() {
+		return EventUUID;
+	}
+	public void setEventUUID(String eventUUID) {
+		EventUUID = eventUUID;
+	}
+
 	@XmlElement(name = "sessionUUID")
 	public String getSessionUUID() {
 		return SessionUUID;
 	}
 	public void setSessionUUID(String sessionUUID) {
 		SessionUUID = sessionUUID;
+	}
+
+	@XmlElement(name = "paid")
+	public float getPaid() {
+		return paid;
+	}
+	public void setPaid(float paid) {
+		this.paid = paid;
 	}
 
 	@XmlElement(name = "entityVersion")
@@ -73,12 +86,12 @@ public class ReservationStructure {
 		this.entityVersion = entityVersion;
 	}
 
-	@XmlElement(name = "status")
-	public String getStatus() {
-		return Status;
+	@XmlElement(name = "active")
+	public int getActive() {
+		return active;
 	}
-	public void setStatus(String status) {
-		Status = status;
+	public void setActive(int active) {
+		this.active = active;
 	}
 
 	@XmlElement(name = "timestamp")

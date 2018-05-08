@@ -1,8 +1,6 @@
 package AppLogic;
 
-import DatabaseLogic.BaseEntityDAO;
-import DatabaseLogic.Session;
-import DatabaseLogic.Session_DAO;
+import DatabaseLogic.*;
 import GoogleCalendarApi.Quickstart;
 import com.rabbitmq.client.*;
 import org.w3c.dom.DOMException;
@@ -18,6 +16,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.StringReader;
 import java.sql.SQLException;
+import java.util.concurrent.TimeoutException;
 
 import static GoogleCalendarApi.Quickstart.getCalendarService;
 
@@ -26,16 +25,17 @@ public class Receiver {
     public static void main(String[] argv) throws Exception {
 
         // Set your source type here: this will determine what queue you will receive messages from!
-        Helper.SourceType yourSourceType = Helper.SourceType.Monitor;
+        Helper.SourceType yourSourceType = Helper.SourceType.Planning;
 
         System.out.println(" [ooo] _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_ [ooo]");
         System.out.println(" [ooo] ___________________________________________________________________ [ooo]");
-        System.out.println(" [ooo] _______________________IPGA-JAVA-RECEIVER-v.1______________________ [ooo]");
+        System.out.println(" [ooo] ___________________IPGA-" + ("" + yourSourceType).toUpperCase() + "-RECEIVER-v.1______________________ [ooo]");
         System.out.println(" [ooo] ___________________________________________________________________ [ooo]");
         System.out.println(" [ooo] -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- [ooo]");
 
 
         //uncomment for sending pingmessage in a different thread
+/*
 
         // # Send pingmessage every 'timeBetweenPings' milliseconds
         int timeBetweenPings = 5000;
@@ -48,15 +48,16 @@ public class Receiver {
 
         // ## start new pingSender thread
         pingThread.start();
+*/
 
         //# Setup connection
         ConnectionFactory factory = new ConnectionFactory();
 
         //https://www.rabbitmq.com/api-guide.html
-        String username = ""+yourSourceType;
-        String password = (""+yourSourceType).toLowerCase();
+        String username = "" + yourSourceType;
+        String password = ("" + yourSourceType).toLowerCase();
         String virtualHost = "/";
-        String TASK_QUEUE_NAME = (""+yourSourceType).toLowerCase()+"-queue";
+        String TASK_QUEUE_NAME = ("" + yourSourceType).toLowerCase() + "-queue";
 
         //for localhost
         //factory.setHost("localhost");
@@ -79,7 +80,7 @@ public class Receiver {
 
         channel.queueBind(TASK_QUEUE_NAME, Helper.EXCHANGE_NAME, "");
 
-        System.out.println(" [ooo] _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_ [ooo]");
+//        System.out.println(" [ooo] _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_ [ooo]");
         System.out.println(" -------------------------------------------------------------------------------");
         System.out.println(" ------ [...] Waiting with queue for messages. To exit press CTRL+C [...] ------");
         System.out.println(" -------------------------------------------------------------------------------\n");
@@ -104,6 +105,7 @@ public class Receiver {
                 }
             }
         };
+
         boolean autoAck = true; // acknowledgment is covered below
         channel.basicConsume(TASK_QUEUE_NAME, autoAck, consumer);
 
@@ -113,218 +115,507 @@ public class Receiver {
 
         //change to true to show full XML message in receiver console when it's received
         boolean showFullXMLMessage = false;
+        Helper.EntityType thisEntityType = Helper.EntityType.ADMIN;
 
         // XML -> Data
         // get messagetype from XML (set in sender)
         String messageType = null, xmlTotalMessage = "";
-        try {
+        messageType = getSafeXmlProperty(task, "messageType");
 
-            messageType = getPropertyFromXml(task, "messageType");
-            //System.out.println(" [i] messageType: " + messageType);
-
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
-            System.out.println(" [!!!] ERROR: No messageType found in XML: " + e);
-        }
         // get Source from XML (set in sender)
         String messageSource = null;
-        try {
-
-            messageSource = getPropertyFromXml(task, "source");
-            System.out.println(" [.i.] Message received from: " + messageSource);
-
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
-            System.out.println(" [!!!] ERROR: No messageType found in XML: " + e);
-        }
+        messageSource = getSafeXmlProperty(task, "source");
 
         // Check XML for message
 
         System.out.println(" -------------------------------------------------------------------------------");
-        System.out.println(" [.i.] [NEW '"+messageType+"'] FROM '"+messageSource+"' @ '\" + Helper.getCurrentDateTimeStamp() + \"'  || message length: '\" + task.length() + \"' characters [.i.]");
+        System.out.println(" [.i.] [NEW '" + messageType + "'] FROM '" + messageSource + "' @ '" + Helper.getCurrentDateTimeStamp() + "' [.i.] ");
+        System.out.println(" [.i.] Message length: '" + task.length() + "' characters [.i.]");
         System.out.println(" -------------------------------------------------------------------------------");
 
         System.out.println(" -------------------------------------------------------------------------------");
 
         String userUUID = "", sessionUUID = "", reservationUUID = "", eventUUID = "", UUID = "";
         int entity_version = 1;
-        boolean allGood = true;
+
+        // Set your team here
+        Helper.SourceType Source_type = Helper.SourceType.Planning;
+
+        boolean allGood = true, uuidExists = false;
 
         //toLowercase just for catching CaPitAliZatIOn errors...
         switch (messageType.toLowerCase()) {
 
+            case "usermessage":
+
+                User thisUserInMessage = null;
+
+                // 1. transform xml to user-object
+                try {
+                    thisUserInMessage = Helper.getUserObjectFromXmlMessage(task);
+
+                    userUUID = thisUserInMessage.getUserUUID();
+
+                    System.out.println("New message for USER with UUID: "+userUUID);
+
+                    //System.out.println("user toString: "+thisUserInMessage.toString());
+                    //System.out.println(" [" + messageType + "] for userUUID: " + userUUID);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (thisUserInMessage != null) {
+                    // 2.1 check if UUID exists in local db
+                    uuidExists = false;
+                    try {
+                        uuidExists = new BaseEntityDAO().doesUUIDExist("User", userUUID);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    if (uuidExists) {
+
+                        System.out.println("UUID already exists in our PlanningDB table:\nUser");
+
+                        // 2.2. User record update
+
+                        // 2.2.1. get idUser from userUUID in User
+                        String[] propertiesToSelect = {"idUser"};
+                        String table = "User";
+                        String[] selectors = {"userUUID"};
+                        String[] values = {"" + userUUID};
+
+                        String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
+
+                        //System.out.println("selectResults: " + selectResults[0]);
+
+                        // 2.2.2. get the entityVersion from idUser
+                        propertiesToSelect[0] = "entity_version";
+                        table = "BaseEntity";
+                        selectors[0] = "entityId";
+                        values[0] = selectResults[0];
+                        int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
+
+                        if (localEntityVersion < thisUserInMessage.getEntityVersion()) {
+                            // 2.3.1. check what's different between thisUserInMessage and user in our local db (selectResults[0] still has it's id in it)
+
+                            // TO DO
+
+                            /*
+                            User userFromDataBase = new BaseEntityDAO().getBaseEntityByEntityId()
+
+
+                            // 2.3.2. update what's different into local db
+                            if (!new BaseEntityDAO().updateTablePropertyValue("User", "userUUID", userUUID, "String", "idUser", thisUserInMessage.getEntityId())) {
+                                System.out.println("Something went wrong updating User's userUUID");
+                            } else {
+                                thisUserInMessage.setUserUUID(userUUID);
+                                //System.out.println(" HERE XXX: userUUID: "+userUUID);
+                            }
+                            */
+
+                            // 2.3.3. updateUuidRecordVersion()
+
+                            try {
+                                Sender.updateUuidRecordVersion("", Source_type, userUUID);
+                            } catch (IOException | TimeoutException | JAXBException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println("TO DO: We had this user with entityVersion: '"+localEntityVersion+"'. Updated to latest version with entityVersion: '"+thisUserInMessage.getEntityVersion()+"'");
+
+                        } else {
+                            // we have the latest version...
+                            System.out.println("We already had this session with entityVersion: '"+localEntityVersion+"'");
+
+                        }
+
+                    } else {
+                        // New user record
+
+                        // 2.4.1. insert new user into local db
+                        int messageUserInsertReturner = 0;
+                        try {
+                            messageUserInsertReturner = new User_DAO().insertIntoUser(thisUserInMessage);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
+                        // 2.4.2. insertUuidRecord
+
+                        try {
+                            Sender.insertUuidRecord("", messageUserInsertReturner, thisEntityType, Source_type, userUUID);
+                        } catch (IOException | TimeoutException | JAXBException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("Inserted new user record with id='"+messageUserInsertReturner+"' and UUID='"+userUUID+"'");
+
+
+                    }
+                } else {
+                    System.out.println("Something went wrong getting user object from xml message!");
+                }
+
+                //System.out.println(" [END] ");
+
+                break;
+
+            case "eventmessage":
+
+
+                Event thisEventInMessage = null;
+
+                // 1. transform xml to event-object
+                try {
+                    thisEventInMessage = Helper.getEventObjectFromXmlMessage(task);
+                    //System.out.println("user toString: "+thisUserInMessage.toString());
+                    eventUUID = thisEventInMessage.getEventUUID();
+
+                    System.out.println("New message for EVENT with UUID: "+eventUUID);
+
+                    //System.out.println(" [" + messageType + "] for userUUID: " + userUUID);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (thisEventInMessage != null) {
+                    // 2.1. check if UUID exists in local db
+                    uuidExists = false;
+                    try {
+                        uuidExists = new BaseEntityDAO().doesUUIDExist("Event", eventUUID);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    if (uuidExists) {
+
+                        System.out.println("UUID already exists in our PlanningDB table:\nEvent");
+
+                        // 2.2 Session record update
+                        // public String[] getPropertyValueByTableAndProperty(String[] propertiesToSelect, String table, String[] selectors, String[] values)
+
+                        // 2.2.1. get idEvent from eventUUID in Event
+                        String[] propertiesToSelect = {"idEvent"};
+                        String table = "Event";
+                        String[] selectors = {"eventUUID"};
+                        String[] values = {"" + eventUUID};
+
+                        String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
+
+                        System.out.println("selectResults: " + selectResults[0]);
+
+                        // 2.2.2. get entityVersion from id in BaseEntity
+                        propertiesToSelect[0] = "entity_version";
+                        table = "BaseEntity";
+                        selectors[0] = "entityId";
+                        values[0] = selectResults[0];
+                        int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
+
+                        if (localEntityVersion < thisEventInMessage.getEntityVersion()) {
+                            // 2.3.1. update local db
+
+                            // 2.3.2. update what's different into local db
+                            // TO DO
+
+                            // 2.3.3. updateUuidRecordVersion()
+
+                            try {
+                                Sender.updateUuidRecordVersion("", Source_type, eventUUID);
+                            } catch (IOException | TimeoutException | JAXBException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println("TO DO: We had this event with entityVersion: '"+localEntityVersion+"'. Updated to latest version with entityVersion: '"+thisEventInMessage.getEntityVersion()+"'");
+
+                        } else {
+                            // we have the latest version...
+                            System.out.println("We already had this event with entityVersion: '"+localEntityVersion+"'");
+
+                        }
+
+                    } else {
+                        // New event record
+                        // 2.3.1. insert new event into local db
+
+                        int messageEventInsertReturner = 0;
+                        try {
+                            messageEventInsertReturner = new Event_DAO().insertIntoEvent(thisEventInMessage);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
+                        // 2.3.2. insertUuidRecord
+                        try {
+                            Sender.insertUuidRecord("", messageEventInsertReturner, thisEntityType, Source_type, eventUUID);
+                        } catch (IOException | TimeoutException | JAXBException e) {
+                            e.printStackTrace();
+                        }
+
+                        System.out.println("Inserted new event record with id='"+messageEventInsertReturner+"' and UUID='"+eventUUID+"'");
+
+
+                    }
+                } else {
+                    System.out.println("Something went wrong getting event object from xml message!");
+                }
+
+                //System.out.println(" [END] ");
+
+                break;
+
+            case "sessionmessage":
+
+
+                Session thisSessionInMessage = null;
+
+                // 1. transform xml to event-object
+                try {
+                    thisSessionInMessage = Helper.getSessionObjectFromXmlMessage(task);
+
+                    sessionUUID = thisSessionInMessage.getSessionUUID();
+
+                    System.out.println("New message for SESSION with UUID: "+sessionUUID);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (thisSessionInMessage != null) {
+                    // 2.1. check if UUID exists in local db
+                    uuidExists = false;
+                    try {
+                        uuidExists = new BaseEntityDAO().doesUUIDExist("Session", sessionUUID);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    if (uuidExists) {
+
+                        System.out.println("UUID already exists in our PlanningDB table:\nSession:");
+
+                        // 2.2 Session record update
+
+                        // 2.2.1. get idSession from sessionUUID in Session
+                        String[] propertiesToSelect = {"idSession"};
+                        String table = "Session";
+                        String[] selectors = {"sessionUUID"};
+                        String[] values = {"" + sessionUUID};
+
+                        String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
+
+                        //System.out.println("selectResults: " + selectResults[0]);
+
+                        // 2.2.2. get entityVersion from id in BaseEntity
+                        propertiesToSelect[0] = "entity_version";
+                        table = "BaseEntity";
+                        selectors[0] = "entityId";
+                        values[0] = selectResults[0];
+                        int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
+
+                        if (localEntityVersion < thisSessionInMessage.getEntityVersion()) {
+
+                            // 2.3.1. update local db
+                            // 2.3.2. update what's different into local db
+                            // TO DO
+
+                            // 2.3.3. updateUuidRecordVersion()
+                            try {
+                                Sender.updateUuidRecordVersion("", Source_type, sessionUUID);
+                            } catch (IOException | TimeoutException | JAXBException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println("TO DO: We had this session with entityVersion: '"+localEntityVersion+"'. Updated to latest version with entityVersion: '"+thisSessionInMessage.getEntityVersion()+"'");
+
+                        } else {
+
+                            // we have the latest version...
+                            System.out.println("We already had this session with entityVersion: '"+localEntityVersion+"'");
+
+                        }
+
+                    } else {
+                        // New session record
+
+                        // 2.4.1. insert new session into local db
+                        int messageSessionInsertReturner = 0;
+                        try {
+                            messageSessionInsertReturner = new Session_DAO().insertIntoSession(thisSessionInMessage);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
+                        // 2.4.2. insertUuidRecord
+                        try {
+                            Sender.insertUuidRecord("", messageSessionInsertReturner, thisEntityType, Source_type, sessionUUID);
+                        } catch (IOException | TimeoutException | JAXBException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("Inserted new session record with id='"+messageSessionInsertReturner+"' and UUID='"+sessionUUID+"'");
+
+
+                    }
+                } else {
+                    System.out.println("Something went wrong getting session object from xml message!");
+                }
+
+                //System.out.println(" [END] ");
+
+                break;
+
+
             case "reservationmessage":
 
+                // get UUID's from xml
                 reservationUUID = getSafeXmlProperty(task, "reservationUUID");
-                if(reservationUUID=="false")
-                {
+                if (reservationUUID == "false") {
                     reservationUUID = getPropertyFromXml(task, "UUID");
-                    if(reservationUUID=="false"){
+                    if (reservationUUID == "false") {
 
                         System.out.println(" [!!!] ERROR: No reservationUUID or UUID found in XML... Looking for UUID...");
 
+                        allGood = false;
                     }
-
-                    allGood=false;
                 }
-
                 userUUID = getSafeXmlProperty(task, "userUUID");
-                if(userUUID=="false"){
+                if (userUUID == "false") {
 
                     System.out.println(" [!!!] ERROR: No userUuid found in XML");
                     allGood = false;
                 }
 
                 sessionUUID = getSafeXmlProperty(task, "sessionUUID");
-                if(sessionUUID=="false") {
+                if (sessionUUID == "false" || sessionUUID == "") {
 
+                    sessionUUID="false";
                     eventUUID = getSafeXmlProperty(task, "eventUUID");
-                    if(eventUUID=="false") {
+                    if (eventUUID == "false" || sessionUUID == "") {
                         System.out.println(" [!!!] ERROR: No sessionUUID or eventUUID found in XML: ");
                         allGood = false;
+                    }else{
+
+                        System.out.println("New RESERVATION_EVENT with UUID: "+eventUUID);
                     }
-                }
-                String Status = getSafeXmlProperty(task,"status");
-
-                String sessionName = getSafeXmlProperty(task,"sessionName");
-                String maxAttendees = getSafeXmlProperty(task,"maxAttendees");
-                String dateTimeStart = getSafeXmlProperty(task,"dateTimeStart");
-                String dateTimeEnd = getSafeXmlProperty(task,"dateTimeEnd");
-                String speaker = getSafeXmlProperty(task,"speaker");
-                String local= getSafeXmlProperty(task,"local");
-                String type= getSafeXmlProperty(task,"type");
-
-                int MaxAttendees=0;
-                if(sessionName  == "false"|| maxAttendees == "false"|| dateTimeStart == "false" || dateTimeEnd  == "false"|| speaker  == "false"|| local  == "false"|| type == "false")
-                {
-                    allGood = false;
                 }else{
-                    MaxAttendees = Integer.parseInt(maxAttendees);
+                    System.out.println("New RESERVATION_SESSION with UUID: "+sessionUUID);
                 }
 
-                System.out.println(" [.i.] " + messageType + ": userUUID:" + userUUID);
-                if (sessionUUID != "") {
+                Reservation_Event newReservation_EventObjectFromXml = null;
+                Reservation_Session newReservation_SessionObjectFromXml = null;
 
-                    System.out.println(" [.i.] " + messageType + ": sessionUUID:" + sessionUUID);
+                // 1. transform xml to user-object
+
+                if (sessionUUID == "false") {
+                    newReservation_EventObjectFromXml = Helper.getReservation_EventObjectFromXmlMessage(task);
+
                 } else {
 
-                    System.out.println(" [.i.] " + messageType + ": eventUUID:" + eventUUID);
+                    newReservation_SessionObjectFromXml = Helper.getReservation_SessionObjectFromXmlMessage(task);
                 }
 
-                //save to local database
+                // System.out.println("sessionUUID: "+sessionUUID);
 
-                System.out.println("\nDATABASE TEST!\n");
+                // 2.1 check if UUID exists in local db
 
-                //check if UUID exists in local db
+                uuidExists = false;
 
-                boolean uuidExists = false;
-                try {
-                    uuidExists = new BaseEntityDAO().doesUUIDExist("reservation_event",reservationUUID);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                if (sessionUUID == "false") {
 
-                if(uuidExists)
-                {
-                    // uuid exists locally:
-                    // # update record locally with given info
+                    // 2.1.A. search event table for uuid
 
-
-
-
-                    // Prepare new session object for sending to database
-                    Session case2NewSession = new Session(0, entity_version, Status, Helper.getCurrentDateTimeStamp(), sessionUUID, eventUUID, sessionName, MaxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type);
-
-                    int case2test = 0;
                     try {
-                        case2test = new Session_DAO().insertIntoSession(case2NewSession);
-                    } catch (SQLException e) {
+                        uuidExists = new BaseEntityDAO().doesUUIDExist("Reservation_Event", newReservation_EventObjectFromXml.getReservationUUID());
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    System.out.println("End of database INSERT... response: "+case2test);
 
+                } else {
+
+                    // 2.1.B. search session table for uuid
+
+                    try {
+                        uuidExists = new BaseEntityDAO().doesUUIDExist("Reservation_Session", newReservation_SessionObjectFromXml.getReservationUUID());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                if (uuidExists) {
+
+                    System.out.println("UUID already exists in our PlanningDB table:\nReservation");
+
+                    // 2.2. User record update
+
+                    System.out.println("UUID already exists in:");
+
+                    if (sessionUUID == "false") {
+
+                        // Prepare new reservation_event object for sending to database
+
+                        //Event case2NewEvent = Helper.getEventObjectFromXmlMessage(task);
+
+                        int case2test = 0;
+                        /*
+                        try {
+                            case2test = new Event_DAO().insertIntoEvent(case2NewEvent);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        */
+                        System.out.println("Reservation_Event");
+                    } else {
+
+                        // Prepare new reservation_session object for sending to database
+                        /*
+                        Session case2NewSession = new Session(0, entity_version, Status, Helper.getCurrentDateTimeStamp(), sessionUUID, eventUUID, sessionName, MaxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type);
+
+                        int case2test = 0;
+                        try {
+                            case2test = new Session_DAO().insertIntoSession(case2NewSession);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("End of database INSERT... response: " + case2test);
+                        */
+                        System.out.println("Reservation_Session");
+                    }
 
 
                     // # send update to uuid manager
 
 
-                }else{
+                } else {
 
                     // uuid doesn't exit locally yet
                     // # insert record locally with given info
 
+                    int messageReservationInsertReturner = 0;
+                    if (sessionUUID == "false") {
 
+                        try {
+                            messageReservationInsertReturner = new Reservation_Event_DAO().insertIntoReservation_Event(newReservation_EventObjectFromXml);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
 
-                    // # send insert to uuid manager
+                        try {
+                            messageReservationInsertReturner = new Reservation_Session_DAO().insertIntoReservation_Session(newReservation_SessionObjectFromXml);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    // insertUuidRecord
+
+                    try {
+                        Sender.insertUuidRecord("", messageReservationInsertReturner, thisEntityType, Source_type, eventUUID);
+                    } catch (IOException | TimeoutException | JAXBException e) {
+                        e.printStackTrace();
+                    }
+
                 }
-
-
-                //String headerDescriptionReservation = "Standard header description for reservation set in receiver";
-                // 2. create xml message
-                //xmlTotalMessage = Helper.getXmlForNewSession(messageType, headerDescriptionReservation, Helper.SourceType.Planning, sessionUUID, eventUUID, sessionName, maxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type, 1);
-
-
-/*
-
-                //save to UUID
-                try {
-                    sessionUUID = Sender.insertUuidRecord(messageType, Entity_sourceId, Entity_type, Source_type);
-                } catch (IOException | TimeoutException | JAXBException e) {
-                    e.printStackTrace();
-                }
-*/
-
-                System.out.println("\nNew Session made with UUID: " + UUID);
-
-                /*
-                System.out.println(" [.!.] START OF TASK:\n\n" + task + " [.!.] \nEND OF TASK\n\n");
-                */
-                break;
-
-            case "sessionmessage":
-
-                String fullSession = "";
-
-                /*
-                try {
-
-                    sessionUUID = getPropertyFromXml(task, "uuid");
-                    //System.out.println(" [i] UUID: " + UUID);
-                    fullSession = "\n [.i.] UUID: '" + sessionUUID + "' || sessionName: '" + getPropertyFromXml(task, "sessionName");
-                    fullSession += "' || dateTimeStart: '" + getPropertyFromXml(task, "dateTimeStart") + "' || dateTimeEnd '" + getPropertyFromXml(task, "dateTimeEnd");
-                    fullSession += "' || speaker: '" + getPropertyFromXml(task, "speaker") + "' || local: '" + getPropertyFromXml(task, "local");
-                    fullSession += "' || type: '" + getPropertyFromXml(task, "type") + "' || status: '" + getPropertyFromXml(task, "status");
-                    fullSession += "' || timestamp: '" + getPropertyFromXml(task, "timestamp") + "'";
-
-                } catch (ParserConfigurationException | SAXException | IOException e) {
-
-                    e.printStackTrace();
-                    System.out.println(" [!!!] ERROR: No some xml not found: " + e);
-                }
-                */
-
-                System.out.println(" [.i.] Full processed sessionmessage: \n" + fullSession + "\n\n [.i.] END of sessionmessage");
-
 
                 break;
 
-            case "eventmessage":
-
-                UUID = getSafeXmlProperty(task, "userUUID");
-
-                System.out.println(" [" + messageType + "] for UUID: " + UUID);/*
-                /*
-                MessageMessage sessionMessage = MessageMessage.generateObject(task);
-                try {
-                    System.out.println("UUID from XML: " + sessionMessage.getDatastructure().getUuid());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println(e);
-                }*/
-
-                //System.out.println(" [.!.] "+messageType+":\nUUID:"+messageMessage.getHeader().getMessageTypeFromXml());
-
-                break;
             case "UpdateLocalMessage":
 
                 System.out.println(" [" + messageType + "] for UUID: " + UUID);/*
@@ -341,44 +632,15 @@ public class Receiver {
 */
 
                 break;
-            case "UpdateEntityVersionMessage":
-
-                System.out.println(" [" + messageType + "] for UUID: " + UUID);/*
-/*
-                MessageMessage updateEntityVersionMessage = MessageMessage.generateObject(task);
-
-                try {
-                    System.out.println("UUID from XML: " + updateEntityVersionMessage.getDatastructure().getUuid());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println(e);
-                }*/
-                break;
 
             case "TestMessage":
 
-                System.out.println(" [" + messageType + "] for UUID: " + UUID);/*
-/*
-
-                MessageMessage messageMessage = MessageMessage.generateObject(task);
-
-                try {
-                    System.out.println("UUID from XML: " + messageMessage.getDatastructure().getUuid());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println(e);
-                }
-*/
-
-                /*
-                System.out.println(" [.!.] TestMessage:\n"+reservationMessage.getHeader().getMessageTypeFromXml());
-*/
+                System.out.println(" [" + messageType + "] for UUID: " + UUID);
                 break;
 
             case "pingmessage":
 
-                System.out.println(" [" + messageType + "] Received from "+getPropertyFromXml(task, "source") );
-
+                System.out.println(" [" + messageType + "] Received from " + Helper.getSafeXmlProperty(task, "source"));
                 break;
 
             case "ListEventsMessage":
@@ -396,12 +658,6 @@ public class Receiver {
                 }
 
                 break;
-
-            case "GetAllUUIDs":
-
-                String allRecords = Helper.httpGetAllRecords(50);
-
-                System.out.println(" [.i.] GetAllUUIDs:\n" + allRecords);
 
             case "":
             default:
@@ -424,22 +680,7 @@ public class Receiver {
         //System.out.println(" [.i.] END OF WORK [************************************************************************]");
     }
 
-    private static String getSafeXmlProperty(String xml, String property)
-    {
-        String messageType ="";
-        try {
-
-            messageType = getPropertyFromXml(xml, property);
-            //System.out.println(" [i] messageType: " + messageType);
-
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
-            messageType="ERROR: No messageType found in XML: " + e;
-        }
-        return messageType;
-    }
-
-    public static String getPropertyFromXml(String xml, String property) throws
+    static String getPropertyFromXml(String xml, String property) throws
             ParserConfigurationException, SAXException, IOException {
         InputSource is = new InputSource();
         is.setCharacterStream(new StringReader(xml));
@@ -463,6 +704,20 @@ public class Receiver {
         return thisMessageType;
 
         //END of getPropertyFromXml();
+    }
+
+    static String getSafeXmlProperty(String xml, String property) {
+        String messageType = "";
+        try {
+
+            messageType = getPropertyFromXml(xml, property);
+            //System.out.println(" [i] messageType: " + messageType);
+
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+            messageType = "ERROR: No "+property+" found in XML: " + e;
+        }
+        return messageType;
     }
 
     //END of Receiver class

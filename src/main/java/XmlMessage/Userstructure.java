@@ -1,115 +1,151 @@
 package XmlMessage;
 
+import AppLogic.Helper;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "usermessage")
-@XmlType(propOrder = { "UUID", "lastname", "firstname", "phonenumber", "GSMnumber", "email", "address", "company", "type", "paymentStatus", "timestamp" })
+@XmlType(propOrder = { "userUUID", "lastName", "firstName", "phoneNumber", "email", "street", "houseNr", "city", "postalCode", "country", "company", "type", "entityVersion","active","timestamp" })
 public class Userstructure {
-	private int userId;
-	private String UUID;
-	private String lastname;
-	private String firstname;
-	private String phonenumber;
-	private String GSMnumber;
+
+	private String userUUID;
+	private String lastName;
+	private String firstName;
+	private String phoneNumber;
 	private String email;
-	private String address;
+	private String street;
+	private int houseNr;
+	private String city;
+	private int postalCode;
+	private String country;
 	private String company;
-	private String type;
-	private String paymentStatus;
+	private Helper.EntityType type;
 	private int entityVersion;
+	private int active;
 	private String timestamp;
 	
-	public Userstructure(String uUID, String lastname, String firstname, String phonenumber, String gSMnumber,
-			String email, String address, String company, String type, String paymentStatus, int entityVersion, String timestamp) {
+	public Userstructure(String userUUID, String lastName, String firstName, String phoneNumber, String email,
+						 String street, int houseNr, String city, int postalCode, String country,
+						 String company, Helper.EntityType type, int entityVersion, int active, String timestamp) {
 		super();
-		UUID = uUID;
-		this.lastname = lastname;
-		this.firstname = firstname;
-		this.phonenumber = phonenumber;
-		GSMnumber = gSMnumber;
+		this.userUUID = userUUID;
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.phoneNumber = phoneNumber;
 		this.email = email;
-		this.address = address;
+		this.street = street;
+		this.houseNr = houseNr;
+		this.city = city;
+		this.postalCode = postalCode;
+		this.country = country;
 		this.company = company;
 		this.type = type;
-		this.paymentStatus = paymentStatus;
 		this.entityVersion = entityVersion;
+		this.active = active;
 		this.timestamp = timestamp;
 	}
 	
 	public Userstructure() {
 		
 	}
-	
-	public String getUUID() {
-		return UUID;
+
+	@XmlElement(name = "userUUID")
+	public String getUserUUID() {
+		return userUUID;
 	}
-	public void setUUID(String uUID) {
-		UUID = uUID;
+	public void setUserUUID(String userUUID) {
+		this.userUUID = userUUID;
 	}
-	@XmlElement(name = "Name")
-	public String getLastname() {
-		return lastname;
+
+
+	@XmlElement(name = "lastName")
+	public String getLastName() {
+		return lastName;
 	}
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
-	@XmlElement(name = "First-name")
-	public String getFirstname() {
-		return firstname;
+
+	@XmlElement(name = "firstName")
+	public String getFirstName() {
+		return firstName;
 	}
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-	@XmlElement(name = "phone-number")
-	public String getPhonenumber() {
-		return phonenumber;
+
+	@XmlElement(name = "phoneNumber")
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
-	public void setPhonenumber(String phonenumber) {
-		this.phonenumber = phonenumber;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
-	@XmlElement(name = "GSM-number")
-	public String getGSMnumber() {
-		return GSMnumber;
-	}
-	public void setGSMnumber(String gSMnumber) {
-		GSMnumber = gSMnumber;
-	}
-	@XmlElement(name = "Email")
+
+	@XmlElement(name = "email")
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	@XmlElement(name = "Address")
-	public String getAddress() {
-		return address;
+
+	@XmlElement(name = "street")
+	public String getStreet() {
+		return street;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+	public void setStreet(String street) {
+		this.street = street;
 	}
-	@XmlElement(name = "Company")
+
+	@XmlElement(name = "houseNr")
+	public int getHouseNr() {
+		return houseNr;
+	}
+	public void setHouseNr(int houseNr) {
+		this.houseNr = houseNr;
+	}
+
+	@XmlElement(name = "city")
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	@XmlElement(name = "postalCode")
+	public int getPostalCode() {
+		return postalCode;
+	}
+	public void setPostalCode(int postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	@XmlElement(name = "country")
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	@XmlElement(name = "company")
 	public String getCompany() {
 		return company;
 	}
 	public void setCompany(String company) {
 		this.company = company;
 	}
-	@XmlElement(name = "Type")
-	public String getType() {
+
+	@XmlElement(name = "type")
+	public Helper.EntityType getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(Helper.EntityType type) {
 		this.type = type;
-	}
-	@XmlElement(name = "Payment-status")
-	public String getPaymentStatus() {
-		return paymentStatus;
-	}
-	public void setPaymentStatus(String paymentStatus) {
-		this.paymentStatus = paymentStatus;
 	}
 
 	@XmlElement(name = "entityVersion")
@@ -120,12 +156,22 @@ public class Userstructure {
 		this.entityVersion = entityVersion;
 	}
 
+	@XmlElement(name = "active")
+	public int getActive() {
+		return active;
+	}
+	public void setActive(int active) {
+		this.active = active;
+	}
 
-	@XmlElement(name = "Timestamp")
+	@XmlElement(name = "timestamp")
 	public String getTimestamp() {
 		return timestamp;
 	}
 	public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
 	}
+
+
+
 }

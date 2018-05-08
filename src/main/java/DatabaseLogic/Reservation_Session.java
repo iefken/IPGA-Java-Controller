@@ -4,40 +4,42 @@ import java.util.Objects;
 
 public class Reservation_Session extends BaseEntity{
 
-    private int reservationId;
     private String reservationUUID;
     private String userUUID;
     private String sessionUUID;
     private String type;
+    private float paid;
 
-    public Reservation_Session(int ReservationId, int entity_version, String Status, String Timestamp,
-                               String reservationUUID, String UserUUID, String SessionUUID, String Type) {
+    public Reservation_Session(int ReservationId, int entity_version, int active, String Timestamp,
+                               String reservationUUID, String UserUUID, String SessionUUID, String Type, float paid) {
 
-        super(ReservationId,entity_version,Status, Timestamp);
+        super(ReservationId,entity_version,active, Timestamp);
 
-        this.reservationId = ReservationId;
         this.reservationUUID = reservationUUID;
         this.userUUID = UserUUID;
         this.sessionUUID = SessionUUID;
         this.type = Type;
+        this.paid = paid;
     }
-    public Reservation_Session(int ReservationId, String reservationUUID, String UserUUID, String SessionUUID, String Type) {
+    public Reservation_Session(int ReservationId, String reservationUUID, String UserUUID, String SessionUUID, String Type, float paid) {
 
         //super(ReservationId,entity_version,Status, Timestamp);
 
-        this.reservationId = ReservationId;
         this.reservationUUID = reservationUUID;
         this.userUUID = UserUUID;
         this.sessionUUID = SessionUUID;
         this.type = Type;
+        this.paid = paid;
     }
 
     public int getReservationId() {
-        return reservationId;
+        // get id from inherited class
+        return this.getEntityId();
     }
     public void setReservationId(int reservationId) {
-        this.reservationId = reservationId;
+        this.setEntityId(reservationId);
     }
+
 
     public String getReservationUUID() {
         return reservationUUID;
@@ -67,32 +69,11 @@ public class Reservation_Session extends BaseEntity{
         this.type = type;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Reservation_Session)) return false;
-        if (!super.equals(o)) return false;
-        Reservation_Session that = (Reservation_Session) o;
-        return Objects.equals(getReservationUUID(), that.getReservationUUID()) &&
-                Objects.equals(getUserUUID(), that.getUserUUID()) &&
-                Objects.equals(getSessionUUID(), that.getSessionUUID()) &&
-                Objects.equals(getType(), that.getType());
+    public float getPaid() {
+        return paid;
+    }
+    public void setPaid(float paid) {
+        this.paid = paid;
     }
 
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(super.hashCode(), getReservationUUID(), getUserUUID(), getSessionUUID(), getType());
-    }
-
-    @Override
-    public String toString() {
-        return "Reservation_Session{" +
-                "reservationUUID='" + reservationUUID + '\'' +
-                ", userUUID='" + userUUID + '\'' +
-                ", sessionUUID='" + sessionUUID + '\'' +
-                ", type='" + type + '\'' +
-                ", '" + super.toString() + '\'' +
-                '}';
-    }
 }

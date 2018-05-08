@@ -76,7 +76,7 @@ public class Sender {
 
         String xmlTotalMessage = "";
         String message = "";
-        String description = "Standard description set in sendMessage2()";
+        String description = "insertUuidRecord() method in Sender.java";
 
         //String newUUID = "";
 
@@ -183,6 +183,7 @@ public class Sender {
         }
 
     }
+/*
 
     //4=updateUuidRecordOnChanged
     // for changing the Entity_version of a certain record // doesn't seem to work yet
@@ -198,7 +199,7 @@ public class Sender {
 
         //Process xml
 
-        xmlTotalMessage = Helper.getXmlForReservation(messageType, description, Source_type, reservationId, reservationUUID, userUUID, sessionUUID,Entity_version);
+        xmlTotalMessage = Helper.getXmlForReservation(description, Source_type, reservationId, reservationUUID, userUUID, sessionUUID,Entity_version);
         //System.out.println("Generated XML in send reservation message: " + xmlTotalMessage);
 
         //Send message
@@ -207,6 +208,7 @@ public class Sender {
 
 
     }
+*/
 
 
     //all messages come here to effectively send their message to our RabbitMQ
@@ -231,6 +233,7 @@ public class Sender {
         Channel channel = connection.createChannel();
 
         //publish to exchange
+        /*
         try {
 
             channel.basicPublish(Helper.EXCHANGE_NAME, "", null, xmlMessage.getBytes());
@@ -241,22 +244,21 @@ public class Sender {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        */
         //publish to channel
-/*
 
         try {
             channel.basicPublish("", TASK_QUEUE_NAME, null, xmlMessage.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
-*/
 
         channel.close();
         connection.close();
 
-        return " [.x.] Sending to exchange:   '" + Helper.EXCHANGE_NAME + "' @ '" + Helper.getCurrentDateTimeStamp() + "' message with '" + xmlMessage.length()+"' characters.";
+        //return " [.x.] Sending to exchange:   '" + Helper.EXCHANGE_NAME + "' @ '" + Helper.getCurrentDateTimeStamp() + "' message with '" + xmlMessage.length()+"' characters.";
 
-        //return " [x] Sending to queue:   '" + TASK_QUEUE_NAME + "' message with length: '" + xmlMessage.length() + "'";
+        return " [x] Sending to queue:   '" + TASK_QUEUE_NAME + "' message with length: '" + xmlMessage.length() + "'";
 
         //channel.exchangeDeclare(EXCHANGE_NAME, "fanout"); // other options: direct, topic, headers and fanout
         //channel.queueDeclare(TASK_QUEUE_NAME, false, false, false, null);
@@ -297,5 +299,7 @@ public class Sender {
 
 
     }
+
+
 
 }

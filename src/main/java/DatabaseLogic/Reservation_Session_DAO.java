@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 
-public class Reservation_Session_DAO extends BaseDAO {
+public class Reservation_Session_DAO extends BaseEntityDAO {
 
     //CRUD Statements
 
@@ -15,33 +15,34 @@ public class Reservation_Session_DAO extends BaseDAO {
 
     public int insertIntoReservation_Session(Reservation_Session reservation_session) throws SQLException {
 
-        BaseEntity newBaseEntity = new BaseEntity(reservation_session.getEntityId(), reservation_session.getEntity_version(), reservation_session.getStatus(), reservation_session.getTimestamp());
+        BaseEntity newBaseEntity = new BaseEntity(reservation_session.getEntityId(), reservation_session.getEntityVersion(), reservation_session.getActive(), reservation_session.getTimestamp());
 
         //execute baseEntity Insert
-        int callbackInsertedInt = BaseEntityDAO.insertIntoBaseEntity(newBaseEntity);
+        int callbackInsertedInt = newBaseEntity.getEntityId();
 
         if (reservation_session.getEntityId()!=0 && callbackInsertedInt != reservation_session.getEntityId()) {
             throw new SQLException("ERROR 05: Given id(" + reservation_session.getEntityId() + ") does not correspond to retreived id(" + callbackInsertedInt + ")!");
         }
 
-        System.out.println("TEST: Given id(" + reservation_session.getEntityId() + ") retreived id(" + callbackInsertedInt + ")!");
+        //System.out.println("TEST: Given id(" + reservation_session.getEntityId() + ") retreived id(" + callbackInsertedInt + ")!");
         PreparedStatement preparedStatement = null;
         String sqlQuery = "";
 
         //sqlQuery = "INSERT INTO PlanningDB.Reservation_Session (`reservationId`, `reservationUUID`, `sessionUUID`, `userUUID`) VALUES(\"" + callbackInsertedInt + "\",\"" + reservation_session.getReservationUUID() + "\",\"" + reservation_session.getSessionUUID() + "\",\"" + reservation_session.getUserUUID() + "\");";
-        sqlQuery = "INSERT INTO planningdb.reservation_session (`reservationId`, `reservationUUID`, `sessionUUID`, `userUUID`) VALUES(" + callbackInsertedInt + ",\"" + reservation_session.getReservationUUID() + "\",\"" + reservation_session.getSessionUUID() + "\",\"" + reservation_session.getUserUUID() + "\");";
+        sqlQuery = "INSERT INTO PlanningDB.Reservation_Session (`idReservationSession`, `reservationUUID`, `sessionUUID`, `userUUID`) VALUES(" + callbackInsertedInt + ",\"" + reservation_session.getReservationUUID() + "\",\"" + reservation_session.getSessionUUID() + "\",\"" + reservation_session.getUserUUID() + "\");";
         //INSERT INTO `PlanningDB`.`Reservation_Session` (`idReservation`, `reservationUUID`, `sessionUUID`, `userUUID`) VALUES (NULL, NULL, NULL, NULL);
 
-        System.out.println("sqlQuery: "+sqlQuery);
+        //System.out.println("sqlQuery: "+sqlQuery);
 
         int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
-        System.out.println("insertSucces: "+insertSucces+", callbackInsertedInt: "+callbackInsertedInt);
-        return insertSucces;
+        //System.out.println("insertSucces: "+insertSucces+", callbackInsertedInt: "+callbackInsertedInt);
+        return callbackInsertedInt;
 
     }
 
     //READ
 
+/*
 
     public ArrayList<Reservation_Session> getAllReservation_Sessions() {
         ResultSet rs = null;
@@ -80,7 +81,7 @@ public class Reservation_Session_DAO extends BaseDAO {
             }
 
             while (rs.next()) {
-                sessionReservationsList.add(new Reservation_Session(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8)));
+                sessionReservationsList.add(new Reservation_Session(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8)));
             }
 
             return sessionReservationsList;
@@ -90,6 +91,7 @@ public class Reservation_Session_DAO extends BaseDAO {
             throw new RuntimeException(e.getMessage());
         }
     }
+*/
 
     //UPDATE
 
