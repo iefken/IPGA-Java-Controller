@@ -112,7 +112,7 @@ public interface Helper {
         String url = "http://" + HOST_NAME_LINK + ":8010/public/index.php/insertUuidRecord";
         String json = myLocalUUID_insertUuidRecordObject.toJSONString();
 
-        System.out.println("json to be sent for httpPostInsertUuidRecord: " + json);
+        //System.out.println("json to be sent for httpPostInsertUuidRecord: " + json);
 
         String myLocalUUID_Response_JSON_String = doHttpRequest(url, json, "post");
 

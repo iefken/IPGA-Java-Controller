@@ -7,43 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="82177a5e-8973-45d5-9e84-1447e337bd45" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db-models/Planning-DB-v1.1.mwb" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/Planning-DB-v1.1.mwb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db-models/Planning-DB-v1.1.mwb.bak" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/Planning-DB-v1.1.mwb.bak" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/AppLogic/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AppLogic/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/AppLogic/Sender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AppLogic/Sender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event_DAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/User_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DatabaseLogic/User_DAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationStructure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationStructure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/XmlMessage/SessionStructure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/SessionStructure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/AppLogic/Helper$EntityType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AppLogic/Helper$EntityType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/AppLogic/Helper$SourceType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AppLogic/Helper$SourceType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/AppLogic/Helper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AppLogic/Helper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/AppLogic/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AppLogic/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/AppLogic/Receiver.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AppLogic/Receiver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/AppLogic/Sender.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AppLogic/Sender.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/BaseEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/BaseEntity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/BaseEntityDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/BaseEntityDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/Event_DAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/Event_DAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/Reservation_Event.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/Reservation_Event.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/Reservation_Event_DAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/Reservation_Event_DAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/Reservation_Session.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/Reservation_Session.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/Reservation_Session_DAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/Reservation_Session_DAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/Session_DAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/Session_DAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/XmlMessage/ReservationStructure.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/XmlMessage/ReservationStructure.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/XmlMessage/SessionStructure.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/XmlMessage/SessionStructure.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -55,7 +20,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.761735">
+    <splitter split-orientation="horizontal" split-proportion="0.55910987">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="Userstructure.java" pinned="false" current-in-tab="false">
@@ -109,8 +74,8 @@
           <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Main.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="529">
-                  <caret line="265" column="91" selection-start-line="265" selection-start-column="91" selection-end-line="265" selection-end-column="91" />
+                <state relative-caret-position="-2504">
+                  <caret line="244" lean-forward="true" selection-start-line="244" selection-end-line="244" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -118,23 +83,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/README.md">
-              <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-                <state split_layout="SPLIT">
-                  <first_editor relative-caret-position="1921">
-                    <caret line="113" lean-forward="true" selection-start-line="113" selection-end-line="113" />
-                  </first_editor>
-                  <second_editor />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Sender.java" pinned="false" current-in-tab="false">
+          <file leaf-file-name="Sender.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Sender.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="138">
-                  <caret line="214" column="25" selection-start-line="214" selection-start-column="25" selection-end-line="214" selection-end-column="25" />
+                <state relative-caret-position="34">
+                  <caret line="22" column="25" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
                 </state>
               </provider>
             </entry>
@@ -142,11 +95,20 @@
           <file leaf-file-name="Receiver.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2688">
-                  <caret line="542" column="97" selection-start-line="542" selection-start-column="97" selection-end-line="542" selection-end-column="97" />
+                <state relative-caret-position="546">
+                  <caret line="612" column="130" selection-start-line="612" selection-start-column="130" selection-end-line="612" selection-end-column="130" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="DatabaseProperties.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseProperties.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="34">
+                  <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
                 </state>
               </provider>
             </entry>
@@ -158,8 +120,8 @@
           <file leaf-file-name="Reservation_Session_DAO.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="457">
-                  <caret line="37" column="10" selection-start-line="37" selection-start-column="10" selection-end-line="37" selection-end-column="10" />
+                <state relative-caret-position="338">
+                  <caret line="36" selection-start-line="36" selection-end-line="36" />
                 </state>
               </provider>
             </entry>
@@ -185,8 +147,8 @@
           <file leaf-file-name="Receiver.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="295">
-                  <caret line="593" column="98" selection-start-line="593" selection-start-column="98" selection-end-line="593" selection-end-column="98" />
+                <state relative-caret-position="1383">
+                  <caret line="617" selection-start-line="617" selection-end-line="617" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -208,11 +170,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="Helper.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="137">
-                  <caret line="39" column="73" selection-start-line="39" selection-start-column="73" selection-end-line="39" selection-end-column="73" />
+                <state relative-caret-position="173">
+                  <caret line="103" column="144" selection-start-line="103" selection-start-column="144" selection-end-line="103" selection-end-column="144" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="method#httpGetAllRecords#0;class#Helper#0" />
@@ -239,11 +201,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+          <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Main.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="401">
-                  <caret line="260" column="37" lean-forward="true" selection-start-line="260" selection-start-column="37" selection-end-line="261" selection-end-column="32" />
+                <state relative-caret-position="316">
+                  <caret line="405" column="56" selection-start-line="405" selection-start-column="56" selection-end-line="405" selection-end-column="56" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -254,8 +216,8 @@
           <file leaf-file-name="BaseEntityDAO.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-79">
-                  <caret line="269" column="21" selection-start-line="269" selection-start-column="21" selection-end-line="269" selection-end-column="21" />
+                <state relative-caret-position="482">
+                  <caret line="334" selection-start-line="334" selection-end-line="334" />
                 </state>
               </provider>
             </entry>
@@ -284,19 +246,21 @@
       <find>getLocal</find>
       <find>getloc</find>
       <find>insertS</find>
-      <find />
-      <find />
-      <find />
-      <find />
+      <find>case &quot;2</find>
+      <find>getting u</find>
+      <find>case &quot;10</find>
+      <find>ady exists on</find>
       <find>getxmlf</find>
-      <find />
+      <find>[.i.] user</find>
       <find>sessionUUID:</find>
-      <find />
-      <find>selectR</find>
-      <find />
+      <find>propertiesToSelect[0] = &quot;entity</find>
+      <find>case &quot;e</find>
       <find>createu</find>
-      <find />
+      <find>case &quot;r</find>
+      <find>selectR</find>
       <find>type</find>
+      <find>reserv</find>
+      <find>UUID al</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -321,12 +285,12 @@
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/XmlMessage/SessionStructure.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Session.java" />
-        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" />
         <option value="$PROJECT_DIR$/src/main/java/AppLogic/Main.java" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java" />
       </list>
     </option>
   </component>
@@ -375,13 +339,6 @@
               <item name="PLANNING" type="462c0819:PsiDirectoryNode" />
               <item name="out" type="462c0819:PsiDirectoryNode" />
               <item name="artifacts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PLANNING" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
-              <item name="cli_java_receiver_planning_jar" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
@@ -538,12 +495,12 @@
       <option name="presentableId" value="Default" />
       <updated>1525702215899</updated>
       <workItem from="1525702219584" duration="16563000" />
-      <workItem from="1525777474857" duration="27670000" />
+      <workItem from="1525777474857" duration="30613000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43017000" />
+    <option name="totallyTimeSpent" value="45960000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3528" y="-8" width="1936" height="1056" extended-state="6" />
@@ -560,7 +517,7 @@
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4989339" weight="0.34204793" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49946696" weight="0.21023965" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.102878466" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23347548" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -772,13 +729,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Sender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="214" column="25" selection-start-line="214" selection-start-column="25" selection-end-line="214" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="245">
@@ -795,13 +745,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="93" selection-start-line="44" selection-end-line="94" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-79">
-          <caret line="269" column="21" selection-start-line="269" selection-start-column="21" selection-end-line="269" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -867,23 +810,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="37" column="10" selection-start-line="37" selection-start-column="10" selection-end-line="37" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2688">
-          <caret line="542" column="97" selection-start-line="542" selection-start-column="97" selection-end-line="542" selection-end-column="97" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event_DAO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="423">
@@ -891,10 +817,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="1921">
+            <caret line="113" lean-forward="true" selection-start-line="113" selection-end-line="113" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="482">
+          <caret line="334" selection-start-line="334" selection-end-line="334" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="39" column="73" selection-start-line="39" selection-start-column="73" selection-end-line="39" selection-end-column="73" />
+        <state relative-caret-position="173">
+          <caret line="103" column="144" selection-start-line="103" selection-start-column="144" selection-end-line="103" selection-end-column="144" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#httpGetAllRecords#0;class#Helper#0" />
@@ -911,23 +861,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="529">
-          <caret line="265" column="91" selection-start-line="265" selection-start-column="91" selection-end-line="265" selection-end-column="91" />
+        <state relative-caret-position="546">
+          <caret line="612" column="130" selection-start-line="612" selection-start-column="130" selection-end-line="612" selection-end-column="130" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="1921">
-            <caret line="113" lean-forward="true" selection-start-line="113" selection-end-line="113" />
-          </first_editor>
-          <second_editor />
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2504">
+          <caret line="244" lean-forward="true" selection-start-line="244" selection-end-line="244" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseProperties.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Sender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="22" column="25" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
         </state>
       </provider>
     </entry>

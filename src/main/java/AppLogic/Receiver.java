@@ -540,11 +540,9 @@ public class Receiver {
 
                 if (uuidExists) {
 
-                    System.out.println("UUID already exists in our PlanningDB table:\nReservation");
+                    System.out.println("UUID already exists in our PlanningDB table:\n");
 
                     // 2.2. User record update
-
-                    System.out.println("UUID already exists in:");
 
                     if (sessionUUID == "false") {
 
@@ -560,7 +558,7 @@ public class Receiver {
                             e.printStackTrace();
                         }
                         */
-                        System.out.println("Reservation_Event");
+                        System.out.println("Reservation_Event\n");
                     } else {
 
                         // Prepare new reservation_session object for sending to database
@@ -595,6 +593,13 @@ public class Receiver {
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
+                        // insertUuidRecord
+
+                        try {
+                            Sender.insertUuidRecord("", messageReservationInsertReturner, thisEntityType, Source_type, eventUUID);
+                        } catch (IOException | TimeoutException | JAXBException e) {
+                            e.printStackTrace();
+                        }
                     } else {
 
                         try {
@@ -602,16 +607,14 @@ public class Receiver {
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
+                        // insertUuidRecord
+
+                        try {
+                            Sender.insertUuidRecord("", messageReservationInsertReturner, thisEntityType, Source_type, sessionUUID);
+                        } catch (IOException | TimeoutException | JAXBException e) {
+                            e.printStackTrace();
+                        }
                     }
-
-                    // insertUuidRecord
-
-                    try {
-                        Sender.insertUuidRecord("", messageReservationInsertReturner, thisEntityType, Source_type, eventUUID);
-                    } catch (IOException | TimeoutException | JAXBException e) {
-                        e.printStackTrace();
-                    }
-
                 }
 
                 break;
