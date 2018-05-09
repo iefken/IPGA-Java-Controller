@@ -48,7 +48,6 @@ public class SessionStructure {
 		
 	}
 
-
 	@XmlElement(name = "sessionUUID")
 	public String getSessionUUID() {
 		return sessionUUID;

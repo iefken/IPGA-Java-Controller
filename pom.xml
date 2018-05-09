@@ -25,12 +25,6 @@
     <dependencies>
 
 
-        <!--RabbitMQ dependencies
-
-        compile(“com.rabbitmq:amqp-client:4.0.2")
-        compile(“org.slf4j:slf4j-api:1.7.21”)
-        compile(“org.slf4j:slf4j-simple:1.7.22")
-        -->
         <dependency>
             <groupId>com.rabbitmq</groupId>
             <artifactId>amqp-client</artifactId>
@@ -104,13 +98,6 @@
             <version>1.7.25</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/net.sf.json-lib/json-lib
-        <dependency>
-            <groupId>net.sf.json-lib</groupId>
-            <artifactId>json-lib</artifactId>
-            <version>2.4</version>
-        </dependency>-->
-
         <!-- json-lib.sourceforge.net/dependencies/html -->
         <dependency>
             <groupId>oro</groupId>
@@ -126,20 +113,6 @@
         </dependency>
 
 
-        <!-- https://mvnrepository.com/artifact/org.json/json
-
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20180130</version>
-        </dependency>
-        <dependency>
-            <groupId>fr.matthieu-vergne</groupId>
-            <artifactId>ioutils-core</artifactId>
-            <version>1.0</version>
-        </dependency>
-        -->
-
         <!-- github.com/com.google.code.gson/gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -153,6 +126,27 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>6.0.6</version>
         </dependency>
+
+        <!-- Google calendar API dependencies: https://developers.google.com/calendar/quickstart/java -->
+
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.23.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.oauth-client</groupId>
+            <artifactId>google-oauth-client-jetty</artifactId>
+            <version>1.23.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-calendar</artifactId>
+            <version>v3-rev305-1.23.0</version>
+        </dependency>
+
 
     </dependencies>
 </project>

@@ -29,31 +29,23 @@ public interface Helper {
     String HOST_NAME_LINK = "10.3.50.38";
     int PORT_NUMBER = 5672;
 
-
     //For setting CLI options in main
     static String[] getOptions() {
 
         //Add CLI options here (a.b. : a: choice, b: sort of message
         String[] options = {
-                "![01.V] Create new User without UUID (Front-End Call)",
-                "![02.V] Create new Event without UUID (Front-End Call)",
-                "![03.V] Create new Session without UUID (Front-End Call)",
-                "![04.V] Create new Reservation_Event: Add User to Event",
-                "![05.V] Create new Reservation_Session: Add User to Session",
-                "0[06.x] Create new User with UUID (Everyone who wants User)",
-                "x[07.x] Update Event (Everyone with Event)",
-                "x[08.x] Update Session (UpdateUuidRecordVersion,SessionMessage)",
-                "x[09.x] Update User (UpdateUuidRecordVersion,UserMessage)",
-                "![10.V] Create new Event with UUID (Everyone who wants Event)",
-                "![11.V] Create new Session with UUID (Everyone who wants Session)",
-                "[12.V] Get all UUID's from UUID manager",
-                "[13.x] Create new User without UUID",
-                "[14.1.old.v] New Reservation_Session object without UUID",
-                "[15.2.old.v] New Reservation_Session object with UUID: after create / update entity: normally when a new message from another team is received",
-                "[16.1.old.v] New Session object without UUID",
-                "[17.2.old.v] New Session object with UUID: after create / update entity:  normally when a new message from another team is received",
-                "[18.3.old.v] Alter existing entity and update UUID mgr: update event, update session, add User to session,...",
-                "[19.4.old.v] Alter record directly in UUID (select on UUID and SOURCE)"
+                "+[01.V] Create new User without UUID (Front-End Call)",
+                "+[02.V] Create new Event without UUID (Front-End Call)",
+                "+[03.V] Create new Session without UUID (Front-End Call)",
+                "+[04.V] Create new Reservation_Event: Add User to Event",
+                "+[05.V] Create new Reservation_Session: Add User to Session",
+                "+[06.V] Get all UUID's from UUID manager",
+                "x[07.V] updateUuidRecordVersion",
+                "x[08.V] updateUuidRecordVersionB",
+                "o[09.x] Google calendar tests",
+                "[10.x] /",
+                "[11.x] /New Session with UUID",
+                "[12.x] /New Reservation_Session with UUID"
 
         };
         return options;
@@ -212,6 +204,7 @@ public interface Helper {
 
 
     }
+
 
 
     // User: (params) => XML
@@ -376,7 +369,6 @@ public interface Helper {
 
         }
         type = Helper.EntityType.valueOf(getSafeXmlProperty(xmlMessage, "type"));
-        System.out.println(type);
         if (type == null) {
 
             System.out.println(" [!!!] ERROR: No type found in XML: ");
@@ -415,6 +407,8 @@ public interface Helper {
         }
 
     }
+
+
 
     // Session: (params) => XML
     static String getXmlForNewSession(String xmlHeaderDescription, SourceType Source_type, String sessionUUID, String eventUUID, String sessionName, int maxAttendees, String description, String summary, String location, String speaker, String dateTimeStart, String dateTimeEnd, String type, float price, int entityVersion, int active) throws JAXBException {
@@ -468,6 +462,13 @@ public interface Helper {
                 allGood = false;
             }
         }
+        eventUUID = getSafeXmlProperty(xmlMessage, "eventUUID");
+        if (eventUUID == "false") {
+
+                System.out.println(" [!!!] ERROR: No eventUUID found in XML: ");
+                allGood = false;
+
+        }
         sessionName = getSafeXmlProperty(xmlMessage, "sessionName");
         if (sessionName == "false") {
 
@@ -480,9 +481,11 @@ public interface Helper {
             maxAttendees = Integer.parseInt(getSafeXmlProperty(xmlMessage, "maxAttendees"));
         } catch (NumberFormatException e) {
             e.printStackTrace();
+            System.out.println(" [!!!] ERROR(intc): No maxAttendees found in XML: ");
+            allGood = false;
         }
 
-        if (maxAttendees == 0) {
+        if (maxAttendees < 0) {
 
             System.out.println(" [!!!] ERROR: No maxAttendees found in XML: ");
             allGood = false;
@@ -569,6 +572,7 @@ public interface Helper {
         sessionObject = new Session(0, entityVersion, active, timestamp, sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, location, speaker, dateTimeStart, dateTimeEnd, type, price);
         return sessionObject;
     }
+
 
 
     // Event: (params) => XML
@@ -687,10 +691,16 @@ public interface Helper {
             allGood = false;
 
         }
-        price = Float.parseFloat(getSafeXmlProperty(xmlMessage, "price"));
-        if (price == 0) {
-
+        try {
+            price = Float.parseFloat(getSafeXmlProperty(xmlMessage, "price"));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
             System.out.println(" [!!!] ERROR: No price found in XML: ");
+            allGood = false;
+        }
+        if (price < 0) {
+
+            System.out.println(" [!!!] ERROR: Negative price found in XML: ");
             allGood = false;
 
         }
@@ -719,6 +729,7 @@ public interface Helper {
         eventObject = new Event(0, entityVersion, active, timestamp, eventUUID, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, type, price);
         return eventObject;
     }
+
 
 
     // Reservation_Session: (params) => XML
@@ -853,6 +864,7 @@ public interface Helper {
 
         return reservationSessionObject;
     }
+
 
 
     // Reservation_Event: (params) => XML
@@ -1019,73 +1031,6 @@ public interface Helper {
         //System.out.println("xmlTotalMessage: "+xmlTotalMessage);
         return xmlTotalMessage;
     }
-
-/*
-
-    static Reservation_Event getReservation_EventObjectFromXmlMessage(String xmlMessage) {
-
-        boolean allGood = true;
-        Reservation_Event reservation_event = null;
-
-        // xmlMessage parsing
-        String reservationUUID = "false";
-        reservationUUID = getSafeXmlProperty(xmlMessage, "reservationUUID");
-        if (reservationUUID == "false") {
-            reservationUUID = getPropertyFromXml(xmlMessage, "UUID");
-            if (reservationUUID == "false") {
-
-                System.out.println(" [!!!] ERROR: No reservationUUID or UUID found in XML... Looking for UUID...");
-
-                allGood = false;
-            }
-        }
-
-        userUUID = getSafeXmlProperty(task, "userUUID");
-        if (userUUID == "false") {
-
-            System.out.println(" [!!!] ERROR: No userUuid found in XML");
-            allGood = false;
-        }
-
-        sessionUUID = getSafeXmlProperty(task, "sessionUUID");
-        if (sessionUUID == "false") {
-
-            eventUUID = getSafeXmlProperty(task, "eventUUID");
-            if (eventUUID == "false") {
-                System.out.println(" [!!!] ERROR: No sessionUUID or eventUUID found in XML: ");
-                allGood = false;
-            }
-        }
-
-        int active = getSafeXmlProperty(task, "active");
-        String sessionName = getSafeXmlProperty(task, "sessionName");
-        String maxAttendees = getSafeXmlProperty(task, "maxAttendees");
-        String dateTimeStart = getSafeXmlProperty(task, "dateTimeStart");
-        String dateTimeEnd = getSafeXmlProperty(task, "dateTimeEnd");
-        String speaker = getSafeXmlProperty(task, "speaker");
-        String local = getSafeXmlProperty(task, "local");
-        String type = getSafeXmlProperty(task, "type");
-
-        int MaxAttendees = 0;
-        if (sessionName == "false" || maxAttendees == "false" || dateTimeStart == "false" || dateTimeEnd == "false" || speaker == "false" || local == "false" || type == "false") {
-            allGood = false;
-        } else {
-            MaxAttendees = Integer.parseInt(maxAttendees);
-        }
-
-        System.out.println(" [.i.] " + messageType + ": userUUID:" + userUUID);
-        if (sessionUUID != "") {
-
-            System.out.println(" [.i.] " + messageType + ": sessionUUID:" + sessionUUID);
-        } else {
-
-            System.out.println(" [.i.] " + messageType + ": eventUUID:" + eventUUID);
-        }
-
-        Reservation_Event reservation_event = new Reservation_Event(0, entity_version, active, Helper.getCurrentDateTimeStamp(), eventUUID, eventName, MaxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, type, price);
-        return reservation_event;
-    }
-*/
 
 
     static String getPropertyFromXml(String xml, String property) throws

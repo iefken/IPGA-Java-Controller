@@ -24,18 +24,15 @@ public class Session_DAO extends BaseEntityDAO {
             throw new SQLException("ERROR 05: Given id(" + session.getEntityId() + ") does not correspond to retreived id(" + callbackInsertedInt + ")!");
         }
 
-        System.out.println("TEST: Given id(" + session.getEntityId() + ") retreived id(" + callbackInsertedInt + ")!");
         PreparedStatement preparedStatement = null;
         String sqlQuery = "";
 
         sqlQuery = "INSERT INTO PlanningDB.Session (`idSession`, `sessionUUID`, `eventUUID`, `sessionName`, `maxAttendees`, `description`, `summary`, `location`, `speaker`, `dateTimeStart`, `dateTimeEND`, `type`, `price`) " +
                 "VALUES(" + callbackInsertedInt + ",\"" + session.getSessionUUID() + "\",\"" + session.getEventUUID() + "\",\"" + session.getSessionName() + "\"," + session.getMaxAttendees() + ",\"" + session.getDescription() + "\",\"" + session.getSummary() + "\",\"" + session.getLocation() + "\",\"" + session.getSpeaker() + "\",\"" + session.getDateTimeStart() + "\",\"" + session.getDateTimeEnd() + "\",\"" + session.getType() + "\",\"" + session.getPrice() + "\");";
 
-        //INSERT INTO `PlanningDB`.`Session` (`idSession`, `sessionUUID`, `eventUUID`, `sessionName`, `maxAttendees`, `dateTimeStart`, `dateTimeEND`, `speaker`, `local`, `type`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-        System.out.println("sqlQuery: "+sqlQuery);
-
+        //System.out.println("sqlquery: "+sqlQuery);
         int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
-        System.out.println("insertSucces: "+insertSucces+", callbackInsertedInt: "+callbackInsertedInt);
+
         return callbackInsertedInt;
 
     }

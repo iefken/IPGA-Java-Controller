@@ -22,17 +22,15 @@ public class Event_DAO extends BaseEntityDAO{
                 throw new SQLException("ERROR 05: Given id(" + event.getEntityId() + ") does not correspond to retreived id(" + callbackInsertedInt + ")!");
             }
 
-            System.out.println("TEST: Given id(" + event.getEntityId() + ") retreived id(" + callbackInsertedInt + ")!");
             PreparedStatement preparedStatement = null;
             String sqlQuery = "";
 
             sqlQuery = "INSERT INTO PlanningDB.Event (`idEvent`, `eventUUID`, `eventName`, `maxAttendees`, `description`, `summary`, `location`,`contactPerson`,`dateTimeStart`,`dateTimeEnd`, `type`, `price`) VALUES (" + callbackInsertedInt + ",\"" + event.getEventUUID() + "\",\"" + event.getEventName() + "\",\"" + event.getMaxAttendees() + "\",\"" + event.getDescription() + "\",\"" + event.getSummary() + "\",\"" + event.getLocation() + "\",\"" + event.getContactPerson() + "\",\"" + event.getDateTimeStart() + "\",\"" + event.getDateTimeEnd()+ "\",\"" + event.getType() + "\",\""+ event.getPrice() + "\");";
 
             //INSERT INTO `PlanningDB`.`Session` (`idSession`, `sessionUUID`, `eventUUID`, `sessionName`, `maxAttendees`, `dateTimeStart`, `dateTimeEND`, `speaker`, `local`, `type`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-            System.out.println("sqlQuery: "+sqlQuery);
 
             int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
-            System.out.println("insertSucces: "+insertSucces+", callbackInsertedInt: "+callbackInsertedInt);
+
             return callbackInsertedInt;
 
         }

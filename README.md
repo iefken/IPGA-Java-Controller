@@ -21,19 +21,19 @@
 
 # 2. Installation process
 
-## 1. Get the files
+## 2.1. Get the files
 
     * git clone ssh://TODO
     * git clone https://github.com/iefken/IPGA-Java-Controller.git
 
-## 2. Open the project locally
+## 2.2. Open the project locally
 
-### 2.A When opening IntelliJ :
+### 2.2.A When opening IntelliJ :
      => Import project...
      => select 'new directory'
      => ...
  
-### 2.B When already in IntelliJ:
+### 2.2.B When already in IntelliJ:
      => File
      => New
      => Project from Existing Sources
@@ -46,23 +46,23 @@
  
      (=> maven depencies should be downloaded automatically... )
  
-## 3. Build the project locally
+## 2.3. Build the project locally
 
     Run Receiver.java for registering Receiver to server, run Main.java for a CLI sender
 
     => On error, go to Main.java and Receiver.java and manually click the 'green run'-button once...
 
-## 4. Open the project on your server
+## 2.4. Open the project on your server
 
     Make sure your the file you want to push to the server works local!
 
-### 4.A. Create the .jar file:
+### 2.4.A. Create the .jar file:
     Follow the directives on this link: 
     * https://www.jetbrains.com/help/idea/creating-and-running-your-first-java-application.html#package
 
 OR in IntelliJ:
 
-#### 4.A.1. Prepare the .jar:
+#### 2.4.A.1. Prepare the .jar:
 
     Select File | Project Structure.
     => New window: Under 'Project Settings' click 'Artifacts'.
@@ -70,7 +70,7 @@ OR in IntelliJ:
     => New window: Select class with main class (receiver) click oke. 
     => New window: You'll see the depencies you'll include, click oke again.
            
-#### 4.A.2. Build the .jar: 
+#### 2.4.A.2. Build the .jar: 
 
     Select Build | Build Artifacts. 
     Select theJarYouPrepared:jar and select 'Build'. 
@@ -80,30 +80,30 @@ OR in IntelliJ:
 #### ! Intermezzo ! 
     TEST your .jar file in terminal (/powershell/cmd): 'java -jar jarFileName.jar'
 
-#### 4.A.3. Make .jar runnable (OPTIONAL) 
+#### 2.4.A.3. Make .jar runnable (OPTIONAL) 
 
     Select Run | Edit Configurations. 
     => New window: click new (green +) and select JAR Application.
 
     ==> Continue only if your .jar files runs successfully (it does the same as running the file/project does/what you want it does...)
 
-### 4.B. Get the .jar on your server
+### 2.4.B. Get the .jar on your server
 
-#### 4.B.1. Put your .jar on your VCS: Git(hub)/TFS
+#### 2.4.B.1. Put your .jar on your VCS: Git(hub)/TFS
     For putting the jar easily on your server I recommend you putting it on your VCS first
-#### 4.B.2. Clone it onto your remote server
+#### 2.4.B.2. Clone it onto your remote server
     In the directory you want to push it: 
     "git clone https://github.com/your-github-nickname/your-github-project-name git-files/"
     "git clone ssh://..."
     (the 'git-files' parameter is optional for naming the new repo the github-project will be pushed in, if it's empty, your-github-project-name will be used)
 
-#### 4.B.3. Navigate to your .jar directory
+#### 2.4.B.3. Navigate to your .jar directory
     Run this line: 'java -jar yourJarFileName.jar'
 
 
 # 3.	Software dependencies
 
-    To read and change the code any IDE will do if you know how to handle the dependencies.
+    Any IDE will do to read and change the code, if you know how to handle the dependencies.
     This project uses Maven (see: https://mvnrepository.com/) as dependency manager and 
     should work on both Linux (debian) and Windows(10) when developing with the IntelliJ IDE (see: https://www.jetbrains.com/idea/). 
     ! If you have instructions for building this project in Eclipse or other IDE's I'll be glad to add them !
@@ -112,11 +112,11 @@ OR in IntelliJ:
 
 # 4.	Latest releases
 
-    08-04-18: v1.1: Receiver handles reservation messages for events and session
-    07-04-18: v1.0: Receiver handles messages event,user and session correctly
-    06-04-18: v0.9: Added create new user functionality
-    03-04-18: v0.8: Added PingMessage (*6.1*)
-    01-04-18: v0.7: Added some Data and DAO classes
+    08-05-18: v1.1: Receiver handles reservation messages for events and sessions
+    07-05-18: v1.0: Receiver handles messages for user, event and session correctly
+    06-05-18: v0.9: Receiver handles user messages
+    03-05-18: v0.8: Added PingMessage (*5.2*)
+    01-05-18: v0.7: Added some Data and DAO classes
     30-04-18: v0.6: Added CLI for testing purposes
     29-04-18: v0.5: Added .jar instructions for serverdeployment
     28-04-18: v0.4:
@@ -126,77 +126,78 @@ OR in IntelliJ:
     26-04-18: v0.2: Added HttpRequest: (1)
     24-04-18: v0.1: Sender and receiver classes functional
 
-# Happy queueing!
+Happy queueing!
 
-# 5. Readme for TFS @ ehb.be
+# 5. Extra
 
-## 1. Setup your SSH
+## 5.1. Readme for TFS @ ehb.be
 
-### 1.1. Generate a SSH key if you have not one yet
+### A. Setup your SSH
+
+#### A.1. Generate a SSH key if you have not one yet
 
     https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/
 
-#### 1.1.1. Create SSH key:
+##### A.1.1. Create SSH key:
     ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
-#### 1.1.2. start ssh-agent if not started:
+##### A.1.2. start ssh-agent if not started:
     eval $(ssh-agent -s)
 
-#### 1.1.3. Add SSH key to ssh-agent:
+##### A.1.3. Add SSH key to ssh-agent:
     ssh-add ~/.ssh/id_rsa (or any other repo/filename you may have given)
 
-### 1.2. Setup SSH key for use with your TFS:
+#### A.2. Setup SSH key for use with your TFS:
 
     https://docs.microsoft.com/en-us/vsts/git/use-ssh-keys-to-authenticate?view=vsts
 
-## 2. Clone remote repository
+### B. Clone remote repository
 
-### 2.1. Clone remote repository locally: 
+#### B.1. Clone remote repository locally: 
 
     git clone ssh://<LINK>
     git clone ssh://dttfs2017.ehb.be:22/Integration%20Project%20-%20Groep%20A/_git/MONITORING
 
     (check 'git remote -v' to make sure it you're linked to your given url)
 
-### 2.2. Checkout remote branch
+#### B.2. Checkout remote branch
     git checkout <branch_name>
     git checkout remotes/origin/DEVBranche_Ief
 
     (check 'git status' to make sure you're on your chosen branch
 
-#### ¿? Don't know your branch name ¿?
+##### ¿? Don't know your branch name ¿?
 
     Check all branches linked to ssh://<LINK> with the following command:
     git branch -a
 
     And choose the one you want to checkout
 
-### 2.3. Add local changes to next commit
+#### B.3. Add local changes to next commit
     (add files in file repository now to add them to TFS in the next commit if you want)
 
     git add --all
 
-### 2.4. Commit these local changes for next push
+#### B.4. Commit these local changes for next push
 
     git commit -m "Your commit message"
 
-### 2.5. Push your local changes to your remote branch
+#### B.5. Push your local changes to your remote branch
 
     git push origin <branch_name>
     git push origin DEVBranch_Ief
 
-# May git commit what you submit!
+May git commit what you submit!
 
-# 6. Extra
 
-## 6.1 PingMessage
+## 5.2 PingMessage
 
-### 6.1.1. Add PingSender.java, PingMessage.java and PingStructure.java to your project 
+### A. Add PingSender.java, PingMessage.java and PingStructure.java to your project 
 
     * Github: https://github.com/iefken/IPGA-Java-Controller/tree/master/src/main/java/AppLogic
     * TFS: 
     
-### 6.1.2. Add following code to parse the correct ping message to xml:
+### B. Add following code to parse the correct ping message to xml:
 
     static String getXmlForPingMessage(String messageType, SourceType Source_type) throws JAXBException {
 
@@ -213,7 +214,7 @@ OR in IntelliJ:
         return xmlTotalMessage;
     }
 
-### 6.1.3. Add following code to your Sender.java
+### C. Add following code to your Sender.java
 
 Or anywhere you want as long as you send the message to the monitor queue here
 
@@ -254,20 +255,20 @@ Or anywhere you want as long as you send the message to the monitor queue here
 
     }
 
-### 6.1.4. Add following code to your receiver.java
+### 2.D. Add following code to your receiver.java
 ! This will start a new thread !
 
  For sending PingMessage every 'timeBetweenPings' milliseconds: 
 
-        // # Send pingmessage every 'timeBetweenPings' milliseconds
+        // Send pingmessage every 'timeBetweenPings' milliseconds
         int timeBetweenPings = 5000;
 
-        // ## make new pingSender object
+        // make new pingSender object
         PingSender pingSender = new PingSender(0, Helper.SourceType.Planning, timeBetweenPings);
 
-        // ## setup new pingSender thread
+        // setup new pingSender thread
         Thread pingThread = new Thread(pingSender);
 
-        // ## start new pingSender thread
+        // start new pingSender thread
         pingThread.start();
 

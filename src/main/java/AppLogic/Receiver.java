@@ -1,7 +1,7 @@
 package AppLogic;
 
 import DatabaseLogic.*;
-import GoogleCalendarApi.Quickstart;
+import GoogleCalendarApi.*;
 import com.rabbitmq.client.*;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -18,21 +18,26 @@ import java.io.StringReader;
 import java.sql.SQLException;
 import java.util.concurrent.TimeoutException;
 
-import static GoogleCalendarApi.Quickstart.getCalendarService;
+import static AppLogic.Helper.getSafeXmlProperty;
+import static GoogleCalendarApi.GoogleCalenderApi.getCalendarService;
 
 public class Receiver {
+
+    private static int workCounter = 0;
 
     public static void main(String[] argv) throws Exception {
 
         // Set your source type here: this will determine what queue you will receive messages from!
         Helper.SourceType yourSourceType = Helper.SourceType.Planning;
 
-        System.out.println(" [ooo] _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_ [ooo]");
-        System.out.println(" [ooo] ___________________________________________________________________ [ooo]");
-        System.out.println(" [ooo] ___________________IPGA-" + ("" + yourSourceType).toUpperCase() + "-RECEIVER-v.1______________________ [ooo]");
-        System.out.println(" [ooo] ___________________________________________________________________ [ooo]");
-        System.out.println(" [ooo] -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- [ooo]");
-
+        System.out.println("_________________________________________________________________________________");
+        System.out.println("*[ooo] ******************************************************************* [ooo]*");
+        System.out.println("*[ooo] _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_ [ooo]*");
+        System.out.println("*[ooo] ___________________________________________________________________ [ooo]*");
+        System.out.println("*[ooo] ___________________IPGA-" + ("" + yourSourceType).toUpperCase() + "-RECEIVER-v.1______________________ [ooo]*");
+        System.out.println("*[ooo] ___________________________________________________________________ [ooo]*");
+        System.out.println("*[ooo] -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- [ooo]*");
+        //System.out.println("*_______________________________________________________________________________*");
 
         //uncomment for sending pingmessage in a different thread
 /*
@@ -81,9 +86,9 @@ public class Receiver {
         channel.queueBind(TASK_QUEUE_NAME, Helper.EXCHANGE_NAME, "");
 
 //        System.out.println(" [ooo] _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_ [ooo]");
-        System.out.println(" -------------------------------------------------------------------------------");
-        System.out.println(" ------ [...] Waiting with queue for messages. To exit press CTRL+C [...] ------");
-        System.out.println(" -------------------------------------------------------------------------------\n");
+        System.out.println("\n*********************************************************************************");
+        System.out.println("*       [...] Waiting with queue for messages. To exit press CTRL+C [...]       *");
+        System.out.println("*********************************************************************************\n");
 
         final Consumer consumer = new DefaultConsumer(channel) {
             @Override
@@ -94,14 +99,14 @@ public class Receiver {
                 //System.out.println("\n [x] MessageStart:\n" + message);
                 //System.out.println("\n [x] MessageEnd\n");
                 try {
+
                     doWork(message);
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
-
-                    System.out.println(" -------------------------------------------------------------------------------");
-                    System.out.println(" ------ [...] Waiting with queue for messages. To exit press CTRL+C [...] ------");
-                    System.out.println(" -------------------------------------------------------------------------------");
+                    System.out.println("\n*********************************************************************************");
+                    System.out.println("*       [...] Waiting with queue for messages. To exit press CTRL+C [...]       *");
+                    System.out.println("*********************************************************************************\n");
                 }
             }
         };
@@ -128,12 +133,18 @@ public class Receiver {
 
         // Check XML for message
 
-        System.out.println(" -------------------------------------------------------------------------------");
-        System.out.println(" [.i.] [NEW '" + messageType + "'] FROM '" + messageSource + "' @ '" + Helper.getCurrentDateTimeStamp() + "' [.i.] ");
-        System.out.println(" [.i.] Message length: '" + task.length() + "' characters [.i.]");
-        System.out.println(" -------------------------------------------------------------------------------");
+        workCounter++;
 
-        System.out.println(" -------------------------------------------------------------------------------");
+        System.out.println("_________________________________________________________________________________");
+        System.out.println("_________________________START OF MESSAGE________________________________________");
+        System.out.println("* [.i.] [NEW MESSAGE]: "+workCounter+" [TYPE]: '" + messageType + "' [FROM]: '" + messageSource + "' [.i.] ");
+        //System.out.println("* [.i.] ********* [TYPE]: '" + messageType + "' [FROM]: '" + messageSource + "' ****** [.i.] *");
+        System.out.println("* [.i.] ** [@] '" + Helper.getCurrentDateTimeStamp() + "' [MESSAGELENGTH]: '" + task.length() + "' characters ** [.i.] ");
+
+        //System.out.println("*[.i.] with length: '" + task.length() + "' characters [.i.]");
+        System.out.println("_________________________________________________________________________________");
+        System.out.println("Message content:");
+
 
         String userUUID = "", sessionUUID = "", reservationUUID = "", eventUUID = "", UUID = "";
         int entity_version = 1;
@@ -466,7 +477,7 @@ public class Receiver {
                 // get UUID's from xml
                 reservationUUID = getSafeXmlProperty(task, "reservationUUID");
                 if (reservationUUID == "false") {
-                    reservationUUID = getPropertyFromXml(task, "UUID");
+                    reservationUUID = Helper.getPropertyFromXml(task, "UUID");
                     if (reservationUUID == "false") {
 
                         System.out.println(" [!!!] ERROR: No reservationUUID or UUID found in XML... Looking for UUID...");
@@ -491,10 +502,10 @@ public class Receiver {
                         allGood = false;
                     }else{
 
-                        System.out.println("New RESERVATION_EVENT with UUID: "+eventUUID);
+                        System.out.println("New RESERVATION_EVENT for Event with UUID: "+eventUUID);
                     }
                 }else{
-                    System.out.println("New RESERVATION_SESSION with UUID: "+sessionUUID);
+                    System.out.println("New RESERVATION_SESSION for Session with UUID: "+sessionUUID);
                 }
 
                 Reservation_Event newReservation_EventObjectFromXml = null;
@@ -636,17 +647,19 @@ public class Receiver {
 
                 break;
 
-            case "TestMessage":
+            case "testmessage":
 
                 System.out.println(" [" + messageType + "] for UUID: " + UUID);
                 break;
 
             case "pingmessage":
 
-                System.out.println(" [" + messageType + "] Received from " + Helper.getSafeXmlProperty(task, "source"));
+                System.out.println(" [" + messageType + "] Received from " + getSafeXmlProperty(task, "source"));
                 break;
 
-            case "ListEventsMessage":
+            case "ListEventMessage":
+
+
 
                 //for listing your upcoming events
 
@@ -655,7 +668,7 @@ public class Receiver {
                 try {
                     com.google.api.services.calendar.Calendar service = getCalendarService();
 
-                    Quickstart.listEvents(service);
+                    GoogleCalenderApi.listEvents(service);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -677,51 +690,15 @@ public class Receiver {
             System.out.println("\n -*- END OF TASK -*-\n");
         } else {
 
-            System.out.println("\n [.!.] XML not shown... Change boolean 'showFullXMLMessage in receiver to show this.\n");
+            System.out.println("\n [.!.] XML not shown... Change boolean 'showFullXMLMessage' to show this.\n");
         }
 
+
+        System.out.println("__________________________END OF MESSAGE______________________________________");
+        System.out.println("_________________________________________________________________________________");
         //System.out.println(" [.i.] END OF WORK [************************************************************************]");
     }
 
-    static String getPropertyFromXml(String xml, String property) throws
-            ParserConfigurationException, SAXException, IOException {
-        InputSource is = new InputSource();
-        is.setCharacterStream(new StringReader(xml));
-
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
-
-        Document doc = db.parse(is);
-
-
-        NodeList nodes = doc.getElementsByTagName(property);
-
-        String thisMessageType = null;
-        try {
-            thisMessageType = nodes.item(0).getTextContent();
-        } catch (DOMException e) {
-            e.printStackTrace();
-            System.out.println(e);
-        }
-
-        return thisMessageType;
-
-        //END of getPropertyFromXml();
-    }
-
-    static String getSafeXmlProperty(String xml, String property) {
-        String messageType = "";
-        try {
-
-            messageType = getPropertyFromXml(xml, property);
-            //System.out.println(" [i] messageType: " + messageType);
-
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
-            messageType = "ERROR: No "+property+" found in XML: " + e;
-        }
-        return messageType;
-    }
 
     //END of Receiver class
 }
