@@ -39,7 +39,7 @@ public class PingSender implements Runnable {
 
         this.thisSourceType = thisSourceType;
         this.timeBetweenPings = timeBetweenPings;
-        this.numberOfPings = 5;
+        this.numberOfPings = 10;
         this.timestamp = Helper.getCurrentDateTimeStamp();
 
     }
@@ -138,7 +138,10 @@ public class PingSender implements Runnable {
                     e.printStackTrace();
                 }
 
-                System.out.println("Ping ("+i+"/"+numberOfPings+")! 'Sleeping' for '"+this.timeBetweenPings/1000+"' seconds...");
+                // Full message Ping sleeping for 'timeBetweenPings' seconds
+                // System.out.println("Ping ("+i+"/"+numberOfPings+")! 'Sleeping' for '"+this.timeBetweenPings/1000+"' seconds...");
+
+                System.out.print(".");
                 Thread.sleep(this.timeBetweenPings);
 
             } catch (InterruptedException e) {

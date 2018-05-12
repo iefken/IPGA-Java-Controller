@@ -245,7 +245,7 @@ public class Sender {
             e.printStackTrace();
         }
         */
-        //publish to channel
+        //publish to channel //queue
 
         try {
             channel.basicPublish("", TASK_QUEUE_NAME, null, xmlMessage.getBytes());

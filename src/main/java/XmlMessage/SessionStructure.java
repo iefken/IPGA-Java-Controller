@@ -5,12 +5,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.util.Objects;
 
-@XmlRootElement(name = "basemessage")
-@XmlType(propOrder = { "sessionUUID","eventUUID","sessionName", "maxAttendees", "description", "summary","location", "speaker","dateTimeStart", "dateTimeEnd", "type", "price", "entityVersion", "active", "timestamp"})
+@XmlRootElement(name = "message")
+@XmlType(propOrder = { "uuid", "eventUuid","sessionName", "maxAttendees", "description", "summary","location", "speaker","dateTimeStart", "dateTimeEnd", "sessionType", "price", "entityVersion", "active", "timestamp"})
 public class SessionStructure {
 
-	private String sessionUUID;
-	private String eventUUID;
+	private String uuid;
+	private String eventUuid;
 	private String sessionName;
 	private int maxAttendees;
 	private String description;
@@ -19,7 +19,7 @@ public class SessionStructure {
 	private String speaker;
 	private String dateTimeStart;
 	private String dateTimeEnd;
-	private String type;
+	private String sessionType;
 	private float price;
 	private int entityVersion;
 	private int active;
@@ -27,8 +27,8 @@ public class SessionStructure {
 
 	public SessionStructure(String sessionUUID,String eventUUID, String sessionName, int maxAttendees, String description, String summary, String location, String speaker, String dateTimeStart, String dateTimeEnd, String type, float price, int entityVersion, int active, String timestamp) {
 		super();
-		this.sessionUUID = sessionUUID;
-		this.eventUUID = eventUUID;
+		this.uuid = sessionUUID;
+		this.eventUuid = eventUUID;
 		this.sessionName = sessionName;
 		this.maxAttendees = maxAttendees;
 		this.description = description;
@@ -37,7 +37,7 @@ public class SessionStructure {
 		this.dateTimeEnd = dateTimeEnd;
 		this.speaker = speaker;
 		this.location = location;
-		this.type = type;
+		this.sessionType = type;
 		this.price = price;
 		this.entityVersion = entityVersion;
 		this.active = active;
@@ -48,20 +48,20 @@ public class SessionStructure {
 		
 	}
 
-	@XmlElement(name = "sessionUUID")
-	public String getSessionUUID() {
-		return sessionUUID;
+	@XmlElement(name = "uuid")
+	public String getUuid() {
+		return uuid;
 	}
-	public void setSessionUUID(String sessionUUID) {
-		this.sessionUUID = sessionUUID;
+	public void setUuid(String sessionUUID) {
+		this.uuid = sessionUUID;
 	}
 
-	@XmlElement(name = "eventUUID")
-	public String getEventUUID() {
-		return eventUUID;
+	@XmlElement(name = "eventUuid")
+	public String getEventUuid() {
+		return eventUuid;
 	}
-	public void setEventUUID(String eventUUID) {
-		this.eventUUID = eventUUID;
+	public void setEventUuid(String eventUUID) {
+		this.eventUuid = eventUUID;
 	}
 
 	@XmlElement(name = "sessionName")
@@ -128,12 +128,12 @@ public class SessionStructure {
 		this.dateTimeEnd = dateTimeEnd;
 	}
 
-	@XmlElement(name = "type")
-	public String getType() {
-		return type;
+	@XmlElement(name = "sessionType")
+	public String getSessionType() {
+		return sessionType;
 	}
-	public void setType(String type) {
-		this.type = type;
+	public void setSessionType(String type) {
+		this.sessionType = type;
 	}
 
 	@XmlElement(name = "price")
@@ -177,8 +177,8 @@ public class SessionStructure {
 				Float.compare(that.getPrice(), getPrice()) == 0 &&
 				getEntityVersion() == that.getEntityVersion() &&
 				getActive() == that.getActive() &&
-				Objects.equals(getSessionUUID(), that.getSessionUUID()) &&
-				Objects.equals(getEventUUID(), that.getEventUUID()) &&
+				Objects.equals(getUuid(), that.getUuid()) &&
+				Objects.equals(getEventUuid(), that.getEventUuid()) &&
 				Objects.equals(getSessionName(), that.getSessionName()) &&
 				Objects.equals(getDescription(), that.getDescription()) &&
 				Objects.equals(getSummary(), that.getSummary()) &&
@@ -186,21 +186,21 @@ public class SessionStructure {
 				Objects.equals(getSpeaker(), that.getSpeaker()) &&
 				Objects.equals(getDateTimeStart(), that.getDateTimeStart()) &&
 				Objects.equals(getDateTimeEnd(), that.getDateTimeEnd()) &&
-				Objects.equals(getType(), that.getType()) &&
+				Objects.equals(getSessionType(), that.getSessionType()) &&
 				Objects.equals(getTimestamp(), that.getTimestamp());
 	}
 
 	@Override
 	public int hashCode() {
 
-		return Objects.hash(getSessionUUID(), getEventUUID(), getSessionName(), getMaxAttendees(), getDescription(), getSummary(), getLocation(), getSpeaker(), getDateTimeStart(), getDateTimeEnd(), getType(), getPrice(), getEntityVersion(), getActive(), getTimestamp());
+		return Objects.hash(getUuid(), getEventUuid(), getSessionName(), getMaxAttendees(), getDescription(), getSummary(), getLocation(), getSpeaker(), getDateTimeStart(), getDateTimeEnd(), getSessionType(), getPrice(), getEntityVersion(), getActive(), getTimestamp());
 	}
 
 	@Override
 	public String toString() {
 		return "SessionStructure{" +
-				"sessionUUID='" + sessionUUID + '\'' +
-				", eventUUID='" + eventUUID + '\'' +
+				"sessionUUID='" + uuid + '\'' +
+				", eventUUID='" + eventUuid + '\'' +
 				", sessionName='" + sessionName + '\'' +
 				", maxAttendees=" + maxAttendees +
 				", description='" + description + '\'' +
@@ -209,7 +209,7 @@ public class SessionStructure {
 				", speaker='" + speaker + '\'' +
 				", dateTimeStart='" + dateTimeStart + '\'' +
 				", dateTimeEnd='" + dateTimeEnd + '\'' +
-				", type='" + type + '\'' +
+				", type='" + sessionType + '\'' +
 				", price=" + price +
 				", entityVersion=" + entityVersion +
 				", active=" + active +

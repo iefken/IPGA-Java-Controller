@@ -112,6 +112,7 @@ OR in IntelliJ:
 
 # 4.	Latest releases
 
+    10-05-18: v1.2: Main can 'mock' new user and event messages
     08-05-18: v1.1: Receiver handles reservation messages for events and sessions
     07-05-18: v1.0: Receiver handles messages for user, event and session correctly
     06-05-18: v0.9: Receiver handles user messages

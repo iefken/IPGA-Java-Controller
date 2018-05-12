@@ -4,14 +4,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "basemessage")
+@XmlRootElement(name = "message")
 
-@XmlType(propOrder = { "eventUUID","eventName", "maxAttendees", "description", "summary", "location", "contactPerson", "dateTimeStart", "dateTimeEnd", "type", "price", "entityVersion", "active", "timestamp" })
+@XmlType(propOrder = { "uuid","eventName", "maxAttendees", "description", "summary", "location", "contactPerson", "dateTimeStart", "dateTimeEnd", "eventType", "price", "entityVersion", "active", "timestamp" })
 
 
 public class EventStructure {
 
-    private String eventUUID;
+    private String uuid;
     private String eventName;
     private int maxAttendees;
     private String description;
@@ -20,7 +20,7 @@ public class EventStructure {
     private String contactPerson;
     private String dateTimeStart;
     private String dateTimeEnd;
-    private String type;
+    private String eventType;
     private float price;
     private int entityVersion;
     private int active;
@@ -31,7 +31,7 @@ public class EventStructure {
                           int entityVersion, int active, String timestamp) {
 
 
-        this.eventUUID = eventUUID;
+        this.uuid = eventUUID;
         this.eventName = eventName;
         this.maxAttendees = maxAttendees;
         this.description = description;
@@ -40,7 +40,7 @@ public class EventStructure {
         this.contactPerson = contactPerson;
         this.dateTimeStart = dateTimeStart;
         this.dateTimeEnd = dateTimeEnd;
-        this.type = type;
+        this.eventType = type;
         this.price = price;
         this.entityVersion = entityVersion;
         this.active = active;
@@ -52,12 +52,12 @@ public class EventStructure {
     }
 
 
-    @XmlElement(name = "eventUUID")
-    public String getEventUUID() {
-        return eventUUID;
+    @XmlElement(name = "uuid")
+    public String getUuid() {
+        return uuid;
     }
-    public void setEventUUID(String eventUUID) {
-        this.eventUUID = eventUUID;
+    public void setUuid(String eventUUID) {
+        this.uuid = eventUUID;
     }
 
     @XmlElement(name = "eventName")
@@ -124,12 +124,12 @@ public class EventStructure {
         this.dateTimeEnd = dateTimeEnd;
     }
 
-    @XmlElement(name = "type")
-    public String getType() {
-        return type;
+    @XmlElement(name = "eventType")
+    public String getEventType() {
+        return eventType;
     }
-    public void setType(String type) {
-        this.type = type;
+    public void setEventType(String type) {
+        this.eventType = type;
     }
 
     @XmlElement(name = "price")

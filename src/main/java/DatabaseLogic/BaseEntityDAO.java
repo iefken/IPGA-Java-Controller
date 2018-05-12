@@ -51,7 +51,7 @@ public class BaseEntityDAO extends BaseDAO{
         }catch(SQLException e){
 
             System.out.println(e.getMessage());;
-            throw new RuntimeException(e.getMessage());
+            //throw new RuntimeException(e.getMessage());
 
         }finally{
 
@@ -67,7 +67,7 @@ public class BaseEntityDAO extends BaseDAO{
 
             }
         }
-        //return runInsertQuery(sqlQuery);
+        return runInsertQuery(sqlQuery);
 
     }
 
@@ -193,7 +193,7 @@ public class BaseEntityDAO extends BaseDAO{
     //UPDATE
 
 
-    public boolean updateTablePropertyValue(String table, String property, String value, String valueType, String whereProperty, int localUserId)
+    public boolean updateTablePropertyValue(String table, String property, String value, String valueType, String whereProperty, String whereValue)
     {
         ResultSet rs = null;
         Boolean executeSucces = false;
@@ -201,9 +201,10 @@ public class BaseEntityDAO extends BaseDAO{
         if(valueType=="String")
         {
             value = "\""+value+"\"";
+            whereValue="\""+whereValue+"\"";
         }
 
-        String sql = "UPDATE PlanningDB."+table+" SET "+property+" = "+value+" WHERE "+whereProperty+" = "+localUserId+";";
+        String sql = "UPDATE PlanningDB."+table+" SET "+property+" = "+value+" WHERE "+whereProperty+" = "+whereValue+";";
         //String sql = "UPDATE PlanningDB.? SET ? = ? WHERE idUser = ?;";
 
         //System.out.println("sql: "+sql);
@@ -258,6 +259,43 @@ public class BaseEntityDAO extends BaseDAO{
 
     //DELETE
 
+    public boolean softDeleteBaseEntity(String table, int entityId)
+    {
+        ResultSet rs = null;
+        Boolean executeSucces = false;
+
+        String sql = "UPDATE PlanningDB."+table+" SET active = 0 WHERE entityId = "+entityId+";";
+        //String sql = "UPDATE PlanningDB.? SET ? = ? WHERE idUser = ?;";
+
+        //System.out.println("sql: "+sql);
+
+        PreparedStatement statement = null;
+        try {
+            if (getConnection().isClosed()) {
+                throw new IllegalStateException("ERROR 01: Connection seems to be closed...");
+            }
+            statement = getConnection().prepareStatement(sql);
+            try{
+                statement.executeUpdate();
+                return true;
+            }catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());;
+            throw new RuntimeException(e.getMessage());
+        }finally{
+            try{
+                if(statement != null)
+                    statement.close();
+            }catch(SQLException e){
+                System.out.println(e.getMessage());;
+                throw new RuntimeException("ERROR 02: Something seems to have gone wrong during closing the connection...");
+            }
+        }
+
+    }
 
 
     //OTHER

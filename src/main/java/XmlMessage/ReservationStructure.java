@@ -4,70 +4,69 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "reservationmessage")
-@XmlType(propOrder = { "reservationUUID","userUUID", "eventUUID", "sessionUUID", "type", "paid", "entityVersion", "active", "timestamp" })
+@XmlRootElement(name = "message")
+@XmlType(propOrder = { "uuid","userUuid", "eventUuid", "sessionUuid", "reservationType", "paid", "entityVersion", "active", "timestamp" })
 public class ReservationStructure {
 
 
-	private String ReservationUUID;
-	private String UserUUID;
-	private String EventUUID;
-	private String SessionUUID;
-	private String Type;
+	private String uuid;
+	private String userUuid;
+	private String eventUuid;
+	private String sessionUuid;
+	private String reservationType;
 	private float paid;
 	private int entityVersion;
 	private int active;
-	private String Timestamp;
+	private String timestamp;
 
 	public ReservationStructure(String ReservationUUID, String UserUUID, String EventUUID, String SessionUUID, String Type, float paid,int entityVersion, int active, String Timestamp) {
 
 		super();
-		this.ReservationUUID = ReservationUUID;
-		this.UserUUID = UserUUID;
-		this.EventUUID = EventUUID;
-		this.SessionUUID = SessionUUID;
-		this.Type = Type;
+		this.uuid = ReservationUUID;
+		this.userUuid = UserUUID;
+		this.eventUuid = EventUUID;
+		this.sessionUuid = SessionUUID;
+		this.reservationType = Type;
 		this.paid=paid;
 		this.entityVersion = entityVersion;
 		this.active = active;
-		this.Timestamp = Timestamp;
+		this.timestamp = Timestamp;
 	}
 
 	public ReservationStructure() {
 		
 	}
 
-
-	@XmlElement(name = "reservationUUID")
-	public String getReservationUUID() {
-		return ReservationUUID;
+	@XmlElement(name = "uuid")
+	public String getUuid() {
+		return uuid;
 	}
-	public void setReservationUUID(String reservationUUID) {
-		ReservationUUID = reservationUUID;
-	}
-
-	@XmlElement(name = "userUUID")
-	public String getUserUUID() {
-		return UserUUID;
-	}
-	public void setUserUUID(String userUUID) {
-		UserUUID = userUUID;
+	public void setUuid(String reservationUUID) {
+		uuid = reservationUUID;
 	}
 
-	@XmlElement(name = "eventUUID")
-	public String getEventUUID() {
-		return EventUUID;
+	@XmlElement(name = "userUuid")
+	public String getUserUuid() {
+		return userUuid;
 	}
-	public void setEventUUID(String eventUUID) {
-		EventUUID = eventUUID;
+	public void setUserUuid(String userUUID) {
+		userUuid = userUUID;
 	}
 
-	@XmlElement(name = "sessionUUID")
-	public String getSessionUUID() {
-		return SessionUUID;
+	@XmlElement(name = "eventUuid")
+	public String getEventUuid() {
+		return eventUuid;
 	}
-	public void setSessionUUID(String sessionUUID) {
-		SessionUUID = sessionUUID;
+	public void setEventUuid(String eventUUID) {
+		eventUuid = eventUUID;
+	}
+
+	@XmlElement(name = "sessionUuid")
+	public String getSessionUuid() {
+		return sessionUuid;
+	}
+	public void setSessionUuid(String sessionUUID) {
+		sessionUuid = sessionUUID;
 	}
 
 	@XmlElement(name = "paid")
@@ -96,18 +95,18 @@ public class ReservationStructure {
 
 	@XmlElement(name = "timestamp")
 	public String getTimestamp() {
-		return Timestamp;
+		return timestamp;
 	}
 	public void setTimestamp(String timestamp) {
-		Timestamp = timestamp;
+		this.timestamp = timestamp;
 	}
 
-	@XmlElement(name = "type")
-	public String getType() {
-		return Type;
+	@XmlElement(name = "reservationType")
+	public String getReservationType() {
+		return reservationType;
 	}
-	public void setType(String type) {
-		Type = type;
+	public void setReservationType(String reservationType) {
+		this.reservationType = reservationType;
 	}
 
 }

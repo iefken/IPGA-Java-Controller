@@ -6,28 +6,29 @@ import java.util.Objects;
 
 public class User extends BaseEntity{
 
-    private String userUUID;
+    //private String userUUID;
+    private String uuid;
     private String lastName;
     private String firstName;
     private String phoneNumber;
     private String email;
     private String street;
-    private int houseNr;
+    private String houseNr;
     private String city;
-    private int postalCode;
+    private String postalCode;
     private String country;
     private String company;
-    private Helper.EntityType type;
+    private String userType;
 
     //public enum UserType {VISITOR,EMPLOYEE,ADMIN,SPONSOR,SPEAKER}
 
 
     public User(int idUser, int Entity_version, int active, String Timestamp,
-                String userUUID, String lastname, String firstname, String phoneNumber, String email, String street, int houseNr, String city, int postalCode, String country, String company, Helper.EntityType type) {
+                String userUUID, String lastname, String firstname, String phoneNumber, String email, String street, String houseNr, String city, String postalCode, String country, String company, String type) {
 
         super(idUser, Entity_version, active,Timestamp);
 
-        this.userUUID = userUUID;
+        this.uuid = userUUID;
         this.lastName = lastname;
         this.firstName = firstname;
         this.phoneNumber = phoneNumber;
@@ -38,7 +39,7 @@ public class User extends BaseEntity{
         this.postalCode = postalCode;
         this.country = country;
         this.company = company;
-        this.type = type;
+        this.userType = type;
     }
 
     public int getIdUser() {
@@ -49,12 +50,23 @@ public class User extends BaseEntity{
         this.setEntityId(userId);
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+
+
+    /*
     public String getUserUUID() {
         return userUUID;
     }
     public void setUserUUID(String userUUID) {
         this.userUUID = userUUID;
     }
+    */
 
     public String getLastname() {
         return lastName;
@@ -70,11 +82,11 @@ public class User extends BaseEntity{
         this.firstName = firstname;
     }
 
-    public String getPhonenumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
-    public void setPhonenumber(String phonenumber) {
-        this.phoneNumber = phonenumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
@@ -105,10 +117,10 @@ public class User extends BaseEntity{
         this.street = street;
     }
 
-    public int getHouseNr() {
+    public String getHouseNr() {
         return houseNr;
     }
-    public void setHouseNr(int houseNr) {
+    public void setHouseNr(String houseNr) {
         this.houseNr = houseNr;
     }
 
@@ -119,10 +131,10 @@ public class User extends BaseEntity{
         this.city = city;
     }
 
-    public int getPostalCode() {
+    public String getPostalCode() {
         return postalCode;
     }
-    public void setPostalCode(int postalCode) {
+    public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
 
@@ -140,11 +152,11 @@ public class User extends BaseEntity{
         this.company = company;
     }
 
-    public Helper.EntityType getType() {
-        return type;
+    public String getUserType() {
+        return userType;
     }
-    public void setType(Helper.EntityType type) {
-        this.type = type;
+    public void setUserType(String type) {
+        this.userType = type;
     }
 
     @Override
@@ -153,41 +165,41 @@ public class User extends BaseEntity{
         if (!(o instanceof User)) return false;
         if (!super.equals(o)) return false;
         User user = (User) o;
-        return getHouseNr() == user.getHouseNr() &&
-                getPostalCode() == user.getPostalCode() &&
-                Objects.equals(getUserUUID(), user.getUserUUID()) &&
+        return Objects.equals(getUuid(), user.getUuid()) &&
                 Objects.equals(getLastName(), user.getLastName()) &&
                 Objects.equals(getFirstName(), user.getFirstName()) &&
-                Objects.equals(getPhonenumber(), user.getPhonenumber()) &&
+                Objects.equals(getPhoneNumber(), user.getPhoneNumber()) &&
                 Objects.equals(getEmail(), user.getEmail()) &&
                 Objects.equals(getStreet(), user.getStreet()) &&
+                Objects.equals(getHouseNr(), user.getHouseNr()) &&
                 Objects.equals(getCity(), user.getCity()) &&
+                Objects.equals(getPostalCode(), user.getPostalCode()) &&
                 Objects.equals(getCountry(), user.getCountry()) &&
                 Objects.equals(getCompany(), user.getCompany()) &&
-                Objects.equals(getType(), user.getType());
+                Objects.equals(getUserType(), user.getUserType());
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), getUserUUID(), getLastName(), getFirstName(), getPhonenumber(), getEmail(), getStreet(), getHouseNr(), getCity(), getPostalCode(), getCountry(), getCompany(), getType());
+        return Objects.hash(super.hashCode(), getUuid(), getLastName(), getFirstName(), getPhoneNumber(), getEmail(), getStreet(), getHouseNr(), getCity(), getPostalCode(), getCountry(), getCompany(), getUserType());
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "userUUID='" + userUUID + '\'' +
+                "uuid='" + uuid + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", street='" + street + '\'' +
-                ", houseNr=" + houseNr +
+                ", houseNr='" + houseNr + '\'' +
                 ", city='" + city + '\'' +
-                ", postalCode=" + postalCode +
+                ", postalCode='" + postalCode + '\'' +
                 ", country='" + country + '\'' +
                 ", company='" + company + '\'' +
-                ", type=" + type +
+                ", userType='" + userType + '\'' +
                 '}';
     }
 }

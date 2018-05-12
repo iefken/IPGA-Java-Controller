@@ -20,7 +20,9 @@ import java.util.Date;
 
 public interface Helper {
 
-    enum EntityType {VISITOR, EMPLOYEE, ADMIN, SPONSOR, SPEAKER, CONSULTANT}
+    //enum EntityType {VISITOR, EMPLOYEE, ADMIN, SPONSOR, SPEAKER, CONSULTANT}
+
+    enum EntityType {EMPTY, USER, EVENT, SESSION, RESERVATION_EVENT, RESERVATION_SESSION, PRODUCT, PURCHASE}
 
     enum SourceType {Front_End, Planning, Monitor, Kassa, CRM, Facturatie}
 
@@ -34,18 +36,20 @@ public interface Helper {
 
         //Add CLI options here (a.b. : a: choice, b: sort of message
         String[] options = {
-                "+[01.V] Create new User without UUID (Front-End Call)",
-                "+[02.V] Create new Event without UUID (Front-End Call)",
-                "+[03.V] Create new Session without UUID (Front-End Call)",
-                "+[04.V] Create new Reservation_Event: Add User to Event",
-                "+[05.V] Create new Reservation_Session: Add User to Session",
-                "+[06.V] Get all UUID's from UUID manager",
-                "x[07.V] updateUuidRecordVersion",
-                "x[08.V] updateUuidRecordVersionB",
-                "o[09.x] Google calendar tests",
-                "[10.x] /",
-                "[11.x] /New Session with UUID",
-                "[12.x] /New Reservation_Session with UUID"
+                "[01.V] Create new User without UUID (Front-End Call)",
+                "[02.V] Create new Event without UUID (Front-End Call)",
+                "[03.V] Create new Session without UUID (Front-End Call)",
+                "[04.V] Create new Reservation_Event: Add User to Event",
+                "[05.V] Create new Reservation_Session: Add User to Session",
+                "[06.V] Get all UUID's from UUID manager",
+                "[07.x] updateUuidRecordVersion",
+                "[08.x] updateUuidRecordVersionB",
+                "[09.V] List upcoming events (Google calendar 1) *authorize not yet included",
+                "[10.V] Create new event (Google calendar 2)",
+                "[11.x] Mock XML message",
+                "/[12.x] /",
+                "/[13.x] /New Session with UUID",
+                "/[14.x] /New Reservation_Session with UUID"
 
         };
         return options;
@@ -206,9 +210,8 @@ public interface Helper {
     }
 
 
-
     // User: (params) => XML
-    static String getXmlForNewUser(String xmlHeaderDescription, SourceType Source_type, String userUUID, String lastName, String firstName, String phoneNumber, String email, String street, int houseNr, String city, int postalCode, String country, String company, Helper.EntityType type, int entity_version, int active, String timestamp) throws JAXBException {
+    static String getXmlForNewUser(String xmlHeaderDescription, SourceType Source_type, String userUUID, String lastName, String firstName, String phoneNumber, String email, String street, String houseNr, String city, String postalCode, String country, String company, String type, int entity_version, int active, String timestamp) throws JAXBException {
 
         String messageType = "userMessage";
         // form xml
@@ -229,19 +232,19 @@ public interface Helper {
     // User: Object => XML
     static String getXmlFromUserObject(String xmlHeaderDescription, SourceType Source_type, User user) throws JAXBException {
 
-        String userUUID = user.getUserUUID();
+        String userUUID = user.getUuid();
         //System.out.println("HELPER: userUUID: "+userUUID);
         String lastName = user.getLastName();
         String firstName = user.getFirstName();
-        String phoneNumber = user.getPhonenumber();
+        String phoneNumber = user.getPhoneNumber();
         String email = user.getEmail();
         String street = user.getStreet();
-        int houseNr = user.getHouseNr();
+        String houseNr = user.getHouseNr();
         String city = user.getCity();
-        int postalCode = user.getPostalCode();
+        String postalCode = user.getPostalCode();
         String country = user.getCountry();
         String company = user.getCompany();
-        Helper.EntityType type = user.getType();
+        String type = user.getUserType();
         int entityVersion = user.getEntityVersion();
         int active = user.getActive();
         String timestamp = user.getTimestamp();
@@ -268,29 +271,38 @@ public interface Helper {
         boolean allGood = true;
         User userObject = null;
 
-        String userUUID = "false";
+        String uuid = "false";
         String lastName = "false";
         String firstName = "false";
         String phoneNumber = "false";
         String email = "false";
         String street = "false";
-        int houseNr = 0;
+        String houseNr = "false";
         String city = "false";
-        int postalCode = 0;
+        String postalCode = "false";
         String country = "false";
         String company = "false";
-        Helper.EntityType type = EntityType.ADMIN;
+        String userType = "false";
         int entityVersion = 0;
         int active = 0;
         String timestamp = "false";
 
-        userUUID = getSafeXmlProperty(xmlMessage, "userUUID");
-        if (userUUID == "false") {
+        uuid = getSafeXmlProperty(xmlMessage, "uuid");
+        if (uuid == "false") {
 
-            userUUID = getSafeXmlProperty(xmlMessage, "UUID");
-            if (userUUID == "false") {
-                System.out.println(" [!!!] ERROR: No userUUID found in XML: ");
-                allGood = false;
+            uuid = getSafeXmlProperty(xmlMessage, "UUID");
+            if (uuid == "false") {
+
+                uuid = getSafeXmlProperty(xmlMessage, "userUuid");
+
+                if (uuid == "false") {
+                    uuid = getSafeXmlProperty(xmlMessage, "userUUID");
+
+                    if (uuid == "false") {
+                        System.out.println(" [!!!] ERROR: No userUUID found in XML: ");
+                        allGood = false;
+                    }
+                }
             }
         }
         lastName = getSafeXmlProperty(xmlMessage, "lastName");
@@ -328,13 +340,8 @@ public interface Helper {
             allGood = false;
 
         }
-        try {
-            houseNr = Integer.parseInt(getSafeXmlProperty(xmlMessage, "houseNr"));
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            houseNr = 0;
-        }
-        if (houseNr == 0) {
+        houseNr = getSafeXmlProperty(xmlMessage, "houseNr");
+        if (houseNr == "false") {
 
             System.out.println(" [!!!] ERROR: No houseNr found in XML: ");
             allGood = false;
@@ -347,8 +354,8 @@ public interface Helper {
             allGood = false;
 
         }
-        postalCode = Integer.parseInt(getSafeXmlProperty(xmlMessage, "postalCode"));
-        if (postalCode == 0) {
+        postalCode = getSafeXmlProperty(xmlMessage, "postalCode");
+        if (postalCode == "false") {
 
             System.out.println(" [!!!] ERROR: No postalCode found in XML: ");
             allGood = false;
@@ -368,10 +375,12 @@ public interface Helper {
             allGood = false;
 
         }
-        type = Helper.EntityType.valueOf(getSafeXmlProperty(xmlMessage, "type"));
-        if (type == null) {
+        //type = Helper.EntityType.valueOf(getSafeXmlProperty(xmlMessage, "type"));
+        userType = getSafeXmlProperty(xmlMessage, "userType");
 
-            System.out.println(" [!!!] ERROR: No type found in XML: ");
+        if (userType == "false") {
+
+            System.out.println(" [!!!] ERROR: No userType found in XML: ");
             allGood = false;
 
         }
@@ -399,7 +408,7 @@ public interface Helper {
 
         if (allGood) {
 
-            userObject = new User(0, entityVersion, active, timestamp, userUUID, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, type);
+            userObject = new User(0, entityVersion, active, timestamp, uuid, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, userType);
 
             return userObject;
         } else {
@@ -407,7 +416,6 @@ public interface Helper {
         }
 
     }
-
 
 
     // Session: (params) => XML
@@ -426,8 +434,31 @@ public interface Helper {
     }
 
     // Session: Object => XML
+    static String getXmlFromSessionObject(String headerDescription, SourceType Source_type, Session newSession) throws JAXBException {
 
-    // TO DO
+        //SourceType Source_type = Source_type;
+        String sessionUUID = newSession.getSessionUUID();
+        String eventUUID = newSession.getEventUUID();
+        String sessionName = newSession.getSessionName();
+        int maxAttendees = newSession.getMaxAttendees();
+        String sessionDescription = newSession.getDescription();
+        String summary = newSession.getSummary();
+        String location = newSession.getLocation();
+        String contactPerson = newSession.getSpeaker();
+        String sessionType = newSession.getType();
+        float price = newSession.getPrice();
+        int entityVersion = newSession.getEntityVersion();
+        int active = newSession.getActive();
+        String dateTimeStart = newSession.getDateTimeStart();
+        String dateTimeEnd = newSession.getDateTimeEnd();
+
+        String messageType = "sessionMessage";
+        XmlMessage.Header header = new XmlMessage.Header(messageType, headerDescription + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
+        XmlMessage.SessionStructure eventStructure = new XmlMessage.SessionStructure(sessionUUID, eventUUID, sessionName, maxAttendees, sessionDescription, summary, location, contactPerson, dateTimeStart, dateTimeEnd, sessionType, price, entityVersion, active, Helper.getCurrentDateTimeStamp());
+        XmlMessage.SessionMessage xmlReservationMessage = new XmlMessage.SessionMessage(header, eventStructure);
+        String xmlTotalMessage = xmlReservationMessage.generateXML();
+        return xmlTotalMessage;
+    }
 
     // Session: XML => Object
     static Session getSessionObjectFromXmlMessage(String xmlMessage) {
@@ -445,7 +476,7 @@ public interface Helper {
         String speaker = "false";
         String dateTimeStart = "false";
         String dateTimeEnd = "false";
-        String type = "false";
+        String sessionType = "false";
         float price = 0;
         int entityVersion = 0;
         int active = 0;
@@ -453,20 +484,27 @@ public interface Helper {
 
         // xmlMessage parsing
 
-        sessionUUID = getSafeXmlProperty(xmlMessage, "sessionUUID");
+        sessionUUID = getSafeXmlProperty(xmlMessage, "uuid");
+
         if (sessionUUID == "false") {
 
             sessionUUID = getSafeXmlProperty(xmlMessage, "UUID");
+
             if (sessionUUID == "false") {
-                System.out.println(" [!!!] ERROR: No sessionUUID found in XML: ");
-                allGood = false;
+
+                sessionUUID = getSafeXmlProperty(xmlMessage, "sessionUUID");
+
+                if (sessionUUID == "false") {
+                    System.out.println(" [!!!] ERROR: No sessionUUID found in XML: ");
+                    allGood = false;
+                }
             }
         }
-        eventUUID = getSafeXmlProperty(xmlMessage, "eventUUID");
+        eventUUID = getSafeXmlProperty(xmlMessage, "eventUuid");
         if (eventUUID == "false") {
 
-                System.out.println(" [!!!] ERROR: No eventUUID found in XML: ");
-                allGood = false;
+            System.out.println(" [!!!] ERROR: No eventUUID found in XML: ");
+            allGood = false;
 
         }
         sessionName = getSafeXmlProperty(xmlMessage, "sessionName");
@@ -533,29 +571,44 @@ public interface Helper {
             allGood = false;
 
         }
-        type = getSafeXmlProperty(xmlMessage, "type");
-        if (type == "false") {
+        sessionType = getSafeXmlProperty(xmlMessage, "sessionType");
+        if (sessionType == "false") {
 
-            System.out.println(" [!!!] ERROR: No type found in XML: ");
+            System.out.println(" [!!!] ERROR: No sessionType found in XML: ");
             allGood = false;
 
         }
-        price = Float.parseFloat(getSafeXmlProperty(xmlMessage, "price"));
-        if (price == 0) {
+        try {
+            price = Float.parseFloat(getSafeXmlProperty(xmlMessage, "price"));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            price = -1;
+        }
+        if (price < 0) {
 
             System.out.println(" [!!!] ERROR: No price found in XML: ");
             allGood = false;
 
         }
-        entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, "entityVersion"));
-        if (entityVersion == 0) {
+        try {
+            entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, "entityVersion"));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            price = -1;
+        }
+        if (entityVersion < 0) {
 
             System.out.println(" [!!!] ERROR: No entityVersion found in XML: ");
             allGood = false;
 
         }
-        active = Integer.parseInt(getSafeXmlProperty(xmlMessage, "active"));
-        if (active == 0) {
+        try {
+            active = Integer.parseInt(getSafeXmlProperty(xmlMessage, "active"));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            price = -1;
+        }
+        if (active < 0) {
 
             System.out.println(" [!!!] ERROR: No active found in XML: ");
             allGood = false;
@@ -569,26 +622,48 @@ public interface Helper {
 
         }
 
-        sessionObject = new Session(0, entityVersion, active, timestamp, sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, location, speaker, dateTimeStart, dateTimeEnd, type, price);
+        sessionObject = new Session(0, entityVersion, active, timestamp, sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, location, speaker, dateTimeStart, dateTimeEnd, sessionType, price);
         return sessionObject;
     }
 
 
-
     // Event: (params) => XML
     static String getXmlForNewEvent(String messageType, String description, SourceType Source_type, String eventUUID, String eventName, int maxAttendees, String eventDescription, String summary,
-                                    String location, String contactPerson, String type, float price, int entityVersion, int active, String dateTimeStart, String dateTimeEnd ) throws JAXBException {
+                                    String location, String contactPerson, String eventType, float price, int entityVersion, int active, String dateTimeStart, String dateTimeEnd) throws JAXBException {
 
-        messageType="eventMessage";
+        messageType = "eventMessage";
         XmlMessage.Header header = new XmlMessage.Header(messageType, description + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
-        XmlMessage.EventStructure eventStructure = new XmlMessage.EventStructure(eventUUID,eventName,maxAttendees,eventDescription,summary,location,contactPerson,dateTimeStart,dateTimeEnd, type, price, entityVersion,active,Helper.getCurrentDateTimeStamp());
+        XmlMessage.EventStructure eventStructure = new XmlMessage.EventStructure(eventUUID, eventName, maxAttendees, eventDescription, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price, entityVersion, active, Helper.getCurrentDateTimeStamp());
         XmlMessage.EventMessage xmlReservationMessage = new XmlMessage.EventMessage(header, eventStructure);
         String xmlTotalMessage = xmlReservationMessage.generateXML();
         return xmlTotalMessage;
     }
-    // Event: Object => XML
 
-    // TO DO
+    // Event: Object => XML
+    static String getXmlFromEventObject(String headerDescription, SourceType Source_type, Event newEvent) throws JAXBException {
+
+        //SourceType Source_type = Source_type;
+        String eventUUID = newEvent.getEventUUID();
+        String eventName = newEvent.getEventName();
+        int maxAttendees = newEvent.getMaxAttendees();
+        String eventDescription = newEvent.getDescription();
+        String summary = newEvent.getSummary();
+        String location = newEvent.getLocation();
+        String contactPerson = newEvent.getContactPerson();
+        String eventType = newEvent.getType();
+        float price = newEvent.getPrice();
+        int entityVersion = newEvent.getEntityVersion();
+        int active = newEvent.getActive();
+        String dateTimeStart = newEvent.getDateTimeStart();
+        String dateTimeEnd = newEvent.getDateTimeEnd();
+
+        String messageType = "eventMessage";
+        XmlMessage.Header header = new XmlMessage.Header(messageType, headerDescription + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
+        XmlMessage.EventStructure eventStructure = new XmlMessage.EventStructure(eventUUID, eventName, maxAttendees, eventDescription, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price, entityVersion, active, Helper.getCurrentDateTimeStamp());
+        XmlMessage.EventMessage xmlReservationMessage = new XmlMessage.EventMessage(header, eventStructure);
+        String xmlTotalMessage = xmlReservationMessage.generateXML();
+        return xmlTotalMessage;
+    }
 
     // Event: XML => Object
     static Event getEventObjectFromXmlMessage(String xmlMessage) {
@@ -596,7 +671,7 @@ public interface Helper {
         boolean allGood = true;
         Event eventObject = null;
 
-        String eventUUID = "false";
+        String uuid = "false";
         String eventName = "false";
         int maxAttendees = 0;
         String description = "false";
@@ -613,15 +688,17 @@ public interface Helper {
 
         // xmlMessage parsing
 
-        eventUUID = getSafeXmlProperty(xmlMessage, "eventUUID");
-        if (eventUUID == "false") {
+        uuid = getSafeXmlProperty(xmlMessage, "uuid");
+        if (uuid == "false") {
 
-            eventUUID = getSafeXmlProperty(xmlMessage, "UUID");
-            if (eventUUID == "false") {
+            uuid = getSafeXmlProperty(xmlMessage, "eventUuid");
+            if (uuid == "false") {
                 System.out.println(" [!!!] ERROR: No eventUUID found in XML: ");
                 allGood = false;
             }
         }
+
+
         eventName = getSafeXmlProperty(xmlMessage, "eventName");
         if (eventName == "false") {
 
@@ -634,9 +711,10 @@ public interface Helper {
             maxAttendees = Integer.parseInt(getSafeXmlProperty(xmlMessage, "maxAttendees"));
         } catch (NumberFormatException e) {
             e.printStackTrace();
+            System.out.println(" [!!!] ERROR: Something went wrong parsing maxAttendees found in XML: ");
         }
 
-        if (maxAttendees == 0) {
+        if (maxAttendees < 0) {
 
             System.out.println(" [!!!] ERROR: No maxAttendees found in XML: ");
             allGood = false;
@@ -684,7 +762,8 @@ public interface Helper {
             allGood = false;
 
         }
-        type = getSafeXmlProperty(xmlMessage, "type");
+        type = getSafeXmlProperty(xmlMessage, "eventType");
+
         if (type == "false") {
 
             System.out.println(" [!!!] ERROR: No type found in XML: ");
@@ -705,14 +784,14 @@ public interface Helper {
 
         }
         entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, "entityVersion"));
-        if (entityVersion == 0) {
+        if (entityVersion <= 0) {
 
             System.out.println(" [!!!] ERROR: No entityVersion found in XML: ");
             allGood = false;
 
         }
         active = Integer.parseInt(getSafeXmlProperty(xmlMessage, "active"));
-        if (active == 0) {
+        if (active < 0) {
 
             System.out.println(" [!!!] ERROR: No active found in XML: ");
             allGood = false;
@@ -726,21 +805,20 @@ public interface Helper {
 
         }
 
-        eventObject = new Event(0, entityVersion, active, timestamp, eventUUID, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, type, price);
+        eventObject = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, type, price);
         return eventObject;
     }
 
 
-
     // Reservation_Session: (params) => XML
-    static String getXmlForNewReservation_Session(String xmlHeaderDescription, SourceType Source_type, String reservationUUID, String userUUID, String eventUUID,String sessionUUID, float paid, int entityVersion) throws JAXBException {
+    static String getXmlForNewReservation_Session(String xmlHeaderDescription, SourceType Source_type, String reservationUUID, String userUUID, String eventUUID, String sessionUUID, float paid, int entityVersion) throws JAXBException {
 
         String messageType = "reservationMessage";
 
         // form xml
         XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
-        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(reservationUUID, userUUID, eventUUID, sessionUUID, messageType.split("Message")[0],paid,entityVersion, 1, Helper.getCurrentDateTimeStamp());
+        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(reservationUUID, userUUID, eventUUID, sessionUUID, messageType.split("Message")[0], paid, entityVersion, 1, Helper.getCurrentDateTimeStamp());
         // steek header en datastructure (Reservationstructure) in message klasse
         XmlMessage.ReservationMessage xmlReservationMessage = new XmlMessage.ReservationMessage(header, reservationStructure);
         // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)
@@ -757,7 +835,7 @@ public interface Helper {
         // form xml
         XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
-        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(thisReservationObject.getReservationUUID(), thisReservationObject.getUserUUID(), "",thisReservationObject.getSessionUUID(), messageType.split("Message")[0],thisReservationObject.getPaid(), 1, 1, Helper.getCurrentDateTimeStamp());
+        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(thisReservationObject.getReservationUUID(), thisReservationObject.getUserUUID(), "", thisReservationObject.getSessionUUID(), messageType.split("Message")[0], thisReservationObject.getPaid(), 1, 1, Helper.getCurrentDateTimeStamp());
         // steek header en datastructure (Reservationstructure) in message klasse
         XmlMessage.ReservationMessage xmlReservationMessage = new XmlMessage.ReservationMessage(header, reservationStructure);
         // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)
@@ -778,37 +856,37 @@ public interface Helper {
         String eventUUID = "false";
         String sessionUUID = "false";
         String type = "false";
-        float paid=0;
+        float paid = 0;
         int entityVersion = 0;
         int active = 0;
         String timestamp = "false";
 
         // xmlMessage parsing
 
-        reservationUUID = getSafeXmlProperty(xmlMessage, "reservationUUID");
+        reservationUUID = getSafeXmlProperty(xmlMessage, "uuid");
         if (reservationUUID == "false") {
 
-            eventUUID = getSafeXmlProperty(xmlMessage, "UUID");
+            eventUUID = getSafeXmlProperty(xmlMessage, "reservationUUID");
             if (eventUUID == "false") {
                 System.out.println(" [!!!] ERROR: No reservationUUID found in XML: ");
                 allGood = false;
             }
         }
-        userUUID = getSafeXmlProperty(xmlMessage, "userUUID");
+        userUUID = getSafeXmlProperty(xmlMessage, "userUuid");
         if (userUUID == "false") {
 
             System.out.println(" [!!!] ERROR: No userUUID found in XML: ");
             allGood = false;
 
         }
-        eventUUID = getSafeXmlProperty(xmlMessage, "eventUUID");
+        eventUUID = getSafeXmlProperty(xmlMessage, "eventUuid");
         if (eventUUID == "false") {
 
             System.out.println(" [!!!] ERROR: No eventUUID found in XML: ");
             allGood = false;
 
         }
-        sessionUUID = getSafeXmlProperty(xmlMessage, "sessionUUID");
+        sessionUUID = getSafeXmlProperty(xmlMessage, "sessionUuid");
         if (sessionUUID == "false") {
 
             System.out.println(" [!!!] ERROR: No sessionUUID found in XML: ");
@@ -866,17 +944,16 @@ public interface Helper {
     }
 
 
-
     // Reservation_Event: (params) => XML
     static String getXmlForNewReservation_Event(String xmlHeaderDescription, SourceType Source_type, String reservationUUID, String userUUID, String eventUUID, float paid, int entityVersion) throws JAXBException {
 
         String messageType = "reservationMessage";
 
-        String sessionUUID ="";
+        String sessionUUID = "";
         // form xml
         XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
-        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(reservationUUID, userUUID, eventUUID, sessionUUID, messageType.split("Message")[0], paid,entityVersion, 1, Helper.getCurrentDateTimeStamp());
+        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(reservationUUID, userUUID, eventUUID, sessionUUID, messageType.split("Message")[0], paid, entityVersion, 1, Helper.getCurrentDateTimeStamp());
         // steek header en datastructure (Reservationstructure) in message klasse
         XmlMessage.ReservationMessage xmlReservationMessage = new XmlMessage.ReservationMessage(header, reservationStructure);
         // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)
@@ -893,7 +970,7 @@ public interface Helper {
         // form xml
         XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
-        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(thisReservationObject.getReservationUUID(), thisReservationObject.getUserUUID(), thisReservationObject.getEventUUID(), "", messageType.split("Message")[0],thisReservationObject.getPaid(),thisReservationObject.getEntityVersion(), 1, Helper.getCurrentDateTimeStamp());
+        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(thisReservationObject.getReservationUUID(), thisReservationObject.getUserUUID(), thisReservationObject.getEventUUID(), "", messageType.split("Message")[0], thisReservationObject.getPaid(), thisReservationObject.getEntityVersion(), 1, Helper.getCurrentDateTimeStamp());
         // steek header en datastructure (Reservationstructure) in message klasse
         XmlMessage.ReservationMessage xmlReservationMessage = new XmlMessage.ReservationMessage(header, reservationStructure);
         // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)
@@ -921,23 +998,31 @@ public interface Helper {
 
         // xmlMessage parsing
 
-        reservationUUID = getSafeXmlProperty(xmlMessage, "reservationUUID");
+        reservationUUID = getSafeXmlProperty(xmlMessage, "uuid");
         if (reservationUUID == "false") {
 
-            eventUUID = getSafeXmlProperty(xmlMessage, "UUID");
-            if (eventUUID == "false") {
-                System.out.println(" [!!!] ERROR: No reservationUUID found in XML: ");
-                allGood = false;
+            reservationUUID = getSafeXmlProperty(xmlMessage, "reservationUUID");
+
+            if (reservationUUID == "false") {
+
+                eventUUID = getSafeXmlProperty(xmlMessage, "UUID");
+
+                if (eventUUID == "false") {
+
+                    System.out.println(" [!!!] ERROR: No reservationUUID found in XML: ");
+
+                    allGood = false;
+                }
             }
         }
-        userUUID = getSafeXmlProperty(xmlMessage, "userUUID");
+        userUUID = getSafeXmlProperty(xmlMessage, "userUuid");
         if (userUUID == "false") {
 
             System.out.println(" [!!!] ERROR: No userUUID found in XML: ");
             allGood = false;
 
         }
-        eventUUID = getSafeXmlProperty(xmlMessage, "eventUUID");
+        eventUUID = getSafeXmlProperty(xmlMessage, "eventUuid");
         if (eventUUID == "false") {
 
             System.out.println(" [!!!] ERROR: No eventUUID found in XML: ");
@@ -1000,7 +1085,6 @@ public interface Helper {
     }
 
 
-
     //pingMessage:
     static String getXmlForPingMessage(String messageType, SourceType Source_type) throws JAXBException {
 
@@ -1034,7 +1118,7 @@ public interface Helper {
 
 
     static String getPropertyFromXml(String xml, String property) throws
-            ParserConfigurationException, SAXException, IOException {
+            ParserConfigurationException, SAXException, IOException, NullPointerException {
         InputSource is = new InputSource();
         is.setCharacterStream(new StringReader(xml));
 
@@ -1060,17 +1144,18 @@ public interface Helper {
     }
 
     static String getSafeXmlProperty(String xml, String property) {
-        String messageType = "";
+        String value = "";
         try {
 
-            messageType = getPropertyFromXml(xml, property);
+            value = getPropertyFromXml(xml, property);
             //System.out.println(" [i] messageType: " + messageType);
 
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
-            messageType = "ERROR: No messageType found in XML: " + e;
+        } catch (ParserConfigurationException | SAXException | IOException | NullPointerException e) {
+            //e.printStackTrace();
+            //messageType = "ERROR: No "+property+" found in XML: " + e;
+            value = "false";
         }
-        return messageType;
+        return value;
     }
 
     //https://stackoverflow.com/a/8345074

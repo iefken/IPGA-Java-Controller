@@ -31,7 +31,12 @@ public class Session_DAO extends BaseEntityDAO {
                 "VALUES(" + callbackInsertedInt + ",\"" + session.getSessionUUID() + "\",\"" + session.getEventUUID() + "\",\"" + session.getSessionName() + "\"," + session.getMaxAttendees() + ",\"" + session.getDescription() + "\",\"" + session.getSummary() + "\",\"" + session.getLocation() + "\",\"" + session.getSpeaker() + "\",\"" + session.getDateTimeStart() + "\",\"" + session.getDateTimeEnd() + "\",\"" + session.getType() + "\",\"" + session.getPrice() + "\");";
 
         //System.out.println("sqlquery: "+sqlQuery);
-        int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
+        try {
+            int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
+        } catch (RuntimeException e) {
+            //e.printStackTrace();
+            System.out.println("[!!!] ERROR: Running query:\n"+sqlQuery+"\n"+e);
+        }
 
         return callbackInsertedInt;
 

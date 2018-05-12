@@ -6,31 +6,31 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "usermessage")
-@XmlType(propOrder = { "userUUID", "lastName", "firstName", "phoneNumber", "email", "street", "houseNr", "city", "postalCode", "country", "company", "type", "entityVersion","active","timestamp" })
+@XmlRootElement(name = "message")
+@XmlType(propOrder = { "uuid", "lastName", "firstName", "phoneNumber", "email", "street", "houseNr", "city", "postalCode", "country", "company", "userType", "entityVersion","active","timestamp" })
 public class Userstructure {
 
-	private String userUUID;
+	private String uuid;
 	private String lastName;
 	private String firstName;
 	private String phoneNumber;
 	private String email;
 	private String street;
-	private int houseNr;
+	private String houseNr;
 	private String city;
-	private int postalCode;
+	private String postalCode;
 	private String country;
 	private String company;
-	private Helper.EntityType type;
+	private String userType;
 	private int entityVersion;
 	private int active;
 	private String timestamp;
 	
-	public Userstructure(String userUUID, String lastName, String firstName, String phoneNumber, String email,
-						 String street, int houseNr, String city, int postalCode, String country,
-						 String company, Helper.EntityType type, int entityVersion, int active, String timestamp) {
+	public Userstructure(String uuid, String lastName, String firstName, String phoneNumber, String email,
+						 String street, String houseNr, String city, String postalCode, String country,
+						 String company, String type, int entityVersion, int active, String timestamp) {
 		super();
-		this.userUUID = userUUID;
+		this.uuid = uuid;
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.phoneNumber = phoneNumber;
@@ -41,7 +41,7 @@ public class Userstructure {
 		this.postalCode = postalCode;
 		this.country = country;
 		this.company = company;
-		this.type = type;
+		this.userType = type;
 		this.entityVersion = entityVersion;
 		this.active = active;
 		this.timestamp = timestamp;
@@ -50,6 +50,7 @@ public class Userstructure {
 	public Userstructure() {
 		
 	}
+/*
 
 	@XmlElement(name = "userUUID")
 	public String getUserUUID() {
@@ -57,6 +58,15 @@ public class Userstructure {
 	}
 	public void setUserUUID(String userUUID) {
 		this.userUUID = userUUID;
+	}
+*/
+
+	@XmlElement(name = "uuid")
+	public String getUuid() {
+		return uuid;
+	}
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 
@@ -101,10 +111,10 @@ public class Userstructure {
 	}
 
 	@XmlElement(name = "houseNr")
-	public int getHouseNr() {
+	public String getHouseNr() {
 		return houseNr;
 	}
-	public void setHouseNr(int houseNr) {
+	public void setHouseNr(String houseNr) {
 		this.houseNr = houseNr;
 	}
 
@@ -117,10 +127,10 @@ public class Userstructure {
 	}
 
 	@XmlElement(name = "postalCode")
-	public int getPostalCode() {
+	public String getPostalCode() {
 		return postalCode;
 	}
-	public void setPostalCode(int postalCode) {
+	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
 
@@ -140,12 +150,12 @@ public class Userstructure {
 		this.company = company;
 	}
 
-	@XmlElement(name = "type")
-	public Helper.EntityType getType() {
-		return type;
+	@XmlElement(name = "userType")
+	public String getUserType() {
+		return userType;
 	}
-	public void setType(Helper.EntityType type) {
-		this.type = type;
+	public void setUserType(String type) {
+		this.userType = type;
 	}
 
 	@XmlElement(name = "entityVersion")

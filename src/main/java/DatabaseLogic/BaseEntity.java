@@ -28,7 +28,8 @@ public class BaseEntity {
                 entityId = thisBaseEntityDAO.insertIntoBaseEntity(this);
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println("SQL ERROR during BaseEntity Insertion: "+e);
+                //e.printStackTrace();
             }
         }
         this.entityId = entityId;
