@@ -91,8 +91,7 @@ public class GoogleCalenderApi {
      * @return an authorized Calendar client service
      * @throws IOException
      */
-    public static com.google.api.services.calendar.Calendar
-    getCalendarService() throws IOException {
+    public static com.google.api.services.calendar.Calendar getCalendarService() throws IOException {
         Credential credential = authorize();
         return new com.google.api.services.calendar.Calendar.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, credential)
