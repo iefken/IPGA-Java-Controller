@@ -140,11 +140,16 @@ public class User_DAO extends BaseEntityDAO {
         //execute baseEntity Insert
         int callbackInsertedInt = newBaseEntity.getEntityId();
 
-        String sqlQuery = "INSERT INTO PlanningDB.User (idUser, userUUID, lastName, 'firstname', phonenumber, email, street, houseNr,`city`,`postalCode`,`country`,`company`, type) VALUES (" + callbackInsertedInt + ",\"" + newUserFromMessage.getUuid() + "\",\"" + newUserFromMessage.getLastName() + "\",\"" + newUserFromMessage.getFirstName() + "\",\"" + newUserFromMessage.getPhoneNumber() + "\",\"" + newUserFromMessage.getEmail() + "\",\"" + newUserFromMessage.getStreet() + "\",\"" + newUserFromMessage.getHouseNr() + "\",\"" + newUserFromMessage.getCity() + "\",\"" + newUserFromMessage.getPostalCode() + "\",\"" + newUserFromMessage.getCountry() + "\",\"" + newUserFromMessage.getCompany() + "\",\"" + newUserFromMessage.getUserType() + "\");";
+        String sqlQuery = "INSERT INTO PlanningDB.User (idUser, userUUID, lastName, firstName, phonenumber, email, street, houseNr, city, postalCode, country, company, type) VALUES (" + callbackInsertedInt + ",\"" + newUserFromMessage.getUuid() + "\",\"" + newUserFromMessage.getLastName() + "\",\"" + newUserFromMessage.getFirstName() + "\",\"" + newUserFromMessage.getPhoneNumber() + "\",\"" + newUserFromMessage.getEmail() + "\",\"" + newUserFromMessage.getStreet() + "\",\"" + newUserFromMessage.getHouseNr() + "\",\"" + newUserFromMessage.getCity() + "\",\"" + newUserFromMessage.getPostalCode() + "\",\"" + newUserFromMessage.getCountry() + "\",\"" + newUserFromMessage.getCompany() + "\",\"" + newUserFromMessage.getUserType() + "\");";
 
         //softdelete oude base entity
         softDeleteBaseEntity("User", oldEntityId);
-        int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
+        try {
+            int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
+        } catch (Exception e) {
+            //e.printStackTrace();
+            System.out.println("Error updating user: "+e);
+        }
 
         return callbackInsertedInt;
     }

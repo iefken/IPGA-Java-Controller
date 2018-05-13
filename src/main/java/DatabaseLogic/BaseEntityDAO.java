@@ -370,8 +370,8 @@ public class BaseEntityDAO extends BaseDAO{
         }catch(SQLException e){
 
             System.out.println(e.getMessage());;
-            throw new RuntimeException(e.getMessage());
-
+            //throw new RuntimeException("SQL error in BaseEntityDAO: "+e.getMessage());
+            return 0;
         }finally{
 
             try{
@@ -382,11 +382,10 @@ public class BaseEntityDAO extends BaseDAO{
             }catch(SQLException e){
 
                 System.out.println(e.getMessage());;
-                throw new RuntimeException("ERROR 02: Something seems to have gone wrong during closing the connection...");
-
+                //throw new RuntimeException("ERROR 02: Something seems to have gone wrong during closing the connection...");
+                return 0;
             }
         }
     }
-
 
 }

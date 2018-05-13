@@ -126,7 +126,14 @@ public class Receiver {
         // XML -> Data
         // get messagetype from XML (set in sender)
         String messageType = null, xmlTotalMessage = "";
+
         messageType = getSafeXmlProperty(task, "messageType");
+
+        if(messageType=="false"){
+
+            messageType = getSafeXmlProperty(task, "MessageType");
+        }
+
 
         // get Source from XML (set in sender)
         String messageSource = null;

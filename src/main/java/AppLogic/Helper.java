@@ -299,8 +299,11 @@ public interface Helper {
                     uuid = getSafeXmlProperty(xmlMessage, "userUUID");
 
                     if (uuid == "false") {
-                        System.out.println(" [!!!] ERROR: No userUUID found in XML: ");
-                        allGood = false;
+                        uuid = getSafeXmlProperty(xmlMessage, "Uuid");
+                        if (uuid == "false") {
+                            System.out.println(" [!!!] ERROR: No userUUID found in XML: ");
+                            allGood = false;
+                        }
                     }
                 }
             }
@@ -380,8 +383,18 @@ public interface Helper {
 
         if (userType == "false") {
 
-            System.out.println(" [!!!] ERROR: No userType found in XML: ");
-            allGood = false;
+            userType = getSafeXmlProperty(xmlMessage, "type");
+
+            if (userType == "false") {
+
+                userType = getSafeXmlProperty(xmlMessage, "Type");
+
+                if (userType == "false") {
+
+                    System.out.println(" [!!!] ERROR: No userType found in XML: ");
+                    allGood = false;
+                }
+            }
 
         }
         entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, "entityVersion"));
@@ -391,8 +404,22 @@ public interface Helper {
             allGood = false;
 
         }
-        active = Integer.parseInt(getSafeXmlProperty(xmlMessage, "active"));
-        if (active == 0) {
+        try {
+            active = Integer.parseInt(getSafeXmlProperty(xmlMessage, "active"));
+        } catch (NumberFormatException e) {
+            //e.printStackTrace();
+
+            //catch boolean instead of int
+
+            if(getSafeXmlProperty(xmlMessage, "active")=="true"){
+                active=1;
+            }else if(getSafeXmlProperty(xmlMessage,"active")=="false"){
+                active=0;
+            }else{
+                active=-1;
+            }
+        }
+        if (active < 0) {
 
             System.out.println(" [!!!] ERROR: No active found in XML: ");
             allGood = false;
@@ -401,9 +428,18 @@ public interface Helper {
         timestamp = getSafeXmlProperty(xmlMessage, "timestamp");
         if (timestamp == "false") {
 
-            System.out.println(" [!!!] ERROR: No timestamp found in XML: ");
-            allGood = false;
+            timestamp = getSafeXmlProperty(xmlMessage, "Timestamp");
 
+            if (timestamp == "false") {
+
+                timestamp = getSafeXmlProperty(xmlMessage, "TimeStamp");
+
+                if (timestamp == "false") {
+
+                    System.out.println(" [!!!] ERROR: No timestamp found in XML: ");
+                    allGood = false;
+                }
+            }
         }
 
         if (allGood) {
@@ -602,11 +638,20 @@ public interface Helper {
             allGood = false;
 
         }
+
         try {
             active = Integer.parseInt(getSafeXmlProperty(xmlMessage, "active"));
         } catch (NumberFormatException e) {
-            e.printStackTrace();
-            price = -1;
+            //e.printStackTrace();
+
+            //catch boolean instead of int
+            if(getSafeXmlProperty(xmlMessage, "active")=="true"){
+                active=1;
+            }else if(getSafeXmlProperty(xmlMessage,"active")=="false"){
+                active=0;
+            }else{
+                active=-1;
+            }
         }
         if (active < 0) {
 
@@ -617,9 +662,18 @@ public interface Helper {
         timestamp = getSafeXmlProperty(xmlMessage, "timestamp");
         if (timestamp == "false") {
 
-            System.out.println(" [!!!] ERROR: No timestamp found in XML: ");
-            allGood = false;
+            timestamp = getSafeXmlProperty(xmlMessage, "Timestamp");
 
+            if (timestamp == "false") {
+
+                timestamp = getSafeXmlProperty(xmlMessage, "TimeStamp");
+
+                if (timestamp == "false") {
+
+                    System.out.println(" [!!!] ERROR: No timestamp found in XML: ");
+                    allGood = false;
+                }
+            }
         }
 
         sessionObject = new Session(0, entityVersion, active, timestamp, sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, location, speaker, dateTimeStart, dateTimeEnd, sessionType, price);

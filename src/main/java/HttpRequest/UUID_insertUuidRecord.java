@@ -7,7 +7,7 @@ import AppLogic.Helper;
 
 public class UUID_insertUuidRecord {
     private int Source_id;
-    private String UUID;
+    private String Uuid;
     private int Entity_version;
 
     private Helper.EntityType Entity_type;
@@ -19,7 +19,7 @@ public class UUID_insertUuidRecord {
         this.Entity_type = thisUUID_createUuidRecord.getEntity_type();
         this.Source = thisUUID_createUuidRecord.getSource();
         this.Entity_version=1;
-        this.UUID=UUID;
+        this.Uuid=UUID;
     }
 
     public UUID_insertUuidRecord(int source_id, Helper.EntityType Entity_type, Helper.SourceType thisSourceType, String UUID) {
@@ -28,7 +28,7 @@ public class UUID_insertUuidRecord {
         this.Entity_type = Entity_type;
         this.Source = thisSourceType;
         this.Entity_version=1;
-        this.UUID=UUID;
+        this.Uuid=UUID;
     }
 
     public UUID_insertUuidRecord(int Source_id, Helper.EntityType Entity_type, Helper.SourceType Source, String UUID, int Entity_version) {
@@ -37,7 +37,7 @@ public class UUID_insertUuidRecord {
         this.Entity_type = Entity_type;
         this.Source = Source;
         this.Entity_version=Entity_version;
-        this.UUID=UUID;
+        this.Uuid=UUID;
     }
 
     //    GETTERS & SETTERS
@@ -48,11 +48,11 @@ public class UUID_insertUuidRecord {
         Source_id = source_id;
     }
 
-    public String getUUID() {
-        return UUID;
+    public String getUuid() {
+        return Uuid;
     }
-    public void setUUID(String UUID) {
-        this.UUID = UUID;
+    public void setUuid(String UUID) {
+        this.Uuid = UUID;
     }
 
     public int getEntity_version() {
@@ -82,7 +82,7 @@ public class UUID_insertUuidRecord {
     public String toString() {
         String s = "\n\n[UUID_RESPONSE tostring()]: \n";
         s+= "{\n 'Source_id' : '"+this.getSource_id()+ "' ,\n ";
-        s+= " 'UUID' : '"+this.getUUID()+ " ,\n ";
+        s+= " 'Uuid' : '"+this.getUuid()+ " ,\n ";
         s+= " 'Entity_version' : '"+this.getEntity_version()+ "' ,\n ";
         s+= " 'Entity_type' : '"+this.getEntity_type()+ "' , \n ";
         s+= " 'Source' : '"+this.getSource()+ "' \n }";
@@ -92,7 +92,7 @@ public class UUID_insertUuidRecord {
 
     public String toJSONString() {
 
-        String s = "{\"Uuid\":\""+this.getUUID()+ "\","
+        String s = "{\"Uuid\":\""+this.getUuid()+ "\","
                 + "\"Source_id\":\""+this.getSource_id()+ "\","
                 + "\"Entity_type\":\""+this.getEntity_type()+ "\","
                 + "\"Entity_version\":\""+this.getEntity_version()+ "\","

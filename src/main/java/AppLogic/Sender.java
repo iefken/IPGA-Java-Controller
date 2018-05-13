@@ -48,7 +48,7 @@ public class Sender {
             Gson gson = new Gson();
             UUID_insertUuidRecord firstTest = gson.fromJson(message, UUID_insertUuidRecord.class);
 
-            newUUID = firstTest.getUUID();
+            newUUID = firstTest.getUuid();
 
         } catch (JSONException e) {
             e.printStackTrace();

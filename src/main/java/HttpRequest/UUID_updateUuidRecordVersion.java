@@ -8,19 +8,22 @@ import AppLogic.Helper;
 
 public class UUID_updateUuidRecordVersion implements Helper{
 
-    private String UUID;
+    private String Uuid;
     private Helper.SourceType Source;
 
     public UUID_updateUuidRecordVersion(String UUID, Helper.SourceType Source) {
 
-        this.UUID = UUID;
+        this.Uuid = UUID;
         this.Source = Source;
     }
 
     //    GETTERS & SETTERS
 
-    public String getUUID() {
-        return UUID;
+    public String getUuid() {
+        return Uuid;
+    }
+    public void setUuid(String uuid) {
+        Uuid = uuid;
     }
 
     public Helper.SourceType getSource() {
@@ -32,7 +35,7 @@ public class UUID_updateUuidRecordVersion implements Helper{
 
     public String toJSONString() {
 
-        String s = "{\"Uuid\":\""+this.getUUID()+ "\","
+        String s = "{\"Uuid\":\""+this.getUuid()+ "\","
                 + "\"Source\":\""+this.getSource()+ "\""
                 + "}";
 

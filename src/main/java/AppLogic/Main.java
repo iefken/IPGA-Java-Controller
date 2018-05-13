@@ -152,7 +152,7 @@ public class Main {
                         e.printStackTrace();
                     }
 
-                    System.out.println("newUser.getEntityId() before uuid manager call" + newUser.getEntityId());
+                    System.out.println("newUser.getEntityId() before uuid manager call, entity id: " + newUser.getEntityId());
 
                     // 3. create new UUID
                     try {
@@ -161,7 +161,7 @@ public class Main {
                         e.printStackTrace();
                     }
 
-                    //System.out.println("\nUserUUID returned: '" + userUUID + "' !");
+                    System.out.println("\nUserUUID returned: '" + userUUID + "' !");
 
                     // 4. update local db with UUID
                     if (!new User_DAO().updateTablePropertyValue("User", "userUUID", userUUID, "String", "idUser", ""+newUser.getEntityId())) {
@@ -491,8 +491,8 @@ public class Main {
 
                     // preset variables (should be set later)
                     messageType = "SessionMessage";
-                    Source_type = Helper.SourceType.Planning;
-                    UUID = "531f33b6-88d1-406f-b6f3-1a0c0de9a1de";
+                    Source_type = Helper.SourceType.Front_End;
+                    UUID = "abc39123-5e55-4104-99d1-52a4873b2b2d";
 
                     try {
 
@@ -530,8 +530,8 @@ public class Main {
                 case "8":
 
                     messageType = "UpdateEntityVersionMessage";
-                    Source_type = Helper.SourceType.Planning;
-                    UUID = "da4bc50d-9268-4cf6-bb52-24f7917d31fa";
+                    Source_type = Helper.SourceType.Front_End;
+                    UUID = "abc39123-5e55-4104-99d1-52a4873b2b2d";
                     Entity_version = 20;
 
                     System.out.println("\nCase " + choice + ": change Entity_version (=>'" + Entity_version + "') of UUID: " + UUID + " with Entity_sourceId = '" + Entity_sourceId + "'");
@@ -607,7 +607,7 @@ public class Main {
                             case "10":
                                 // User with UUID
 
-                                uuid="83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
+                                uuid="e319f8aa-1910-442c-8b17-5e809d713ee4";
                                 System.out.print("You've chosen '" + choice + "': User with uuid '"+uuid+"' ...\n");
 
                                 System.out.println("Mocking user 'John Parker' ...");
