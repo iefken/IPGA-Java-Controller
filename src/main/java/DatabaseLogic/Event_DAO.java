@@ -25,7 +25,7 @@ public class Event_DAO extends BaseEntityDAO{
             PreparedStatement preparedStatement = null;
             String sqlQuery = "";
 
-            sqlQuery = "INSERT INTO PlanningDB.Event (`idEvent`, `eventUUID`, `eventName`, `maxAttendees`, `description`, `summary`, `location`,`contactPerson`,`dateTimeStart`,`dateTimeEnd`, `type`, `price`, `eventLink`) VALUES (" + callbackInsertedInt + ",\"" + event.getEventUUID() + "\",\"" + event.getEventName() + "\",\"" + event.getMaxAttendees() + "\",\"" + event.getDescription() + "\",\"" + event.getSummary() + "\",\"" + event.getLocation() + "\",\"" + event.getContactPerson() + "\",\"" + event.getDateTimeStart() + "\",\"" + event.getDateTimeEnd()+ "\",\"" + event.getType() + "\",\""+ event.getPrice() + "\",\""+ event.getEventLink() + "\");";
+            sqlQuery = "INSERT INTO PlanningDB.Event (`idEvent`, `eventUUID`, `eventName`, `maxAttendees`, `description`, `summary`, `location`,`contactPerson`,`dateTimeStart`,`dateTimeEnd`, `type`, `price`, `GCAEventId`,`GCAEventLink`) VALUES (" + callbackInsertedInt + ",\"" + event.getEventUUID() + "\",\"" + event.getEventName() + "\",\"" + event.getMaxAttendees() + "\",\"" + event.getDescription() + "\",\"" + event.getSummary() + "\",\"" + event.getLocation() + "\",\"" + event.getContactPerson() + "\",\"" + event.getDateTimeStart() + "\",\"" + event.getDateTimeEnd()+ "\",\"" + event.getType() + "\",\""+ event.getPrice() + "\",\""+ event.getGCAEventId() + "\",\""+ event.getGCAEventLink() + "\");";
 
             //INSERT INTO `PlanningDB`.`Session` (`idSession`, `sessionUUID`, `eventUUID`, `sessionName`, `maxAttendees`, `dateTimeStart`, `dateTimeEND`, `speaker`, `local`, `type`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
@@ -51,7 +51,12 @@ public class Event_DAO extends BaseEntityDAO{
 
             //softdelete oude base entity
             softDeleteBaseEntity("Event",oldEntityId);
-            int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
+            try {
+                int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
+            } catch (Exception e) {
+//                e.printStackTrace();
+                System.out.println("ERROR inserting Event: "+e);
+            }
 
             return callbackInsertedInt;
 

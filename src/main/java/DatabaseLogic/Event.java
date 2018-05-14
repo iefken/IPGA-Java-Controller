@@ -16,7 +16,8 @@ public class Event extends BaseEntity{
     private String dateTimeStart;
     private String dateTimeEnd;
     private String type;
-    private String eventLink;
+    private String GCAEventId;
+    private String GCAEventLink;
     private float price;
 
     public Event(int eventId, int entityVersion, int active, String Timestamp,
@@ -38,13 +39,14 @@ public class Event extends BaseEntity{
         this.type = type;
         this.price = price;
 
-        this.eventLink="";
+        this.GCAEventId="";
+        this.GCAEventLink="";
 
     }
 
     public Event(int eventId, int entityVersion, int active, String Timestamp,
                  String eventUUID, String eventName, int maxAttendees, String description, String summary,
-                 String location, String contactPerson,String dateTimeStart, String dateTimeEnd, String type, float price, String eventLink) {
+                 String location, String contactPerson,String dateTimeStart, String dateTimeEnd, String type, float price, String GCAEventId, String GCAEventLink) {
 
         super(eventId, entityVersion, active, Timestamp);
 
@@ -60,7 +62,9 @@ public class Event extends BaseEntity{
 
         this.type = type;
         this.price = price;
-        this.eventLink = eventLink;
+
+        this.GCAEventId = GCAEventId;
+        this.GCAEventLink = GCAEventLink;
 
 
     }
@@ -166,10 +170,17 @@ public class Event extends BaseEntity{
         this.price = price;
     }
 
-    public String getEventLink() {
-        return eventLink;
+    public String getGCAEventId() {
+        return GCAEventId;
     }
-    public void setEventLink(String eventLink) {
-        this.eventLink = eventLink;
+    public void setGCAEventId(String GCAEventId) {
+        this.GCAEventId = GCAEventId;
+    }
+
+    public String getGCAEventLink() {
+        return GCAEventLink;
+    }
+    public void setGCAEventLink(String eventLink) {
+        this.GCAEventLink = eventLink;
     }
 }

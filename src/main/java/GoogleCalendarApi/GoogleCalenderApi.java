@@ -71,6 +71,8 @@ public class GoogleCalenderApi {
         //InputStream in = new FileInputStream("C:\\Users\\ief.falot\\Documents\\GitHub\\PLANNING\\src\\main\\java\\GoogleCalendarApi\\cred\\client_secret.json");
         InputStream in = new FileInputStream("/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/src/main/java/GoogleCalendarApi/cred/client_secret.json");
 
+        //InputStream in = new FileInputStream("C:\\Users\\ief.falot\\Documents\\GitHub\\PLANNING\\src\\main\\java\\GoogleCalendarApi\\cred\\client_secret(ief).json");
+
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
@@ -83,8 +85,7 @@ public class GoogleCalenderApi {
                         .build();
         Credential credential = new AuthorizationCodeInstalledApp(
                 flow, new LocalServerReceiver()).authorize("user");
-        System.out.println(
-                "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+        //System.out.println("Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
     }
 
@@ -113,13 +114,16 @@ public class GoogleCalenderApi {
                 .setLocation(newEvent.getLocation())
                 .setDescription(newEvent.getDescription());
 
-        DateTime startDateTime = new DateTime(newEvent.getDateTimeStart()+"+02:00");
+        String dts = newEvent.getDateTimeStart()+":00+02:00";
+        String dte = newEvent.getDateTimeEnd()+":00+02:00";
+
+        DateTime startDateTime = new DateTime(dts);
         EventDateTime start = new EventDateTime()
                 .setDateTime(startDateTime)
                 .setTimeZone("Europe/Brussels");
         event.setStart(start);
-
-        DateTime endDateTime = new DateTime(newEvent.getDateTimeEnd()+"+02:00");
+//2015-05-28T09:00:00-07:00
+        DateTime endDateTime = new DateTime(dte);
         EventDateTime end = new EventDateTime()
                 .setDateTime(endDateTime)
                 .setTimeZone("Europe/Brussels");
@@ -149,16 +153,81 @@ public class GoogleCalenderApi {
         event.setReminders(reminders);
 
         String calendarId = "primary";
-        event = service.events().insert(calendarId, event).execute();
-        System.out.printf("Event created: %s\n", event.getHtmlLink());
+        try {
+            event = service.events().insert(calendarId, event).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.printf("Created new Event: %s\n", event.getHtmlLink());
 
-        // TO DO
-        return event.getHtmlLink();
+        String toReturn = event.getHtmlLink() + "-=-"+event.getId();
 
-        // Save link to DB
-
+        return toReturn;
     }
 
+    public static String createEventFromSessionObject(DatabaseLogic.Session newSession) throws IOException{
+        //Create new events
+        // Refer to the Java quickstart on how to setup the environment:
+        // https://developers.google.com/calendar/quickstart/java
+        // Change the scope to CalendarScopes.CALENDAR and delete any stored
+        // credentials.
+
+        com.google.api.services.calendar.Calendar service = getCalendarService();
+        Event event = new Event()
+                .setSummary(newSession.getSummary())
+                .setLocation(newSession.getLocation())
+                .setDescription(newSession.getDescription());
+
+        String dts = newSession.getDateTimeStart()+":00+02:00";
+        String dte = newSession.getDateTimeEnd()+":00+02:00";
+
+        DateTime startDateTime = new DateTime(dts);
+        EventDateTime start = new EventDateTime()
+                .setDateTime(startDateTime)
+                .setTimeZone("Europe/Brussels");
+        event.setStart(start);
+//2015-05-28T09:00:00-07:00
+        DateTime endDateTime = new DateTime(dte);
+        EventDateTime end = new EventDateTime()
+                .setDateTime(endDateTime)
+                .setTimeZone("Europe/Brussels");
+        event.setEnd(end);
+
+        String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=1"};
+        event.setRecurrence(Arrays.asList(recurrence));
+
+        EventAttendee[] attendees = new EventAttendee[] {
+                new EventAttendee().setEmail("ief.falot@student.ehb.be"),
+                new EventAttendee().setEmail("ieffalot@gmail.com"),
+                new EventAttendee().setEmail("ieffalot@hotmail.com"),
+                new EventAttendee().setEmail("wissam.nasser@student.ehb.be"),
+                new EventAttendee().setEmail("gill.steens@student.ehb.be"),
+                new EventAttendee().setEmail("gillsteens@gmail.com"),
+                new EventAttendee().setEmail("johannesschreurs@icloud.com"),
+        };
+        event.setAttendees(Arrays.asList(attendees));
+
+        EventReminder[] reminderOverrides = new EventReminder[] {
+                new EventReminder().setMethod("email").setMinutes(24 * 60),
+                new EventReminder().setMethod("popup").setMinutes(10),
+        };
+        Event.Reminders reminders = new Event.Reminders()
+                .setUseDefault(false)
+                .setOverrides(Arrays.asList(reminderOverrides));
+        event.setReminders(reminders);
+
+        String calendarId = "primary";
+        try {
+            event = service.events().insert(calendarId, event).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.printf("Created new Session: %s\n", event.getHtmlLink());
+
+        String toReturn = event.getHtmlLink() + "-=-"+event.getId();
+
+        return toReturn;
+    }
     public static void createDummyEvent(com.google.api.services.calendar.Calendar service) throws IOException{
         //Create new events
         // Refer to the Java quickstart on how to setup the environment:
@@ -224,7 +293,7 @@ public class GoogleCalenderApi {
         if (items.size() == 0) {
             System.out.println("No upcoming events found.");
         } else {
-            System.out.println("Upcoming events");
+            System.out.println("Upcoming events:");
             for (Event event : items) {
                 DateTime start = event.getStart().getDateTime();
                 if (start == null) {

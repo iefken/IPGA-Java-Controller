@@ -16,6 +16,8 @@ public class Session extends BaseEntity{
     private String dateTimeStart;
     private String dateTimeEnd;
     private String type;
+    private String GCAEventId;
+    private String GCAEventLink;
     private float price;
 
     public Session(int SessionId, int Entity_version, int active, String Timestamp,
@@ -36,8 +38,33 @@ public class Session extends BaseEntity{
         this.type = Type;
         this.price = price;
 
+        this.GCAEventId="";
+        this.GCAEventLink="";
+
     }
 
+    public Session(int SessionId, int Entity_version, int active, String Timestamp,
+                   String SessionUUID, String eventUUID, String SessionName, int maxAttendees, String description, String summary, String DateTimeStart, String DateTimeEnd, String Speaker, String location, String Type, String GCAEventId, String GCAEventLink, float price) {
+
+        super(SessionId,Entity_version,active,Timestamp);
+
+        this.sessionUUID = SessionUUID;
+        this.eventUUID=eventUUID;
+        this.sessionName = SessionName;
+        this.maxAttendees = maxAttendees;
+        this.description = description;
+        this.summary = summary;
+        this.dateTimeStart = DateTimeStart;
+        this.dateTimeEnd = DateTimeEnd;
+        this.speaker = Speaker;
+        this.location = location;
+        this.type = Type;
+        this.price = price;
+
+        this.GCAEventId=GCAEventId;
+        this.GCAEventLink=GCAEventLink;
+
+    }
     public int getSessionId() {
         // get id from inherited class
         return this.getEntityId();
@@ -123,6 +150,20 @@ public class Session extends BaseEntity{
         this.location = location;
     }
 
+    public String getGCAEventId() {
+        return GCAEventId;
+    }
+    public void setGCAEventId(String GCAEventId) {
+        this.GCAEventId = GCAEventId;
+    }
+
+    public String getGCAEventLink() {
+        return GCAEventLink;
+    }
+    public void setGCAEventLink(String eventLink) {
+        this.GCAEventLink = eventLink;
+    }
+
     public float getPrice() {
         return price;
     }
@@ -147,13 +188,15 @@ public class Session extends BaseEntity{
                 Objects.equals(getSpeaker(), session.getSpeaker()) &&
                 Objects.equals(getDateTimeStart(), session.getDateTimeStart()) &&
                 Objects.equals(getDateTimeEnd(), session.getDateTimeEnd()) &&
-                Objects.equals(getType(), session.getType());
+                Objects.equals(getType(), session.getType()) &&
+                Objects.equals(getGCAEventId(), session.getGCAEventId()) &&
+                Objects.equals(getGCAEventLink(), session.getGCAEventLink());
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), getSessionUUID(), getEventUUID(), getSessionName(), getMaxAttendees(), getDescription(), getSummary(), getLocation(), getSpeaker(), getDateTimeStart(), getDateTimeEnd(), getType(), getPrice());
+        return Objects.hash(super.hashCode(), getSessionUUID(), getEventUUID(), getSessionName(), getMaxAttendees(), getDescription(), getSummary(), getLocation(), getSpeaker(), getDateTimeStart(), getDateTimeEnd(), getType(), getGCAEventId(), getGCAEventLink(), getPrice());
     }
 
     @Override
@@ -170,6 +213,8 @@ public class Session extends BaseEntity{
                 ", dateTimeStart='" + dateTimeStart + '\'' +
                 ", dateTimeEnd='" + dateTimeEnd + '\'' +
                 ", type='" + type + '\'' +
+                ", GCAEventId='" + GCAEventId + '\'' +
+                ", GCAEventLink='" + GCAEventLink + '\'' +
                 ", price=" + price +
                 '}';
     }

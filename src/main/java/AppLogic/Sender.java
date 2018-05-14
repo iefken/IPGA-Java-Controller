@@ -122,7 +122,6 @@ public class Sender {
             e.printStackTrace();
         }
 
-
         // process UUID from message
         //cut away the outer [ and ] from the retrieved json string
         message = message.substring(1, message.length() - 1);
@@ -138,13 +137,11 @@ public class Sender {
 
             //System.out.println("newEntity_versionFROMJSON: "+newEntity_version);
         } catch (Exception e) {
-            System.out.println(obj.getEntity_version());
-            System.out.println(e);
+            //System.out.println(obj.getEntity_version());
+            System.out.println("Something went wrong with updateUuidRecordVersion: "+e);
 
         }
-
         return newEntity_version;
-
 
     }
 

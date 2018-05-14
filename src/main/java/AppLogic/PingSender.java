@@ -113,13 +113,13 @@ public class PingSender implements Runnable {
 
                 // ## save pingmessage to localdb
 
-                // TO DO
+                // TODO
 
                 // ## form xml pingmessage
 
                 String xmlMessage = "";
                 try {
-                    xmlMessage = Helper.getXmlForPingMessage("PingMessage",this.getThisSourceType());
+                    xmlMessage = Helper.getXmlForPingMessage("pingMessage",this.getThisSourceType());
                 } catch (JAXBException e) {
                     e.printStackTrace();
                 }
