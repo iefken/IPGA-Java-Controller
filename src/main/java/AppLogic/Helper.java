@@ -2938,6 +2938,77 @@ public interface Helper {
                 }
 
                 break;
+
+            case "22":
+                // new event without UUID
+
+                System.out.println("You've chosen '" + choice + "': Event without UUID ...\n");
+
+                // Set chosen eventName
+                System.out.print("\nEnter the eventName to use:_ ");
+                scanner = new Scanner(System.in);
+                choice = scanner.next();
+                eventName=choice;
+
+                String UuidInsertReturner="";
+                try {
+                    //UuidInsertReturner = Helper.httpPostCreateUuidRecord(Entity_sourceId, Entity_type, Source_type);
+                    UuidInsertReturner = Helper.httpPostCreateUuidRecord(50, Entity_type.EVENT, Source_type.Planning);
+
+
+                    UuidInsertReturner = UuidInsertReturner.substring(1, UuidInsertReturner.length() - 1);
+
+                    System.out.println("\nMessage From UUID server: " + UuidInsertReturner);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                // 1. Preset variables
+
+                headerDescription = "Mocking Event message";
+                // Source_type= ... ;
+                //uuid="83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
+                //eventName = "Mocked eventName";
+                maxAttendees = 45;
+                description = "Mocked description";
+                summary = "Mocked summary";
+                location = "Mocked location";
+                contactPerson = "Mocked contactPerson";
+                dateTimeStart = "2018-05-28T09:00:00+02:00";
+                dateTimeEnd = "2018-05-29T09:00:00+02:00";
+                eventType="MockerNoon";
+                price = 0;
+                Source_type = Helper.SourceType.Front_End;
+                Entity_type = Helper.EntityType.EVENT;
+                entityVersion=1;
+                active=1;
+                timestamp=Helper.getCurrentDateTimeStamp();
+
+                System.out.println("Mocking event '"+eventName+"' with uuid: '"+uuid+"' ... Other variables are preset in Main.java around line 800");
+
+                // 2. Form Event object
+                mockEvent = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price);
+
+                // 3. Form XML
+                try {
+                    xmlTotalMessage = Helper.getXmlFromEventObject(headerDescription, Source_type, mockEvent);
+                } catch (JAXBException e) {
+                    e.printStackTrace();
+                }
+
+                // 4. Send XML
+                try {
+                    Sender.sendMessage(xmlTotalMessage);
+                } catch (TimeoutException | IOException e) {
+                    e.printStackTrace();
+                } catch (JAXBException e) {
+                    e.printStackTrace();
+                }
+
+
+
+                break;
+
             case "30":
                 // Session with UUID
 
