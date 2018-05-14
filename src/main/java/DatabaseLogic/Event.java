@@ -1,5 +1,7 @@
 package DatabaseLogic;
 
+import AppLogic.Helper;
+
 import java.util.Objects;
 
 public class Event extends BaseEntity{
@@ -14,6 +16,7 @@ public class Event extends BaseEntity{
     private String dateTimeStart;
     private String dateTimeEnd;
     private String type;
+    private String eventLink;
     private float price;
 
     public Event(int eventId, int entityVersion, int active, String Timestamp,
@@ -35,7 +38,34 @@ public class Event extends BaseEntity{
         this.type = type;
         this.price = price;
 
+        this.eventLink="";
+
     }
+
+    public Event(int eventId, int entityVersion, int active, String Timestamp,
+                 String eventUUID, String eventName, int maxAttendees, String description, String summary,
+                 String location, String contactPerson,String dateTimeStart, String dateTimeEnd, String type, float price, String eventLink) {
+
+        super(eventId, entityVersion, active, Timestamp);
+
+        this.eventUUID = eventUUID;
+        this.eventName = eventName;
+        this.maxAttendees = maxAttendees;
+        this.description = description;
+        this.summary = summary;
+        this.location = location;
+        this.contactPerson = contactPerson;
+        this.dateTimeStart = dateTimeStart;
+        this.dateTimeEnd = dateTimeEnd;
+
+        this.type = type;
+        this.price = price;
+        this.eventLink = eventLink;
+
+
+    }
+    //INSERT INTO `PlanningDB`.`BaseEntity` (`entityId`, `entity_version`, `active`, `timestamp`, `timestampLastUpdated`, `timestampCreated`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL);
+
 
     public int getEventId() {
         // get id from inherited class
@@ -136,4 +166,10 @@ public class Event extends BaseEntity{
         this.price = price;
     }
 
+    public String getEventLink() {
+        return eventLink;
+    }
+    public void setEventLink(String eventLink) {
+        this.eventLink = eventLink;
+    }
 }

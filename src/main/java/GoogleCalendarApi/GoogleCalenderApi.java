@@ -98,12 +98,14 @@ public class GoogleCalenderApi {
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
-    public static void createEventFromEventObject(com.google.api.services.calendar.Calendar service, Event newEvent) throws IOException{
+    public static String createEventFromEventObject(DatabaseLogic.Event newEvent) throws IOException{
         //Create new events
         // Refer to the Java quickstart on how to setup the environment:
         // https://developers.google.com/calendar/quickstart/java
         // Change the scope to CalendarScopes.CALENDAR and delete any stored
         // credentials.
+
+        com.google.api.services.calendar.Calendar service = getCalendarService();
         Event event = new Event()
                 .setSummary(newEvent.getSummary())
                 .setLocation(newEvent.getLocation())
@@ -149,6 +151,7 @@ public class GoogleCalenderApi {
         System.out.printf("Event created: %s\n", event.getHtmlLink());
 
         // TO DO
+        return event.getHtmlLink();
 
         // Save link to DB
 

@@ -162,8 +162,11 @@ public class Sender {
         try {
             message = Helper.httpPutUpdateUuidRecordVersionB(UUID, Entity_version, Source_type);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Something went wrong updating entity version: "+e);
+            //e.printStackTrace();
         }
+        return message;
+/*
 
         if (message == "") {
             //Process xml
@@ -181,6 +184,7 @@ public class Sender {
 
             return "Something could have gone wrong updating entity with UUID: " + UUID + "...\n -*- Error starts here: -*-\n" + message + "\n -*- Error ends here -*-";
         }
+*/
 
     }
 /*

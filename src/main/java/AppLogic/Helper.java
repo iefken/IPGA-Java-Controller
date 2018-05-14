@@ -1011,8 +1011,12 @@ public interface Helper {
 
                     } else {
                         // New event record
-                        // 2.3.1. insert new event into local db
 
+                        // 2.3.1. Add new event to Google calendar
+                        String newEventHtmlLink = GoogleCalenderApi.createEventFromEventObject(thisEventInMessage);
+                        thisEventInMessage.setEventLink(newEventHtmlLink);
+
+                        // 2.3.2. insert new event into local db
                         int messageEventInsertReturner = 0;
                         try {
                             messageEventInsertReturner = new Event_DAO().insertIntoEvent(thisEventInMessage);
@@ -1020,7 +1024,7 @@ public interface Helper {
                             e.printStackTrace();
                         }
 
-                        // 2.3.2. insertUuidRecord
+                        // 2.3.3. insertUuidRecord
                         try {
                             Sender.insertUuidRecord("", messageEventInsertReturner, thisEntityType, Source_type, eventUUID);
                         } catch (IOException | TimeoutException | JAXBException e) {
@@ -2608,21 +2612,6 @@ public interface Helper {
         return xmlTotalMessage;
     }
 
-    static String getOurXmlMessage(String messageType, String description, SourceType Source_type, String UUID) throws JAXBException {
-
-        // form xml
-        XmlMessage.Header header = new XmlMessage.Header(messageType, description + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
-        // set datastructure
-        XmlMessage.MessageStructure messageStructure = new XmlMessage.MessageStructure(UUID, "1", messageType, Helper.getCurrentDateTimeStamp());
-        // steek header en datastructure (Reservationstructure) in message klasse
-        XmlMessage.MessageMessage xmlReservationMessage = new XmlMessage.MessageMessage(header, messageStructure);
-        // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)
-        String xmlTotalMessage = xmlReservationMessage.generateXML();
-
-        //System.out.println("xmlTotalMessage: "+xmlTotalMessage);
-        return xmlTotalMessage;
-    }
-
 
     static String getPropertyFromXml(String xml, String property) throws
             ParserConfigurationException, SAXException, IOException, NullPointerException {
@@ -3087,3 +3076,24 @@ public interface Helper {
     }
 
 }
+
+
+/*
+old code:
+
+    static String getOurXmlMessage(String messageType, String description, SourceType Source_type, String UUID) throws JAXBException {
+
+        // form xml
+        XmlMessage.Header header = new XmlMessage.Header(messageType, description + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
+        // set datastructure
+        XmlMessage.MessageStructure messageStructure = new XmlMessage.MessageStructure(UUID, "1", messageType, Helper.getCurrentDateTimeStamp());
+        // steek header en datastructure (Reservationstructure) in message klasse
+        XmlMessage.MessageMessage xmlReservationMessage = new XmlMessage.MessageMessage(header, messageStructure);
+        // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)
+        String xmlTotalMessage = xmlReservationMessage.generateXML();
+
+        //System.out.println("xmlTotalMessage: "+xmlTotalMessage);
+        return xmlTotalMessage;
+    }
+
+ */

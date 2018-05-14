@@ -1,8 +1,10 @@
 package AppLogic;
+import com.rabbitmq.client.*;
+import java.io.IOException;
+/*
 
 import DatabaseLogic.*;
 import GoogleCalendarApi.*;
-import com.rabbitmq.client.*;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -13,13 +15,13 @@ import javax.xml.bind.JAXBException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 import java.io.StringReader;
 import java.sql.SQLException;
 import java.util.concurrent.TimeoutException;
 
 import static AppLogic.Helper.getSafeXmlProperty;
 import static GoogleCalendarApi.GoogleCalenderApi.getCalendarService;
+*/
 
 public class Receiver {
 
