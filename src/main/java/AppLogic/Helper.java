@@ -366,7 +366,7 @@ public interface Helper {
                     //preset variables
                     messageType = "ReservationMessage";
                     //Entity_sourceId = 200;
-                    //Entity_type=Helper.EntityType.Visitor;
+                    Entity_type = EntityType.RESERVATION_EVENT;
                     Source_type = Helper.SourceType.Front_End;
                     type = "Case 10 type";
                     paid = 0;
@@ -810,7 +810,12 @@ public interface Helper {
 
                 break;
 
-            case "reservationmessage":
+            case "reservationSessionMessage":
+
+                handleNewMessageReservation(task);
+
+                break;
+            case "reservationEventMessage":
 
                 handleNewMessageReservation(task);
 
@@ -822,10 +827,21 @@ public interface Helper {
                 break;
 
             case "pingmessage":
+            case "errormessage":
 
                 System.out.println(" [" + messageType + "] Received from " + getSafeXmlProperty(task, "source"));
                 break;
 
+            case "productmessage":
+            case "purchasemessage":
+            case "invoicerequestmessage":
+            case "creditnotemessage":
+            case "invitemessage":
+            case "invoiceMessage":
+
+                System.out.println(" [" + messageType + "] Received from " + getSafeXmlProperty(task, "source"));
+
+                break;
             case "":
             default:
 
@@ -1687,7 +1703,7 @@ public interface Helper {
 
         String messageType = "userMessage";
         // form xml
-        XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
+        XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
         XmlMessage.Userstructure userStructure = new XmlMessage.Userstructure(userUUID, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, type, entity_version, active, timestamp);
         // steek header en datastructure (Reservationstructure) in message klasse
@@ -2082,8 +2098,13 @@ public interface Helper {
         sessionType = getSafeXmlProperty(xmlMessage, "sessionType");
         if (sessionType == "false") {
 
-            System.out.println(" [!!!] ERROR: No sessionType found in XML: ");
-            allGood = false;
+            sessionType = getSafeXmlProperty(xmlMessage, "type");
+
+            if (sessionType == "false") {
+
+                System.out.println(" [!!!] ERROR: No sessionType/type found in XML: ");
+                allGood = false;
+            }
 
         }
         try {
@@ -2149,7 +2170,7 @@ public interface Helper {
         }
 
         sessionObject = new Session(0, entityVersion, active, timestamp, sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, location, speaker, dateTimeStart, dateTimeEnd, sessionType, "","",price);
-        System.out.println("sessionObject.toString()"+sessionObject.toString());
+        //System.out.println("sessionObject.toString()"+sessionObject.toString());
         return sessionObject;
     }
 
@@ -2293,15 +2314,20 @@ public interface Helper {
 
         if (type == "false") {
 
-            System.out.println(" [!!!] ERROR: No type found in XML: ");
-            allGood = false;
+            type = getSafeXmlProperty(xmlMessage, "type");
+
+            if (type == "false") {
+
+                System.out.println(" [!!!] ERROR: No type found in XML: ");
+                allGood = false;
+            }
 
         }
         try {
             price = Float.parseFloat(getSafeXmlProperty(xmlMessage, "price"));
         } catch (NumberFormatException e) {
-            e.printStackTrace();
-            System.out.println(" [!!!] ERROR: No price found in XML: ");
+            //e.printStackTrace();
+            System.out.println(" [!!!] ERROR: No price found in XML: "+e);
             allGood = false;
         }
         if (price < 0) {
@@ -2734,7 +2760,7 @@ public interface Helper {
         System.out.println("20. Event with UUID: 'e319f8aa-1910-442c-8b17-5e809d713ee4' ");
         System.out.println("21. Event with chosen UUID: ");
         System.out.println("22. New Event without UUID: ");
-        System.out.println("30. Session with UUID: '' ");
+        System.out.println("30. Session with UUID: 'c1a89eff-0a22-454d-aecc-44c19c95c261' ");
         System.out.println("31. Session with chosen UUID: ");
         System.out.println("32. New Session without UUID: ");
 
@@ -3068,7 +3094,7 @@ public interface Helper {
             case "30":
                 // Session with UUID
 
-                uuid="83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
+                uuid="c1a89eff-0a22-454d-aecc-44c19c95c261";
                 System.out.println("Mocking Session 'MockSess' with uuid: '"+uuid+"' ...");
 
                 // 1. Preset variables
@@ -3095,7 +3121,7 @@ public interface Helper {
                 // 2. Form Event object
                 mockSession = new Session(0, entityVersion, active, timestamp, uuid, eventUuid, sessionName, maxAttendees, description, summary, dateTimeStart, dateTimeEnd, contactPerson, location, sessionType, price);
 
-                System.out.println("mockSession toString(): "+mockSession.toString());
+                //System.out.println("mockSession toString(): "+mockSession.toString());
 
                 // 3. Form XML
 
@@ -3105,7 +3131,7 @@ public interface Helper {
                     e.printStackTrace();
                 }
 
-                System.out.println("xmlTotalMessage toString(): \n"+xmlTotalMessage);
+                //System.out.println("xmlTotalMessage toString(): \n"+xmlTotalMessage);
 
                 // 4. Send XML
 
@@ -3136,7 +3162,7 @@ public interface Helper {
                 sessionName=choice;
 
                 //uuid="e319f8aa-1910-442c-8b17-5e809d713ee4";
-                System.out.println("Mocking Session 'MockSess' with uuid: '"+uuid+"' ");
+                //System.out.println("Mocking Session 'MockSess' with uuid: '"+uuid+"' ");
 
                 // 1. Preset variables
 
@@ -3294,8 +3320,9 @@ public interface Helper {
     //https://stackoverflow.com/a/8345074
     static String getCurrentDateTimeStamp() {
         Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        return sdf.format(date);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
+        return sdf.format(date)+"T"+sdf2.format(date);
     }
 
 }

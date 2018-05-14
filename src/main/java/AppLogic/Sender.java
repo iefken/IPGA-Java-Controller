@@ -218,7 +218,7 @@ public class Sender {
         //setup RabbitMQ connection, publish message to queue/exchange
 
         ConnectionFactory factory = new ConnectionFactory();
-        String TASK_QUEUE_NAME = "planning-queue";
+        String TASK_QUEUE_NAME = "frontend-queue";
         String username = "Planning";
         String password = "planning";
         String virtualHost = "/";
