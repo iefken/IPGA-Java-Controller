@@ -2,6 +2,8 @@ package AppLogic;
 
 import DatabaseLogic.*;
 import GoogleCalendarApi.GoogleCalenderApi;
+import JsonMessage.JSONException;
+import com.google.gson.Gson;
 import okhttp3.*;
 import HttpRequest.*;
 import org.w3c.dom.DOMException;
@@ -2947,7 +2949,28 @@ public interface Helper {
             case "22":
                 // new event without UUID
 
-                System.out.println("You've chosen '" + choice + "': Event without UUID ...\n");
+                System.out.println("You've chosen '" + choice + "': New Event without UUID ...\n");
+
+                // 1. Preset variables
+
+                headerDescription = "Mocking Event message";
+                // Source_type= ... ;
+                //uuid="83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
+                //eventName = "Mocked eventName";
+                maxAttendees = 45;
+                description = "Mocked description";
+                summary = "Mocked summary";
+                location = "Mocked location";
+                contactPerson = "Mocked contactPerson";
+//                dateTimeStart = "2018-05-28T09:00:00+02:00";
+//                dateTimeEnd = "2018-05-29T09:00:00+02:00";
+                eventType="MockerNoon";
+                price = 0;
+                Source_type = Helper.SourceType.Front_End;
+                Entity_type = Helper.EntityType.EVENT;
+                entityVersion=1;
+                active=1;
+                timestamp=Helper.getCurrentDateTimeStamp();
 
                 // Set chosen eventName
                 System.out.print("\nEnter the new event's name: ");
@@ -2977,29 +3000,25 @@ public interface Helper {
 
                     System.out.println("\nMessage From UUID server: " + UuidInsertReturner);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
+                    System.out.println("Error during http post request: createUuidRecord();");
                 }
 
-                // 1. Preset variables
+                // handle uuid response to get uuid out of it
 
-                headerDescription = "Mocking Event message";
-                // Source_type= ... ;
-                //uuid="83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
-                //eventName = "Mocked eventName";
-                maxAttendees = 45;
-                description = "Mocked description";
-                summary = "Mocked summary";
-                location = "Mocked location";
-                contactPerson = "Mocked contactPerson";
-//                dateTimeStart = "2018-05-28T09:00:00+02:00";
-//                dateTimeEnd = "2018-05-29T09:00:00+02:00";
-                eventType="MockerNoon";
-                price = 0;
-                Source_type = Helper.SourceType.Front_End;
-                Entity_type = Helper.EntityType.EVENT;
-                entityVersion=1;
-                active=1;
-                timestamp=Helper.getCurrentDateTimeStamp();
+                UUID_insertUuidRecord obj = null;
+
+                try {
+                    Gson gson = new Gson();
+                    UUID_insertUuidRecord firstTest = gson.fromJson(UuidInsertReturner, UUID_insertUuidRecord.class);
+
+                    uuid = firstTest.getUuid();
+
+                } catch (JSONException e) {
+                    //e.printStackTrace();
+                    System.out.println(e);
+                    System.out.println("uuid: "+uuid);
+                }
 
                 System.out.println("Mocking event '"+eventName+"' with uuid: '"+uuid+"' ... Other variables are preset in Main.java around line 800");
 
