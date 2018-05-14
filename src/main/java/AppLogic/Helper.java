@@ -1013,7 +1013,12 @@ public interface Helper {
                         // New event record
 
                         // 2.3.1. Add new event to Google calendar
-                        String newEventHtmlLink = GoogleCalenderApi.createEventFromEventObject(thisEventInMessage);
+                        String newEventHtmlLink = null;
+                        try {
+                            newEventHtmlLink = GoogleCalenderApi.createEventFromEventObject(thisEventInMessage);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         thisEventInMessage.setEventLink(newEventHtmlLink);
 
                         // 2.3.2. insert new event into local db
@@ -1498,7 +1503,6 @@ public interface Helper {
     }
 
 
-    //
 
     // UUID: GET: all
     static String httpGetAllRecords(int limit) throws IOException {
@@ -2705,6 +2709,7 @@ public interface Helper {
         System.out.println("11. User with chosen UUID: ");
         System.out.println("20. Event with UUID: 'e319f8aa-1910-442c-8b17-5e809d713ee4' ");
         System.out.println("21. Event with chosen UUID: ");
+        System.out.println("22. New Event without UUID: ");
         System.out.println("30. Session with UUID: '' ");
         System.out.println("31. Session with chosen UUID: ");
 
@@ -2945,10 +2950,22 @@ public interface Helper {
                 System.out.println("You've chosen '" + choice + "': Event without UUID ...\n");
 
                 // Set chosen eventName
-                System.out.print("\nEnter the eventName to use:_ ");
+                System.out.print("\nEnter the new event's name: ");
                 scanner = new Scanner(System.in);
                 choice = scanner.next();
                 eventName=choice;
+
+                // Set chosen DateTimeStart
+                System.out.print("\nEnter the new event's start datetime (2018-05-01T09:00) ");
+                scanner = new Scanner(System.in);
+                choice = scanner.next();
+                dateTimeStart=choice;
+
+                // Set chosen DateTimeEnd
+                System.out.print("\nEnter the new event's end datetime (2018-05-01T09:00) ");
+                scanner = new Scanner(System.in);
+                choice = scanner.next();
+                dateTimeEnd=choice;
 
                 String UuidInsertReturner="";
                 try {
@@ -2974,8 +2991,8 @@ public interface Helper {
                 summary = "Mocked summary";
                 location = "Mocked location";
                 contactPerson = "Mocked contactPerson";
-                dateTimeStart = "2018-05-28T09:00:00+02:00";
-                dateTimeEnd = "2018-05-29T09:00:00+02:00";
+//                dateTimeStart = "2018-05-28T09:00:00+02:00";
+//                dateTimeEnd = "2018-05-29T09:00:00+02:00";
                 eventType="MockerNoon";
                 price = 0;
                 Source_type = Helper.SourceType.Front_End;

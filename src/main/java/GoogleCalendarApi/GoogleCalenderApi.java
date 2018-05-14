@@ -68,8 +68,8 @@ public class GoogleCalenderApi {
         //InputStream in = Quickstart.class.getResourceAsStream("/client_secret.json");
         // /
         //InputStream in = new FileInputStream("C:\\Users\\ief.falot\\.credentials\\calendar-integration-groupA-java\\client_secret.json");
-        //InputStream in = new FileInputStream("C:\\Users\\ief.falot\\Documents\\GitHub\\PLANNING\\src\\main\\java\\GoogleCalendarApi\\cred\\client_secret.json");
-        InputStream in = new FileInputStream("/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/src/main/java/GoogleCalendarApi/cred/client_secret.json");
+        InputStream in = new FileInputStream("C:\\Users\\ief.falot\\Documents\\GitHub\\PLANNING\\src\\main\\java\\GoogleCalendarApi\\cred\\client_secret.json");
+        //InputStream in = new FileInputStream("/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/src/main/java/GoogleCalendarApi/cred/client_secret.json");
 
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
@@ -113,13 +113,13 @@ public class GoogleCalenderApi {
                 .setLocation(newEvent.getLocation())
                 .setDescription(newEvent.getDescription());
 
-        DateTime startDateTime = new DateTime("2018-05-27T20:42:00-07:00");
+        DateTime startDateTime = new DateTime(newEvent.getDateTimeStart()+"+02:00");
         EventDateTime start = new EventDateTime()
                 .setDateTime(startDateTime)
                 .setTimeZone("Europe/Brussels");
         event.setStart(start);
 
-        DateTime endDateTime = new DateTime("2018-05-27T23:42:00-07:00");
+        DateTime endDateTime = new DateTime(newEvent.getDateTimeEnd()+"+02:00");
         EventDateTime end = new EventDateTime()
                 .setDateTime(endDateTime)
                 .setTimeZone("Europe/Brussels");

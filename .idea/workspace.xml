@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="cli-java-controller:jar2" />
+      <artifact name="cli-java-main-controller:jar" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
@@ -39,7 +39,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.7406484">
+    <splitter split-orientation="horizontal" split-proportion="0.29399142">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="Receiver.java" pinned="false" current-in-tab="false">
@@ -57,8 +57,8 @@
           <file leaf-file-name="GoogleCalenderApi.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="221">
-                  <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
+                <state relative-caret-position="255">
+                  <caret line="121" column="69" selection-start-line="121" selection-start-column="69" selection-end-line="121" selection-end-column="69" />
                 </state>
               </provider>
             </entry>
@@ -159,8 +159,8 @@
           <file leaf-file-name="DatabaseProperties.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseProperties.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="323">
-                  <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
+                <state relative-caret-position="68">
+                  <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="8" />
                 </state>
               </provider>
             </entry>
@@ -184,7 +184,7 @@
           <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Main.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="376">
+                <state relative-caret-position="331">
                   <caret line="29" column="55" lean-forward="true" selection-start-line="29" selection-start-column="55" selection-end-line="29" selection-end-column="55" />
                   <folding>
                     <element signature="imports" expanded="true" />
@@ -196,8 +196,8 @@
           <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="564">
-                  <caret line="2956" lean-forward="true" selection-start-line="2956" selection-end-line="2956" />
+                <state relative-caret-position="305">
+                  <caret line="2993" column="62" lean-forward="true" selection-start-line="2993" selection-start-column="62" selection-end-line="2994" selection-end-column="60" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="method#receiverMessageWaitPaint#0;class#Helper#0" />
@@ -205,7 +205,6 @@
                     <element signature="method#httpGetAllRecords#0;class#Helper#0" />
                     <element signature="method#httpPostCreateUuidRecord#0;class#Helper#0" />
                     <element signature="method#httpPostInsertUuidRecord#0;class#Helper#0" />
-                    <element signature="method#httpPutUpdateUuidRecordVersion#0;class#Helper#0" />
                     <element signature="method#httpPutUpdateUuidRecordVersionB#0;class#Helper#0" />
                     <element signature="method#doHttpRequest#0;class#Helper#0" />
                     <element signature="method#getXmlForNewUser#0;class#Helper#0" />
@@ -216,6 +215,7 @@
                     <element signature="method#getSessionObjectFromXmlMessage#0;class#Helper#0" />
                     <element signature="method#getXmlForNewEvent#0;class#Helper#0" />
                     <element signature="method#getXmlFromEventObject#0;class#Helper#0" />
+                    <element signature="method#getEventObjectFromXmlMessage#0;class#Helper#0" />
                     <element signature="method#getXmlForNewReservation_Session#0;class#Helper#0" />
                     <element signature="method#getXmlFromReservation_SessionObject#0;class#Helper#0" />
                     <element signature="method#getReservation_SessionObjectFromXmlMessage#0;class#Helper#0" />
@@ -299,7 +299,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>reserv</find>
       <find>createu</find>
       <find>getPropertyFromXml</find>
       <find>list</find>
@@ -329,6 +328,7 @@
       <find>eve</find>
       <find>createeve</find>
       <find>insertuu</find>
+      <find>event with</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -366,8 +366,8 @@
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Event.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseProperties.java" />
-        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" />
         <option value="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" />
+        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" />
       </list>
     </option>
   </component>
@@ -389,10 +389,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
-    <option name="y" value="34" />
-    <option name="width" value="986" />
-    <option name="height" value="833" />
+    <option name="x" value="353" />
+    <option name="y" value="-13" />
+    <option name="width" value="1038" />
+    <option name="height" value="650" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -520,7 +520,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.Receiver">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="AppLogic.Main" />
       <module name="cli-java-controller" />
@@ -602,8 +602,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Receiver" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Quickstart" />
       </list>
     </recent_temporary>
@@ -628,12 +628,12 @@
       <workItem from="1526043967196" duration="3287000" />
       <workItem from="1526048493341" duration="1073000" />
       <workItem from="1526059675627" duration="2602000" />
-      <workItem from="1526244717340" duration="13691000" />
+      <workItem from="1526244717340" duration="15481000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="130312000" />
+    <option name="totallyTimeSpent" value="132102000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -656,10 +656,10 @@
       <window_info anchor="right" id="Maven Projects" order="5" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4989339" visible="true" weight="0.21273713" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4989339" visible="true" weight="0.2100271" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49946696" weight="0.41666666" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22686376" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.10154241" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -778,7 +778,6 @@
             <element signature="method#httpGetAllRecords#0;class#Helper#0" />
             <element signature="method#httpPostCreateUuidRecord#0;class#Helper#0" />
             <element signature="method#httpPostInsertUuidRecord#0;class#Helper#0" />
-            <element signature="method#httpPutUpdateUuidRecordVersion#0;class#Helper#0" />
             <element signature="method#httpPutUpdateUuidRecordVersionB#0;class#Helper#0" />
             <element signature="method#doHttpRequest#0;class#Helper#0" />
             <element signature="method#getXmlForNewUser#0;class#Helper#0" />
@@ -789,6 +788,7 @@
             <element signature="method#getSessionObjectFromXmlMessage#0;class#Helper#0" />
             <element signature="method#getXmlForNewEvent#0;class#Helper#0" />
             <element signature="method#getXmlFromEventObject#0;class#Helper#0" />
+            <element signature="method#getEventObjectFromXmlMessage#0;class#Helper#0" />
             <element signature="method#getXmlForNewReservation_Session#0;class#Helper#0" />
             <element signature="method#getXmlFromReservation_SessionObject#0;class#Helper#0" />
             <element signature="method#getReservation_SessionObjectFromXmlMessage#0;class#Helper#0" />
@@ -1052,16 +1052,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="29" column="55" lean-forward="true" selection-start-line="29" selection-start-column="55" selection-end-line="29" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -1079,17 +1069,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseProperties.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
+        <state relative-caret-position="489">
+          <caret line="81" lean-forward="true" selection-start-line="81" selection-end-line="81" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Sender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="12">
+          <caret line="38" column="67" lean-forward="true" selection-start-line="38" selection-start-column="67" selection-end-line="41" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseProperties.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="25" column="23" lean-forward="true" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
+          <caret line="121" column="69" selection-start-line="121" selection-start-column="69" selection-end-line="121" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="29" column="55" lean-forward="true" selection-start-line="29" selection-start-column="55" selection-end-line="29" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1098,8 +1112,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="667" column="58" lean-forward="true" selection-start-line="667" selection-start-column="58" selection-end-line="667" selection-end-column="58" />
+        <state relative-caret-position="305">
+          <caret line="2993" column="62" lean-forward="true" selection-start-line="2993" selection-start-column="62" selection-end-line="2994" selection-end-column="60" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#receiverMessageWaitPaint#0;class#Helper#0" />
@@ -1107,7 +1121,6 @@
             <element signature="method#httpGetAllRecords#0;class#Helper#0" />
             <element signature="method#httpPostCreateUuidRecord#0;class#Helper#0" />
             <element signature="method#httpPostInsertUuidRecord#0;class#Helper#0" />
-            <element signature="method#httpPutUpdateUuidRecordVersion#0;class#Helper#0" />
             <element signature="method#httpPutUpdateUuidRecordVersionB#0;class#Helper#0" />
             <element signature="method#doHttpRequest#0;class#Helper#0" />
             <element signature="method#getXmlForNewUser#0;class#Helper#0" />
@@ -1118,6 +1131,7 @@
             <element signature="method#getSessionObjectFromXmlMessage#0;class#Helper#0" />
             <element signature="method#getXmlForNewEvent#0;class#Helper#0" />
             <element signature="method#getXmlFromEventObject#0;class#Helper#0" />
+            <element signature="method#getEventObjectFromXmlMessage#0;class#Helper#0" />
             <element signature="method#getXmlForNewReservation_Session#0;class#Helper#0" />
             <element signature="method#getXmlFromReservation_SessionObject#0;class#Helper#0" />
             <element signature="method#getReservation_SessionObjectFromXmlMessage#0;class#Helper#0" />
@@ -1130,20 +1144,6 @@
             <element signature="method#getSafeXmlProperty#0;class#Helper#0" />
             <element signature="method#getCurrentDateTimeStamp#0;class#Helper#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Sender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12">
-          <caret line="38" column="67" lean-forward="true" selection-start-line="38" selection-start-column="67" selection-end-line="41" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
         </state>
       </provider>
     </entry>
