@@ -222,24 +222,24 @@
       <find>pingm</find>
       <find>eve</find>
       <find>createeve</find>
-      <find>event with</find>
+      <find />
       <find>xmlmessagem</find>
-      <find>new message for e</find>
+      <find />
       <find>handle</find>
       <find>insertuu</find>
-      <find>case &quot;32</find>
+      <find />
       <find>sessionm</find>
       <find>sessionme</find>
-      <find>error ha</find>
-      <find>mocked locat</find>
+      <find />
+      <find />
       <find>upcom</find>
       <find>dateT</find>
-      <find>error: no</find>
-      <find>mocking even</find>
+      <find />
+      <find />
       <find>cefso</find>
-      <find>error</find>
-      <find>case &quot;22</find>
-      <find>Add new ev</find>
+      <find />
+      <find />
+      <find />
       <find>sessionObject.toString()</find>
       <find>toString()</find>
       <find>getcur</find>
@@ -248,7 +248,7 @@
       <find>type</find>
       <find>message</find>
       <find>eventmess</find>
-      <find>session with</find>
+      <find />
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -308,11 +308,11 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="456" />
-    <option name="y" value="159" />
-    <option name="width" value="664" />
-    <option name="height" value="650" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1616" />
+    <option name="height" value="876" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -537,12 +537,12 @@
       <workItem from="1526043967196" duration="3287000" />
       <workItem from="1526048493341" duration="1073000" />
       <workItem from="1526059675627" duration="2602000" />
-      <workItem from="1526244717340" duration="43941000" />
+      <workItem from="1526244717340" duration="44393000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="160562000" />
+    <option name="totallyTimeSpent" value="161014000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -554,7 +554,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="456" y="159" width="664" height="650" extended-state="0" />
+    <frame x="523" y="138" width="664" height="650" extended-state="0" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />

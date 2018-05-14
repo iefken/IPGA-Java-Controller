@@ -66,11 +66,11 @@ public class GoogleCalenderApi {
      */
     public static Credential authorize() throws IOException {
         // Load client secrets.
-        //InputStream in = Quickstart.class.getResourceAsStream("/client_secret.json");
-        // /
-        //InputStream in = new FileInputStream("C:\\Users\\ief.falot\\.credentials\\calendar-integration-groupA-java\\client_secret.json");
-        InputStream in = new FileInputStream("C:\\Users\\ief.falot\\Documents\\GitHub\\PLANNING\\src\\main\\java\\GoogleCalendarApi\\cred\\client_secret.json");
-//        InputStream in = new FileInputStream("/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/src/main/java/GoogleCalendarApi/cred/client_secret.json");
+        // InputStream in = Quickstart.class.getResourceAsStream("/client_secret.json");
+
+        // InputStream in = new FileInputStream("C:\\Users\\ief.falot\\.credentials\\calendar-integration-groupA-java\\client_secret.json");
+        // InputStream in = new FileInputStream("C:\\Users\\ief.falot\\Documents\\GitHub\\PLANNING\\src\\main\\java\\GoogleCalendarApi\\cred\\client_secret.json");
+        InputStream in = new FileInputStream("/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/src/main/java/GoogleCalendarApi/cred/client_secret.json");
 
         //InputStream in = new FileInputStream("C:\\Users\\ief.falot\\Documents\\GitHub\\PLANNING\\src\\main\\java\\GoogleCalendarApi\\cred\\client_secret(ief).json");
 
