@@ -1212,15 +1212,17 @@ public interface Helper {
             } else {
                 // New session record
 
-                // 2.4.1. Add new event to Google calendar
+                // 2.4.1. Add new Session to Google calendar
                 String newSessionHtmlLinkAndId = "";
                 try {
                     newSessionHtmlLinkAndId = GoogleCalenderApi.createEventFromSessionObject(thisSessionInMessage);
 
+                    //System.out.println("newSessionHtmlLinkAndId: "+newSessionHtmlLinkAndId);
                     String[] newSessionProperties = newSessionHtmlLinkAndId.split("-=-");
 
                     thisSessionInMessage.setGCAEventId(newSessionProperties[1]);
                     thisSessionInMessage.setGCAEventLink(newSessionProperties[0]);
+                    //System.out.println("thisSessionInMessage.toString()"+thisSessionInMessage.toString());
 
                 } catch (IOException e) {
                     System.out.println("Error adding session as event to Google calendar API: "+e);
@@ -2146,7 +2148,8 @@ public interface Helper {
             }
         }
 
-        sessionObject = new Session(0, entityVersion, active, timestamp, sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, location, speaker, dateTimeStart, dateTimeEnd, sessionType, price);
+        sessionObject = new Session(0, entityVersion, active, timestamp, sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, location, speaker, dateTimeStart, dateTimeEnd, sessionType, "","",price);
+        System.out.println("sessionObject.toString()"+sessionObject.toString());
         return sessionObject;
     }
 
@@ -2978,13 +2981,13 @@ public interface Helper {
                 //uuid="83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
                 //eventName = "Mocked eventName";
                 maxAttendees = 45;
-                description = "Mocked description";
-                summary = "Mocked summary";
-                location = "Mocked location";
-                contactPerson = "Mocked contactPerson";
+                description = "Mocked Event description";
+                summary = "Mocked Event summary";
+                location = "Mocked Event location";
+                contactPerson = "Mocked Event contactPerson";
 //                dateTimeStart = "2018-05-28T09:00:00+02:00";
 //                dateTimeEnd = "2018-05-29T09:00:00+02:00";
-                eventType="MockerNoon";
+                eventType="EventType";
                 price = 0;
                 Source_type = Helper.SourceType.Front_End;
                 Entity_type = Helper.EntityType.EVENT;
@@ -3185,23 +3188,22 @@ public interface Helper {
 
                 headerDescription = "Mocking Session message";
                 // Source_type= ... ;
-                eventUuid = "e319f8aa-1910-442c-8b17-5e809d713ee";
+                eventUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
                 //sessionName = "Mocked sessionName";
                 maxAttendees = 45;
-                description = "Mocked description";
-                summary = "Mocked summary";
-                location = "Mocked location";
-                contactPerson = "Mocked speaker";
+                description = "Mocked Session description";
+                summary = "Mocked Session summary";
+                location = "Mocked Session location";
+                contactPerson = "Mocked Session speaker";
                 dateTimeStart = "2018-05-28T12:00:00+02:00";
                 dateTimeEnd = "2018-05-29T14:00:00+02:00";
-                sessionType="SessionMockerType";
+                sessionType="SessionMockedType";
                 price = 0;
                 Source_type = Helper.SourceType.Front_End;
                 Entity_type = Helper.EntityType.SESSION;
                 entityVersion=1;
                 active=1;
                 timestamp=Helper.getCurrentDateTimeStamp();
-
 
                 // Set chosen sessionName
                 System.out.print("\nEnter the new session's name: ");
@@ -3250,8 +3252,10 @@ public interface Helper {
                     System.out.println("uuid: "+uuid);
                 }
 
+                System.out.println("Mocking session '"+sessionName+"' with uuid: '"+uuid+"' ... Other variables are preset in Helper.java around line 3250");
+
                 // 2. Form Session object
-                mockSession = new Session(0, entityVersion, active, timestamp, uuid, eventUuid, sessionName, maxAttendees, description, summary, dateTimeStart, dateTimeEnd, contactPerson, location, sessionType, price);
+                mockSession = new Session(0, entityVersion, active, timestamp, uuid, eventUuid, sessionName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, sessionType, "","", price);
 
                 // 3. Form XML
                 try {

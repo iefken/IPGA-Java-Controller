@@ -40,6 +40,7 @@ public class GoogleCalenderApi {
     /** Global instance of the HTTP transport. */
     private static HttpTransport HTTP_TRANSPORT;
 
+
     /** Global instance of the scopes required by this quickstart.
      *
      * If modifying these scopes, delete your previously saved credentials
@@ -68,8 +69,8 @@ public class GoogleCalenderApi {
         //InputStream in = Quickstart.class.getResourceAsStream("/client_secret.json");
         // /
         //InputStream in = new FileInputStream("C:\\Users\\ief.falot\\.credentials\\calendar-integration-groupA-java\\client_secret.json");
-        //InputStream in = new FileInputStream("C:\\Users\\ief.falot\\Documents\\GitHub\\PLANNING\\src\\main\\java\\GoogleCalendarApi\\cred\\client_secret.json");
-        InputStream in = new FileInputStream("/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/src/main/java/GoogleCalendarApi/cred/client_secret.json");
+        InputStream in = new FileInputStream("C:\\Users\\ief.falot\\Documents\\GitHub\\PLANNING\\src\\main\\java\\GoogleCalendarApi\\cred\\client_secret.json");
+//        InputStream in = new FileInputStream("/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/src/main/java/GoogleCalendarApi/cred/client_secret.json");
 
         //InputStream in = new FileInputStream("C:\\Users\\ief.falot\\Documents\\GitHub\\PLANNING\\src\\main\\java\\GoogleCalendarApi\\cred\\client_secret(ief).json");
 
@@ -178,21 +179,25 @@ public class GoogleCalenderApi {
                 .setLocation(newSession.getLocation())
                 .setDescription(newSession.getDescription());
 
+        //System.out.println("cefso: 1");
         String dts = newSession.getDateTimeStart()+":00+02:00";
         String dte = newSession.getDateTimeEnd()+":00+02:00";
+
+        //System.out.println("dts: "+dts+" , dte: "+dte);
 
         DateTime startDateTime = new DateTime(dts);
         EventDateTime start = new EventDateTime()
                 .setDateTime(startDateTime)
                 .setTimeZone("Europe/Brussels");
         event.setStart(start);
-//2015-05-28T09:00:00-07:00
+        //2015-05-28T09:00:00-07:00
         DateTime endDateTime = new DateTime(dte);
         EventDateTime end = new EventDateTime()
                 .setDateTime(endDateTime)
                 .setTimeZone("Europe/Brussels");
         event.setEnd(end);
 
+        //System.out.println("cefso: 2");
         String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=1"};
         event.setRecurrence(Arrays.asList(recurrence));
 

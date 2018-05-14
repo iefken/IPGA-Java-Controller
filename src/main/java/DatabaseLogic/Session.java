@@ -44,7 +44,7 @@ public class Session extends BaseEntity{
     }
 
     public Session(int SessionId, int Entity_version, int active, String Timestamp,
-                   String SessionUUID, String eventUUID, String SessionName, int maxAttendees, String description, String summary, String DateTimeStart, String DateTimeEnd, String Speaker, String location, String Type, String GCAEventId, String GCAEventLink, float price) {
+                   String SessionUUID, String eventUUID, String SessionName, int maxAttendees, String description, String summary, String location, String Speaker, String DateTimeStart, String DateTimeEnd, String Type, String GCAEventId, String GCAEventLink, float price) {
 
         super(SessionId,Entity_version,active,Timestamp);
 
