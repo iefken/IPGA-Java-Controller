@@ -8,7 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="82177a5e-8973-45d5-9e84-1447e337bd45" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/cli_java_controller_jar2/cli-java-controller.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/cli_java_controller_jar2/cli-java-controller.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/cli_java_controller_jar2/cli-java-controller.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AppLogic/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AppLogic/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java" afterDir="false" />
@@ -196,8 +196,8 @@
           <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="305">
-                  <caret line="2993" column="62" lean-forward="true" selection-start-line="2993" selection-start-column="62" selection-end-line="2994" selection-end-column="60" />
+                <state relative-caret-position="254">
+                  <caret line="2984" column="48" selection-start-line="2984" selection-start-column="48" selection-end-line="2984" selection-end-column="48" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="method#receiverMessageWaitPaint#0;class#Helper#0" />
@@ -628,12 +628,12 @@
       <workItem from="1526043967196" duration="3287000" />
       <workItem from="1526048493341" duration="1073000" />
       <workItem from="1526059675627" duration="2602000" />
-      <workItem from="1526244717340" duration="15481000" />
+      <workItem from="1526244717340" duration="15750000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="132102000" />
+    <option name="totallyTimeSpent" value="132371000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -646,7 +646,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
@@ -656,10 +655,10 @@
       <window_info anchor="right" id="Maven Projects" order="5" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4989339" visible="true" weight="0.2100271" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4989339" weight="0.34417343" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49946696" weight="0.41666666" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.10154241" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19987147" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1112,8 +1111,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="2993" column="62" lean-forward="true" selection-start-line="2993" selection-start-column="62" selection-end-line="2994" selection-end-column="60" />
+        <state relative-caret-position="254">
+          <caret line="2984" column="48" selection-start-line="2984" selection-start-column="48" selection-end-line="2984" selection-end-column="48" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#receiverMessageWaitPaint#0;class#Helper#0" />
