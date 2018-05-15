@@ -28,7 +28,7 @@ public class Sender {
         String message = "";
 
         //set xml header description for message here with timestamp
-        String description = "Standard description for '"+messageType+"' set in sendMessage1()";
+        String description = "Standard description for createUuidRecord";
 
         String newUUID = "";
 
@@ -147,7 +147,7 @@ public class Sender {
 
 
     //4=updateUuidRecordOnChanged
-    // for changing the Entity_version of a certain record // doesn't seem to work yet
+    // for changing the Entity_version of a certain record
     public static String updateUuidRecordVersionB(String messageType, Helper.SourceType Source_type, String UUID, int Entity_version) throws IOException, TimeoutException, JAXBException {
 
 
@@ -218,7 +218,7 @@ public class Sender {
         //setup RabbitMQ connection, publish message to queue/exchange
 
         ConnectionFactory factory = new ConnectionFactory();
-        String TASK_QUEUE_NAME = "frontend-queue";
+        String TASK_QUEUE_NAME = "planning-queue";
         String username = "Planning";
         String password = "planning";
         String virtualHost = "/";
@@ -287,16 +287,20 @@ public class Sender {
 
         //publish to queue
 
+        String message = "ERROR";
+
         try {
             channel.basicPublish("", TASK_QUEUE_NAME, null, xmlMessage.getBytes());
+            message="SUCCES: Sending as '"+thisSourceType+"' to queue: '" + TASK_QUEUE_NAME + "' with message length: '" + xmlMessage.length() + "'";
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            message="ERROR: "+e;
         }
 
         channel.close();
         connection.close();
 
-        return " => Sending as '"+thisSourceType+"' to queue: '" + TASK_QUEUE_NAME + "' with message length: '" + xmlMessage.length() + "'";
+        return message;
 
 
     }

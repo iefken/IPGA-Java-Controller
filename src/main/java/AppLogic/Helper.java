@@ -50,12 +50,12 @@ public interface Helper {
                 "[04.V] Create new Reservation_Event: Add User to Event",
                 "[05.V] Create new Reservation_Session: Add User to Session",
                 "[06.V] Get all UUID's from UUID manager",
-                "[07.x] updateUuidRecordVersion",
-                "[08.x] updateUuidRecordVersionB",
+                "[07.V] updateUuidRecordVersion",
+                "[08.V] updateUuidRecordVersionB",
                 "[09.V] List upcoming events (Google calendar 1) *authorize not yet included",
                 "[10.V] Create new event (Google calendar 2)",
-                "[11.x] Create new chosen event (Google calendar 2)",
-                "[12.x] Mock XML message",
+                "[11.V] Create new chosen event (Google calendar 2)",
+                "[12.V] Mock XML message",
                 "/[13.x] /New Session with UUID",
                 "/[14.x] /New Reservation_Session with UUID"
 
@@ -89,7 +89,7 @@ public interface Helper {
 
         int choser = 999;
         String responseFromSender = "";
-        String[] senderOptions = Helper.getOptions();
+        String[] senderOptions = getOptions();
 
         //initialize possible variables
         boolean inputSucces = true;
@@ -107,8 +107,8 @@ public interface Helper {
         String headerDescription = "Standard header description";
         String xmlTotalMessage = "<test>testertester</test>";
 
-        Helper.EntityType Entity_type = Helper.EntityType.EMPTY;
-        Helper.SourceType Source_type = Helper.SourceType.Front_End;
+        EntityType Entity_type = EntityType.EMPTY;
+        SourceType Source_type = SourceType.Front_End;
         int Entity_version = 1;
         int maxAttendees = 50;
         float paid = 0;
@@ -174,11 +174,11 @@ public interface Helper {
                     String country = "Case1COU";
                     String company = "Case1COM";
                     String userType = "ADMIN";
-                    Source_type = Helper.SourceType.Front_End;
-                    Entity_type = Helper.EntityType.USER;
+                    Source_type = SourceType.Front_End;
+                    Entity_type = EntityType.USER;
 
                     // 1. create user object
-                    User newUser = new User(0, 1, 1, Helper.getCurrentDateTimeStamp(), userUUID, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, userType);
+                    User newUser = new User(0, 1, 1, getCurrentDateTimeStamp(), userUUID, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, userType);
 
                     // 2. insert into local DB
                     int case3test = 0;
@@ -211,7 +211,7 @@ public interface Helper {
                     // System.out.println("user toString MAIN: "+newUser.toString());
 
                     // 5. Parse user object to xml String
-                    xmlTotalMessage = Helper.getXmlFromUserObject(headerDescription, Source_type, newUser);
+                    xmlTotalMessage = getXmlFromUserObject(headerDescription, Source_type, newUser);
 
                     // 6. Send send new object to rabbitExchange
 
@@ -238,11 +238,11 @@ public interface Helper {
                     //String dateTimeEnd;
                     type = "Case 2 EventType ";
                     float price = 0;
-                    Source_type = Helper.SourceType.Front_End;
-                    Entity_type = Helper.EntityType.EVENT;
+                    Source_type = SourceType.Front_End;
+                    Entity_type = EntityType.EVENT;
                     int entityVersion = 1;
                     int active = 1;
-                    String timestamp = Helper.getCurrentDateTimeStamp();
+                    String timestamp = getCurrentDateTimeStamp();
 
                     // 1. create Event object
 
@@ -275,7 +275,7 @@ public interface Helper {
                     }
                     // 5. create xml message
 
-                    xmlTotalMessage = Helper.getXmlForNewEvent(messageType, headerDescription, Source_type, eventUUID, eventName, maxAttendees, description, summary, location, contactPerson, type, price, entityVersion, active, dateTimeStart, dateTimeEnd);
+                    xmlTotalMessage = getXmlForNewEvent(messageType, headerDescription, Source_type, eventUUID, eventName, maxAttendees, description, summary, location, contactPerson, type, price, entityVersion, active, dateTimeStart, dateTimeEnd);
 
                     // 6. send new object to exchange
 
@@ -295,12 +295,12 @@ public interface Helper {
                     // Change as you wish
 
                     //new session will be set in Front_End
-                    Source_type = AppLogic.Helper.SourceType.Front_End;
+                    Source_type = SourceType.Front_End;
 
                     // variables for session
                     messageType = "sessionMessage";
                     Entity_sourceId = 100;
-                    Entity_type = Helper.EntityType.SESSION;
+                    Entity_type = EntityType.SESSION;
                     sessionName = "Session name test";
                     dateTimeStart = "30/05/2018 20:00:00";
                     dateTimeEnd = "31/05/2018 08:00:00";
@@ -317,7 +317,7 @@ public interface Helper {
                     System.out.println("\nNew Session made with sessionUUID: " + sessionUUID);
 
                     // 1. create session object
-                    Session case2NewSession = new Session(0, 1, 1, Helper.getCurrentDateTimeStamp(), sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, dateTimeStart, dateTimeEnd, speaker, location, type, price);
+                    Session case2NewSession = new Session(0, 1, 1, getCurrentDateTimeStamp(), sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, dateTimeStart, dateTimeEnd, speaker, location, type, price);
 
                     System.out.println("case2NewSession: " + case2NewSession.toString());
 
@@ -346,7 +346,7 @@ public interface Helper {
                     }
 
                     // 5. create xml message
-                    xmlTotalMessage = Helper.getXmlForNewSession(headerDescription, Source_type, sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, location, speaker, dateTimeStart, dateTimeEnd, type, price, Entity_version, 1);
+                    xmlTotalMessage = getXmlForNewSession(headerDescription, Source_type, sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, location, speaker, dateTimeStart, dateTimeEnd, type, price, Entity_version, 1);
 
                     // 6. send new object to exchange
 
@@ -367,7 +367,7 @@ public interface Helper {
                     messageType = "ReservationMessage";
                     //Entity_sourceId = 200;
                     Entity_type = EntityType.RESERVATION_EVENT;
-                    Source_type = Helper.SourceType.Front_End;
+                    Source_type = SourceType.Front_End;
                     type = "Case 10 type";
                     paid = 0;
 
@@ -380,7 +380,7 @@ public interface Helper {
 
                     // 1. create Event object
                     int eventId = 0;
-                    Reservation_Event newEventReservation = new Reservation_Event(0, 1, 1, Helper.getCurrentDateTimeStamp(), reservationUUID, userUUID, eventUUID, type, paid);
+                    Reservation_Event newEventReservation = new Reservation_Event(0, 1, 1, getCurrentDateTimeStamp(), reservationUUID, userUUID, eventUUID, type, paid);
 
                     // 2. insert to local db
                     //System.out.println("Reservation to string: "+newEventReservation.toString());
@@ -409,7 +409,7 @@ public interface Helper {
                     }
 
                     // 5. create xml message
-                    xmlTotalMessage = Helper.getXmlFromReservation_EventObject(headerDescription, Source_type, newEventReservation);
+                    xmlTotalMessage = getXmlFromReservation_EventObject(headerDescription, Source_type, newEventReservation);
 
                     // 6. send new object to exchange
                     try {
@@ -426,8 +426,8 @@ public interface Helper {
                     //preset variables
                     messageType = "ReservationMessage";
                     //Entity_sourceId = 200;
-                    //Entity_type=Helper.EntityType.Visitor;
-                    Source_type = Helper.SourceType.Front_End;
+                    //Entity_type=EntityType.Visitor;
+                    Source_type = SourceType.Front_End;
                     type = "Case 11 type";
                     paid = 0;
 
@@ -440,7 +440,7 @@ public interface Helper {
 
                     // 1. create Event object
                     int reservationId = 0;
-                    Reservation_Session newSessionReservation = new Reservation_Session(0, 1, 1, Helper.getCurrentDateTimeStamp(), reservationUUID, userUUID, sessionUUID, type, paid);
+                    Reservation_Session newSessionReservation = new Reservation_Session(0, 1, 1, getCurrentDateTimeStamp(), reservationUUID, userUUID, sessionUUID, type, paid);
 
                     // 2. insert to local db
                     int case11test = 0;
@@ -467,7 +467,7 @@ public interface Helper {
                     }
 
                     // 5. create xml message
-                    xmlTotalMessage = Helper.getXmlFromReservation_SessionObject(headerDescription, Source_type, newSessionReservation);
+                    xmlTotalMessage = getXmlFromReservation_SessionObject(headerDescription, Source_type, newSessionReservation);
 
                     // 6. send new object to exchange
                     try {
@@ -490,7 +490,7 @@ public interface Helper {
 
                     //try to get all records from UUID server
                     try {
-                        myRecordsJsonString = Helper.httpGetAllRecords(10);
+                        myRecordsJsonString = httpGetAllRecords(10);
                         //System.out.println("myRecordsJsonString: "+myRecordsJsonString);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -527,7 +527,7 @@ public interface Helper {
 
                     // preset variables (should be set later)
                     messageType = "SessionMessage";
-                    Source_type = Helper.SourceType.Front_End;
+                    Source_type = SourceType.Front_End;
                     UUID = "abc39123-5e55-4104-99d1-52a4873b2b2d";
 
                     try {
@@ -546,7 +546,7 @@ public interface Helper {
 
                     Entity_sourceId = 100;
                     price=8.88f;
-                    Entity_type = Helper.EntityType.ADMIN;
+                    Entity_type = EntityType.ADMIN;
                     sessionName = "Session RENAME test";
                     dateTimeStart = "30/05/2018 20:00:00";
                     dateTimeEnd = "31/05/2018 08:00:00";
@@ -566,7 +566,7 @@ public interface Helper {
                 case "8":
 
                     messageType = "UpdateEntityVersionMessage";
-                    Source_type = Helper.SourceType.Front_End;
+                    Source_type = SourceType.Front_End;
                     UUID = "abc39123-5e55-4104-99d1-52a4873b2b2d";
                     Entity_version = 20;
 
@@ -652,8 +652,8 @@ public interface Helper {
                     // preset variables (should be set later)
                     messageType = "SessionMessage";
                     Entity_sourceId = 100;
-                    Entity_type = Helper.EntityType.SESSION;
-                    Source_type = Helper.SourceType.Planning;
+                    Entity_type = EntityType.SESSION;
+                    Source_type = SourceType.Planning;
                     sessionName = "Session name test";
                     dateTimeStart = "30/05/2018 20:00:00";
                     dateTimeEnd = "31/05/2018 08:00:00";
@@ -677,7 +677,7 @@ public interface Helper {
 
                     // 3. insert to local db
 
-                    Session newSession = new Session(0, 1, 1, Helper.getCurrentDateTimeStamp(), sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, dateTimeStart, dateTimeEnd, speaker, local, type, price);
+                    Session newSession = new Session(0, 1, 1, getCurrentDateTimeStamp(), sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, dateTimeStart, dateTimeEnd, speaker, local, type, price);
 
                     int case5test = 0;
                     try {
@@ -696,11 +696,11 @@ public interface Helper {
 
                     messageType = "ReservationMessage";
                     Entity_sourceId = 1200;
-                    Entity_type = Helper.EntityType.RESERVATION_SESSION;
-                    Source_type = Helper.SourceType.Planning;
+                    Entity_type = EntityType.RESERVATION_SESSION;
+                    Source_type = SourceType.Planning;
 
                     UUID = "e0e7e624-ea01-410b-8a8f-25c551d43c25";
-                    //responseFromSender = logic.Helper.httpPutUpdateUuidRecordVersion(UUID, Source_type);
+                    //responseFromSender = logic.httpPutUpdateUuidRecordVersion(UUID, Source_type);
 
                     // 1. create new UUID-record
                     System.out.println("\nCase " + choice + ": message for letting UUID manager know of a new local object with a UUID (=>'" + UUID + "') with messageType: '" + messageType + "' and with Entity_sourceId = '" + Entity_sourceId + "'");
@@ -780,7 +780,7 @@ public interface Helper {
         System.out.println("_________________________START OF MESSAGE________________________________________");
         System.out.println("* [.i.] [NEW MESSAGE]: " + workCounter + " [TYPE]: '" + messageType + "' [FROM]: '" + messageSource + "' [.i.] ");
         //System.out.println("* [.i.] ********* [TYPE]: '" + messageType + "' [FROM]: '" + messageSource + "' ****** [.i.] *");
-        System.out.println("* [.i.] ** [@] '" + Helper.getCurrentDateTimeStamp() + "' [MESSAGELENGTH]: '" + task.length() + "' characters ** [.i.] ");
+        System.out.println("* [.i.] ** [@] '" + getCurrentDateTimeStamp() + "' [MESSAGELENGTH]: '" + task.length() + "' characters ** [.i.] ");
 
         //System.out.println("*[.i.] with length: '" + task.length() + "' characters [.i.]");
         System.out.println("_________________________________________________________________________________");
@@ -811,11 +811,14 @@ public interface Helper {
                 break;
 
             case "reservationSessionMessage":
+            case "reservationsessionmessage":
 
                 handleNewMessageReservation(task);
 
                 break;
+
             case "reservationEventMessage":
+            case "reservationeventmessage":
 
                 handleNewMessageReservation(task);
 
@@ -827,6 +830,30 @@ public interface Helper {
                 break;
 
             case "pingmessage":
+
+
+                // 1. Form XML pingMessage
+
+                String xmlMessage = "";
+                try {
+                    xmlMessage = getXmlForPingMessage("pingMessage",SourceType.Planning);
+                } catch (JAXBException e) {
+                    e.printStackTrace();
+                }
+
+                // 2. send xml message to exchange
+
+                String returnedMessage="";
+                try {
+                    returnedMessage = Sender.sendPingMessage(xmlMessage,SourceType.Planning);
+                } catch (IOException | TimeoutException | JAXBException e) {
+                    e.printStackTrace();
+                }
+
+                System.out.println(returnedMessage);
+
+
+                break;
             case "errormessage":
 
                 System.out.println(" [" + messageType + "] Received from " + getSafeXmlProperty(task, "source"));
@@ -873,12 +900,12 @@ public interface Helper {
         String userUUID="";
         User thisUserInMessage = null;
         Boolean uuidExists = false;
-        EntityType thisEntityType = Helper.EntityType.USER;
+        EntityType thisEntityType = EntityType.USER;
         SourceType Source_type = SourceType.Planning;
 
         // 1. transform xml to user-object
         try {
-            thisUserInMessage = Helper.getUserObjectFromXmlMessage(task);
+            thisUserInMessage = getUserObjectFromXmlMessage(task);
 
             userUUID = thisUserInMessage.getUuid();
 
@@ -928,7 +955,7 @@ public interface Helper {
                     // 2.3.1. set active = 0 on old record in db
                     boolean newExistingUserResponse = false;
                     try {
-                        newExistingUserResponse = new BaseEntityDAO().updateTablePropertyValue("User", "active", "0", "int", "idUser", selectResults[0]);
+                        newExistingUserResponse = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "active", "0", "int", "entityId", selectResults[0]);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -951,6 +978,8 @@ public interface Helper {
                         }
                         System.out.println("We had this Reservation_Session with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisUserInMessage.getEntityVersion() + "'");
 
+                    }else{
+                        System.out.println("Something seems to have gone wrong with newExistingUserResponse...");
                     }
                     /*
                     // 2.3.3. updateUuidRecordVersion()
@@ -1003,7 +1032,7 @@ public interface Helper {
 
         // 1. transform xml to event-object
         try {
-            thisEventInMessage = Helper.getEventObjectFromXmlMessage(task);
+            thisEventInMessage = getEventObjectFromXmlMessage(task);
             //System.out.println("user toString: "+thisUserInMessage.toString());
             eventUUID = thisEventInMessage.getEventUUID();
 
@@ -1141,7 +1170,7 @@ public interface Helper {
 
         // 1. transform xml to session-object
         try {
-            thisSessionInMessage = Helper.getSessionObjectFromXmlMessage(task);
+            thisSessionInMessage = getSessionObjectFromXmlMessage(task);
 
             sessionUUID = thisSessionInMessage.getSessionUUID();
 
@@ -1287,11 +1316,11 @@ public interface Helper {
         reservationUUID = getSafeXmlProperty(task, "uuid");
         if (reservationUUID == "false") {
 
-            reservationUUID = Helper.getSafeXmlProperty(task, "reservationUUID");
+            reservationUUID = getSafeXmlProperty(task, "reservationUUID");
 
             if (reservationUUID == "false") {
 
-                reservationUUID = Helper.getSafeXmlProperty(task, "reservationUuid");
+                reservationUUID = getSafeXmlProperty(task, "reservationUuid");
 
                 if (reservationUUID == "false") {
 
@@ -1325,22 +1354,22 @@ public interface Helper {
 
             } else {
 
-                thisEntityType = Helper.EntityType.EVENT;
+                thisEntityType = EntityType.EVENT;
                 System.out.println("New RESERVATION_EVENT for Event with UUID: " + eventUUID);
             }
         } else {
-            thisEntityType = Helper.EntityType.SESSION;
+            thisEntityType = EntityType.SESSION;
             System.out.println("New RESERVATION_SESSION for Session with UUID: " + sessionUUID);
         }
 
         // 1. transform xml to user-object
 
         if (sessionUUID == "false") {
-            newReservation_EventObjectFromXml = Helper.getReservation_EventObjectFromXmlMessage(task);
+            newReservation_EventObjectFromXml = getReservation_EventObjectFromXmlMessage(task);
 
         } else {
 
-            newReservation_SessionObjectFromXml = Helper.getReservation_SessionObjectFromXmlMessage(task);
+            newReservation_SessionObjectFromXml = getReservation_SessionObjectFromXmlMessage(task);
         }
 
         // System.out.println("sessionUUID: "+sessionUUID);
@@ -1401,7 +1430,7 @@ public interface Helper {
                 values[0] = selectResults[0];
                 int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
 
-                Reservation_Event existingReservation_Event = Helper.getReservation_EventObjectFromXmlMessage(task);
+                Reservation_Event existingReservation_Event = getReservation_EventObjectFromXmlMessage(task);
 
                 if(localEntityVersion<existingReservation_Event.getEntityVersion())
                 {
@@ -1462,8 +1491,8 @@ public interface Helper {
                 values[0] = selectResults[0];
                 int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
 
-                Reservation_Session existingReservation_Session = Helper.getReservation_SessionObjectFromXmlMessage(task);
-                // new Session(0, entity_version, act, Helper.getCurrentDateTimeStamp(), sessionUUID, eventUUID, sessionName, MaxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type);
+                Reservation_Session existingReservation_Session = getReservation_SessionObjectFromXmlMessage(task);
+                // new Session(0, entity_version, act, getCurrentDateTimeStamp(), sessionUUID, eventUUID, sessionName, MaxAttendees, dateTimeStart, dateTimeEnd, speaker, local, type);
 
                 if(localEntityVersion<existingReservation_Session.getEntityVersion()) {
 
@@ -1565,7 +1594,7 @@ public interface Helper {
     }
 
     // UUID: POST: create
-    static String httpPostCreateUuidRecord(int Entity_sourceId, AppLogic.Helper.EntityType Entity_type, SourceType Source_type) throws IOException {
+    static String httpPostCreateUuidRecord(int Entity_sourceId, EntityType Entity_type, SourceType Source_type) throws IOException {
 
         //make new object for HttpRequest.UUID_createUuidRecord(int source_id, EntityType thisEntityType, MessageSource thisMessageSource)
         UUID_createUuidRecord myLocalUUID_createUuidRecordObject = new UUID_createUuidRecord(Entity_sourceId, Entity_type, Source_type);
@@ -1739,7 +1768,7 @@ public interface Helper {
 
         String messageType = "userMessage";
         // form xml
-        XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
+        XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
         XmlMessage.Userstructure userStructure = new XmlMessage.Userstructure(userUUID, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, type, entityVersion, active, timestamp);
         // steek header en datastructure (Reservationstructure) in message klasse
@@ -1866,7 +1895,7 @@ public interface Helper {
             allGood = false;
 
         }
-        //type = Helper.EntityType.valueOf(getSafeXmlProperty(xmlMessage, "type"));
+        //type = EntityType.valueOf(getSafeXmlProperty(xmlMessage, "type"));
         userType = getSafeXmlProperty(xmlMessage, "userType");
 
         if (userType == "false") {
@@ -1947,9 +1976,9 @@ public interface Helper {
         String messageType = "sessionMessage";
 
         // form xml
-        XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
+        XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
-        XmlMessage.SessionStructure sessionStructure = new XmlMessage.SessionStructure(sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, location, dateTimeStart, dateTimeEnd, speaker, type, price, entityVersion, active, Helper.getCurrentDateTimeStamp());
+        XmlMessage.SessionStructure sessionStructure = new XmlMessage.SessionStructure(sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, location, dateTimeStart, dateTimeEnd, speaker, type, price, entityVersion, active, getCurrentDateTimeStamp());
         // steek header en datastructure (SessionStructure) in message klasse
 
         XmlMessage.SessionMessage sessionMessage = new XmlMessage.SessionMessage(header, sessionStructure);
@@ -1977,8 +2006,8 @@ public interface Helper {
         String dateTimeEnd = newSession.getDateTimeEnd();
 
         String messageType = "sessionMessage";
-        XmlMessage.Header header = new XmlMessage.Header(messageType, headerDescription + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
-        XmlMessage.SessionStructure eventStructure = new XmlMessage.SessionStructure(sessionUUID, eventUUID, sessionName, maxAttendees, sessionDescription, summary, location, contactPerson, dateTimeStart, dateTimeEnd, sessionType, price, entityVersion, active, Helper.getCurrentDateTimeStamp());
+        XmlMessage.Header header = new XmlMessage.Header(messageType, headerDescription + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
+        XmlMessage.SessionStructure eventStructure = new XmlMessage.SessionStructure(sessionUUID, eventUUID, sessionName, maxAttendees, sessionDescription, summary, location, contactPerson, dateTimeStart, dateTimeEnd, sessionType, price, entityVersion, active, getCurrentDateTimeStamp());
         XmlMessage.SessionMessage xmlReservationMessage = new XmlMessage.SessionMessage(header, eventStructure);
         String xmlTotalMessage = xmlReservationMessage.generateXML();
         return xmlTotalMessage;
@@ -2180,8 +2209,8 @@ public interface Helper {
                                     String location, String contactPerson, String eventType, float price, int entityVersion, int active, String dateTimeStart, String dateTimeEnd) throws JAXBException {
 
         messageType = "eventMessage";
-        XmlMessage.Header header = new XmlMessage.Header(messageType, description + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
-        XmlMessage.EventStructure eventStructure = new XmlMessage.EventStructure(eventUUID, eventName, maxAttendees, eventDescription, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price, entityVersion, active, Helper.getCurrentDateTimeStamp());
+        XmlMessage.Header header = new XmlMessage.Header(messageType, description + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
+        XmlMessage.EventStructure eventStructure = new XmlMessage.EventStructure(eventUUID, eventName, maxAttendees, eventDescription, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price, entityVersion, active, getCurrentDateTimeStamp());
         XmlMessage.EventMessage xmlReservationMessage = new XmlMessage.EventMessage(header, eventStructure);
         String xmlTotalMessage = xmlReservationMessage.generateXML();
         return xmlTotalMessage;
@@ -2206,8 +2235,8 @@ public interface Helper {
         String dateTimeEnd = newEvent.getDateTimeEnd();
 
         String messageType = "eventMessage";
-        XmlMessage.Header header = new XmlMessage.Header(messageType, headerDescription + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
-        XmlMessage.EventStructure eventStructure = new XmlMessage.EventStructure(eventUUID, eventName, maxAttendees, eventDescription, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price, entityVersion, active, Helper.getCurrentDateTimeStamp());
+        XmlMessage.Header header = new XmlMessage.Header(messageType, headerDescription + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
+        XmlMessage.EventStructure eventStructure = new XmlMessage.EventStructure(eventUUID, eventName, maxAttendees, eventDescription, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price, entityVersion, active, getCurrentDateTimeStamp());
         XmlMessage.EventMessage xmlReservationMessage = new XmlMessage.EventMessage(header, eventStructure);
         String xmlTotalMessage = xmlReservationMessage.generateXML();
         return xmlTotalMessage;
@@ -2369,9 +2398,9 @@ public interface Helper {
         String messageType = "reservationMessage";
 
         // form xml
-        XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
+        XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
-        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(reservationUUID, userUUID, eventUUID, sessionUUID, messageType.split("Message")[0], paid, entityVersion, 1, Helper.getCurrentDateTimeStamp());
+        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(reservationUUID, userUUID, eventUUID, sessionUUID, messageType.split("Message")[0], paid, entityVersion, 1, getCurrentDateTimeStamp());
         // steek header en datastructure (Reservationstructure) in message klasse
         XmlMessage.ReservationMessage xmlReservationMessage = new XmlMessage.ReservationMessage(header, reservationStructure);
         // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)
@@ -2386,9 +2415,9 @@ public interface Helper {
 
         String messageType = "reservationMessage";
         // form xml
-        XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
+        XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
-        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(thisReservationObject.getReservationUUID(), thisReservationObject.getUserUUID(), "", thisReservationObject.getSessionUUID(), messageType.split("Message")[0], thisReservationObject.getPaid(), 1, 1, Helper.getCurrentDateTimeStamp());
+        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(thisReservationObject.getReservationUUID(), thisReservationObject.getUserUUID(), "", thisReservationObject.getSessionUUID(), messageType.split("Message")[0], thisReservationObject.getPaid(), 1, 1, getCurrentDateTimeStamp());
         // steek header en datastructure (Reservationstructure) in message klasse
         XmlMessage.ReservationMessage xmlReservationMessage = new XmlMessage.ReservationMessage(header, reservationStructure);
         // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)
@@ -2504,9 +2533,9 @@ public interface Helper {
 
         String sessionUUID = "";
         // form xml
-        XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
+        XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
-        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(reservationUUID, userUUID, eventUUID, sessionUUID, messageType.split("Message")[0], paid, entityVersion, 1, Helper.getCurrentDateTimeStamp());
+        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(reservationUUID, userUUID, eventUUID, sessionUUID, messageType.split("Message")[0], paid, entityVersion, 1, getCurrentDateTimeStamp());
         // steek header en datastructure (Reservationstructure) in message klasse
         XmlMessage.ReservationMessage xmlReservationMessage = new XmlMessage.ReservationMessage(header, reservationStructure);
         // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)
@@ -2521,9 +2550,9 @@ public interface Helper {
 
         String messageType = "reservationMessage";
         // form xml
-        XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + Helper.getCurrentDateTimeStamp(), Source_type.toString());
+        XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
-        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(thisReservationObject.getReservationUUID(), thisReservationObject.getUserUUID(), thisReservationObject.getEventUUID(), "", messageType.split("Message")[0], thisReservationObject.getPaid(), thisReservationObject.getEntityVersion(), 1, Helper.getCurrentDateTimeStamp());
+        XmlMessage.ReservationStructure reservationStructure = new XmlMessage.ReservationStructure(thisReservationObject.getReservationUUID(), thisReservationObject.getUserUUID(), thisReservationObject.getEventUUID(), "", messageType.split("Message")[0], thisReservationObject.getPaid(), thisReservationObject.getEntityVersion(), 1, getCurrentDateTimeStamp());
         // steek header en datastructure (Reservationstructure) in message klasse
         XmlMessage.ReservationMessage xmlReservationMessage = new XmlMessage.ReservationMessage(header, reservationStructure);
         // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)
@@ -2712,7 +2741,7 @@ public interface Helper {
     static boolean xmlMessageMocker(){
 
         String responseFromSender = "";
-        String[] senderOptions = Helper.getOptions();
+        String[] senderOptions = getOptions();
 
         //initialize possible variables
         boolean inputSucces = true;
@@ -2727,8 +2756,8 @@ public interface Helper {
         String headerDescription = "Standard header description";
         String xmlTotalMessage = "<test>testertester</test>";
 
-        Helper.EntityType Entity_type = Helper.EntityType.EMPTY;
-        Helper.SourceType Source_type = Helper.SourceType.Front_End;
+        EntityType Entity_type = EntityType.EMPTY;
+        SourceType Source_type = SourceType.Front_End;
         int Entity_version = 1;
         int maxAttendees = 50;
         float paid = 0;
@@ -2755,14 +2784,16 @@ public interface Helper {
 
 
         System.out.println("Choose the message to mock:\n");
-        System.out.println("10. User with UUID: '83a02f40-ee76-4ba1-9bd7-80b5a163c61e' ");
-        System.out.println("11. User with chosen UUID: ");
-        System.out.println("20. Event with UUID: 'e319f8aa-1910-442c-8b17-5e809d713ee4' ");
-        System.out.println("21. Event with chosen UUID: ");
-        System.out.println("22. New Event without UUID: ");
-        System.out.println("30. Session with UUID: 'c1a89eff-0a22-454d-aecc-44c19c95c261' ");
-        System.out.println("31. Session with chosen UUID: ");
-        System.out.println("32. New Session without UUID: ");
+        System.out.println("10.V User with UUID: 'fbea0671-1324-4f92-a0b4-cc6e56c537d7' ");
+        System.out.println("11.V User with chosen UUID: ");
+        System.out.println("12.(x) New User without UUID: ");
+        System.out.println("15.(x) Update user with UUID: 'fbea0671-1324-4f92-a0b4-cc6e56c537d7' ");
+        System.out.println("20.V Event with UUID: 'e319f8aa-1910-442c-8b17-5e809d713ee4' ");
+        System.out.println("21.V Event with chosen UUID: ");
+        System.out.println("22.V New Event without UUID: ");
+        System.out.println("30.V Session with UUID: 'c1a89eff-0a22-454d-aecc-44c19c95c261' ");
+        System.out.println("31.V Session with chosen UUID: ");
+        System.out.println("32.V New Session without UUID: ");
 
         System.out.print("\nChoose a number [0 to quit!]\n");
 
@@ -2775,7 +2806,7 @@ public interface Helper {
             case "10":
                 // User with UUID
 
-                uuid="e319f8aa-1910-442c-8b17-5e809d713ee4";
+                uuid="fbea0671-1324-4f92-a0b4-cc6e56c537d7";
                 System.out.print("You've chosen '" + choice + "': User with uuid '"+uuid+"' ...\n");
 
                 System.out.println("Mocking user 'John Parker' ...");
@@ -2795,7 +2826,7 @@ public interface Helper {
                 String userType ="VISITOR";
                 int entityVersion=1;
                 int active=1;
-                String timestamp=Helper.getCurrentDateTimeStamp();
+                String timestamp=getCurrentDateTimeStamp();
 
                 // 1. Preset variables
                 // Source_type= ... ;
@@ -2805,7 +2836,7 @@ public interface Helper {
                 // 3. Form XML
 
                 try {
-                    xmlTotalMessage = Helper.getXmlFromUserObject(headerDescription, Source_type, mockUser);
+                    xmlTotalMessage = getXmlFromUserObject(headerDescription, Source_type, mockUser);
                 } catch (JAXBException e) {
                     e.printStackTrace();
                 }
@@ -2828,19 +2859,19 @@ public interface Helper {
                 System.out.print("You've chosen '" + choice + "': User with chosen UUID ...\n");
 
                 // Set chosen uuid
-                System.out.print("\nEnter the uuid to use:_ ");
+                System.out.print("\nEnter the uuid to use: ");
                 scanner = new Scanner(System.in);
                 choice = scanner.next();
                 uuid=choice;
 
                 // Set chosen firstName
-                System.out.print("\nEnter the firstName to use:_ ");
+                System.out.print("\nEnter the firstName to use: ");
                 scanner = new Scanner(System.in);
                 choice = scanner.next();
                 firstName=choice;
 
                 // Set chosen firstName
-                System.out.print("\nEnter the lastName to use:_ ");
+                System.out.print("\nEnter the lastName to use: ");
                 scanner = new Scanner(System.in);
                 choice = scanner.next();
                 lastName=choice;
@@ -2860,7 +2891,7 @@ public interface Helper {
                 userType="VISITOR";
                 entityVersion=1;
                 active=1;
-                timestamp=Helper.getCurrentDateTimeStamp();
+                timestamp=getCurrentDateTimeStamp();
 
                 // 2. Form user object
                 mockUser = new User(0, entityVersion, active, timestamp, uuid, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, userType);
@@ -2868,7 +2899,7 @@ public interface Helper {
                 // 3. Form XML
 
                 try {
-                    xmlTotalMessage = Helper.getXmlFromUserObject(headerDescription, Source_type, mockUser);
+                    xmlTotalMessage = getXmlFromUserObject(headerDescription, Source_type, mockUser);
                 } catch (JAXBException e) {
                     e.printStackTrace();
                 }
@@ -2877,13 +2908,58 @@ public interface Helper {
 
                 try {
                     Sender.sendMessage(xmlTotalMessage);
-                } catch (TimeoutException | IOException e) {
-                    e.printStackTrace();
-                } catch (JAXBException e) {
+                } catch (TimeoutException | IOException | JAXBException e) {
                     e.printStackTrace();
                 }
 
 
+                break;
+
+            case "15":
+
+                uuid="fbea0671-1324-4f92-a0b4-cc6e56c537d7";
+                System.out.print("You've chosen '" + choice + "': Update user with UUID: '"+uuid+"' ...\n");
+
+                // 1. Preset variables
+
+                System.out.println("Updating user 'John Parker' ...");
+
+                // 1. Preset variables
+                headerDescription = "Mocking user message";
+                // Source_type= ... ;
+                lastName="Parker";
+                firstName="John";
+                phoneNumber="+(32) 499 88 77 33";
+                email = "mockedUserUpdatedEmail@mocker.com";
+                street = "MockedNamelaan";
+                houseNr ="420 Mock";
+                city = "Mockels";
+                postalCode="4501 Mock";
+                country ="Mockelgium";
+                company ="JP Mocked";
+                userType ="VISITOR";
+                entityVersion=2;
+                active=1;
+                timestamp=getCurrentDateTimeStamp();
+
+                // 2. Form user object
+                mockUser = new User(0, entityVersion, active, timestamp, uuid, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, userType);
+
+                // 3. Form XML
+
+                try {
+                    xmlTotalMessage = getXmlFromUserObject(headerDescription, Source_type, mockUser);
+                } catch (JAXBException e) {
+                    e.printStackTrace();
+                }
+
+                // 4. Send XML
+
+                try {
+                    Sender.sendMessage(xmlTotalMessage);
+                } catch (TimeoutException | IOException | JAXBException e) {
+                    e.printStackTrace();
+                }
                 break;
 
             case "20":
@@ -2906,11 +2982,11 @@ public interface Helper {
                 dateTimeEnd = "2018-05-29T09:00:00+02:00";
                 eventType="MockerNoon";
                 float price = 0;
-                Source_type = Helper.SourceType.Front_End;
-                Entity_type = Helper.EntityType.EVENT;
+                Source_type = SourceType.Front_End;
+                Entity_type = EntityType.EVENT;
                 entityVersion=1;
                 active=1;
-                timestamp=Helper.getCurrentDateTimeStamp();
+                timestamp=getCurrentDateTimeStamp();
 
                 // 2. Form Event object
                 mockEvent = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price);
@@ -2918,7 +2994,7 @@ public interface Helper {
                 // 3. Form XML
 
                 try {
-                    xmlTotalMessage = Helper.getXmlFromEventObject(headerDescription, Source_type, mockEvent);
+                    xmlTotalMessage = getXmlFromEventObject(headerDescription, Source_type, mockEvent);
                 } catch (JAXBException e) {
                     e.printStackTrace();
                 }
@@ -2927,9 +3003,7 @@ public interface Helper {
 
                 try {
                     Sender.sendMessage(xmlTotalMessage);
-                } catch (TimeoutException | IOException e) {
-                    e.printStackTrace();
-                } catch (JAXBException e) {
+                } catch (TimeoutException | IOException | JAXBException e) {
                     e.printStackTrace();
                 }
 
@@ -2966,11 +3040,11 @@ public interface Helper {
                 dateTimeEnd = "2018-05-29T09:00:00+02:00";
                 eventType="MockerNoon";
                 price = 0;
-                Source_type = Helper.SourceType.Front_End;
-                Entity_type = Helper.EntityType.EVENT;
+                Source_type = SourceType.Front_End;
+                Entity_type = EntityType.EVENT;
                 entityVersion=1;
                 active=1;
-                timestamp=Helper.getCurrentDateTimeStamp();
+                timestamp=getCurrentDateTimeStamp();
 
                 System.out.println("Mocking event '"+eventName+"' with uuid: '"+uuid+"' ... Other variables are preset in Main.java around line 800");
 
@@ -2979,7 +3053,7 @@ public interface Helper {
 
                 // 3. Form XML
                 try {
-                    xmlTotalMessage = Helper.getXmlFromEventObject(headerDescription, Source_type, mockEvent);
+                    xmlTotalMessage = getXmlFromEventObject(headerDescription, Source_type, mockEvent);
                 } catch (JAXBException e) {
                     e.printStackTrace();
                 }
@@ -2987,9 +3061,7 @@ public interface Helper {
                 // 4. Send XML
                 try {
                     Sender.sendMessage(xmlTotalMessage);
-                } catch (TimeoutException | IOException e) {
-                    e.printStackTrace();
-                } catch (JAXBException e) {
+                } catch (TimeoutException | IOException | JAXBException e) {
                     e.printStackTrace();
                 }
 
@@ -3015,11 +3087,11 @@ public interface Helper {
 //                dateTimeEnd = "2018-05-29T09:00:00+02:00";
                 eventType="EventType";
                 price = 0;
-                Source_type = Helper.SourceType.Front_End;
-                Entity_type = Helper.EntityType.EVENT;
+                Source_type = SourceType.Front_End;
+                Entity_type = EntityType.EVENT;
                 entityVersion=1;
                 active=1;
-                timestamp=Helper.getCurrentDateTimeStamp();
+                timestamp=getCurrentDateTimeStamp();
 
                 // Set chosen eventName
                 System.out.print("\nEnter the new event's name: ");
@@ -3041,8 +3113,8 @@ public interface Helper {
 
                 String UuidInsertReturner="";
                 try {
-                    //UuidInsertReturner = Helper.httpPostCreateUuidRecord(Entity_sourceId, Entity_type, Source_type);
-                    UuidInsertReturner = Helper.httpPostCreateUuidRecord(50, Entity_type.EVENT, Source_type.Planning);
+                    //UuidInsertReturner = httpPostCreateUuidRecord(Entity_sourceId, Entity_type, Source_type);
+                    UuidInsertReturner = httpPostCreateUuidRecord(50, EntityType.EVENT, SourceType.Planning);
 
                     UuidInsertReturner = UuidInsertReturner.substring(1, UuidInsertReturner.length() - 1);
 
@@ -3058,14 +3130,15 @@ public interface Helper {
 
                 try {
                     Gson gson = new Gson();
+
                     UUID_insertUuidRecord firstTest = gson.fromJson(UuidInsertReturner, UUID_insertUuidRecord.class);
 
                     uuid = firstTest.getUuid();
 
                 } catch (JSONException e) {
-                    //e.printStackTrace();
-                    System.out.println(e);
-                    System.out.println("uuid: "+uuid);
+
+                    System.out.println("ERROR: "+e);
+
                 }
 
                 System.out.println("Mocking event '"+eventName+"' with uuid: '"+uuid+"' ... Other variables are preset in Helper.java around line 3000");
@@ -3075,7 +3148,7 @@ public interface Helper {
 
                 // 3. Form XML
                 try {
-                    xmlTotalMessage = Helper.getXmlFromEventObject(headerDescription, Source_type, mockEvent);
+                    xmlTotalMessage = getXmlFromEventObject(headerDescription, Source_type, mockEvent);
                 } catch (JAXBException e) {
                     e.printStackTrace();
                 }
@@ -3083,9 +3156,7 @@ public interface Helper {
                 // 4. Send XML
                 try {
                     Sender.sendMessage(xmlTotalMessage);
-                } catch (TimeoutException | IOException e) {
-                    e.printStackTrace();
-                } catch (JAXBException e) {
+                } catch (TimeoutException | IOException | JAXBException e) {
                     e.printStackTrace();
                 }
 
@@ -3112,11 +3183,11 @@ public interface Helper {
                 dateTimeEnd = "2018-05-29T09:00:00+02:00";
                 sessionType="SessionMockerType";
                 price = 0;
-                Source_type = Helper.SourceType.Front_End;
-                Entity_type = Helper.EntityType.SESSION;
+                Source_type = SourceType.Front_End;
+                Entity_type = EntityType.SESSION;
                 entityVersion=1;
                 active=1;
-                timestamp=Helper.getCurrentDateTimeStamp();
+                timestamp=getCurrentDateTimeStamp();
 
                 // 2. Form Event object
                 mockSession = new Session(0, entityVersion, active, timestamp, uuid, eventUuid, sessionName, maxAttendees, description, summary, dateTimeStart, dateTimeEnd, contactPerson, location, sessionType, price);
@@ -3126,7 +3197,7 @@ public interface Helper {
                 // 3. Form XML
 
                 try {
-                    xmlTotalMessage = Helper.getXmlFromSessionObject(headerDescription, Source_type, mockSession);
+                    xmlTotalMessage = getXmlFromSessionObject(headerDescription, Source_type, mockSession);
                 } catch (JAXBException e) {
                     e.printStackTrace();
                 }
@@ -3137,9 +3208,7 @@ public interface Helper {
 
                 try {
                     Sender.sendMessage(xmlTotalMessage);
-                } catch (TimeoutException | IOException e) {
-                    e.printStackTrace();
-                } catch (JAXBException e) {
+                } catch (TimeoutException | IOException | JAXBException e) {
                     e.printStackTrace();
                 }
                 break;
@@ -3179,18 +3248,18 @@ public interface Helper {
                 dateTimeEnd = "2018-05-29T14:00:00+02:00";
                 sessionType="SessionMockerType";
                 price = 0;
-                Source_type = Helper.SourceType.Front_End;
-                Entity_type = Helper.EntityType.SESSION;
+                Source_type = SourceType.Front_End;
+                Entity_type = EntityType.SESSION;
                 entityVersion=1;
                 active=1;
-                timestamp=Helper.getCurrentDateTimeStamp();
+                timestamp=getCurrentDateTimeStamp();
 
                 // 2. Form Session object
                 mockSession = new Session(0, entityVersion, active, timestamp, uuid, eventUuid, sessionName, maxAttendees, description, summary, dateTimeStart, dateTimeEnd, contactPerson, location, sessionType, price);
 
                 // 3. Form XML
                 try {
-                    xmlTotalMessage = Helper.getXmlFromSessionObject(headerDescription, Source_type, mockSession);
+                    xmlTotalMessage = getXmlFromSessionObject(headerDescription, Source_type, mockSession);
                 } catch (JAXBException e) {
                     e.printStackTrace();
                 }
@@ -3198,9 +3267,7 @@ public interface Helper {
                 // 4. Send XML
                 try {
                     Sender.sendMessage(xmlTotalMessage);
-                } catch (TimeoutException | IOException e) {
-                    e.printStackTrace();
-                } catch (JAXBException e) {
+                } catch (TimeoutException | IOException | JAXBException e) {
                     e.printStackTrace();
                 }
                 break;
@@ -3225,11 +3292,11 @@ public interface Helper {
                 dateTimeEnd = "2018-05-29T14:00:00+02:00";
                 sessionType="SessionMockedType";
                 price = 0;
-                Source_type = Helper.SourceType.Front_End;
-                Entity_type = Helper.EntityType.SESSION;
+                Source_type = SourceType.Front_End;
+                Entity_type = EntityType.SESSION;
                 entityVersion=1;
                 active=1;
-                timestamp=Helper.getCurrentDateTimeStamp();
+                timestamp=getCurrentDateTimeStamp();
 
                 // Set chosen sessionName
                 System.out.print("\nEnter the new session's name: ");
@@ -3251,8 +3318,8 @@ public interface Helper {
 
                 UuidInsertReturner="";
                 try {
-                    //UuidInsertReturner = Helper.httpPostCreateUuidRecord(Entity_sourceId, Entity_type, Source_type);
-                    UuidInsertReturner = Helper.httpPostCreateUuidRecord(50, Entity_type.SESSION, Source_type.Planning);
+                    //UuidInsertReturner = httpPostCreateUuidRecord(Entity_sourceId, Entity_type, Source_type);
+                    UuidInsertReturner = httpPostCreateUuidRecord(50, EntityType.SESSION, SourceType.Planning);
 
                     UuidInsertReturner = UuidInsertReturner.substring(1, UuidInsertReturner.length() - 1);
 
@@ -3285,7 +3352,7 @@ public interface Helper {
 
                 // 3. Form XML
                 try {
-                    xmlTotalMessage = Helper.getXmlFromSessionObject(headerDescription, Source_type, mockSession);
+                    xmlTotalMessage = getXmlFromSessionObject(headerDescription, Source_type, mockSession);
                 } catch (JAXBException e) {
                     e.printStackTrace();
                 }
@@ -3293,22 +3360,20 @@ public interface Helper {
                 // 4. Send XML
                 try {
                     Sender.sendMessage(xmlTotalMessage);
-                } catch (TimeoutException | IOException e) {
-                    e.printStackTrace();
-                } catch (JAXBException e) {
+                } catch (TimeoutException | IOException | JAXBException e) {
                     e.printStackTrace();
                 }
                 break;
 
             case "0":
 
-                System.out.println("Quiting this mocking session!");
+                System.out.println("You've chosen '" + choice + "': quiting this mocking session!");
                 continueMocking = false;
                 break;
 
             default:
 
-                System.out.println("Choose a better number!");
+                System.out.println("You've chosen '" + choice + "' but this one doesn't seem to have a case ! (around line 3350 in Helper.java)\n");
 
                 break;
         }

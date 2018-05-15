@@ -68,10 +68,7 @@ public class Receiver {
 
         channel.queueBind(TASK_QUEUE_NAME, Helper.EXCHANGE_NAME, "");
 
-//        System.out.println(" [ooo] _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_ [ooo]");
-        System.out.println("\n*********************************************************************************");
-        System.out.println("*       [...] Waiting with queue for messages. To exit press CTRL+C [...]       *");
-        System.out.println("*********************************************************************************\n");
+        Helper.receiverMessageWaitPaint();
 
         final int[] numberOfMessage = {1};
 

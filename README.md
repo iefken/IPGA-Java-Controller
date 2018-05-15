@@ -112,11 +112,12 @@ OR in IntelliJ:
 
 # 4.	Latest releases
 
-    10-05-18: v1.2: Main can 'mock' new user and event messages
+    14-05-18: v1.3: Integrated Google Calendar API (GCA) calls into receiver
+    10-05-18: v1.2: Main can 'mock' new user, event, session and reservation messages
     08-05-18: v1.1: Receiver handles reservation messages for events and sessions
     07-05-18: v1.0: Receiver handles messages for user, event and session correctly
     06-05-18: v0.9: Receiver handles user messages
-    03-05-18: v0.8: Added PingMessage (*5.2*)
+    03-05-18: v0.8: Added PingMessage
     01-05-18: v0.7: Added some Data and DAO classes
     30-04-18: v0.6: Added CLI for testing purposes
     29-04-18: v0.5: Added .jar instructions for serverdeployment
