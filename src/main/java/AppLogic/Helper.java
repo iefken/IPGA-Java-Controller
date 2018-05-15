@@ -1006,6 +1006,7 @@ public interface Helper {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                System.out.println("User.toString(): "+thisUserInMessage.toString());
 
                 // 2.4.2. insertUuidRecord
 
@@ -1152,6 +1153,8 @@ public interface Helper {
                     System.out.println("Error inserting record into the Uuid Master: "+e);
                     //e.printStackTrace();
                 }
+
+                System.out.println("Event.toString(): "+thisEventInMessage.toString());
 
                 System.out.println("Inserted new event record with id='" + messageEventInsertReturner + "' and UUID='" + eventUUID + "'");
 
