@@ -51,7 +51,37 @@ public class Reservation_Event_DAO extends BaseEntityDAO{
     }
 
     //READ
-/*
+
+//    public BaseEntity getReservationEventByReservationEventId(int thisReservationEventId)
+//    {
+//        ResultSet rs = null;
+//        Event thisReservationEvent = null;
+//
+//        String sql = "SELECT * FROM User t1 JOIN BaseEntity t2 ON t1.idReservationEvent = t2.entityId WHERE thisReservationEventId = \""+thisReservationEventId+"\";";
+//
+//        try(Statement s = getConnection().createStatement()){
+//
+//            if (getConnection().isClosed()) {
+//                throw new IllegalStateException("ERROR 01: Connection seems to be closed...");
+//            }
+//
+//            rs = s.executeQuery(sql);
+//            if(rs.next())
+//            {
+//
+//                thisReservationEvent = new Reservation_Event(rs.getInt(1),rs.getInt(8),rs.getInt(),);
+//
+//                return thisReservationEvent;
+//            }else{
+//                throw new IllegalStateException("ERROR 03: No entity found with id: '"+thisReservationEventId+"'...");
+//            }
+//
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//            throw new RuntimeException(e.getMessage());
+//        }
+//    }
+    /*
 
     public ArrayList <Reservation_Event> getAllReservation_Events()
     {

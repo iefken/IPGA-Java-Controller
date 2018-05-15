@@ -1,5 +1,6 @@
 package AppLogic;
 
+import AppLogic.Sender;
 import DatabaseLogic.*;
 import GoogleCalendarApi.GoogleCalenderApi;
 import JsonMessage.JSONException;
@@ -364,7 +365,7 @@ public interface Helper {
                     // 4. Create new Reservation_Event: Add User to Event
 
                     //preset variables
-                    messageType = "ReservationMessage";
+                    messageType = "reservationEventMessage";
                     //Entity_sourceId = 200;
                     Entity_type = EntityType.RESERVATION_EVENT;
                     Source_type = SourceType.Front_End;
@@ -424,7 +425,7 @@ public interface Helper {
                 case "5":
 
                     //preset variables
-                    messageType = "ReservationMessage";
+                    messageType = "reservationSessionMessage";
                     //Entity_sourceId = 200;
                     //Entity_type=EntityType.Visitor;
                     Source_type = SourceType.Front_End;
@@ -2395,7 +2396,7 @@ public interface Helper {
     // Reservation_Session: (params) => XML
     static String getXmlForNewReservation_Session(String xmlHeaderDescription, SourceType Source_type, String reservationUUID, String userUUID, String eventUUID, String sessionUUID, float paid, int entityVersion) throws JAXBException {
 
-        String messageType = "reservationMessage";
+        String messageType = "reservationSessionMessage";
 
         // form xml
         XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
@@ -2413,7 +2414,7 @@ public interface Helper {
     // Reservation_Session: object => XML
     static String getXmlFromReservation_SessionObject(String xmlHeaderDescription, SourceType Source_type, Reservation_Session thisReservationObject) throws JAXBException {
 
-        String messageType = "reservationMessage";
+        String messageType = "reservationSessionMessage";
         // form xml
         XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
@@ -2529,7 +2530,7 @@ public interface Helper {
     // Reservation_Event: (params) => XML
     static String getXmlForNewReservation_Event(String xmlHeaderDescription, SourceType Source_type, String reservationUUID, String userUUID, String eventUUID, float paid, int entityVersion) throws JAXBException {
 
-        String messageType = "reservationMessage";
+        String messageType = "reservationEventMessage";
 
         String sessionUUID = "";
         // form xml
@@ -2548,7 +2549,7 @@ public interface Helper {
     // Reservation_Event: object => XML
     static String getXmlFromReservation_EventObject(String xmlHeaderDescription, SourceType Source_type, Reservation_Event thisReservationObject) throws JAXBException {
 
-        String messageType = "reservationMessage";
+        String messageType = "reservationEventMessage";
         // form xml
         XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure

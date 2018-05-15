@@ -6,68 +6,66 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class Event_DAO extends BaseEntityDAO{
-        //CRUD Statements
+public class Event_DAO extends BaseEntityDAO {
+    //CRUD Statements
 
-        //CREATE
+    //CREATE
 
-        public int insertIntoEvent(Event event) throws SQLException {
+    public int insertIntoEvent(Event event) throws SQLException {
 
-            BaseEntity newBaseEntity = new BaseEntity(event.getEntityId(), event.getEntityVersion(), event.getActive(), event.getTimestamp());
+        BaseEntity newBaseEntity = new BaseEntity(event.getEntityId(), event.getEntityVersion(), event.getActive(), event.getTimestamp());
 
-            //execute baseEntity Insert
-            int callbackInsertedInt = newBaseEntity.getEntityId();
+        //execute baseEntity Insert
+        int callbackInsertedInt = newBaseEntity.getEntityId();
 
-            if (event.getEntityId()!=0 && callbackInsertedInt != event.getEntityId()) {
-                throw new SQLException("ERROR 05: Given id(" + event.getEntityId() + ") does not correspond to retreived id(" + callbackInsertedInt + ")!");
-            }
+        if (event.getEntityId() != 0 && callbackInsertedInt != event.getEntityId()) {
+            throw new SQLException("ERROR 05: Given id(" + event.getEntityId() + ") does not correspond to retreived id(" + callbackInsertedInt + ")!");
+        }
 
-            PreparedStatement preparedStatement = null;
-            String sqlQuery = "";
+        PreparedStatement preparedStatement = null;
+        String sqlQuery = "";
 
-            sqlQuery = "INSERT INTO PlanningDB.Event (`idEvent`, `eventUUID`, `eventName`, `maxAttendees`, `description`, `summary`, `location`,`contactPerson`,`dateTimeStart`,`dateTimeEnd`, `type`, `price`, `GCAEventId`,`GCAEventLink`) VALUES (" + callbackInsertedInt + ",\"" + event.getEventUUID() + "\",\"" + event.getEventName() + "\",\"" + event.getMaxAttendees() + "\",\"" + event.getDescription() + "\",\"" + event.getSummary() + "\",\"" + event.getLocation() + "\",\"" + event.getContactPerson() + "\",\"" + event.getDateTimeStart() + "\",\"" + event.getDateTimeEnd()+ "\",\"" + event.getType() + "\",\""+ event.getPrice() + "\",\""+ event.getGCAEventId() + "\",\""+ event.getGCAEventLink() + "\");";
+        sqlQuery = "INSERT INTO PlanningDB.Event (`idEvent`, `eventUUID`, `eventName`, `maxAttendees`, `description`, `summary`, `location`,`contactPerson`,`dateTimeStart`,`dateTimeEnd`, `type`, `price`) VALUES (" + callbackInsertedInt + ",\"" + event.getEventUUID() + "\",\"" + event.getEventName() + "\",\"" + event.getMaxAttendees() + "\",\"" + event.getDescription() + "\",\"" + event.getSummary() + "\",\"" + event.getLocation() + "\",\"" + event.getContactPerson() + "\",\"" + event.getDateTimeStart() + "\",\"" + event.getDateTimeEnd() + "\",\"" + event.getType() + "\",\"" + event.getPrice() + "\");";
 
-            //INSERT INTO `PlanningDB`.`Session` (`idSession`, `sessionUUID`, `eventUUID`, `sessionName`, `maxAttendees`, `dateTimeStart`, `dateTimeEND`, `speaker`, `local`, `type`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        //INSERT INTO `PlanningDB`.`Session` (`idSession`, `sessionUUID`, `eventUUID`, `sessionName`, `maxAttendees`, `dateTimeStart`, `dateTimeEND`, `speaker`, `local`, `type`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
+        int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
+
+        return callbackInsertedInt;
+
+    }
+
+    //READ
+
+
+    //UPDATE
+
+    public int UpdateEvent(Event newEventFromMessage, int oldEntityId) throws SQLException {
+
+        //Maak een nieuwe BaseEntity met incremented entityVersion
+        BaseEntity newBaseEntity = new BaseEntity(newEventFromMessage.getEntityId(), newEventFromMessage.getEntityVersion(), newEventFromMessage.getActive(), newEventFromMessage.getTimestamp());
+        //execute baseEntity Insert
+        int callbackInsertedInt = newBaseEntity.getEntityId();
+
+        String sqlQuery = "INSERT INTO PlanningDB.Event (idEvent, eventUUID, eventName, maxAttendees, description, summary, location,`contactPerson`,`dateTimeStart`,`dateTimeEnd`, type, price) VALUES (" + callbackInsertedInt + ",\"" + newEventFromMessage.getEventUUID() + "\",\"" + newEventFromMessage.getEventName() + "\",\"" + newEventFromMessage.getMaxAttendees() + "\",\"" + newEventFromMessage.getDescription() + "\",\"" + newEventFromMessage.getSummary() + "\",\"" + newEventFromMessage.getLocation() + "\",\"" + newEventFromMessage.getContactPerson() + "\",\"" + newEventFromMessage.getDateTimeStart() + "\",\"" + newEventFromMessage.getDateTimeEnd() + "\",\"" + newEventFromMessage.getType() + "\",\"" + newEventFromMessage.getPrice() + "\");";
+
+        //softdelete oude base entity
+        softDeleteBaseEntity("Event", oldEntityId);
+        try {
             int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
-
-            return callbackInsertedInt;
-
-        }
-
-        //READ
-
-
-        //UPDATE
-
-        public int UpdateEvent(Event newEventFromMessage, int oldEntityId) throws SQLException {
-
-            //Maak een nieuwe BaseEntity met incremented entityVersion
-            BaseEntity newBaseEntity = new BaseEntity(newEventFromMessage.getEntityId(), newEventFromMessage.getEntityVersion() , newEventFromMessage.getActive(), newEventFromMessage.getTimestamp());
-            //execute baseEntity Insert
-            int callbackInsertedInt = newBaseEntity.getEntityId();
-
-            String sqlQuery = "INSERT INTO PlanningDB.Event (idEvent, eventUUID, eventName, maxAttendees, description, summary, location,`contactPerson`,`dateTimeStart`,`dateTimeEnd`, type, price) VALUES (" + callbackInsertedInt + ",\"" + newEventFromMessage.getEventUUID() + "\",\"" + newEventFromMessage.getEventName() + "\",\"" + newEventFromMessage.getMaxAttendees() + "\",\"" + newEventFromMessage.getDescription() + "\",\"" + newEventFromMessage.getSummary() + "\",\"" + newEventFromMessage.getLocation() + "\",\"" + newEventFromMessage.getContactPerson() + "\",\"" + newEventFromMessage.getDateTimeStart() + "\",\"" + newEventFromMessage.getDateTimeEnd()+ "\",\"" + newEventFromMessage.getType() + "\",\""+ newEventFromMessage.getPrice() + "\");";
-
-            //softdelete oude base entity
-            softDeleteBaseEntity("Event",oldEntityId);
-            try {
-                int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
-            } catch (Exception e) {
+        } catch (Exception e) {
 //                e.printStackTrace();
-                System.out.println("ERROR inserting Event: "+e);
-            }
-
-            return callbackInsertedInt;
-
+            System.out.println("ERROR inserting Event: " + e);
         }
 
-        //DELETE
+        return callbackInsertedInt;
+
+    }
+
+    //DELETE
 
 
-        //OTHER
-
-
+    //OTHER
 
 
 }

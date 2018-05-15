@@ -192,6 +192,53 @@ public class BaseEntityDAO extends BaseDAO{
 
     //UPDATE
 
+//    public boolean updateTablePropertyValue(String table, String property, String value, String valueType, String whereProperty, int localId)
+//    {
+//        ResultSet rs = null;
+//        Boolean executeSucces = false;
+//
+//        if(valueType=="String"){value = "\""+value+"\"";}
+//
+//        String sql = "UPDATE PlanningDB."+table+" SET "+property+" = "+value+" WHERE "+whereProperty+" = "+localId+";";
+//        //String sql = "UPDATE PlanningDB.? SET ? = ? WHERE idUser = ?;";
+//
+//        //System.out.println("sql: "+sql);
+//
+//        PreparedStatement statement = null;
+//        try {
+//            if (getConnection().isClosed()) {
+//                throw new IllegalStateException("ERROR 01: Connection seems to be closed...");
+//            }
+//
+//            statement = getConnection().prepareStatement(sql);
+//            //prepare statement here:
+//            /*
+//            statement.setString(1, table);
+//            statement.setString(2, property);
+//            statement.setString(3, value);
+//            statement.setInt(4, localId);
+//*/
+//            try{
+//                statement.executeUpdate();
+//                return true;
+//            }catch (Exception e) {
+//                e.printStackTrace();
+//                return false;
+//            }
+//        }catch(SQLException e){
+//            System.out.println(e.getMessage());;
+//            throw new RuntimeException(e.getMessage());
+//        }finally{
+//            try{
+//                if(statement != null)
+//                    statement.close();
+//            }catch(SQLException e){
+//                System.out.println(e.getMessage());;
+//                throw new RuntimeException("ERROR 02: Something seems to have gone wrong during closing the connection...");
+//            }
+//        }
+//    }
+
 
     public boolean updateTablePropertyValue(String table, String property, String value, String valueType, String whereProperty, String whereValue)
     {
@@ -214,48 +261,28 @@ public class BaseEntityDAO extends BaseDAO{
             if (getConnection().isClosed()) {
                 throw new IllegalStateException("ERROR 01: Connection seems to be closed...");
             }
-
             statement = getConnection().prepareStatement(sql);
-            //prepare statement here:
-            /*
-            statement.setString(1, table);
-            statement.setString(2, property);
-            statement.setString(3, value);
-            statement.setInt(4, localUserId);
-*/
             try{
-
                 statement.executeUpdate();
                 return true;
-            }catch (Exception e)
-            {
+            }catch (Exception e) {
                 e.printStackTrace();
                 return false;
             }
-
-
         }catch(SQLException e){
-
             System.out.println(e.getMessage());;
             throw new RuntimeException(e.getMessage());
-
         }finally{
-
             try{
-
                 if(statement != null)
                     statement.close();
-
             }catch(SQLException e){
-
                 System.out.println(e.getMessage());;
                 throw new RuntimeException("ERROR 02: Something seems to have gone wrong during closing the connection...");
-
             }
         }
 
     }
-
 
     //DELETE
 
@@ -296,7 +323,6 @@ public class BaseEntityDAO extends BaseDAO{
         }
 
     }
-
 
     //OTHER
 
@@ -341,9 +367,6 @@ public class BaseEntityDAO extends BaseDAO{
             throw new RuntimeException(e.getMessage());
         }
     }
-
-
-
 
     public static int runInsertQuery(String sqlQuery)
     {
