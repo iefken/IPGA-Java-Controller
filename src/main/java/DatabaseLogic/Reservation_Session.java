@@ -7,28 +7,28 @@ public class Reservation_Session extends BaseEntity{
     private String reservationUUID;
     private String userUUID;
     private String sessionUUID;
-    private String type;
+//    private String type;
     private float paid;
 
     public Reservation_Session(int ReservationId, int entity_version, int active, String Timestamp,
-                               String reservationUUID, String UserUUID, String SessionUUID, String Type, float paid) {
+                               String reservationUUID, String UserUUID, String SessionUUID, /*String Type,*/ float paid) {
 
         super(ReservationId,entity_version,active, Timestamp);
 
         this.reservationUUID = reservationUUID;
         this.userUUID = UserUUID;
         this.sessionUUID = SessionUUID;
-        this.type = Type;
+//        this.type = Type;
         this.paid = paid;
     }
-    public Reservation_Session(int ReservationId, String reservationUUID, String UserUUID, String SessionUUID, String Type, float paid) {
+    public Reservation_Session(int ReservationId, String reservationUUID, String UserUUID, String SessionUUID, /*String Type,*/ float paid) {
 
         //super(ReservationId,entity_version,Status, Timestamp);
 
         this.reservationUUID = reservationUUID;
         this.userUUID = UserUUID;
         this.sessionUUID = SessionUUID;
-        this.type = Type;
+//        this.type = Type;
         this.paid = paid;
     }
 
@@ -62,12 +62,12 @@ public class Reservation_Session extends BaseEntity{
         this.sessionUUID=sessionUUID;
     }
 
-    public String getType() {
-        return type;
-    }
-    public void setType(String type) {
-        this.type = type;
-    }
+//    public String getType() {
+//        return type;
+//    }
+//    public void setType(String type) {
+//        this.type = type;
+//    }
 
     public float getPaid() {
         return paid;

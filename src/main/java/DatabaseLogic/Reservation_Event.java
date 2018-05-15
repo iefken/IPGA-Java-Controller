@@ -7,19 +7,19 @@ public class Reservation_Event extends BaseEntity{
     private String reservationUUID;
     private String userUUID;
     private String eventUUID;
-    private String type;
+    //private String type;
     private float paid;
 
 
     public Reservation_Event(int ReservationId, int entity_version, int active, String Timestamp,
-                             String reservationUUID, String UserUUID, String EventUUID, String Type, float paid) {
+                             String reservationUUID, String UserUUID, String EventUUID, float paid) {
 
         super(ReservationId,entity_version,active,Timestamp);
 
         this.reservationUUID = reservationUUID;
         this.userUUID = UserUUID;
         this.eventUUID = EventUUID;
-        this.type = Type;
+        //this.type = Type;
         this.paid = paid;
     }
 
@@ -30,7 +30,7 @@ public class Reservation_Event extends BaseEntity{
         this.reservationUUID = reservationUUID;
         this.userUUID = UserUUID;
         this.eventUUID = EventUUID;
-        this.type = Type;
+        //this.type = Type;
         this.paid = paid;
     }
 
@@ -62,6 +62,7 @@ public class Reservation_Event extends BaseEntity{
     public void setEventUUID(String eventUUID){
         this.eventUUID=eventUUID;
     }
+/*
 
     public String getType() {
         return type;
@@ -69,6 +70,7 @@ public class Reservation_Event extends BaseEntity{
     public void setType(String type) {
         this.type = type;
     }
+*/
 
     public float getPaid() {
         return paid;
@@ -86,14 +88,13 @@ public class Reservation_Event extends BaseEntity{
         return Float.compare(that.getPaid(), getPaid()) == 0 &&
                 Objects.equals(getReservationUUID(), that.getReservationUUID()) &&
                 Objects.equals(getUserUUID(), that.getUserUUID()) &&
-                Objects.equals(getEventUUID(), that.getEventUUID()) &&
-                Objects.equals(getType(), that.getType());
+                Objects.equals(getEventUUID(), that.getEventUUID());
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), getReservationUUID(), getUserUUID(), getEventUUID(), getType(), getPaid());
+        return Objects.hash(super.hashCode(), getReservationUUID(), getUserUUID(), getEventUUID(), getPaid());
     }
 
     @Override
@@ -102,7 +103,6 @@ public class Reservation_Event extends BaseEntity{
                 "reservationUUID='" + reservationUUID + '\'' +
                 ", userUUID='" + userUUID + '\'' +
                 ", eventUUID='" + eventUUID + '\'' +
-                ", type='" + type + '\'' +
                 ", paid=" + paid +
                 '}';
     }

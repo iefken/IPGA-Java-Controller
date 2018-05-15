@@ -36,7 +36,7 @@ public class Receiver {
         Helper.receiverCliStartPaint(yourSourceType);
 
         //uncomment for sending pingmessage in a different thread
-        Helper.startSendingPingMessages(10000,yourSourceType);
+        //Helper.startSendingPingMessages(10000,yourSourceType);
 
         //# Setup rabbitMQ connection
         ConnectionFactory factory = new ConnectionFactory();

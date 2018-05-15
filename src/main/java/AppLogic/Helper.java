@@ -31,7 +31,7 @@ public interface Helper {
 
     //enum EntityType {VISITOR, EMPLOYEE, ADMIN, SPONSOR, SPEAKER, CONSULTANT}
 
-    enum EntityType {EMPTY, USER, EVENT, SESSION, RESERVATION_EVENT, RESERVATION_SESSION, PRODUCT, PURCHASE}
+    enum EntityType {EMPTY, User, Event, Session, ReservationEvent, ReservationSession, Product, Purchase}
 
     enum SourceType {Front_End, Planning, Monitor, Kassa, CRM, Facturatie}
 
@@ -176,7 +176,7 @@ public interface Helper {
                     String company = "Case1COM";
                     String userType = "ADMIN";
                     Source_type = SourceType.Front_End;
-                    Entity_type = EntityType.USER;
+                    Entity_type = EntityType.User;
 
                     // 1. create user object
                     User newUser = new User(0, 1, 1, getCurrentDateTimeStamp(), userUUID, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, userType);
@@ -240,7 +240,7 @@ public interface Helper {
                     type = "Case 2 EventType ";
                     float price = 0;
                     Source_type = SourceType.Front_End;
-                    Entity_type = EntityType.EVENT;
+                    Entity_type = EntityType.Event;
                     int entityVersion = 1;
                     int active = 1;
                     String timestamp = getCurrentDateTimeStamp();
@@ -301,7 +301,7 @@ public interface Helper {
                     // variables for session
                     messageType = "sessionMessage";
                     Entity_sourceId = 100;
-                    Entity_type = EntityType.SESSION;
+                    Entity_type = EntityType.Session;
                     sessionName = "Session name test";
                     dateTimeStart = "30/05/2018 20:00:00";
                     dateTimeEnd = "31/05/2018 08:00:00";
@@ -367,7 +367,7 @@ public interface Helper {
                     //preset variables
                     messageType = "reservationEventMessage";
                     //Entity_sourceId = 200;
-                    Entity_type = EntityType.RESERVATION_EVENT;
+                    Entity_type = EntityType.ReservationEvent;
                     Source_type = SourceType.Front_End;
                     type = "Case 10 type";
                     paid = 0;
@@ -381,7 +381,7 @@ public interface Helper {
 
                     // 1. create Event object
                     int eventId = 0;
-                    Reservation_Event newEventReservation = new Reservation_Event(0, 1, 1, getCurrentDateTimeStamp(), reservationUUID, userUUID, eventUUID, type, paid);
+                    Reservation_Event newEventReservation = new Reservation_Event(0, 1, 1, getCurrentDateTimeStamp(), reservationUUID, userUUID, eventUUID, paid);
 
                     // 2. insert to local db
                     //System.out.println("Reservation to string: "+newEventReservation.toString());
@@ -441,7 +441,7 @@ public interface Helper {
 
                     // 1. create Event object
                     int reservationId = 0;
-                    Reservation_Session newSessionReservation = new Reservation_Session(0, 1, 1, getCurrentDateTimeStamp(), reservationUUID, userUUID, sessionUUID, type, paid);
+                    Reservation_Session newSessionReservation = new Reservation_Session(0, 1, 1, getCurrentDateTimeStamp(), reservationUUID, userUUID, sessionUUID, paid);
 
                     // 2. insert to local db
                     int case11test = 0;
@@ -653,7 +653,7 @@ public interface Helper {
                     // preset variables (should be set later)
                     messageType = "SessionMessage";
                     Entity_sourceId = 100;
-                    Entity_type = EntityType.SESSION;
+                    Entity_type = EntityType.Session;
                     Source_type = SourceType.Planning;
                     sessionName = "Session name test";
                     dateTimeStart = "30/05/2018 20:00:00";
@@ -697,7 +697,7 @@ public interface Helper {
 
                     messageType = "ReservationMessage";
                     Entity_sourceId = 1200;
-                    Entity_type = EntityType.RESERVATION_SESSION;
+                    Entity_type = EntityType.ReservationSession;
                     Source_type = SourceType.Planning;
 
                     UUID = "e0e7e624-ea01-410b-8a8f-25c551d43c25";
@@ -901,7 +901,7 @@ public interface Helper {
         String userUUID="";
         User thisUserInMessage = null;
         Boolean uuidExists = false;
-        EntityType thisEntityType = EntityType.USER;
+        EntityType thisEntityType = EntityType.User;
         SourceType Source_type = SourceType.Planning;
 
         // 1. transform xml to user-object
@@ -932,7 +932,7 @@ public interface Helper {
 
             if (uuidExists) {
 
-                System.out.println("UUID already exists in our PlanningDB table:\nUser");
+                System.out.println("UUID already exists in our PlanningDB table:[User]");
 
                 // 2.2. User record update
 
@@ -963,6 +963,8 @@ public interface Helper {
 
                     if(newExistingUserResponse){
 
+
+
                         // 2.3.2. insert new record into local db
                         int messageUserInsertReturner = 0;
                         try {
@@ -977,7 +979,7 @@ public interface Helper {
                         } catch (IOException | TimeoutException | JAXBException e) {
                             e.printStackTrace();
                         }
-                        System.out.println("We had this Reservation_Session with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisUserInMessage.getEntityVersion() + "'");
+                        System.out.println("We had this User with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisUserInMessage.getEntityVersion() + "'");
 
                     }else{
                         System.out.println("Something seems to have gone wrong with newExistingUserResponse...");
@@ -991,7 +993,7 @@ public interface Helper {
                     }*/
                 } else {
                     // we have the latest version...
-                    System.out.println("We already had this user with entityVersion: '" + localEntityVersion + "'");
+                    System.out.println("We already had this User with entityVersion: '" + localEntityVersion + "'");
                 }
 
             } else {
@@ -1028,7 +1030,7 @@ public interface Helper {
         String eventUUID="";
         Event thisEventInMessage = null;
         Boolean uuidExists = false;
-        EntityType thisEntityType = EntityType.EVENT;
+        EntityType thisEntityType = EntityType.Event;
         SourceType Source_type = SourceType.Planning;
 
         // 1. transform xml to event-object
@@ -1118,6 +1120,8 @@ public interface Helper {
                 // New event record
 
                 // 2.4.1. Add new event to Google calendar
+
+                /*
                 String newEventHtmlLinkAndId = null;
                 try {
                     newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromEventObject(thisEventInMessage);
@@ -1131,7 +1135,7 @@ public interface Helper {
                     System.out.println("Error adding event to Google calendar API: "+e);
                     //e.printStackTrace();
                 }
-
+*/
                 // 2.4.2. insert new event into local db
                 int messageEventInsertReturner = 0;
                 try {
@@ -1166,7 +1170,7 @@ public interface Helper {
         String sessionUUID="";
         Session thisSessionInMessage = null;
         Boolean uuidExists = false;
-        EntityType thisEntityType = EntityType.SESSION;
+        EntityType thisEntityType = EntityType.Session;
         SourceType Source_type = SourceType.Planning;
 
         // 1. transform xml to session-object
@@ -1258,6 +1262,7 @@ public interface Helper {
             } else {
                 // New session record
 
+                /*
                 // 2.4.1. Add new Session to Google calendar
                 String newSessionHtmlLinkAndId = "";
                 try {
@@ -1274,6 +1279,7 @@ public interface Helper {
                     System.out.println("Error adding session as event to Google calendar API: "+e);
                     //e.printStackTrace();
                 }
+                */
                 // 2.4.2. insert new session into local db
                 int messageSessionInsertReturner = 0;
                 try {
@@ -1355,11 +1361,11 @@ public interface Helper {
 
             } else {
 
-                thisEntityType = EntityType.EVENT;
+                thisEntityType = EntityType.ReservationEvent;
                 System.out.println("New RESERVATION_EVENT for Event with UUID: " + eventUUID);
             }
         } else {
-            thisEntityType = EntityType.SESSION;
+            thisEntityType = EntityType.ReservationSession;
             System.out.println("New RESERVATION_SESSION for Session with UUID: " + sessionUUID);
         }
 
@@ -2521,7 +2527,7 @@ public interface Helper {
 
         }
 
-        reservationSessionObject = new Reservation_Session(0, entityVersion, active, timestamp, reservationUUID, userUUID, sessionUUID, type, paid);
+        reservationSessionObject = new Reservation_Session(0, entityVersion, active, timestamp, reservationUUID, userUUID, sessionUUID, paid);
 
         return reservationSessionObject;
     }
@@ -2627,6 +2633,7 @@ public interface Helper {
             System.out.println(" [!!!] ERROR: No paid found in XML: ");
             allGood = false;
         }
+        /*
         type = getSafeXmlProperty(xmlMessage, "type");
         if (type == "false") {
 
@@ -2634,7 +2641,7 @@ public interface Helper {
             allGood = false;
 
         }
-
+*/
         try {
             entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, "entityVersion"));
         } catch (NumberFormatException e) {
@@ -2648,7 +2655,7 @@ public interface Helper {
 
         }
         active = Integer.parseInt(getSafeXmlProperty(xmlMessage, "active"));
-        if (active == 0) {
+        if (active < 0) {
 
             System.out.println(" [!!!] ERROR: No active found in XML: ");
             allGood = false;
@@ -2662,7 +2669,7 @@ public interface Helper {
 
         }
 
-        reservationEventObject = new Reservation_Event(0, entityVersion, active, timestamp, reservationUUID, userUUID, eventUUID, type, paid);
+        reservationEventObject = new Reservation_Event(0, entityVersion, active, timestamp, reservationUUID, userUUID, eventUUID, paid);
 
         return reservationEventObject;
     }
@@ -2984,7 +2991,7 @@ public interface Helper {
                 eventType="MockerNoon";
                 float price = 0;
                 Source_type = SourceType.Front_End;
-                Entity_type = EntityType.EVENT;
+                Entity_type = EntityType.Event;
                 entityVersion=1;
                 active=1;
                 timestamp=getCurrentDateTimeStamp();
@@ -3042,7 +3049,7 @@ public interface Helper {
                 eventType="MockerNoon";
                 price = 0;
                 Source_type = SourceType.Front_End;
-                Entity_type = EntityType.EVENT;
+                Entity_type = EntityType.Event;
                 entityVersion=1;
                 active=1;
                 timestamp=getCurrentDateTimeStamp();
@@ -3089,7 +3096,7 @@ public interface Helper {
                 eventType="EventType";
                 price = 0;
                 Source_type = SourceType.Front_End;
-                Entity_type = EntityType.EVENT;
+                Entity_type = EntityType.Event;
                 entityVersion=1;
                 active=1;
                 timestamp=getCurrentDateTimeStamp();
@@ -3115,7 +3122,7 @@ public interface Helper {
                 String UuidInsertReturner="";
                 try {
                     //UuidInsertReturner = httpPostCreateUuidRecord(Entity_sourceId, Entity_type, Source_type);
-                    UuidInsertReturner = httpPostCreateUuidRecord(50, EntityType.EVENT, SourceType.Planning);
+                    UuidInsertReturner = httpPostCreateUuidRecord(50, EntityType.Event, SourceType.Planning);
 
                     UuidInsertReturner = UuidInsertReturner.substring(1, UuidInsertReturner.length() - 1);
 
@@ -3185,7 +3192,7 @@ public interface Helper {
                 sessionType="SessionMockerType";
                 price = 0;
                 Source_type = SourceType.Front_End;
-                Entity_type = EntityType.SESSION;
+                Entity_type = EntityType.Session;
                 entityVersion=1;
                 active=1;
                 timestamp=getCurrentDateTimeStamp();
@@ -3250,7 +3257,7 @@ public interface Helper {
                 sessionType="SessionMockerType";
                 price = 0;
                 Source_type = SourceType.Front_End;
-                Entity_type = EntityType.SESSION;
+                Entity_type = EntityType.Session;
                 entityVersion=1;
                 active=1;
                 timestamp=getCurrentDateTimeStamp();
@@ -3294,7 +3301,7 @@ public interface Helper {
                 sessionType="SessionMockedType";
                 price = 0;
                 Source_type = SourceType.Front_End;
-                Entity_type = EntityType.SESSION;
+                Entity_type = EntityType.Session;
                 entityVersion=1;
                 active=1;
                 timestamp=getCurrentDateTimeStamp();
@@ -3320,7 +3327,7 @@ public interface Helper {
                 UuidInsertReturner="";
                 try {
                     //UuidInsertReturner = httpPostCreateUuidRecord(Entity_sourceId, Entity_type, Source_type);
-                    UuidInsertReturner = httpPostCreateUuidRecord(50, EntityType.SESSION, SourceType.Planning);
+                    UuidInsertReturner = httpPostCreateUuidRecord(50, EntityType.Session, SourceType.Planning);
 
                     UuidInsertReturner = UuidInsertReturner.substring(1, UuidInsertReturner.length() - 1);
 

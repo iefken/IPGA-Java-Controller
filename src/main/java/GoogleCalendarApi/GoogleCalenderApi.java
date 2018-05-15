@@ -1,5 +1,6 @@
 package GoogleCalendarApi;
 
+import JsonMessage.JSONObject;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -10,16 +11,29 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
+import com.google.api.client.util.IOUtils;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.*;
+import jcifs.smb.SmbFile;
 
-import java.io.FileInputStream;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.List;
+import java.io.Reader;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.stream.Collectors;
 
 public class GoogleCalenderApi {
 
@@ -69,13 +83,55 @@ public class GoogleCalenderApi {
         // InputStream in = Quickstart.class.getResourceAsStream("/client_secret.json");
 
         // InputStream in = new FileInputStream("C:\\Users\\ief.falot\\.credentials\\calendar-integration-groupA-java\\client_secret.json");
-        InputStream in = new FileInputStream("C:\\Users\\ief.falot\\Documents\\GitHub\\PLANNING\\src\\main\\java\\GoogleCalendarApi\\cred\\client_secret.json");
+        // InputStream in = new FileInputStream("C:\\Users\\ief.falot\\Documents\\GitHub\\PLANNING\\src\\main\\java\\GoogleCalendarApi\\cred\\client_secret.json");
         // InputStream in = new FileInputStream("/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/src/main/java/GoogleCalendarApi/cred/client_secret.json");
-
+        // SmbFile fileToRead= new SmbFile("smb://10.3.50.38/export/myFile.txt");
+/*
+        try (FileOutputStream fos = new FileOutputStream("smb://iwtsl.ehb.be/~ief.falot/Integration/GoogleCalendarApi/client_secret.json")){
+            URL url = new URL("smb://iwtsl.ehb.be/~ief.falot/Integration/GoogleCalendarApi/client_secret.json");
+            URLConnection connection = url.openConnection();
+            IOUtils.copy( connection.getInputStream(),  fos);
+        }catch(Exception e)
+        {
+            System.out.println("Error getting FileOutputStream: "+e);
+        }*/
+/*
+        SmbFile in= null;
+        try {
+            in = new SmbFile("smb://github.com/iefken/IPGA-Java-Controller/src/main/java/GoogleCalendarApi/cred/client_secret.json");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }*/
+        // "smb://github.com/iefken/IPGA-Java-Controller/src/main/java/GoogleCalendarApi/cred/client_secret.json"
+        // "smb://github.com/iefken/IPGA-Java-Controller/blob/master/src/main/java/GoogleCalendarApi/cred/client_secret.json"
+        // http://dtsl.ehb.be/~ief.falot/Integration/GoogleCalendarApi/client_secret.json
+        //InputStream test = in.getInputStream();
         //InputStream in = new FileInputStream("C:\\Users\\ief.falot\\Documents\\GitHub\\PLANNING\\src\\main\\java\\GoogleCalendarApi\\cred\\client_secret(ief).json");
 
-        GoogleClientSecrets clientSecrets =
-                GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+        String url = "https://github.com/iefken/IPGA-Java-Controller/blob/master/src/main/java/GoogleCalendarApi/cred/client_secret.json";
+
+        url = "http://dtsl.ehb.be/~ief.falot/Integration/GoogleCalendarApi/client_secret.json";
+        InputStream is = null;
+        try {
+            is = new URL(url).openStream();
+        } catch (IOException e) {
+            System.out.println("ERROR: "+e);
+            // e.printStackTrace();
+        }
+
+        String message ="ERROR";
+        try {
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+            //String jsonText = readAll(rd);
+            message = rd.lines().collect(Collectors.joining());
+            //JSONObject json = new JSONObject(jsonText);
+        } finally {
+            is.close();
+        }
+
+        InputStream stream = new ByteArrayInputStream(message.getBytes(StandardCharsets.UTF_8));
+
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(is));
 
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow =
