@@ -4,30 +4,41 @@ import java.util.Objects;
 
 public class Reservation_Event extends BaseEntity{
 
-    private String reservationUUID;
+    private String uuid;
     private String userUUID;
     private String eventUUID;
     //private String type;
     private float paid;
 
 
-    public Reservation_Event(int ReservationId, int entity_version, int active, String Timestamp,
+    public Reservation_Event(int ReservationId, int entity_version, int active, String timestamp,
                              String reservationUUID, String UserUUID, String EventUUID, float paid) {
 
-        super(ReservationId,entity_version,active,Timestamp);
+        super(ReservationId,entity_version,active,timestamp);
 
-        this.reservationUUID = reservationUUID;
+        this.uuid = reservationUUID;
         this.userUUID = UserUUID;
         this.eventUUID = EventUUID;
         //this.type = Type;
         this.paid = paid;
     }
 
+    public Reservation_Event(int ReservationId, int entity_version, int active, String timestamp,
+                             String reservationUUID, String UserUUID, String EventUUID, float paid, boolean insertBaseEntity) {
+
+        super(ReservationId,entity_version,active,timestamp, insertBaseEntity);
+
+        this.uuid = reservationUUID;
+        this.userUUID = UserUUID;
+        this.eventUUID = EventUUID;
+        //this.type = Type;
+        this.paid = paid;
+    }
     public Reservation_Event(int ReservationId, String reservationUUID, String UserUUID, String EventUUID, String Type, float paid) {
 
         //super(ReservationId,entity_version,active,Timestamp);
 
-        this.reservationUUID = reservationUUID;
+        this.uuid = reservationUUID;
         this.userUUID = UserUUID;
         this.eventUUID = EventUUID;
         //this.type = Type;
@@ -43,10 +54,10 @@ public class Reservation_Event extends BaseEntity{
     }
 
     public String getReservationUUID() {
-        return reservationUUID;
+        return uuid;
     }
     public void setReservationUUID(String reservationUUID) {
-        this.reservationUUID = reservationUUID;
+        this.uuid = reservationUUID;
     }
 
     public String getUserUUID(){
@@ -91,7 +102,7 @@ public class Reservation_Event extends BaseEntity{
     @Override
     public String toString() {
         return "Reservation_Event{" +
-                "reservationUUID='" + reservationUUID + '\'' +
+                "uuid='" + uuid + '\'' +
                 ", userUUID='" + userUUID + '\'' +
                 ", eventUUID='" + eventUUID + '\'' +
                 ", paid=" + paid +

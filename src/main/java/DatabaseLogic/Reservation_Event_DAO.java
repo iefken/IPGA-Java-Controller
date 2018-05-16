@@ -20,7 +20,7 @@ public class Reservation_Event_DAO extends BaseEntityDAO{
 
         int callbackInsertedInt = newBaseEntity.getEntityId();
 
-        if(callbackInsertedInt != reservation_event.getEntityId())
+        if(reservation_event.getEntityId()!=0 && callbackInsertedInt != reservation_event.getEntityId())
         {
             throw new SQLException("ERROR 05: Given id("+reservation_event.getEntityId()+") does not correspond to retreived id("+callbackInsertedInt+")!");
         }

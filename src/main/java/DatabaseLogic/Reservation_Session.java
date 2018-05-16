@@ -10,10 +10,10 @@ public class Reservation_Session extends BaseEntity{
 //    private String type;
     private float paid;
 
-    public Reservation_Session(int ReservationId, int entity_version, int active, String Timestamp,
+    public Reservation_Session(int ReservationId, int entity_version, int active, String timestamp,
                                String reservationUUID, String UserUUID, String SessionUUID, /*String Type,*/ float paid) {
 
-        super(ReservationId,entity_version,active, Timestamp);
+        super(ReservationId,entity_version,active, timestamp);
 
         this.reservationUUID = reservationUUID;
         this.userUUID = UserUUID;
@@ -21,6 +21,19 @@ public class Reservation_Session extends BaseEntity{
 //        this.type = Type;
         this.paid = paid;
     }
+
+    public Reservation_Session(int ReservationId, int entity_version, int active, String timestamp,
+                               String reservationUUID, String UserUUID, String SessionUUID, /*String Type,*/ float paid, boolean insertBaseEntity) {
+
+        super(ReservationId,entity_version,active, timestamp,insertBaseEntity);
+
+        this.reservationUUID = reservationUUID;
+        this.userUUID = UserUUID;
+        this.sessionUUID = SessionUUID;
+//        this.type = Type;
+        this.paid = paid;
+    }
+
     public Reservation_Session(int ReservationId, String reservationUUID, String UserUUID, String SessionUUID, /*String Type,*/ float paid) {
 
         //super(ReservationId,entity_version,Status, Timestamp);

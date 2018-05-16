@@ -334,20 +334,22 @@ public class BaseEntityDAO extends BaseDAO{
     {
         ResultSet rs = null;
         Boolean uuidExists = false;
+        String idFromTableToCheck ="id";
 
         if(tableToCheck.contains("_")){
 
             String[] parts = tableToCheck.split("_");
 
-            tableToCheck="";
             for (int i=0; i< parts.length;i++)
             {
-                tableToCheck+=parts[i];
+                idFromTableToCheck+=parts[i];
             }
 
+        }else{
+            idFromTableToCheck+=tableToCheck;
         }
                                 // SELECT name FROM PlanningDB.User WHERE idUser = 5 AND active = 1;
-        String sql = "SELECT uuid FROM PlanningDB."+tableToCheck+" t1 JOIN PlanningDB.BaseEntity t2 ON t1.id"+tableToCheck+" = t2.idBaseEntity WHERE uuid = \""+UUID+"\" AND active = 1;";
+        String sql = "SELECT uuid FROM PlanningDB."+tableToCheck+" t1 JOIN PlanningDB.BaseEntity t2 ON t1."+idFromTableToCheck+" = t2.idBaseEntity WHERE uuid = \""+UUID+"\" AND active = 1;";
 
         //System.out.println("test: "+tableToCheck.substring(0, 11).toLowerCase()+ " // does uuid exist sql: "+sql);
 

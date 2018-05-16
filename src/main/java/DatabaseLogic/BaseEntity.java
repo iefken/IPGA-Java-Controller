@@ -1,5 +1,7 @@
 package DatabaseLogic;
 
+import AppLogic.Helper;
+
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -41,6 +43,18 @@ public class BaseEntity {
         this.idBaseEntity = entityId;
     }
     public BaseEntity() {
+        this.entityVersion = 1;
+        this.active = 1;
+        this.timestamp = Helper.getCurrentDateTimeStamp();
+        BaseEntityDAO thisBaseEntityDAO = new BaseEntityDAO();
+
+        try {
+            this.idBaseEntity = thisBaseEntityDAO.insertIntoBaseEntity(this);
+
+        } catch (SQLException e) {
+            System.out.println("SQL ERROR during BaseEntity Insertion: "+e);
+            //e.printStackTrace();
+        }
     }
 
     public int getEntityId() {
