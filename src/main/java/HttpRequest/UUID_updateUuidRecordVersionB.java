@@ -3,21 +3,24 @@ package HttpRequest;
 import AppLogic.Helper;
 
 public class UUID_updateUuidRecordVersionB {
-    private String UUID;
+    private String Uuid;
     private int Entity_version;
     private Helper.SourceType Source;
 
     public UUID_updateUuidRecordVersionB(String UUID, int Entity_version, Helper.SourceType Source) {
 
-        this.UUID = UUID;
+        this.Uuid = UUID;
         this.Entity_version = Entity_version;
         this.Source = Source;
     }
 
     //    GETTERS & SETTERS
 
-    public String getUUID() {
-        return UUID;
+    public String getUuid() {
+        return Uuid;
+    }
+    public void setUuid(String uuid) {
+        Uuid = uuid;
     }
 
     public Helper.SourceType getSource() {
@@ -36,7 +39,7 @@ public class UUID_updateUuidRecordVersionB {
 
     public String toJSONString() {
 
-        String s = "{\"Uuid\":\""+this.getUUID()+ "\","
+        String s = "{\"Uuid\":\""+this.getUuid()+ "\","
                 + "\"Entity_version\":\""+this.getEntity_version()+ "\","
                 + "\"Source\":\""+this.getSource()+ "\""
                 + "}";

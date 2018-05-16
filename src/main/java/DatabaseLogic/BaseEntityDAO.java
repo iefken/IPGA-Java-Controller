@@ -24,9 +24,9 @@ public class BaseEntityDAO extends BaseDAO{
 
         }else{
             //known BaseEntity-object for database
-            sqlQuery = "INSERT INTO PlanningDB.BaseEntity (entityId, entity_version, active, timestamp) VALUES(\""+thisBaseEntity.getEntityId()+"\",\""+thisBaseEntity.getEntityVersion()+"\",\""+thisBaseEntity.getActive()+"\",\""+thisBaseEntity.getTimestamp()+"\");";
+            sqlQuery = "INSERT INTO PlanningDB.BaseEntity (idBaseEntity, entity_version, active, timestamp) VALUES(\""+thisBaseEntity.getEntityId()+"\",\""+thisBaseEntity.getEntityVersion()+"\",\""+thisBaseEntity.getActive()+"\",\""+thisBaseEntity.getTimestamp()+"\");";
         }
-        //INSERT INTO `PlanningDB`.`BaseEntity` (`entityId`, `entity_version`, `status`, `timestamp`) VALUES (NULL, NULL, NULL, NULL);
+        //INSERT INTO `PlanningDB`.`BaseEntity` (`idBaseEntity`, `entity_version`, `status`, `timestamp`) VALUES (NULL, NULL, NULL, NULL);
 
         //System.out.println("sqlQuery: "+sqlQuery+"\n");
         try {
@@ -78,7 +78,7 @@ public class BaseEntityDAO extends BaseDAO{
         ResultSet rs = null;
         BaseEntity thisBaseEntity = null;
 
-        String sql = "SELECT * FROM PlanningDB.BaseEntity WHERE entityId = \""+thisEntityId+"\";";
+        String sql = "SELECT * FROM PlanningDB.BaseEntity WHERE idBaseEntity = \""+thisEntityId+"\";";
 
         try(Statement s = getConnection().createStatement()){
 
@@ -256,17 +256,20 @@ public class BaseEntityDAO extends BaseDAO{
 
         //System.out.println("sql: "+sql);
 
+        // sql
+
         PreparedStatement statement = null;
         try {
             if (getConnection().isClosed()) {
-                throw new IllegalStateException("ERROR 01: Connection seems to be closed...");
+                throw new IllegalStateException("ERROR 01: Connection closed...");
             }
             statement = getConnection().prepareStatement(sql);
             try{
                 statement.executeUpdate();
                 return true;
             }catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("ERROR: during executing statement.executeUpdate():\n"+e);
+                //e.printStackTrace();
                 return false;
             }
         }catch(SQLException e){
@@ -274,11 +277,12 @@ public class BaseEntityDAO extends BaseDAO{
             throw new RuntimeException(e.getMessage());
         }finally{
             try{
+                //System.out.println("Queried:\nSTART\n"+sql+"\nEND\n");
                 if(statement != null)
                     statement.close();
             }catch(SQLException e){
                 System.out.println(e.getMessage());;
-                throw new RuntimeException("ERROR 02: Something seems to have gone wrong during closing the connection...");
+                throw new RuntimeException("ERROR 02: Error during closing the connection...");
             }
         }
 
@@ -291,7 +295,7 @@ public class BaseEntityDAO extends BaseDAO{
         ResultSet rs = null;
         Boolean executeSucces = false;
 
-        String sql = "UPDATE PlanningDB."+table+" SET active = 0 WHERE entityId = "+entityId+";";
+        String sql = "UPDATE PlanningDB."+table+" SET active = 0 WHERE idBaseEntity = "+entityId+";";
         //String sql = "UPDATE PlanningDB.? SET ? = ? WHERE idUser = ?;";
 
         //System.out.println("sql: "+sql);
@@ -331,16 +335,19 @@ public class BaseEntityDAO extends BaseDAO{
         ResultSet rs = null;
         Boolean uuidExists = false;
 
-        String selector = tableToCheck.toLowerCase();
+        if(tableToCheck.contains("_")){
 
-        if (tableToCheck.toLowerCase().contains("reservation")) {
-            selector="reservation";
+            String[] parts = tableToCheck.split("_");
+
+            tableToCheck="";
+            for (int i=0; i< parts.length;i++)
+            {
+                tableToCheck+=parts[i];
+            }
+
         }
-
-        selector+="UUID";
-
-
-        String sql = "SELECT "+selector+" FROM PlanningDB."+tableToCheck+" WHERE "+selector+" = \""+UUID+"\";";
+                                // SELECT name FROM PlanningDB.User WHERE idUser = 5 AND active = 1;
+        String sql = "SELECT uuid FROM PlanningDB."+tableToCheck+" t1 JOIN PlanningDB.BaseEntity t2 ON t1.id"+tableToCheck+" = t2.idBaseEntity WHERE uuid = \""+UUID+"\" AND active = 1;";
 
         //System.out.println("test: "+tableToCheck.substring(0, 11).toLowerCase()+ " // does uuid exist sql: "+sql);
 

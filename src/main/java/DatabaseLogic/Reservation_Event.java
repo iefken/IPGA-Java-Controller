@@ -62,15 +62,6 @@ public class Reservation_Event extends BaseEntity{
     public void setEventUUID(String eventUUID){
         this.eventUUID=eventUUID;
     }
-/*
-
-    public String getType() {
-        return type;
-    }
-    public void setType(String type) {
-        this.type = type;
-    }
-*/
 
     public float getPaid() {
         return paid;
@@ -104,6 +95,7 @@ public class Reservation_Event extends BaseEntity{
                 ", userUUID='" + userUUID + '\'' +
                 ", eventUUID='" + eventUUID + '\'' +
                 ", paid=" + paid +
+                ", {'" + super.toString() + "'}" +
                 '}';
     }
 }

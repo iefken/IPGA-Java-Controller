@@ -27,7 +27,7 @@ public class Session_DAO extends BaseEntityDAO {
         PreparedStatement preparedStatement = null;
         String sqlQuery = "";
 
-        sqlQuery = "INSERT INTO PlanningDB.Session (`idSession`, `sessionUUID`, `eventUUID`, `sessionName`, `maxAttendees`, `description`, `summary`, `location`, `speaker`, `dateTimeStart`, `dateTimeEND`, `type`, `GCAEventId`,`GCAEventLink`, `price`) " +
+        sqlQuery = "INSERT INTO PlanningDB.Session (`idSession`, `uuid`, `eventUuid`, `sessionName`, `maxAttendees`, `description`, `summary`, `location`, `speaker`, `dateTimeStart`, `dateTimeEnd`, `type`, `GCAEventId`,`GCAEventLink`, `price`) " +
                 "VALUES(" + callbackInsertedInt + ",\"" + session.getSessionUUID() + "\",\"" + session.getEventUUID() + "\",\"" + session.getSessionName() + "\"," + session.getMaxAttendees() + ",\"" + session.getDescription() + "\",\"" + session.getSummary() + "\",\"" + session.getLocation() + "\",\"" + session.getSpeaker() + "\",\"" + session.getDateTimeStart() + "\",\"" + session.getDateTimeEnd() + "\",\"" + session.getType() + "\",\"" + session.getGCAEventId() + "\",\"" + session.getGCAEventLink() + "\",\"" + session.getPrice() + "\");";
 
         //System.out.println("sqlquery: "+sqlQuery);

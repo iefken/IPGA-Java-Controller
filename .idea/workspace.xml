@@ -6,30 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82177a5e-8973-45d5-9e84-1447e337bd45" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/receiver/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/cli_java_controller_jar2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/cli_java_controller_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db-models/Planning-DB-v3.1.mwb" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/Planning-DB-v3.1.mwb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db-models/Planning-DB-v3.1.mwb.bak" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/Planning-DB-v3.1.mwb.bak" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/cli_java_controller_jar2/cli-java-controller.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/cli_java_main_controller_jar/cli-java-controller.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/cli_java_main_controller_jar/cli-java-controller.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/AppLogic/Helper$EntityType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AppLogic/Helper$EntityType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/AppLogic/Helper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AppLogic/Helper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/AppLogic/Receiver.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AppLogic/Receiver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/DatabaseProperties.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/DatabaseProperties.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/DatabaseSingleton.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/DatabaseSingleton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/Reservation_Event.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/Reservation_Event.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/Reservation_Session.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/Reservation_Session.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/GoogleCalendarApi/GoogleCalenderApi.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GoogleCalendarApi/GoogleCalenderApi.class" afterDir="false" />
-    </list>
+    <list default="true" id="82177a5e-8973-45d5-9e84-1447e337bd45" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,33 +14,70 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="253">
+                    <caret line="996" lean-forward="true" selection-start-line="996" selection-end-line="1004" selection-end-column="25" />
+                    <folding>
+                      <element signature="class#EntityType#0;class#Helper#0" />
+                      <element signature="class#SourceType#0;class#Helper#0" />
+                      <element signature="method#getOptions#0;class#Helper#0" />
+                      <element signature="method#receiverMessageWaitPaint#0;class#Helper#0" />
+                      <element signature="method#receiverCliStartPaint#0;class#Helper#0" />
+                      <element signature="method#startCliInterface#0;class#Helper#0" />
+                      <element signature="method#handleNewMessageSession#0;class#Helper#0" />
+                      <element signature="method#handleNewMessageReservation#0;class#Helper#0" />
+                      <element signature="method#httpGetAllRecords#0;class#Helper#0" />
+                      <element signature="method#httpPostCreateUuidRecord#0;class#Helper#0" />
+                      <element signature="method#httpPutUpdateUuidRecordVersion#0;class#Helper#0" />
+                      <element signature="method#httpPutUpdateUuidRecordVersionB#0;class#Helper#0" />
+                      <element signature="method#doHttpRequest#0;class#Helper#0" />
+                      <element signature="method#getXmlForNewUser#0;class#Helper#0" />
+                      <element signature="method#getXmlFromUserObject#0;class#Helper#0" />
+                      <element signature="method#getUserObjectFromXmlMessage#0;class#Helper#0" />
+                      <element signature="method#getXmlForNewSession#0;class#Helper#0" />
+                      <element signature="method#getXmlFromSessionObject#0;class#Helper#0" />
+                      <element signature="method#getSessionObjectFromXmlMessage#0;class#Helper#0" />
+                      <element signature="method#getXmlForNewEvent#0;class#Helper#0" />
+                      <element signature="method#getXmlFromEventObject#0;class#Helper#0" />
+                      <element signature="method#getEventObjectFromXmlMessage#0;class#Helper#0" />
+                      <element signature="method#getXmlForNewReservation_Session#0;class#Helper#0" />
+                      <element signature="method#getXmlFromReservation_SessionObject#0;class#Helper#0" />
+                      <element signature="method#getReservation_SessionObjectFromXmlMessage#0;class#Helper#0" />
+                      <element signature="method#getXmlForNewReservation_Event#0;class#Helper#0" />
+                      <element signature="method#getXmlFromReservation_EventObject#0;class#Helper#0" />
+                      <element signature="method#getReservation_EventObjectFromXmlMessage#0;class#Helper#0" />
+                      <element signature="method#startSendingPingMessages#0;class#Helper#0" />
+                      <element signature="method#getXmlForPingMessage#0;class#Helper#0" />
+                      <element signature="method#getPropertyFromXml#0;class#Helper#0" />
+                      <element signature="method#getSafeXmlProperty#0;class#Helper#0" />
+                      <element signature="method#xmlMessageMocker#0;class#Helper#0" />
+                      <element signature="method#getCurrentDateTimeStamp#0;class#Helper#0" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.70726913">
+    <splitter split-orientation="horizontal" split-proportion="0.42216358">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/User.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="68">
-                  <caret line="28" column="11" selection-start-line="28" selection-start-column="11" selection-end-line="28" selection-end-column="11" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="BaseEntity.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntity.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="136">
-                  <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="40">
-                  <caret line="1011" lean-forward="true" selection-start-line="1011" selection-end-line="1011" />
+                <state relative-caret-position="87">
+                  <caret line="996" lean-forward="true" selection-start-line="996" selection-end-line="996" />
                   <folding>
                     <element signature="class#EntityType#0;class#Helper#0" />
                     <element signature="class#SourceType#0;class#Helper#0" />
@@ -71,53 +85,206 @@
                     <element signature="method#receiverMessageWaitPaint#0;class#Helper#0" />
                     <element signature="method#receiverCliStartPaint#0;class#Helper#0" />
                     <element signature="method#startCliInterface#0;class#Helper#0" />
-                    <element signature="e#6915#6949#0" />
-                    <element signature="e#9566#9657#0" />
-                    <element signature="e#10749#10772#0" />
-                    <element signature="e#13326#13347#0" />
-                    <element signature="e#16785#16838#0" />
-                    <element signature="e#17791#17815#0" />
-                    <element signature="e#19911#19935#0" />
-                    <element signature="e#23173#23249#0" />
-                    <element signature="e#23945#23987#0" />
-                    <element signature="e#25765#25793#0" />
-                    <element signature="e#29223#29292#0" />
-                    <element signature="e#30560#30576#0" />
-                    <element signature="e#31396#31444#0" />
-                    <element signature="e#31947#32026#0" />
-                    <element signature="method#handleNewMessage#0;class#Helper#0" />
-                    <element signature="e#39447#39516#0" />
-                    <element signature="e#40155#40181#0" />
-                    <element signature="e#43254#43272#0" />
-                    <element signature="method#handleNewMessageEvent#0;class#Helper#0" />
-                    <element signature="e#45480#45508#0" />
-                    <element signature="e#46086#46145#0" />
-                    <element signature="e#48337#48356#0" />
                     <element signature="method#handleNewMessageSession#0;class#Helper#0" />
-                    <element signature="e#51309#51337#0" />
-                    <element signature="e#51779#51838#0" />
                     <element signature="method#handleNewMessageReservation#0;class#Helper#0" />
-                    <element signature="e#58488#58539#0" />
-                    <element signature="e#60103#60162#0" />
-                    <element signature="e#63208#63267#0" />
-                    <element signature="e#65993#66025#0" />
                     <element signature="method#httpGetAllRecords#0;class#Helper#0" />
-                    <element signature="e#67518#67648#0" />
-                    <element signature="e#68100#68118#0" />
                     <element signature="method#httpPostCreateUuidRecord#0;class#Helper#0" />
-                    <element signature="e#69038#69056#0" />
-                    <element signature="e#69723#69737#0" />
                     <element signature="method#httpPutUpdateUuidRecordVersion#0;class#Helper#0" />
                     <element signature="method#httpPutUpdateUuidRecordVersionB#0;class#Helper#0" />
                     <element signature="method#doHttpRequest#0;class#Helper#0" />
                     <element signature="method#getXmlForNewUser#0;class#Helper#0" />
                     <element signature="method#getXmlFromUserObject#0;class#Helper#0" />
                     <element signature="method#getUserObjectFromXmlMessage#0;class#Helper#0" />
-                    <element signature="e#81221#81243#0" />
                     <element signature="method#getXmlForNewSession#0;class#Helper#0" />
                     <element signature="method#getXmlFromSessionObject#0;class#Helper#0" />
                     <element signature="method#getSessionObjectFromXmlMessage#0;class#Helper#0" />
-                    <element signature="e#90085#90107#0" />
+                    <element signature="method#getXmlForNewEvent#0;class#Helper#0" />
+                    <element signature="method#getXmlFromEventObject#0;class#Helper#0" />
+                    <element signature="method#getXmlForNewReservation_Session#0;class#Helper#0" />
+                    <element signature="method#getXmlFromReservation_SessionObject#0;class#Helper#0" />
+                    <element signature="method#getReservation_SessionObjectFromXmlMessage#0;class#Helper#0" />
+                    <element signature="method#getXmlForNewReservation_Event#0;class#Helper#0" />
+                    <element signature="method#getXmlFromReservation_EventObject#0;class#Helper#0" />
+                    <element signature="method#getReservation_EventObjectFromXmlMessage#0;class#Helper#0" />
+                    <element signature="method#startSendingPingMessages#0;class#Helper#0" />
+                    <element signature="method#getXmlForPingMessage#0;class#Helper#0" />
+                    <element signature="method#getPropertyFromXml#0;class#Helper#0" />
+                    <element signature="method#getSafeXmlProperty#0;class#Helper#0" />
+                    <element signature="method#getCurrentDateTimeStamp#0;class#Helper#0" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Session_DAO.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="268">
+                  <caret line="29" column="70" selection-start-line="29" selection-start-column="67" selection-end-line="29" selection-end-column="70" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/User.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="208">
+                  <caret line="42" column="11" selection-start-line="42" selection-start-column="11" selection-end-line="42" selection-end-column="11" />
+                  <folding>
+                    <element signature="e#559#1297#0" />
+                    <element signature="e#1303#2041#0" />
+                    <element signature="e#1303#1407#0" />
+                    <element signature="e#4368#5384#0" />
+                    <element signature="e#5390#5651#0" />
+                    <element signature="e#4365#5047#0" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Session.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Session.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="325">
+                  <caret line="115" lean-forward="true" selection-start-line="115" selection-end-line="115" />
+                  <folding>
+                    <element signature="e#549#1420#0" />
+                    <element signature="e#1426#2355#0" />
+                    <element signature="e#2362#3233#0" />
+                    <element signature="e#3239#4168#0" />
+                    <element signature="e#2360#2467#0" />
+                    <element signature="e#4790#6046#0" />
+                    <element signature="e#6052#6372#0" />
+                    <element signature="e#4790#5681#0" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Reservation_Session.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="475">
+                  <caret line="90" column="29" selection-start-line="90" selection-start-column="29" selection-end-line="90" selection-end-column="29" />
+                  <folding>
+                    <element signature="method#Reservation_Session#0;class#Reservation_Session#0" />
+                    <element signature="method#Reservation_Session#1;class#Reservation_Session#0" />
+                    <element signature="method#getReservationId#0;class#Reservation_Session#0" />
+                    <element signature="method#equals#0;class#Reservation_Session#0" />
+                    <element signature="method#hashCode#0;class#Reservation_Session#0" />
+                    <element signature="method#toString#0;class#Reservation_Session#0" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Reservation_Event_DAO.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event_DAO.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="153">
+                  <caret line="16" column="100" selection-start-line="16" selection-start-column="100" selection-end-line="16" selection-end-column="100" />
+                  <folding>
+                    <element signature="e#237#254#0" />
+                    <element signature="method#insertIntoReservation_Event#0;class#Reservation_Event_DAO#0" />
+                    <element signature="e#1837#1843#0" />
+                    <element signature="e#4812#4820#0" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Reservation_Event.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="491">
+                  <caret line="91" column="29" selection-start-line="91" selection-start-column="29" selection-end-line="91" selection-end-column="29" />
+                  <folding>
+                    <element signature="method#Reservation_Event#0;class#Reservation_Event#0" />
+                    <element signature="method#Reservation_Event#1;class#Reservation_Event#0" />
+                    <element signature="method#getReservationId#0;class#Reservation_Event#0" />
+                    <element signature="method#equals#0;class#Reservation_Event#0" />
+                    <element signature="method#hashCode#0;class#Reservation_Event#0" />
+                    <element signature="method#toString#0;class#Reservation_Event#0" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Event.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Event.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="356">
+                  <caret line="24" column="123" selection-start-line="24" selection-start-column="123" selection-end-line="24" selection-end-column="123" />
+                  <folding>
+                    <element signature="e#514#1349#0" />
+                    <element signature="e#1355#2216#0" />
+                    <element signature="e#1355#2253#0" />
+                    <element signature="e#3143#4041#0" />
+                    <element signature="e#2447#2552#0" />
+                    <element signature="e#5057#6209#0" />
+                    <element signature="e#6215#6521#0" />
+                    <element signature="e#6527#7367#0" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Sender.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Sender.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="243">
+                  <caret line="130" column="51" selection-start-line="130" selection-start-column="51" selection-end-line="130" selection-end-column="51" />
+                  <folding>
+                    <element signature="method#createUuidRecord#0;class#Sender#0" />
+                    <element signature="e#1134#1189#0" />
+                    <element signature="e#1401#1472#0" />
+                    <element signature="e#1972#1985#0" />
+                    <element signature="method#insertUuidRecord#0;class#Sender#0" />
+                    <element signature="e#4075#4103#0" />
+                    <element signature="method#updateUuidRecordVersionB#0;class#Sender#0" />
+                    <element signature="method#sendMessage#0;class#Sender#0" />
+                    <element signature="method#sendPingMessage#0;class#Sender#0" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="UUID_updateUuidRecordVersionResponse.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/HttpRequest/UUID_updateUuidRecordVersionResponse.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="34">
+                  <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-106">
+                  <caret line="1313" column="57" selection-start-line="1313" selection-start-column="57" selection-end-line="1313" selection-end-column="57" />
+                  <folding>
+                    <element signature="class#EntityType#0;class#Helper#0" />
+                    <element signature="class#SourceType#0;class#Helper#0" />
+                    <element signature="method#getOptions#0;class#Helper#0" />
+                    <element signature="method#receiverMessageWaitPaint#0;class#Helper#0" />
+                    <element signature="method#receiverCliStartPaint#0;class#Helper#0" />
+                    <element signature="method#handleNewMessageReservation#0;class#Helper#0" />
+                    <element signature="method#httpGetAllRecords#0;class#Helper#0" />
+                    <element signature="method#httpPostCreateUuidRecord#0;class#Helper#0" />
+                    <element signature="method#httpPutUpdateUuidRecordVersion#0;class#Helper#0" />
+                    <element signature="method#httpPutUpdateUuidRecordVersionB#0;class#Helper#0" />
+                    <element signature="method#doHttpRequest#0;class#Helper#0" />
+                    <element signature="method#getXmlForNewUser#0;class#Helper#0" />
+                    <element signature="method#getXmlFromUserObject#0;class#Helper#0" />
+                    <element signature="method#getUserObjectFromXmlMessage#0;class#Helper#0" />
+                    <element signature="method#getXmlForNewSession#0;class#Helper#0" />
+                    <element signature="method#getXmlFromSessionObject#0;class#Helper#0" />
+                    <element signature="method#getSessionObjectFromXmlMessage#0;class#Helper#0" />
                     <element signature="method#getXmlForNewEvent#0;class#Helper#0" />
                     <element signature="method#getXmlFromEventObject#0;class#Helper#0" />
                     <element signature="method#getEventObjectFromXmlMessage#0;class#Helper#0" />
@@ -131,28 +298,17 @@
                     <element signature="method#getXmlForPingMessage#0;class#Helper#0" />
                     <element signature="method#getPropertyFromXml#0;class#Helper#0" />
                     <element signature="method#getSafeXmlProperty#0;class#Helper#0" />
-                    <element signature="method#xmlMessageMocker#0;class#Helper#0" />
-                    <element signature="e#117042#117064#0" />
-                    <element signature="e#118956#118978#0" />
-                    <element signature="e#124574#124595#0" />
-                    <element signature="e#126551#126572#0" />
-                    <element signature="e#126943#127005#0" />
-                    <element signature="e#128823#128868#0" />
-                    <element signature="e#131600#131672#0" />
-                    <element signature="e#131956#132027#0" />
-                    <element signature="e#132941#132987#0" />
-                    <element signature="e#137363#137408#0" />
                     <element signature="method#getCurrentDateTimeStamp#0;class#Helper#0" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="GoogleCalenderApi.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
+          <file leaf-file-name="BaseEntityDAO.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="163">
-                  <caret line="40" column="69" selection-start-line="40" selection-start-column="69" selection-end-line="40" selection-end-column="69" />
+                <state relative-caret-position="459">
+                  <caret line="267" column="33" selection-start-line="267" selection-start-column="26" selection-end-line="267" selection-end-column="33" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -160,40 +316,19 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="DatabaseProperties.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseProperties.java">
+          <file leaf-file-name="BaseEntity.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntity.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="187">
-                  <caret line="11" selection-start-line="11" selection-end-line="15" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Reservation_Event.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="238">
-                  <caret line="14" column="88" selection-start-line="14" selection-start-column="88" selection-end-line="14" selection-end-column="88" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Reservation_Session.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="552">
-                  <caret line="68" column="27" selection-start-line="68" selection-start-column="27" selection-end-line="68" selection-end-column="27" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Receiver.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="230">
-                  <caret line="83" column="55" selection-start-line="83" selection-start-column="55" selection-end-line="83" selection-end-column="55" />
+                <state relative-caret-position="17">
+                  <caret line="1" selection-start-line="1" selection-end-line="1" />
                   <folding>
                     <element signature="imports" expanded="true" />
+                    <element signature="method#BaseEntity#0;class#BaseEntity#0" />
+                    <element signature="method#BaseEntity#1;class#BaseEntity#0" />
+                    <element signature="method#BaseEntity#2;class#BaseEntity#0" />
+                    <element signature="method#equals#0;class#BaseEntity#0" />
+                    <element signature="method#hashCode#0;class#BaseEntity#0" />
+                    <element signature="method#toString#0;class#BaseEntity#0" />
                   </folding>
                 </state>
               </provider>
@@ -202,39 +337,8 @@
           <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Main.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="286">
+                <state relative-caret-position="357">
                   <caret line="30" column="48" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Sender.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Sender.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="157">
-                  <caret line="72" column="25" selection-start-line="72" selection-start-column="25" selection-end-line="72" selection-end-column="25" />
-                  <folding>
-                    <element signature="method#createUuidRecord#0;class#Sender#0" />
-                    <element signature="method#updateUuidRecordVersionB#0;class#Sender#0" />
-                    <element signature="method#sendPingMessage#0;class#Sender#0" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="7">
-                  <caret line="1973" column="181" selection-start-line="1973" selection-start-column="181" selection-end-line="1973" selection-end-column="181" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="method#getXmlFromReservation_EventObject#0;class#Helper#0" />
-                  </folding>
                 </state>
               </provider>
             </entry>
@@ -245,15 +349,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>case &quot;4</find>
-      <find>type</find>
-      <find>handlenew</find>
-      <find>USER</find>
-      <find>EVENT</find>
-      <find>case &quot;12</find>
-      <find>jena</find>
       <find>xmlmes</find>
       <find>New event r</find>
+      <find>In String httpp</find>
+      <find>case &quot;7</find>
+      <find>case &quot;us</find>
+      <find>user.to</find>
+      <find>Reservation_</find>
+      <find>join</find>
+      <find>userUUID</find>
+      <find>eventUUID</find>
+      <find>sessionUUID</find>
+      <find>&quot;sessionUUID&quot;</find>
+      <find>// 4. update local db with UUID</find>
+      <find>&quot;sessionuuid&quot;</find>
+      <find>&quot;reservationuuid&quot;</find>
+      <find>&quot;uuid&quot;</find>
+      <find>uuid</find>
+      <find>entityId</find>
+      <find>case &quot;u</find>
+      <find>handlen</find>
+      <find>new User</find>
+      <find>case &quot;12</find>
+      <find>mocker</find>
+      <find>// 2.3.1.A. set active = 0 on old entity record in db</find>
+      <find>e319f8aa-1910-442c-8b17-5e809d713ee4</find>
+      <find>new Event(</find>
+      <find>UUID</find>
+      <find>case &quot;35</find>
+      <find>new Event</find>
+      <find>execute</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -263,37 +388,38 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event_DAO.java" />
         <option value="$PROJECT_DIR$/db-models/mysqltest-2.txt" />
         <option value="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/Quickstart.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/XmlMessage/MessageStructure.java" />
         <option value="$PROJECT_DIR$/src/main/java/XmlMessage/Userstructure.java" />
         <option value="$PROJECT_DIR$/src/main/java/XmlMessage/EventStructure.java" />
         <option value="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationStructure.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntity.java" />
         <option value="$PROJECT_DIR$/src/main/java/XmlMessage/SessionStructure.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/HttpRequest/UUID_insertUuidRecord.java" />
         <option value="$PROJECT_DIR$/src/main/java/HttpRequest/UUID_updateUuidRecordVersion.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Event.java" />
         <option value="$PROJECT_DIR$/src/main/java/AppLogic/PingSender.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Session.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Sender.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/User_DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/AppLogic/Main.java" />
         <option value="$PROJECT_DIR$/src/main/resources/MANIFEST.mf" />
         <option value="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.mf" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseProperties.java" />
         <option value="$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/User_DAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event_DAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Sender.java" />
+        <option value="$PROJECT_DIR$/src/main/java/HttpRequest/UUID_updateUuidRecordVersionB.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/User.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Event.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Session.java" />
         <option value="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" />
       </list>
     </option>
@@ -316,7 +442,7 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-3061" />
+    <option name="x" value="-3308" />
     <option name="y" value="-8" />
     <option name="width" value="1272" />
     <option name="height" value="733" />
@@ -391,6 +517,14 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="GoogleCalendarApi" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PLANNING" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="HttpRequest" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -426,7 +560,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Receiver">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="AppLogic.Main" />
       <module name="cli-java-controller" />
@@ -496,8 +630,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Receiver" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Receiver" />
       </list>
     </recent_temporary>
   </component>
@@ -526,12 +660,12 @@
       <workItem from="1526350094216" duration="4559000" />
       <workItem from="1526361612695" duration="667000" />
       <workItem from="1526366561491" duration="698000" />
-      <workItem from="1526383686664" duration="17576000" />
+      <workItem from="1526383686664" duration="32789000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16067000" />
+    <option name="totallyTimeSpent" value="31280000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3528" y="-8" width="1936" height="1056" extended-state="6" />
@@ -540,16 +674,16 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
       <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49307036" weight="0.3845316" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.32302773" side_tool="true" visible="true" weight="0.4335512" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.45735607" side_tool="true" visible="true" weight="0.2647059" />
       <window_info anchor="right" id="Maven Projects" order="5" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.67697227" visible="true" weight="0.4335512" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5426439" visible="true" weight="0.2647059" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.4989339" weight="0.41503268" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.5153846" visible="true" weight="0.18603411" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.53037035" visible="true" weight="0.15778251" />
       <window_info anchor="right" id="Database" order="4" />
-      <window_info id="Structure" order="1" sideWeight="0.4846154" side_tool="true" visible="true" weight="0.18603411" />
+      <window_info id="Structure" order="1" sideWeight="0.46962962" side_tool="true" visible="true" weight="0.15778251" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -567,24 +701,10 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="7" />
+      <option name="time" value="8" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Sender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1802">
-          <caret line="117" lean-forward="true" selection-start-line="117" selection-end-line="117" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3281">
-          <caret line="199" column="47" selection-start-line="199" selection-start-column="47" selection-end-line="199" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -596,9 +716,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8245">
           <caret line="485" column="39" lean-forward="true" selection-start-line="485" selection-start-column="39" selection-end-line="485" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -620,56 +737,21 @@
             <element signature="method#receiverMessageWaitPaint#0;class#Helper#0" />
             <element signature="method#receiverCliStartPaint#0;class#Helper#0" />
             <element signature="method#startCliInterface#0;class#Helper#0" />
-            <element signature="e#6915#6949#0" />
-            <element signature="e#9566#9657#0" />
-            <element signature="e#10749#10772#0" />
-            <element signature="e#13326#13347#0" />
-            <element signature="e#16785#16838#0" />
-            <element signature="e#17791#17815#0" />
-            <element signature="e#19911#19935#0" />
-            <element signature="e#23173#23249#0" />
-            <element signature="e#23945#23987#0" />
-            <element signature="e#25765#25793#0" />
-            <element signature="e#29223#29292#0" />
-            <element signature="e#30560#30576#0" />
-            <element signature="e#31396#31444#0" />
-            <element signature="e#31947#32026#0" />
-            <element signature="method#handleNewMessage#0;class#Helper#0" />
-            <element signature="e#39447#39516#0" />
-            <element signature="e#40155#40181#0" />
-            <element signature="e#43254#43272#0" />
-            <element signature="method#handleNewMessageEvent#0;class#Helper#0" />
-            <element signature="e#45480#45508#0" />
-            <element signature="e#46086#46145#0" />
-            <element signature="e#48337#48356#0" />
             <element signature="method#handleNewMessageSession#0;class#Helper#0" />
-            <element signature="e#51309#51337#0" />
-            <element signature="e#51779#51838#0" />
             <element signature="method#handleNewMessageReservation#0;class#Helper#0" />
-            <element signature="e#58488#58539#0" />
-            <element signature="e#60103#60162#0" />
-            <element signature="e#63208#63267#0" />
-            <element signature="e#65993#66025#0" />
             <element signature="method#httpGetAllRecords#0;class#Helper#0" />
-            <element signature="e#67518#67648#0" />
-            <element signature="e#68100#68118#0" />
             <element signature="method#httpPostCreateUuidRecord#0;class#Helper#0" />
-            <element signature="e#69038#69056#0" />
-            <element signature="e#69723#69737#0" />
             <element signature="method#httpPutUpdateUuidRecordVersion#0;class#Helper#0" />
             <element signature="method#httpPutUpdateUuidRecordVersionB#0;class#Helper#0" />
             <element signature="method#doHttpRequest#0;class#Helper#0" />
             <element signature="method#getXmlForNewUser#0;class#Helper#0" />
             <element signature="method#getXmlFromUserObject#0;class#Helper#0" />
             <element signature="method#getUserObjectFromXmlMessage#0;class#Helper#0" />
-            <element signature="e#81221#81243#0" />
             <element signature="method#getXmlForNewSession#0;class#Helper#0" />
             <element signature="method#getXmlFromSessionObject#0;class#Helper#0" />
             <element signature="method#getSessionObjectFromXmlMessage#0;class#Helper#0" />
-            <element signature="e#90085#90107#0" />
             <element signature="method#getXmlForNewEvent#0;class#Helper#0" />
             <element signature="method#getXmlFromEventObject#0;class#Helper#0" />
-            <element signature="method#getEventObjectFromXmlMessage#0;class#Helper#0" />
             <element signature="method#getXmlForNewReservation_Session#0;class#Helper#0" />
             <element signature="method#getXmlFromReservation_SessionObject#0;class#Helper#0" />
             <element signature="method#getReservation_SessionObjectFromXmlMessage#0;class#Helper#0" />
@@ -680,33 +762,8 @@
             <element signature="method#getXmlForPingMessage#0;class#Helper#0" />
             <element signature="method#getPropertyFromXml#0;class#Helper#0" />
             <element signature="method#getSafeXmlProperty#0;class#Helper#0" />
-            <element signature="method#xmlMessageMocker#0;class#Helper#0" />
-            <element signature="e#117042#117064#0" />
-            <element signature="e#118956#118978#0" />
-            <element signature="e#124574#124595#0" />
-            <element signature="e#126551#126572#0" />
-            <element signature="e#126943#127005#0" />
-            <element signature="e#128823#128868#0" />
-            <element signature="e#131600#131672#0" />
-            <element signature="e#131956#132027#0" />
-            <element signature="e#132941#132987#0" />
-            <element signature="e#137363#137408#0" />
             <element signature="method#getCurrentDateTimeStamp#0;class#Helper#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="45" column="10" selection-start-line="45" selection-start-column="10" selection-end-line="45" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="36" selection-start-line="36" selection-end-line="36" />
         </state>
       </provider>
     </entry>
@@ -803,27 +860,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/HttpRequest/UUID_updateUuidRecordVersion.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/HttpRequest/UUID_createUuidRecord.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/HttpRequest/UUID_insertUuidRecord.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1088">
-          <caret line="84" column="19" selection-start-line="84" selection-start-column="19" selection-end-line="84" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseSingleton.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -831,31 +867,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Session.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="155" column="16" selection-start-line="155" selection-start-column="16" selection-end-line="155" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_161/src.zip!/java/text/SimpleDateFormat.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="148">
           <caret line="825" selection-start-line="825" selection-end-line="825" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Event.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="472">
-          <caret line="171" selection-start-line="171" selection-end-line="185" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -883,54 +898,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/User_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2182">
-          <caret line="152" selection-start-line="152" selection-end-line="152" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="90" lean-forward="true" selection-start-line="90" selection-end-line="90" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="68" column="27" selection-start-line="68" selection-start-column="27" selection-end-line="68" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="88" selection-start-line="14" selection-start-column="88" selection-end-line="14" selection-end-column="88" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="83" column="55" selection-start-line="83" selection-start-column="55" selection-end-line="83" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="47" selection-start-line="13" selection-start-column="47" selection-end-line="13" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -948,41 +919,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2959">
-          <caret line="242" column="19" selection-start-line="242" selection-start-column="19" selection-end-line="242" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/PingSender.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1665">
           <caret line="125" selection-start-line="125" selection-end-line="125" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="28" column="11" selection-start-line="28" selection-start-column="11" selection-end-line="28" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="30" column="48" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
         </state>
       </provider>
     </entry>
@@ -1003,22 +943,229 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-846">
+          <caret line="31" column="233" selection-start-line="31" selection-start-column="233" selection-end-line="31" selection-end-column="233" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="83" column="56" selection-start-line="83" selection-start-column="56" selection-end-line="83" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/User_DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="33" column="64" selection-start-line="33" selection-start-column="64" selection-end-line="33" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="833">
+          <caret line="49" column="70" selection-start-line="49" selection-start-column="70" selection-end-line="49" selection-end-column="70" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/HttpRequest/UUID_updateUuidRecordVersionB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/HttpRequest/UUID_updateUuidRecordVersion.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/HttpRequest/UUID_insertUuidRecord.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1088">
+          <caret line="84" column="19" selection-start-line="84" selection-start-column="19" selection-end-line="84" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/HttpRequest/UUID_createUuidRecord.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="45" column="46" selection-start-line="45" selection-start-column="46" selection-end-line="45" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/HttpRequest/UUID_updateUuidRecordVersionResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="30" column="48" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Sender.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="72" column="25" selection-start-line="72" selection-start-column="25" selection-end-line="72" selection-end-column="25" />
+        <state relative-caret-position="243">
+          <caret line="130" column="51" selection-start-line="130" selection-start-column="51" selection-end-line="130" selection-end-column="51" />
           <folding>
             <element signature="method#createUuidRecord#0;class#Sender#0" />
+            <element signature="e#1134#1189#0" />
+            <element signature="e#1401#1472#0" />
+            <element signature="e#1972#1985#0" />
+            <element signature="method#insertUuidRecord#0;class#Sender#0" />
+            <element signature="e#4075#4103#0" />
             <element signature="method#updateUuidRecordVersionB#0;class#Sender#0" />
+            <element signature="method#sendMessage#0;class#Sender#0" />
             <element signature="method#sendPingMessage#0;class#Sender#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event_DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="16" column="100" selection-start-line="16" selection-start-column="100" selection-end-line="16" selection-end-column="100" />
+          <folding>
+            <element signature="e#237#254#0" />
+            <element signature="method#insertIntoReservation_Event#0;class#Reservation_Event_DAO#0" />
+            <element signature="e#1837#1843#0" />
+            <element signature="e#4812#4820#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="91" column="29" selection-start-line="91" selection-start-column="29" selection-end-line="91" selection-end-column="29" />
+          <folding>
+            <element signature="method#Reservation_Event#0;class#Reservation_Event#0" />
+            <element signature="method#Reservation_Event#1;class#Reservation_Event#0" />
+            <element signature="method#getReservationId#0;class#Reservation_Event#0" />
+            <element signature="method#equals#0;class#Reservation_Event#0" />
+            <element signature="method#hashCode#0;class#Reservation_Event#0" />
+            <element signature="method#toString#0;class#Reservation_Event#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="90" column="29" selection-start-line="90" selection-start-column="29" selection-end-line="90" selection-end-column="29" />
+          <folding>
+            <element signature="method#Reservation_Session#0;class#Reservation_Session#0" />
+            <element signature="method#Reservation_Session#1;class#Reservation_Session#0" />
+            <element signature="method#getReservationId#0;class#Reservation_Session#0" />
+            <element signature="method#equals#0;class#Reservation_Session#0" />
+            <element signature="method#hashCode#0;class#Reservation_Session#0" />
+            <element signature="method#toString#0;class#Reservation_Session#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#BaseEntity#0;class#BaseEntity#0" />
+            <element signature="method#BaseEntity#1;class#BaseEntity#0" />
+            <element signature="method#BaseEntity#2;class#BaseEntity#0" />
+            <element signature="method#equals#0;class#BaseEntity#0" />
+            <element signature="method#hashCode#0;class#BaseEntity#0" />
+            <element signature="method#toString#0;class#BaseEntity#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="42" column="11" selection-start-line="42" selection-start-column="11" selection-end-line="42" selection-end-column="11" />
+          <folding>
+            <element signature="e#559#1297#0" />
+            <element signature="e#1303#2041#0" />
+            <element signature="e#1303#1407#0" />
+            <element signature="e#4368#5384#0" />
+            <element signature="e#5390#5651#0" />
+            <element signature="e#4365#5047#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Event.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="24" column="123" selection-start-line="24" selection-start-column="123" selection-end-line="24" selection-end-column="123" />
+          <folding>
+            <element signature="e#514#1349#0" />
+            <element signature="e#1355#2216#0" />
+            <element signature="e#1355#2253#0" />
+            <element signature="e#3143#4041#0" />
+            <element signature="e#2447#2552#0" />
+            <element signature="e#5057#6209#0" />
+            <element signature="e#6215#6521#0" />
+            <element signature="e#6527#7367#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Session.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="115" lean-forward="true" selection-start-line="115" selection-end-line="115" />
+          <folding>
+            <element signature="e#549#1420#0" />
+            <element signature="e#1426#2355#0" />
+            <element signature="e#2362#3233#0" />
+            <element signature="e#3239#4168#0" />
+            <element signature="e#2360#2467#0" />
+            <element signature="e#4790#6046#0" />
+            <element signature="e#6052#6372#0" />
+            <element signature="e#4790#5681#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="29" column="70" selection-start-line="29" selection-start-column="67" selection-end-line="29" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="267" column="33" selection-start-line="267" selection-start-column="26" selection-end-line="267" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="1011" lean-forward="true" selection-start-line="1011" selection-end-line="1011" />
+        <state relative-caret-position="87">
+          <caret line="996" lean-forward="true" selection-start-line="996" selection-end-line="996" />
           <folding>
             <element signature="class#EntityType#0;class#Helper#0" />
             <element signature="class#SourceType#0;class#Helper#0" />
@@ -1026,56 +1173,21 @@
             <element signature="method#receiverMessageWaitPaint#0;class#Helper#0" />
             <element signature="method#receiverCliStartPaint#0;class#Helper#0" />
             <element signature="method#startCliInterface#0;class#Helper#0" />
-            <element signature="e#6915#6949#0" />
-            <element signature="e#9566#9657#0" />
-            <element signature="e#10749#10772#0" />
-            <element signature="e#13326#13347#0" />
-            <element signature="e#16785#16838#0" />
-            <element signature="e#17791#17815#0" />
-            <element signature="e#19911#19935#0" />
-            <element signature="e#23173#23249#0" />
-            <element signature="e#23945#23987#0" />
-            <element signature="e#25765#25793#0" />
-            <element signature="e#29223#29292#0" />
-            <element signature="e#30560#30576#0" />
-            <element signature="e#31396#31444#0" />
-            <element signature="e#31947#32026#0" />
-            <element signature="method#handleNewMessage#0;class#Helper#0" />
-            <element signature="e#39447#39516#0" />
-            <element signature="e#40155#40181#0" />
-            <element signature="e#43254#43272#0" />
-            <element signature="method#handleNewMessageEvent#0;class#Helper#0" />
-            <element signature="e#45480#45508#0" />
-            <element signature="e#46086#46145#0" />
-            <element signature="e#48337#48356#0" />
             <element signature="method#handleNewMessageSession#0;class#Helper#0" />
-            <element signature="e#51309#51337#0" />
-            <element signature="e#51779#51838#0" />
             <element signature="method#handleNewMessageReservation#0;class#Helper#0" />
-            <element signature="e#58488#58539#0" />
-            <element signature="e#60103#60162#0" />
-            <element signature="e#63208#63267#0" />
-            <element signature="e#65993#66025#0" />
             <element signature="method#httpGetAllRecords#0;class#Helper#0" />
-            <element signature="e#67518#67648#0" />
-            <element signature="e#68100#68118#0" />
             <element signature="method#httpPostCreateUuidRecord#0;class#Helper#0" />
-            <element signature="e#69038#69056#0" />
-            <element signature="e#69723#69737#0" />
             <element signature="method#httpPutUpdateUuidRecordVersion#0;class#Helper#0" />
             <element signature="method#httpPutUpdateUuidRecordVersionB#0;class#Helper#0" />
             <element signature="method#doHttpRequest#0;class#Helper#0" />
             <element signature="method#getXmlForNewUser#0;class#Helper#0" />
             <element signature="method#getXmlFromUserObject#0;class#Helper#0" />
             <element signature="method#getUserObjectFromXmlMessage#0;class#Helper#0" />
-            <element signature="e#81221#81243#0" />
             <element signature="method#getXmlForNewSession#0;class#Helper#0" />
             <element signature="method#getXmlFromSessionObject#0;class#Helper#0" />
             <element signature="method#getSessionObjectFromXmlMessage#0;class#Helper#0" />
-            <element signature="e#90085#90107#0" />
             <element signature="method#getXmlForNewEvent#0;class#Helper#0" />
             <element signature="method#getXmlFromEventObject#0;class#Helper#0" />
-            <element signature="method#getEventObjectFromXmlMessage#0;class#Helper#0" />
             <element signature="method#getXmlForNewReservation_Session#0;class#Helper#0" />
             <element signature="method#getXmlFromReservation_SessionObject#0;class#Helper#0" />
             <element signature="method#getReservation_SessionObjectFromXmlMessage#0;class#Helper#0" />
@@ -1086,17 +1198,6 @@
             <element signature="method#getXmlForPingMessage#0;class#Helper#0" />
             <element signature="method#getPropertyFromXml#0;class#Helper#0" />
             <element signature="method#getSafeXmlProperty#0;class#Helper#0" />
-            <element signature="method#xmlMessageMocker#0;class#Helper#0" />
-            <element signature="e#117042#117064#0" />
-            <element signature="e#118956#118978#0" />
-            <element signature="e#124574#124595#0" />
-            <element signature="e#126551#126572#0" />
-            <element signature="e#126943#127005#0" />
-            <element signature="e#128823#128868#0" />
-            <element signature="e#131600#131672#0" />
-            <element signature="e#131956#132027#0" />
-            <element signature="e#132941#132987#0" />
-            <element signature="e#137363#137408#0" />
             <element signature="method#getCurrentDateTimeStamp#0;class#Helper#0" />
           </folding>
         </state>

@@ -1,16 +1,22 @@
 package DatabaseLogic;
 
-import AppLogic.Helper;
-
 import java.sql.SQLException;
 import java.util.Objects;
 
 public class BaseEntity {
 
-    private int entityId;
+    private int idBaseEntity;
     private int entityVersion;
     private int active;
     private String timestamp;
+
+    public BaseEntity(int entityId, int entityVersion, int active, String timestamp, boolean insertBaseEntity) {
+
+        this.entityVersion = entityVersion;
+        this.active = active;
+        this.timestamp = timestamp;
+        this.idBaseEntity = entityId;
+    }
 
     public BaseEntity(int entityId, int entityVersion, int active, String timestamp) {
 
@@ -32,17 +38,16 @@ public class BaseEntity {
                 //e.printStackTrace();
             }
         }
-        this.entityId = entityId;
+        this.idBaseEntity = entityId;
     }
-
     public BaseEntity() {
     }
 
     public int getEntityId() {
-        return entityId;
+        return idBaseEntity;
     }
     public void setEntityId(int entityId) {
-        this.entityId = entityId;
+        this.idBaseEntity = entityId;
     }
 
     public int getEntityVersion() {
@@ -71,7 +76,7 @@ public class BaseEntity {
         if (this == o) return true;
         if (!(o instanceof BaseEntity)) return false;
         BaseEntity that = (BaseEntity) o;
-        return getEntityId() == that.getEntityId() &&
+        return idBaseEntity == that.idBaseEntity &&
                 getEntityVersion() == that.getEntityVersion() &&
                 getActive() == that.getActive() &&
                 Objects.equals(getTimestamp(), that.getTimestamp());
@@ -80,13 +85,13 @@ public class BaseEntity {
     @Override
     public int hashCode() {
 
-        return Objects.hash(getEntityId(), getEntityVersion(), getActive(), getTimestamp());
+        return Objects.hash(idBaseEntity, getEntityVersion(), getActive(), getTimestamp());
     }
 
     @Override
     public String toString() {
         return "BaseEntity{" +
-                "entityId=" + entityId +
+                "idBaseEntity=" + idBaseEntity +
                 ", entityVersion=" + entityVersion +
                 ", active=" + active +
                 ", timestamp='" + timestamp + '\'' +

@@ -1,7 +1,5 @@
 package DatabaseLogic;
 
-import AppLogic.Helper;
-
 import java.util.Objects;
 
 public class User extends BaseEntity{
@@ -23,10 +21,10 @@ public class User extends BaseEntity{
     //public enum UserType {VISITOR,EMPLOYEE,ADMIN,SPONSOR,SPEAKER}
 
 
-    public User(int idUser, int Entity_version, int active, String Timestamp,
+    public User(int idUser, int Entity_version, int active, String timestamp,
                 String userUUID, String lastname, String firstname, String phoneNumber, String email, String street, String houseNr, String city, String postalCode, String country, String company, String type) {
 
-        super(idUser, Entity_version, active,Timestamp);
+        super(idUser, Entity_version, active, timestamp);
 
         this.uuid = userUUID;
         this.lastName = lastname;
@@ -42,6 +40,26 @@ public class User extends BaseEntity{
         this.userType = type;
     }
 
+    public User(int idUser, int Entity_version, int active, String Timestamp,
+                String userUUID, String lastname, String firstname, String phoneNumber, String email, String street, String houseNr, String city, String postalCode, String country, String company, String type, boolean insertBaseEntity) {
+
+        super(idUser, Entity_version, active, Timestamp, insertBaseEntity);
+
+        this.uuid = userUUID;
+        this.lastName = lastname;
+        this.firstName = firstname;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.street = street;
+        this.houseNr = houseNr;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.country = country;
+        this.company = company;
+        this.userType = type;
+    }
+
+
     public int getIdUser() {
         // get id from inherited class
         return this.getEntityId();
@@ -56,17 +74,6 @@ public class User extends BaseEntity{
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
-
-
-
-    /*
-    public String getUserUUID() {
-        return userUUID;
-    }
-    public void setUserUUID(String userUUID) {
-        this.userUUID = userUUID;
-    }
-    */
 
     public String getLastname() {
         return lastName;
@@ -200,6 +207,7 @@ public class User extends BaseEntity{
                 ", country='" + country + '\'' +
                 ", company='" + company + '\'' +
                 ", userType='" + userType + '\'' +
+                ", {'" + super.toString() + "'}" +
                 '}';
     }
 }

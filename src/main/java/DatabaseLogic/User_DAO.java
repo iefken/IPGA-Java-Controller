@@ -31,7 +31,7 @@ public class User_DAO extends BaseEntityDAO {
         PreparedStatement preparedStatement = null;
         String sqlQuery = "";
 
-        sqlQuery = "INSERT INTO PlanningDB.User (`idUser`, `userUUID`, `lastName`, `firstName`, `phonenumber`, `email`, `street`,`houseNr`,`city`,`postalCode`, `country`, `company`, `type`) VALUES (" + callbackInsertedInt + ",\"" + user.getUuid() + "\",\"" + user.getLastname() + "\",\"" + user.getFirstname() + "\",\"" + user.getPhoneNumber() + "\",\"" + user.getEmail() + "\",\"" + user.getStreet() + "\",\"" + user.getHouseNr() + "\",\"" + user.getCity() + "\",\"" + user.getPostalCode() + "\",\"" + user.getCountry() + "\",\""+user.getCompany() + "\",\""+user.getUserType() + "\");";
+        sqlQuery = "INSERT INTO PlanningDB.User (`idUser`, `uuid`, `lastName`, `firstName`, `phonenumber`, `email`, `street`,`houseNr`,`city`,`postalCode`, `country`, `company`, `type`) VALUES (" + callbackInsertedInt + ",\"" + user.getUuid() + "\",\"" + user.getLastname() + "\",\"" + user.getFirstname() + "\",\"" + user.getPhoneNumber() + "\",\"" + user.getEmail() + "\",\"" + user.getStreet() + "\",\"" + user.getHouseNr() + "\",\"" + user.getCity() + "\",\"" + user.getPostalCode() + "\",\"" + user.getCountry() + "\",\""+user.getCompany() + "\",\""+user.getUserType() + "\");";
         //sqlQuery = "INSERT INTO planningDB.user (`idUser`, `userUUID`, `lastName`, `firstName`, `phonenumber`, `email`, `street`,`houseNr`,`city`,`postalCode`, `country`, `company`, `type`) VALUES (" + callbackInsertedInt + ",\"" + user.getUserUUID() + "\",\"" + user.getLastname() + "\",\"" + user.getFirstname() + "\",\"" + user.getPhonenumber() + "\",\"" + user.getEmail() + "\",\"" + user.getStreet() + "\",\"" + user.getHouseNr() + "\",\"" + user.getCity() + "\",\"" + user.getPostalCode() + "\",\"" + user.getCountry() + "\",\""+user.getCompany() + "\",\""+user.getType() + "\");";
 
         //INSERT INTO `PlanningDB`.`Session` (`idSession`, `sessionUUID`, `eventUUID`, `sessionName`, `maxAttendees`, `dateTimeStart`, `dateTimeEND`, `speaker`, `local`, `type`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -50,7 +50,7 @@ public class User_DAO extends BaseEntityDAO {
         ResultSet rs = null;
         User thisUser = null;
 
-        String sql = "SELECT * FROM User t1 JOIN BaseEntity t2 ON t1.idUser = t2.entityId WHERE idUser = \""+thisUserId+"\";";
+        String sql = "SELECT * FROM PlanningDB.User t1 JOIN PlanningDB.BaseEntity t2 ON t1.idUser = t2.idBaseEntity WHERE idUser = \""+thisUserId+"\";";
 
         try(Statement s = getConnection().createStatement()){
 

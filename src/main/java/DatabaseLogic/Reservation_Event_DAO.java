@@ -31,13 +31,9 @@ public class Reservation_Event_DAO extends BaseEntityDAO{
 
         if(reservation_event.getEntityId()==0)
         {
-            sqlQuery = "INSERT INTO PlanningDB.Reservation_Event (`reservationUUID`, `eventUUID`, `userUUID`) VALUES(\""+reservation_event.getReservationUUID()+"\",\""+reservation_event.getEventUUID()+"\",\""+reservation_event.getUserUUID()+"\");";
-
-
+            sqlQuery = "INSERT INTO PlanningDB.Reservation_Event (`uuid`, `eventUuid`, `userUuid`) VALUES(\""+reservation_event.getReservationUUID()+"\",\""+reservation_event.getEventUUID()+"\",\""+reservation_event.getUserUUID()+"\");";
         }else{
-
-            sqlQuery = "INSERT INTO PlanningDB.Reservation_Event (`idReservationEvent`, `reservationUUID`, `eventUUID`, `userUUID`) VALUES(\""+callbackInsertedInt+"\",\""+reservation_event.getReservationUUID()+"\",\""+reservation_event.getEventUUID()+"\",\""+reservation_event.getUserUUID()+"\");";
-
+            sqlQuery = "INSERT INTO PlanningDB.Reservation_Event (`idReservationEvent`, `uuid`, `eventUuid`, `userUuid`) VALUES(\""+callbackInsertedInt+"\",\""+reservation_event.getReservationUUID()+"\",\""+reservation_event.getEventUUID()+"\",\""+reservation_event.getUserUUID()+"\");";
         }
 
         //System.out.println("sqlQuery= "+sqlQuery);

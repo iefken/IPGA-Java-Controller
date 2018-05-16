@@ -20,10 +20,10 @@ public class Session extends BaseEntity{
     private String GCAEventLink;
     private float price;
 
-    public Session(int SessionId, int Entity_version, int active, String Timestamp,
+    public Session(int SessionId, int Entity_version, int active, String timestamp,
                    String SessionUUID, String eventUUID, String SessionName, int maxAttendees, String description, String summary, String DateTimeStart, String DateTimeEnd, String Speaker, String location, String Type, float price) {
 
-        super(SessionId,Entity_version,active,Timestamp);
+        super(SessionId,Entity_version,active,timestamp);
 
         this.sessionUUID = SessionUUID;
         this.eventUUID=eventUUID;
@@ -43,10 +43,10 @@ public class Session extends BaseEntity{
 
     }
 
-    public Session(int SessionId, int Entity_version, int active, String Timestamp,
+    public Session(int SessionId, int Entity_version, int active, String timestamp,
                    String SessionUUID, String eventUUID, String SessionName, int maxAttendees, String description, String summary, String location, String Speaker, String DateTimeStart, String DateTimeEnd, String Type, String GCAEventId, String GCAEventLink, float price) {
 
-        super(SessionId,Entity_version,active,Timestamp);
+        super(SessionId,Entity_version,active,timestamp);
 
         this.sessionUUID = SessionUUID;
         this.eventUUID=eventUUID;
@@ -65,6 +65,55 @@ public class Session extends BaseEntity{
         this.GCAEventLink=GCAEventLink;
 
     }
+
+
+    public Session(int SessionId, int Entity_version, int active, String timestamp,
+                   String SessionUUID, String eventUUID, String SessionName, int maxAttendees, String description, String summary, String DateTimeStart, String DateTimeEnd, String Speaker, String location, String Type, float price, boolean insertBaseEntity) {
+
+        super(SessionId,Entity_version,active,timestamp, insertBaseEntity);
+
+        this.sessionUUID = SessionUUID;
+        this.eventUUID=eventUUID;
+        this.sessionName = SessionName;
+        this.maxAttendees = maxAttendees;
+        this.description = description;
+        this.summary = summary;
+        this.dateTimeStart = DateTimeStart;
+        this.dateTimeEnd = DateTimeEnd;
+        this.speaker = Speaker;
+        this.location = location;
+        this.type = Type;
+        this.price = price;
+
+        this.GCAEventId="";
+        this.GCAEventLink="";
+
+    }
+
+    public Session(int SessionId, int Entity_version, int active, String timestamp,
+                   String SessionUUID, String eventUUID, String SessionName, int maxAttendees, String description, String summary, String location, String Speaker, String DateTimeStart, String DateTimeEnd, String Type, String GCAEventId, String GCAEventLink, float price, boolean insertBaseEntity) {
+
+        super(SessionId,Entity_version,active,timestamp, insertBaseEntity);
+
+        this.sessionUUID = SessionUUID;
+        this.eventUUID=eventUUID;
+        this.sessionName = SessionName;
+        this.maxAttendees = maxAttendees;
+        this.description = description;
+        this.summary = summary;
+        this.dateTimeStart = DateTimeStart;
+        this.dateTimeEnd = DateTimeEnd;
+        this.speaker = Speaker;
+        this.location = location;
+        this.type = Type;
+        this.price = price;
+
+        this.GCAEventId=GCAEventId;
+        this.GCAEventLink=GCAEventLink;
+
+    }
+
+
     public int getSessionId() {
         // get id from inherited class
         return this.getEntityId();
@@ -216,6 +265,7 @@ public class Session extends BaseEntity{
                 ", GCAEventId='" + GCAEventId + '\'' +
                 ", GCAEventLink='" + GCAEventLink + '\'' +
                 ", price=" + price +
+                ", {'" + super.toString() + "'}" +
                 '}';
     }
 }

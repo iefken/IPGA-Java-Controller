@@ -20,11 +20,11 @@ public class Event extends BaseEntity{
     private String GCAEventLink;
     private float price;
 
-    public Event(int eventId, int entityVersion, int active, String Timestamp,
+    public Event(int eventId, int entityVersion, int active, String timestamp,
                  String eventUUID, String eventName, int maxAttendees, String description, String summary,
                  String location, String contactPerson,String dateTimeStart, String dateTimeEnd, String type, float price) {
 
-        super(eventId, entityVersion, active, Timestamp);
+        super(eventId, entityVersion, active, timestamp);
 
         this.eventUUID = eventUUID;
         this.eventName = eventName;
@@ -44,6 +44,29 @@ public class Event extends BaseEntity{
 
     }
 
+    public Event(int eventId, int entityVersion, int active, String timestamp,
+                 String eventUUID, String eventName, int maxAttendees, String description, String summary,
+                 String location, String contactPerson,String dateTimeStart, String dateTimeEnd, String type, float price, boolean insertBaseEntity) {
+
+        super(eventId, entityVersion, active, timestamp, insertBaseEntity);
+
+        this.eventUUID = eventUUID;
+        this.eventName = eventName;
+        this.maxAttendees = maxAttendees;
+        this.description = description;
+        this.summary = summary;
+        this.location = location;
+        this.contactPerson = contactPerson;
+        this.dateTimeStart = dateTimeStart;
+        this.dateTimeEnd = dateTimeEnd;
+
+        this.type = type;
+        this.price = price;
+
+        this.GCAEventId="";
+        this.GCAEventLink="";
+
+    }
     public Event(int eventId, int entityVersion, int active, String Timestamp,
                  String eventUUID, String eventName, int maxAttendees, String description, String summary,
                  String location, String contactPerson,String dateTimeStart, String dateTimeEnd, String type, float price, String GCAEventId, String GCAEventLink) {
@@ -68,8 +91,34 @@ public class Event extends BaseEntity{
 
 
     }
-    //INSERT INTO `PlanningDB`.`BaseEntity` (`entityId`, `entity_version`, `active`, `timestamp`, `timestampLastUpdated`, `timestampCreated`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL);
 
+    public Event(int eventId, int entityVersion, int active, String timestamp,
+                 String eventUUID, String eventName, int maxAttendees, String description, String summary,
+                 String location, String contactPerson,String dateTimeStart, String dateTimeEnd, String type, float price, String GCAEventId, String GCAEventLink, boolean insertBaseEntity) {
+
+        super(eventId, entityVersion, active, timestamp, insertBaseEntity);
+
+        this.eventUUID = eventUUID;
+        this.eventName = eventName;
+        this.maxAttendees = maxAttendees;
+        this.description = description;
+        this.summary = summary;
+        this.location = location;
+        this.contactPerson = contactPerson;
+        this.dateTimeStart = dateTimeStart;
+        this.dateTimeEnd = dateTimeEnd;
+
+        this.type = type;
+        this.price = price;
+
+        this.GCAEventId = GCAEventId;
+        this.GCAEventLink = GCAEventLink;
+
+
+    }
+
+
+    //INSERT INTO `PlanningDB`.`BaseEntity` (`entityId`, `entity_version`, `active`, `timestamp`, `timestampLastUpdated`, `timestampCreated`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL);
 
     public int getEventId() {
         // get id from inherited class
@@ -182,5 +231,52 @@ public class Event extends BaseEntity{
     }
     public void setGCAEventLink(String eventLink) {
         this.GCAEventLink = eventLink;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Event)) return false;
+        if (!super.equals(o)) return false;
+        Event event = (Event) o;
+        return getMaxAttendees() == event.getMaxAttendees() &&
+                Float.compare(event.getPrice(), getPrice()) == 0 &&
+                Objects.equals(getEventUUID(), event.getEventUUID()) &&
+                Objects.equals(getEventName(), event.getEventName()) &&
+                Objects.equals(getDescription(), event.getDescription()) &&
+                Objects.equals(getSummary(), event.getSummary()) &&
+                Objects.equals(getLocation(), event.getLocation()) &&
+                Objects.equals(getContactPerson(), event.getContactPerson()) &&
+                Objects.equals(getDateTimeStart(), event.getDateTimeStart()) &&
+                Objects.equals(getDateTimeEnd(), event.getDateTimeEnd()) &&
+                Objects.equals(getType(), event.getType()) &&
+                Objects.equals(getGCAEventId(), event.getGCAEventId()) &&
+                Objects.equals(getGCAEventLink(), event.getGCAEventLink());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), getEventUUID(), getEventName(), getMaxAttendees(), getDescription(), getSummary(), getLocation(), getContactPerson(), getDateTimeStart(), getDateTimeEnd(), getType(), getGCAEventId(), getGCAEventLink(), getPrice());
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "eventUUID='" + eventUUID + '\'' +
+                ", eventName='" + eventName + '\'' +
+                ", maxAttendees=" + maxAttendees +
+                ", description='" + description + '\'' +
+                ", summary='" + summary + '\'' +
+                ", location='" + location + '\'' +
+                ", contactPerson='" + contactPerson + '\'' +
+                ", dateTimeStart='" + dateTimeStart + '\'' +
+                ", dateTimeEnd='" + dateTimeEnd + '\'' +
+                ", type='" + type + '\'' +
+                ", GCAEventId='" + GCAEventId + '\'' +
+                ", GCAEventLink='" + GCAEventLink + '\'' +
+                ", price=" + price +
+                ", {'" + super.toString() + "'}" +
+                '}';
     }
 }

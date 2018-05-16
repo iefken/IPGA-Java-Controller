@@ -114,7 +114,7 @@ public class Sender {
         // BESTAAND OBJECT AANPASSEN (PUT)
 
         String message = "";
-        int newEntity_version = 1;
+        int newEntity_version = 0;
 
         try {
             message = Helper.httpPutUpdateUuidRecordVersion(UUID, Source_type);
@@ -184,32 +184,7 @@ public class Sender {
 */
 
     }
-/*
 
-    //4=updateUuidRecordOnChanged
-    // for changing the Entity_version of a certain record // doesn't seem to work yet
-    public static String sendReservationMessage(String messageType, Helper.SourceType Source_type, int reservationId, String reservationUUID, String userUUID, String sessionUUID,int Entity_version) throws IOException, TimeoutException, JAXBException {
-
-
-        String xmlTotalMessage = "";
-        String message = "";
-
-        String description = "Standard Reservation_Session description set in sendReservationMessage()";
-
-        //message = Helper.httpPutUpdateUuidRecordVersionB(UUID, Entity_version, Source_type);
-
-        //Process xml
-
-        xmlTotalMessage = Helper.getXmlForReservation(description, Source_type, reservationId, reservationUUID, userUUID, sessionUUID,Entity_version);
-        //System.out.println("Generated XML in send reservation message: " + xmlTotalMessage);
-
-        //Send message
-
-        return sendMessage(xmlTotalMessage);
-
-
-    }
-*/
 
 
     //all messages come here to effectively send their message to our RabbitMQ
@@ -308,3 +283,31 @@ public class Sender {
 
 
 }
+
+
+/*
+
+    //4=updateUuidRecordOnChanged
+    // for changing the Entity_version of a certain record // doesn't seem to work yet
+    public static String sendReservationMessage(String messageType, Helper.SourceType Source_type, int reservationId, String reservationUUID, String userUUID, String sessionUUID,int Entity_version) throws IOException, TimeoutException, JAXBException {
+
+
+        String xmlTotalMessage = "";
+        String message = "";
+
+        String description = "Standard Reservation_Session description set in sendReservationMessage()";
+
+        //message = Helper.httpPutUpdateUuidRecordVersionB(UUID, Entity_version, Source_type);
+
+        //Process xml
+
+        xmlTotalMessage = Helper.getXmlForReservation(description, Source_type, reservationId, reservationUUID, userUUID, sessionUUID,Entity_version);
+        //System.out.println("Generated XML in send reservation message: " + xmlTotalMessage);
+
+        //Send message
+
+        return sendMessage(xmlTotalMessage);
+
+
+    }
+*/

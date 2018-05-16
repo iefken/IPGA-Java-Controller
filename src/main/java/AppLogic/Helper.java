@@ -201,7 +201,7 @@ public interface Helper {
                     System.out.println("\nUserUUID returned: '" + userUUID + "' !");
 
                     // 4. update local db with UUID
-                    if (!new User_DAO().updateTablePropertyValue("User", "userUUID", userUUID, "String", "idUser", ""+newUser.getEntityId())) {
+                    if (!new User_DAO().updateTablePropertyValue("User", "uuid", userUUID, "String", "idUser", ""+newUser.getEntityId())) {
                         System.out.println("Something went wrong updating User's userUUID");
                     } else {
                         newUser.setUuid(userUUID);
@@ -268,7 +268,7 @@ public interface Helper {
 
                     // 4. update local db with UUID
 
-                    if (!new BaseEntityDAO().updateTablePropertyValue("Event", "eventUUID", eventUUID, "String", "idEvent", ""+newEvent.getEntityId())) {
+                    if (!new BaseEntityDAO().updateTablePropertyValue("Event", "uuid", eventUUID, "String", "idEvent", ""+newEvent.getEntityId())) {
                         System.out.println("Something went wrong updating Event's eventUUID");
                     } else {
                         newEvent.setEventUUID(eventUUID);
@@ -339,7 +339,7 @@ public interface Helper {
                     }
 
                     // 4. update local db with UUID
-                    if (!new BaseEntityDAO().updateTablePropertyValue("Session", "sessionUUID", sessionUUID, "String", "idSession", ""+case2NewSession.getEntityId())) {
+                    if (!new BaseEntityDAO().updateTablePropertyValue("Session", "uuid", sessionUUID, "String", "idSession", ""+case2NewSession.getEntityId())) {
                         System.out.println("Something went wrong updating Session's sessionUUID");
                     } else {
                         case2NewSession.setSessionUUID(sessionUUID);
@@ -402,7 +402,7 @@ public interface Helper {
                     reservationUUID = responseFromSender;
 
                     // 4. update local db with UUID
-                    if (!new Reservation_Event_DAO().updateTablePropertyValue("Reservation_Event", "reservationUUID", reservationUUID, "String", "idReservationEvent", ""+newEventReservation.getEntityId())) {
+                    if (!new Reservation_Event_DAO().updateTablePropertyValue("Reservation_Event", "uuid", reservationUUID, "String", "idReservationEvent", ""+newEventReservation.getEntityId())) {
                         System.out.println("Something went wrong updating Reservation_Event's reservationUUID");
                     } else {
                         newEventReservation.setReservationUUID(reservationUUID);
@@ -460,7 +460,7 @@ public interface Helper {
 
 
                     // 4. update local db with UUID
-                    if (!new Reservation_Session_DAO().updateTablePropertyValue("Reservation_Session", "sessionUUID", sessionUUID, "String", "idReservationSession", ""+newSessionReservation.getEntityId())) {
+                    if (!new Reservation_Session_DAO().updateTablePropertyValue("Reservation_Session", "uuid", reservationUUID, "String", "idReservationSession", ""+newSessionReservation.getEntityId())) {
                         System.out.println("Something went wrong updating Reservation_Event's reservationUUID");
                     } else {
                         newSessionReservation.setReservationUUID(reservationUUID);
@@ -528,8 +528,8 @@ public interface Helper {
 
                     // preset variables (should be set later)
                     messageType = "SessionMessage";
-                    Source_type = SourceType.Front_End;
-                    UUID = "abc39123-5e55-4104-99d1-52a4873b2b2d";
+                    Source_type = SourceType.Planning;
+                    UUID = "9ab1ffe1-3376-4add-abac-92e9ee00b671";
 
                     try {
 
@@ -567,8 +567,8 @@ public interface Helper {
                 case "8":
 
                     messageType = "UpdateEntityVersionMessage";
-                    Source_type = SourceType.Front_End;
-                    UUID = "abc39123-5e55-4104-99d1-52a4873b2b2d";
+                    Source_type = SourceType.Planning;
+                    UUID = "9ab1ffe1-3376-4add-abac-92e9ee00b671";
                     Entity_version = 20;
 
                     System.out.println("\nCase " + choice + ": change Entity_version (=>'" + Entity_version + "') of UUID: " + UUID + " with Entity_sourceId = '" + Entity_sourceId + "'");
@@ -908,9 +908,10 @@ public interface Helper {
         try {
             thisUserInMessage = getUserObjectFromXmlMessage(task);
 
+            System.out.println("thisUserInMessage.toString():\n"+thisUserInMessage.toString()+"\n");
+
             userUUID = thisUserInMessage.getUuid();
 
-            System.out.println("New message for USER with UUID: " + userUUID);
 
             //System.out.println("user toString: "+thisUserInMessage.toString());
             //System.out.println(" [" + messageType + "] for userUUID: " + userUUID);
@@ -939,7 +940,7 @@ public interface Helper {
                 // 2.2.1. get idUser from userUUID in User
                 String[] propertiesToSelect = {"idUser"};
                 String table = "User";
-                String[] selectors = {"userUUID"};
+                String[] selectors = {"uuid"};
                 String[] values = {"" + userUUID};
 
                 String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
@@ -947,50 +948,68 @@ public interface Helper {
                 // 2.2.2. get the entityVersion from idUser
                 propertiesToSelect[0] = "entity_version";
                 table = "BaseEntity";
-                selectors[0] = "entityId";
+                selectors[0] = "idBaseEntity";
                 values[0] = selectResults[0];
                 int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
 
+                //System.out.println("localEntityVersion: "+localEntityVersion + " & thisUserInMessage.getEntityVersion():  "+thisUserInMessage.getEntityVersion());
+
                 if (localEntityVersion < thisUserInMessage.getEntityVersion()) {
 
-                    // 2.3.1. set active = 0 on old record in db
-                    boolean newExistingUserResponse = false;
+                    // 2.3.1.A. set active = 0 on old entity record in db
+                    boolean allGood = true;
                     try {
-                        newExistingUserResponse = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "active", "0", "int", "entityId", selectResults[0]);
+                        allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "active", "0", "int", "idBaseEntity", selectResults[0]);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        System.out.println("ERROR in 2.3.1.A. set active = 0 on old record in db:\n "+e);
+                        allGood=false;
                     }
 
-                    if(newExistingUserResponse){
+                    // 2.3.1.B. set uuid = / on old table record in db
+                    if(allGood) {
 
+                        try {
+                            allGood = new BaseEntityDAO().updateTablePropertyValue("User", "uuid", "/", "String", "idUser", selectResults[0]);
+                        } catch (Exception e) {
+                            //e.printStackTrace();
+                            System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n " + e);
+                            allGood = false;
+                        }
+                    }
 
+                    if(allGood){
 
                         // 2.3.2. insert new record into local db
-                        int messageUserInsertReturner = 0;
+                        int messageUserInsertReturner = 0, updateUuidRecordVersionResponse=0;
                         try {
                             messageUserInsertReturner = new User_DAO().insertIntoUser(thisUserInMessage);
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
 
-                        // 2.3.3. updateUuidRecordVersion()
+                        // 2.3.3. updateUuidRecordVersion() (To UUID master)
                         try {
-                            Sender.updateUuidRecordVersion("", Source_type, userUUID);
+                            updateUuidRecordVersionResponse=Sender.updateUuidRecordVersion("", Source_type, userUUID);
                         } catch (IOException | TimeoutException | JAXBException e) {
                             e.printStackTrace();
                         }
+
+                        // 2.3.4. update entity version (on our database)
+                        try {
+                            allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", ""+thisUserInMessage.getEntityVersion(), "int", "idBaseEntity", ""+messageUserInsertReturner);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n "+e);
+                            allGood=false;
+                        }
+
                         System.out.println("We had this User with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisUserInMessage.getEntityVersion() + "'");
 
                     }else{
                         System.out.println("Something seems to have gone wrong with newExistingUserResponse...");
                     }
-                    /*
-                    // 2.3.3. updateUuidRecordVersion()
-                    try {
-                        Sender.updateUuidRecordVersion("", Source_type, userUUID);
-                    } catch (IOException | TimeoutException | JAXBException e) {
-                        e.printStackTrace();
-                    }*/
+
                 } else {
                     // we have the latest version...
                     System.out.println("We already had this User with entityVersion: '" + localEntityVersion + "'");
@@ -998,7 +1017,6 @@ public interface Helper {
 
             } else {
                 // New user record
-
                 // 2.4.1. insert new user into local db
                 int messageUserInsertReturner = 0;
                 try {
@@ -1006,7 +1024,7 @@ public interface Helper {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                System.out.println("User.toString(): "+thisUserInMessage.toString());
+                //System.out.println("User.toString(): "+thisUserInMessage.toString());
 
                 // 2.4.2. insertUuidRecord
 
@@ -1066,7 +1084,7 @@ public interface Helper {
                 // 2.2.1. get idEvent from eventUUID in Event
                 String[] propertiesToSelect = {"idEvent"};
                 String table = "Event";
-                String[] selectors = {"eventUUID"};
+                String[] selectors = {"uuid"};
                 String[] values = {"" + eventUUID};
 
                 String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
@@ -1076,37 +1094,56 @@ public interface Helper {
                 // 2.2.2. get entityVersion from id in BaseEntity
                 propertiesToSelect[0] = "entity_version";
                 table = "BaseEntity";
-                selectors[0] = "entityId";
+                selectors[0] = "idBaseEntity";
                 values[0] = selectResults[0];
                 int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
 
                 if (localEntityVersion < thisEventInMessage.getEntityVersion()) {
 
-                    // 2.3.1. set active = 0 on old record in db
-                    boolean newExistingEventResponse = false;
+                    // 2.3.1.A. set active = 0 on old entity record in db
+                    boolean allGood = true;
                     try {
-                        newExistingEventResponse = new BaseEntityDAO().updateTablePropertyValue("Event", "active", "0", "int", "idEvent", selectResults[0]);
+                        allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "active", "0", "int", "idBaseEntity", selectResults[0]);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        System.out.println("ERROR in 2.3.1.A. set active = 0 on old record in db:\n "+e);
+                        allGood=false;
                     }
 
-                    if(newExistingEventResponse){
+                    // 2.3.1.B. set uuid = / on old table record in db
+                    try {
+                        allGood = new BaseEntityDAO().updateTablePropertyValue("Event", "uuid", "/", "String", "idEvent", selectResults[0]);
+                    } catch (Exception e) {
+                        //e.printStackTrace();
+                        System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n "+e);
+                        allGood=false;
+                    }
+
+                    if(allGood){
 
                         // 2.3.2. insert new record into local db
-                        int messageEventInsertReturner = 0;
+                        int messageEventInsertReturner = 0, updateUuidRecordVersionResponse=0;
                         try {
                             messageEventInsertReturner = new Event_DAO().insertIntoEvent(thisEventInMessage);
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
 
-                        // 2.3.3. updateUuidRecordVersion()
+                        // 2.3.3. updateUuidRecordVersion() (To UUID master)
                         try {
-                            Sender.updateUuidRecordVersion("", Source_type, eventUUID);
+                            updateUuidRecordVersionResponse=Sender.updateUuidRecordVersion("", Source_type, eventUUID);
                         } catch (IOException | TimeoutException | JAXBException e) {
                             e.printStackTrace();
                         }
 
+                        // 2.3.4. update entity version (on our database)
+                        try {
+                            allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", ""+thisEventInMessage.getEntityVersion(), "int", "idBaseEntity", ""+messageEventInsertReturner);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n "+e);
+                            allGood=false;
+                        }
                         System.out.println("We had this event with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisEventInMessage.getEntityVersion() + "'");
 
                     }
@@ -1206,7 +1243,7 @@ public interface Helper {
                 // 2.2.1. get idSession from sessionUUID in Session
                 String[] propertiesToSelect = {"idSession"};
                 String table = "Session";
-                String[] selectors = {"sessionUUID"};
+                String[] selectors = {"uuid"};
                 String[] values = {"" + sessionUUID};
 
                 String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
@@ -1216,7 +1253,7 @@ public interface Helper {
                 // 2.2.2. get entityVersion from id in BaseEntity
                 propertiesToSelect[0] = "entity_version";
                 table = "BaseEntity";
-                selectors[0] = "entityId";
+                selectors[0] = "idBaseEntity";
                 values[0] = selectResults[0];
 
                 int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
@@ -1224,36 +1261,57 @@ public interface Helper {
 
                 if (localEntityVersion < thisSessionInMessage.getEntityVersion()) {
 
-                    // 2.3.1. set active = 0 on old record in db
+                    // 2.3.1.A. set active = 0 on old entity record in db
 
-                    boolean newExistingSessionResponse = false;
+                    boolean allGood = true;
                     try {
-                        newExistingSessionResponse = new BaseEntityDAO().updateTablePropertyValue("Session", "active", "0", "int", "idSession", selectResults[0]);
+                        allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "active", "0", "int", "idBaseEntity", selectResults[0]);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        System.out.println("ERROR in 2.3.1.A. set active = 0 on old record in db:\n "+e);
+                        allGood=false;
                     }
 
-                    if(newExistingSessionResponse)
-                    {
+                    // 2.3.1.B. set uuid = / on old table record in db
 
+                    if(allGood) {
+
+                        try {
+                            allGood = new BaseEntityDAO().updateTablePropertyValue("Session", "uuid", "/", "String", "idSession", selectResults[0]);
+                        } catch (Exception e) {
+                            //e.printStackTrace();
+                            System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n " + e);
+                            allGood = false;
+                        }
+                    }
+
+                    if(allGood)
+                    {
                         // 2.3.2. insert new record into local db
-                        int messageSessionInsertReturner = 0;
+                        int messageSessionInsertReturner = 0, updateUuidRecordVersionResponse=0;
                         try {
                             messageSessionInsertReturner = new Session_DAO().insertIntoSession(thisSessionInMessage);
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
 
-                        // 2.3.3. updateUuidRecordVersion()
-
+                        // 2.3.3. updateUuidRecordVersion() (To UUID master)
                         try {
-                            Sender.updateUuidRecordVersion("", Source_type, sessionUUID);
+                            updateUuidRecordVersionResponse=Sender.updateUuidRecordVersion("", Source_type, sessionUUID);
                         } catch (IOException | TimeoutException | JAXBException e) {
                             e.printStackTrace();
                         }
-                        System.out.println("TO DO: We had this session with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisSessionInMessage.getEntityVersion() + "'");
 
+                        // 2.3.4. update entity version (on our database)
+                        try {
+                            allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", ""+thisSessionInMessage.getEntityVersion(), "int", "idBaseEntity", ""+messageSessionInsertReturner);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n "+e);
+                            allGood=false;
+                        }
 
+                        System.out.println("We had this Session with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisSessionInMessage.getEntityVersion() + "'");
                     }
                 } else {
 
@@ -1426,7 +1484,7 @@ public interface Helper {
                 // 2.2.1 get idSession from sessionUUID in Session
                 String[] propertiesToSelect = {"idReservationEvent"};
                 String table = "Reservation_Event";
-                String[] selectors = {"reservationUUID"};
+                String[] selectors = {"uuid"};
                 String[] values = {"" + reservationUUID};
 
                 String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
@@ -1436,7 +1494,7 @@ public interface Helper {
                 // 2.2.2. get entityVersion from id in BaseEntity
                 propertiesToSelect[0] = "entity_version";
                 table = "BaseEntity";
-                selectors[0] = "entityId";
+                selectors[0] = "idBaseEntity";
                 values[0] = selectResults[0];
                 int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
 
@@ -1487,7 +1545,7 @@ public interface Helper {
                 // 2.3.1 get idSession from sessionUUID in Session
                 String[] propertiesToSelect = {"idReservationSession"};
                 String table = "Reservation_Session";
-                String[] selectors = {"sessionUUID"};
+                String[] selectors = {"uuid"};
                 String[] values = {"" + sessionUUID};
 
                 String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
@@ -1497,7 +1555,7 @@ public interface Helper {
                 // 2.3.2. get entityVersion from id in BaseEntity
                 propertiesToSelect[0] = "entity_version";
                 table = "BaseEntity";
-                selectors[0] = "entityId";
+                selectors[0] = "idBaseEntity";
                 values[0] = selectResults[0];
                 int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
 
@@ -1971,7 +2029,7 @@ public interface Helper {
 
         if (allGood) {
 
-            userObject = new User(0, entityVersion, active, timestamp, uuid, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, userType);
+            userObject = new User(0, entityVersion, active, timestamp, uuid, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, userType, false);
 
             return userObject;
         } else {
@@ -2397,7 +2455,7 @@ public interface Helper {
 
         }
 
-        eventObject = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, type, price);
+        eventObject = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, type, price, false);
         return eventObject;
     }
 
@@ -2458,8 +2516,8 @@ public interface Helper {
         reservationUUID = getSafeXmlProperty(xmlMessage, "uuid");
         if (reservationUUID == "false") {
 
-            eventUUID = getSafeXmlProperty(xmlMessage, "reservationUUID");
-            if (eventUUID == "false") {
+            reservationUUID = getSafeXmlProperty(xmlMessage, "reservationUUID");
+            if (reservationUUID == "false") {
                 System.out.println(" [!!!] ERROR: No reservationUUID found in XML: ");
                 allGood = false;
             }
@@ -2597,9 +2655,9 @@ public interface Helper {
 
             if (reservationUUID == "false") {
 
-                eventUUID = getSafeXmlProperty(xmlMessage, "UUID");
+                reservationUUID = getSafeXmlProperty(xmlMessage, "UUID");
 
-                if (eventUUID == "false") {
+                if (reservationUUID == "false") {
 
                     System.out.println(" [!!!] ERROR: No reservationUUID found in XML: ");
 
@@ -2795,16 +2853,18 @@ public interface Helper {
 
 
         System.out.println("Choose the message to mock:\n");
-        System.out.println("10.V User with UUID: 'fbea0671-1324-4f92-a0b4-cc6e56c537d7' ");
-        System.out.println("11.V User with chosen UUID: ");
-        System.out.println("12.(x) New User without UUID: ");
-        System.out.println("15.(x) Update user with UUID: 'fbea0671-1324-4f92-a0b4-cc6e56c537d7' ");
-        System.out.println("20.V Event with UUID: 'e319f8aa-1910-442c-8b17-5e809d713ee4' ");
-        System.out.println("21.V Event with chosen UUID: ");
-        System.out.println("22.V New Event without UUID: ");
-        System.out.println("30.V Session with UUID: 'c1a89eff-0a22-454d-aecc-44c19c95c261' ");
-        System.out.println("31.V Session with chosen UUID: ");
-        System.out.println("32.V New Session without UUID: ");
+        System.out.println("[10.V] User: New with Uuid: 'fbea0671-1324-4f92-a0b4-cc6e56c537d7' ");
+        System.out.println("[11.V] User: New with chosen Uuid: ");
+        System.out.println("[12.x] User: New without Uuid: ");
+        System.out.println("[15.V] User: Update with Uuid: 'fbea0671-1324-4f92-a0b4-cc6e56c537d7' ");
+        System.out.println("[20.V] Event: New with Uuid: 'd5b0f1ea-a8db-4186-b3fe-f37654eebe65' ");
+        System.out.println("[21.V] Event: New with chosen Uuid: ");
+        System.out.println("[22.V] Event: New without Uuid: ");
+        System.out.println("[25.V] Event: Update with Uuid: 'd5b0f1ea-a8db-4186-b3fe-f37654eebe65' ");
+        System.out.println("[30.V] Session: New with Uuid: 'c1a89eff-0a22-454d-aecc-44c19c95c261' ");
+        System.out.println("[31.V] Session: New with chosen Uuid: ");
+        System.out.println("[32.V] Session: New without Uuid: ");
+        System.out.println("[35.x] Session: Update with Uuid: 'c1a89eff-0a22-454d-aecc-44c19c95c261' ");
 
         System.out.print("\nChoose a number [0 to quit!]\n");
 
@@ -2842,7 +2902,7 @@ public interface Helper {
                 // 1. Preset variables
                 // Source_type= ... ;
                 // 2. Form user object
-                mockUser = new User(0, entityVersion, active, timestamp, uuid, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, userType);
+                mockUser = new User(0, entityVersion, active, timestamp, uuid, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, userType, false);
 
                 // 3. Form XML
 
@@ -2905,7 +2965,7 @@ public interface Helper {
                 timestamp=getCurrentDateTimeStamp();
 
                 // 2. Form user object
-                mockUser = new User(0, entityVersion, active, timestamp, uuid, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, userType);
+                mockUser = new User(0, entityVersion, active, timestamp, uuid, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, userType, false);
 
                 // 3. Form XML
 
@@ -2954,7 +3014,7 @@ public interface Helper {
                 timestamp=getCurrentDateTimeStamp();
 
                 // 2. Form user object
-                mockUser = new User(0, entityVersion, active, timestamp, uuid, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, userType);
+                mockUser = new User(0, entityVersion, active, timestamp, uuid, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, userType, false);
 
                 // 3. Form XML
 
@@ -2971,12 +3031,13 @@ public interface Helper {
                 } catch (TimeoutException | IOException | JAXBException e) {
                     e.printStackTrace();
                 }
+
                 break;
 
             case "20":
                 // Event with UUID
 
-                uuid="e319f8aa-1910-442c-8b17-5e809d713ee4";
+                uuid="d5b0f1ea-a8db-4186-b3fe-f37654eebe65";
                 System.out.println("Mocking Event 'MockFest' with uuid: '"+uuid+"' ...");
 
                 // 1. Preset variables
@@ -3000,7 +3061,7 @@ public interface Helper {
                 timestamp=getCurrentDateTimeStamp();
 
                 // 2. Form Event object
-                mockEvent = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price);
+                mockEvent = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price, false);
 
                 // 3. Form XML
 
@@ -3019,6 +3080,7 @@ public interface Helper {
                 }
 
                 break;
+
             case "21":
                 // Event with chosen UUID
 
@@ -3060,7 +3122,7 @@ public interface Helper {
                 System.out.println("Mocking event '"+eventName+"' with uuid: '"+uuid+"' ... Other variables are preset in Main.java around line 800");
 
                 // 2. Form Event object
-                mockEvent = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price);
+                mockEvent = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price, false);
 
                 // 3. Form XML
                 try {
@@ -3155,7 +3217,7 @@ public interface Helper {
                 System.out.println("Mocking event '"+eventName+"' with uuid: '"+uuid+"' ... Other variables are preset in Helper.java around line 3000");
 
                 // 2. Form Event object
-                mockEvent = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price);
+                mockEvent = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price, false);
 
                 // 3. Form XML
                 try {
@@ -3171,6 +3233,50 @@ public interface Helper {
                     e.printStackTrace();
                 }
 
+                break;
+
+            case "25":
+                // Event with UUID
+
+                uuid="d5b0f1ea-a8db-4186-b3fe-f37654eebe65";
+                System.out.print("You've chosen '" + choice + "': Update Event with UUID: '"+uuid+"' ...\n");
+
+                // 1. Preset variables
+
+                headerDescription = "Mocking Event message UPDATED";
+                // Source_type= ... ;
+                eventName = "'MockFest' UPDATED";
+                maxAttendees = 45;
+                description = "Mocked description UPDATED";
+                summary = "Mocked summary UPDATED";
+                location = "Mocked location UPDATED";
+                contactPerson = "Mocked contactPerson";
+                dateTimeStart = "2018-05-28T09:00:00+02:00";
+                dateTimeEnd = "2018-05-29T09:00:00+02:00";
+                eventType="MockerNoon";
+                price = 60;
+                Source_type = SourceType.Front_End;
+                Entity_type = EntityType.Event;
+                entityVersion=2;
+                active=1;
+                timestamp=getCurrentDateTimeStamp();
+
+                // 2. Form Event object
+                mockEvent = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price, false);
+
+                // 3. Form XML
+                try {
+                    xmlTotalMessage = getXmlFromEventObject(headerDescription, Source_type, mockEvent);
+                } catch (JAXBException e) {
+                    e.printStackTrace();
+                }
+
+                // 4. Send XML
+                try {
+                    Sender.sendMessage(xmlTotalMessage);
+                } catch (TimeoutException | IOException | JAXBException e) {
+                    e.printStackTrace();
+                }
                 break;
 
             case "30":
@@ -3201,7 +3307,7 @@ public interface Helper {
                 timestamp=getCurrentDateTimeStamp();
 
                 // 2. Form Event object
-                mockSession = new Session(0, entityVersion, active, timestamp, uuid, eventUuid, sessionName, maxAttendees, description, summary, dateTimeStart, dateTimeEnd, contactPerson, location, sessionType, price);
+                mockSession = new Session(0, entityVersion, active, timestamp, uuid, eventUuid, sessionName, maxAttendees, description, summary, dateTimeStart, dateTimeEnd, contactPerson, location, sessionType, price, false);
 
                 //System.out.println("mockSession toString(): "+mockSession.toString());
 
@@ -3266,7 +3372,7 @@ public interface Helper {
                 timestamp=getCurrentDateTimeStamp();
 
                 // 2. Form Session object
-                mockSession = new Session(0, entityVersion, active, timestamp, uuid, eventUuid, sessionName, maxAttendees, description, summary, dateTimeStart, dateTimeEnd, contactPerson, location, sessionType, price);
+                mockSession = new Session(0, entityVersion, active, timestamp, uuid, eventUuid, sessionName, maxAttendees, description, summary, dateTimeStart, dateTimeEnd, contactPerson, location, sessionType, price, false);
 
                 // 3. Form XML
                 try {
@@ -3359,7 +3465,7 @@ public interface Helper {
                 System.out.println("Mocking session '"+sessionName+"' with uuid: '"+uuid+"' ... Other variables are preset in Helper.java around line 3250");
 
                 // 2. Form Session object
-                mockSession = new Session(0, entityVersion, active, timestamp, uuid, eventUuid, sessionName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, sessionType, "","", price);
+                mockSession = new Session(0, entityVersion, active, timestamp, uuid, eventUuid, sessionName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, sessionType, "","", price, false);
 
                 // 3. Form XML
                 try {
@@ -3369,6 +3475,58 @@ public interface Helper {
                 }
 
                 // 4. Send XML
+                try {
+                    Sender.sendMessage(xmlTotalMessage);
+                } catch (TimeoutException | IOException | JAXBException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case "35":
+                // Session with UUID
+
+                uuid="c1a89eff-0a22-454d-aecc-44c19c95c261";
+
+                System.out.print("You've chosen '" + choice + "': Update Session with UUID: '"+uuid+"' ...\n");
+
+                // 1. Preset variables
+
+                headerDescription = "Mocking Session message";
+                // Source_type= ... ;
+                eventUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
+                sessionName = "Mocked sessionName";
+                maxAttendees = 45;
+                description = "Mocked description";
+                summary = "Mocked summary";
+                location = "Mocked location";
+                contactPerson = "Mocked contactPerson";
+                dateTimeStart = "2018-05-28T09:00:00+02:00";
+                dateTimeEnd = "2018-05-29T09:00:00+02:00";
+                sessionType="SessionMockerType";
+                price = 0;
+                Source_type = SourceType.Front_End;
+                Entity_type = EntityType.Session;
+                entityVersion=2;
+                active=1;
+                timestamp=getCurrentDateTimeStamp();
+
+                // 2. Form Event object
+                mockSession = new Session(0, entityVersion, active, timestamp, uuid, eventUuid, sessionName, maxAttendees, description, summary, dateTimeStart, dateTimeEnd, contactPerson, location, sessionType, price, false);
+
+                //System.out.println("mockSession toString(): "+mockSession.toString());
+
+                // 3. Form XML
+
+                try {
+                    xmlTotalMessage = getXmlFromSessionObject(headerDescription, Source_type, mockSession);
+                } catch (JAXBException e) {
+                    e.printStackTrace();
+                }
+
+                //System.out.println("xmlTotalMessage toString(): \n"+xmlTotalMessage);
+
+                // 4. Send XML
+
                 try {
                     Sender.sendMessage(xmlTotalMessage);
                 } catch (TimeoutException | IOException | JAXBException e) {

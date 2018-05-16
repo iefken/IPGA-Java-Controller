@@ -62,13 +62,6 @@ public class Reservation_Session extends BaseEntity{
         this.sessionUUID=sessionUUID;
     }
 
-//    public String getType() {
-//        return type;
-//    }
-//    public void setType(String type) {
-//        this.type = type;
-//    }
-
     public float getPaid() {
         return paid;
     }
@@ -76,4 +69,32 @@ public class Reservation_Session extends BaseEntity{
         this.paid = paid;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Reservation_Session)) return false;
+        if (!super.equals(o)) return false;
+        Reservation_Session that = (Reservation_Session) o;
+        return Float.compare(that.getPaid(), getPaid()) == 0 &&
+                Objects.equals(getReservationUUID(), that.getReservationUUID()) &&
+                Objects.equals(getUserUUID(), that.getUserUUID()) &&
+                Objects.equals(getSessionUUID(), that.getSessionUUID());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), getReservationUUID(), getUserUUID(), getSessionUUID(), getPaid());
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation_Session{" +
+                "reservationUUID='" + reservationUUID + '\'' +
+                ", userUUID='" + userUUID + '\'' +
+                ", sessionUUID='" + sessionUUID + '\'' +
+                ", paid=" + paid +
+                ", {'" + super.toString() + "'}" +
+                '}';
+    }
 }
