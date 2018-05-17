@@ -1,4 +1,3 @@
-
 package DatabaseLogic;
 
 import AppLogic.*;
@@ -153,6 +152,5 @@ public class User_DAO extends BaseEntityDAO {
 
 
     //OTHER
-
 
 }

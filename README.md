@@ -112,6 +112,7 @@ OR in IntelliJ:
 
 # 4.	Latest releases
 
+    16-05-18: v1.4: Main can 'mock' updates for user, event and session
     14-05-18: v1.3: Integrated Google Calendar API (GCA) calls into receiver
     10-05-18: v1.2: Main can 'mock' new user, event, session and reservation messages
     08-05-18: v1.1: Receiver handles reservation messages for events and sessions

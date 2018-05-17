@@ -29,7 +29,7 @@ public class Reservation_Session_DAO extends BaseEntityDAO {
         String sqlQuery = "";
 
         if(reservation_session.getEntityId()==0) {
-            sqlQuery = "INSERT INTO PlanningDB.Reservation_Event (`uuid`, `eventUuid`, `userUuid`) VALUES(\"" + reservation_session.getReservationUUID() + "\",\"" + reservation_session.getSessionUUID() + "\",\"" + reservation_session.getUserUUID() + "\");";
+            sqlQuery = "INSERT INTO PlanningDB.Reservation_Event (`uuid`, `eventUuid`, `userUuid`) VALUES(\"" + reservation_session.getEntityId() + "\",\"" + reservation_session.getSessionUUID() + "\",\"" + reservation_session.getUserUUID() + "\");";
         }else{
             sqlQuery = "INSERT INTO PlanningDB.Reservation_Session (`idReservationSession`, `uuid`, `sessionUuid`, `userUuid`) VALUES(" + callbackInsertedInt + ",\"" + reservation_session.getReservationUUID() + "\",\"" + reservation_session.getSessionUUID() + "\",\"" + reservation_session.getUserUUID() + "\");";
         }
@@ -99,6 +99,27 @@ public class Reservation_Session_DAO extends BaseEntityDAO {
 
     //UPDATE
 
+    public int UpdateReservationSession (Reservation_Session newReservationSessionFromMessage, int oldEntityId) throws SQLException {
+
+        //Maak een nieuwe BaseEntity met incremented entityVersion
+        BaseEntity newBaseEntity = new BaseEntity(newReservationSessionFromMessage.getEntityId(), newReservationSessionFromMessage.getEntityVersion(), newReservationSessionFromMessage.getActive(), newReservationSessionFromMessage.getTimestamp());
+        //execute baseEntity Insert
+        int callbackInsertedInt = newBaseEntity.getEntityId();
+
+        String sqlQuery = "INSERT INTO PlanningDB.reservation_session (idReservationSession, reservationUUID, sessionUUID, userUUID, paid, timestampLastUpdated, timestampCreated) VALUES (" + callbackInsertedInt + ",\"" + newReservationSessionFromMessage.getReservationId() + "\",\"" + newReservationSessionFromMessage.getReservationUUID() + "\",\"" + newReservationSessionFromMessage.getSessionUUID() + "\",\"" + newReservationSessionFromMessage.getUserUUID() + "\",\"" + newReservationSessionFromMessage.getPaid() + "\",\"" + newReservationSessionFromMessage.getTimestamp() + "\");";
+
+        //softdelete oude base entity
+        softDeleteBaseEntity("reservation_session", oldEntityId);
+        try {
+            int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
+        } catch (Exception e) {
+//                e.printStackTrace();
+            System.out.println("ERROR inserting reservation_session: " + e);
+        }
+
+        return callbackInsertedInt;
+
+    }
 
     //DELETE
 

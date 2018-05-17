@@ -7,41 +7,37 @@ public class Reservation_Session extends BaseEntity{
     private String reservationUUID;
     private String userUUID;
     private String sessionUUID;
-//    private String type;
     private float paid;
 
     public Reservation_Session(int ReservationId, int entity_version, int active, String timestamp,
-                               String reservationUUID, String UserUUID, String SessionUUID, /*String Type,*/ float paid) {
+                               String reservationUUID, String userUUID, String sessionUUID, float paid) {
 
         super(ReservationId,entity_version,active, timestamp);
 
         this.reservationUUID = reservationUUID;
-        this.userUUID = UserUUID;
-        this.sessionUUID = SessionUUID;
-//        this.type = Type;
+        this.userUUID = userUUID;
+        this.sessionUUID = sessionUUID;
         this.paid = paid;
     }
 
     public Reservation_Session(int ReservationId, int entity_version, int active, String timestamp,
-                               String reservationUUID, String UserUUID, String SessionUUID, /*String Type,*/ float paid, boolean insertBaseEntity) {
+                               String reservationUUID, String userUUID, String sessionUUID, float paid, boolean insertBaseEntity) {
 
         super(ReservationId,entity_version,active, timestamp,insertBaseEntity);
 
         this.reservationUUID = reservationUUID;
-        this.userUUID = UserUUID;
-        this.sessionUUID = SessionUUID;
-//        this.type = Type;
+        this.userUUID = userUUID;
+        this.sessionUUID = sessionUUID;
         this.paid = paid;
     }
 
-    public Reservation_Session(int ReservationId, String reservationUUID, String UserUUID, String SessionUUID, /*String Type,*/ float paid) {
+    public Reservation_Session(int ReservationId, String reservationUUID, String userUUID, String sessionUUID, float paid) {
 
         //super(ReservationId,entity_version,Status, Timestamp);
 
         this.reservationUUID = reservationUUID;
-        this.userUUID = UserUUID;
-        this.sessionUUID = SessionUUID;
-//        this.type = Type;
+        this.userUUID = userUUID;
+        this.sessionUUID = sessionUUID;
         this.paid = paid;
     }
 

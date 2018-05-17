@@ -132,6 +132,27 @@ public class Reservation_Event_DAO extends BaseEntityDAO{
     //UPDATE
 
 
+    public int UpdateReservationSession (Reservation_Event newReservationEventFromMessage, int oldEntityId) throws SQLException {
+
+        //Maak een nieuwe BaseEntity met incremented entityVersion
+        BaseEntity newBaseEntity = new BaseEntity(newReservationEventFromMessage.getEntityId(), newReservationEventFromMessage.getEntityVersion(), newReservationEventFromMessage.getActive(), newReservationEventFromMessage.getTimestamp());
+        //execute baseEntity Insert
+        int callbackInsertedInt = newBaseEntity.getEntityId();
+
+        String sqlQuery = "INSERT INTO PlanningDB.reservation_event (idReservationEvent, reservationUUID, eventUUID, userUUID, paid, timestampLastUpdated, timestampCreated) VALUES (" + callbackInsertedInt + ",\"" + newReservationEventFromMessage.getReservationId() + "\",\"" + newReservationEventFromMessage.getReservationUUID() + "\",\"" + newReservationEventFromMessage.getEventUUID() + "\",\"" + newReservationEventFromMessage.getUserUUID() + "\",\"" + newReservationEventFromMessage.getPaid() + "\",\"" + newReservationEventFromMessage.getTimestamp() + "\");";
+
+        //softdelete oude base entity
+        softDeleteBaseEntity("reservation_event", oldEntityId);
+        try {
+            int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
+        } catch (Exception e) {
+//                e.printStackTrace();
+            System.out.println("ERROR inserting reservation_event: " + e);
+        }
+
+        return callbackInsertedInt;
+
+    }
 
     //DELETE
 

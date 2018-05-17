@@ -111,7 +111,7 @@ public interface Helper {
         String xmlTotalMessage = "<test>testertester</test>";
 
         EntityType Entity_type = EntityType.EMPTY;
-        SourceType Source_type = SourceType.Front_End;
+        SourceType Source_type = SourceType.Planning;
         int Entity_version = 1;
         int maxAttendees = 50;
         float paid = 0;
@@ -177,7 +177,7 @@ public interface Helper {
                     String country = "Case1COU";
                     String company = "Case1COM";
                     String userType = "ADMIN";
-                    Source_type = SourceType.Front_End;
+                    Source_type = SourceType.Planning;
                     Entity_type = EntityType.User;
 
                     // 1. create user object
@@ -241,7 +241,7 @@ public interface Helper {
                     //String dateTimeEnd;
                     type = "Case 2 EventType ";
                     float price = 0;
-                    Source_type = SourceType.Front_End;
+                    Source_type = SourceType.Planning;
                     Entity_type = EntityType.Event;
                     int entityVersion = 1;
                     int active = 1;
@@ -297,8 +297,8 @@ public interface Helper {
 
                     // Change as you wish
 
-                    //new session will be set in Front_End
-                    Source_type = SourceType.Front_End;
+                    //new session will be set in Planning
+                    Source_type = SourceType.Planning;
 
                     // variables for session
                     messageType = "sessionMessage";
@@ -370,7 +370,7 @@ public interface Helper {
                     messageType = "reservationEventMessage";
                     //Entity_sourceId = 200;
                     Entity_type = EntityType.ReservationEvent;
-                    Source_type = SourceType.Front_End;
+                    Source_type = SourceType.Planning;
                     type = "Case 10 type";
                     paid = 0;
 
@@ -430,7 +430,7 @@ public interface Helper {
                     messageType = "reservationSessionMessage";
                     //Entity_sourceId = 200;
                     //Entity_type=EntityType.Visitor;
-                    Source_type = SourceType.Front_End;
+                    Source_type = SourceType.Planning;
                     type = "Case 11 type";
                     paid = 0;
 
@@ -963,6 +963,19 @@ public interface Helper {
 
                     // 2.3.1.A. set active = 0 on old entity record in db
                     boolean allGood = true;
+
+                    // parse id to int
+
+                    int oldLocalEntityId = Integer.parseInt(selectResults[0]), newLocalEntityId;
+
+                    try {
+                        newLocalEntityId = new User_DAO().UpdateUser(thisUserInMessage, oldLocalEntityId);
+                    } catch (SQLException e) {
+                        System.out.println("Something went wrong updating user: " + e);
+                        //e.printStackTrace();
+                    }
+
+                    /*
                     try {
                         allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "active", "0", "int", "idBaseEntity", selectResults[0]);
                     } catch (Exception e) {
@@ -1008,17 +1021,13 @@ public interface Helper {
                             System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n " + e);
                             allGood = false;
                         }
-
-                        System.out.println("We had this User with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisUserInMessage.getEntityVersion() + "'");
-
-                    } else {
-                        System.out.println("Something seems to have gone wrong with newExistingUserResponse...");
-                    }
+*/
+                    System.out.println("We had this User with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisUserInMessage.getEntityVersion() + "'");
 
                 } else {
-                    // we have the latest version...
                     System.out.println("We already had this User with entityVersion: '" + localEntityVersion + "'");
                 }
+
 
             } else {
                 // New user record
@@ -1043,7 +1052,7 @@ public interface Helper {
 
             }
         } else {
-            System.out.println("Something went wrong getting user object from xml message!");
+            System.out.println("ERROR: Something went wrong getting user object from xml message!");
         }
 
         //System.out.println(" [END] ");
@@ -1164,7 +1173,7 @@ public interface Helper {
 
                 // 2.4.1. Add new event to Google calendar
 
-                /*
+
                 String newEventHtmlLinkAndId = null;
                 try {
                     newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromEventObject(thisEventInMessage);
@@ -1175,10 +1184,10 @@ public interface Helper {
                     thisEventInMessage.setGCAEventLink(newEventProperties[0]);
 
                 } catch (IOException e) {
-                    System.out.println("Error adding event to Google calendar API: "+e);
+                    System.out.println("Error adding event to Google calendar API: " + e);
                     //e.printStackTrace();
                 }
-*/
+
                 // 2.4.2. insert new event into local db
                 int messageEventInsertReturner = 0;
                 try {
@@ -2942,7 +2951,7 @@ public interface Helper {
         String xmlTotalMessage = "<test>testertester</test>";
 
         EntityType Entity_type = EntityType.EMPTY;
-        SourceType Source_type = SourceType.Front_End;
+        SourceType Source_type = SourceType.Planning;
         int Entity_version = 1;
         int maxAttendees = 50;
         float paid = 0;
@@ -3186,7 +3195,7 @@ public interface Helper {
                 dateTimeEnd = "2018-05-29T09:00:00+02:00";
                 eventType = "MockerNoon";
                 float price = 0;
-                Source_type = SourceType.Front_End;
+                Source_type = SourceType.Planning;
                 Entity_type = EntityType.Event;
                 entityVersion = 1;
                 active = 1;
@@ -3245,7 +3254,7 @@ public interface Helper {
                 dateTimeEnd = "2018-05-29T09:00:00+02:00";
                 eventType = "MockerNoon";
                 price = 0;
-                Source_type = SourceType.Front_End;
+                Source_type = SourceType.Planning;
                 Entity_type = EntityType.Event;
                 entityVersion = 1;
                 active = 1;
@@ -3292,7 +3301,7 @@ public interface Helper {
 //                dateTimeEnd = "2018-05-29T09:00:00+02:00";
                 eventType = "EventType";
                 price = 0;
-                Source_type = SourceType.Front_End;
+                Source_type = SourceType.Planning;
                 Entity_type = EntityType.Event;
                 entityVersion = 1;
                 active = 1;
@@ -3387,7 +3396,7 @@ public interface Helper {
                 dateTimeEnd = "2018-05-29T09:00:00+02:00";
                 eventType = "MockerNoon";
                 price = 60;
-                Source_type = SourceType.Front_End;
+                Source_type = SourceType.Planning;
                 Entity_type = EntityType.Event;
                 entityVersion = 2;
                 active = 1;
@@ -3432,7 +3441,7 @@ public interface Helper {
                 dateTimeEnd = "2018-05-29T09:00:00+02:00";
                 sessionType = "SessionMockerType";
                 price = 0;
-                Source_type = SourceType.Front_End;
+                Source_type = SourceType.Planning;
                 Entity_type = EntityType.Session;
                 entityVersion = 1;
                 active = 1;
@@ -3497,7 +3506,7 @@ public interface Helper {
                 dateTimeEnd = "2018-05-29T14:00:00+02:00";
                 sessionType = "SessionMockerType";
                 price = 0;
-                Source_type = SourceType.Front_End;
+                Source_type = SourceType.Planning;
                 Entity_type = EntityType.Session;
                 entityVersion = 1;
                 active = 1;
@@ -3541,7 +3550,7 @@ public interface Helper {
                 dateTimeEnd = "2018-05-29T14:00:00+02:00";
                 sessionType = "SessionMockedType";
                 price = 0;
-                Source_type = SourceType.Front_End;
+                Source_type = SourceType.Planning;
                 Entity_type = EntityType.Session;
                 entityVersion = 1;
                 active = 1;
@@ -3636,7 +3645,7 @@ public interface Helper {
                 dateTimeEnd = "2018-05-29T09:00:00+02:00";
                 sessionType = "SessionMockerType";
                 price = 0;
-                Source_type = SourceType.Front_End;
+                Source_type = SourceType.Planning;
                 Entity_type = EntityType.Session;
                 entityVersion = 2;
                 active = 1;
@@ -3680,7 +3689,7 @@ public interface Helper {
                 String userUuid = "83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
                 eventUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
                 paid = 0;
-                Source_type = SourceType.Front_End;
+                Source_type = SourceType.Planning;
                 Entity_type = EntityType.ReservationEvent;
                 entityVersion = 1;
                 active = 1;
@@ -3729,7 +3738,7 @@ public interface Helper {
                 userUuid = "83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
                 eventUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
                 paid = 0;
-                Source_type = SourceType.Front_End;
+                Source_type = SourceType.Planning;
                 Entity_type = EntityType.ReservationEvent;
                 entityVersion = 1;
                 active = 1;
@@ -3772,7 +3781,7 @@ public interface Helper {
                 userUuid = "83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
                 eventUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
                 paid = 0;
-                Source_type = SourceType.Front_End;
+                Source_type = SourceType.Planning;
                 Entity_type = EntityType.ReservationEvent;
                 entityVersion = 1;
                 active = 1;
@@ -3851,7 +3860,7 @@ public interface Helper {
                 userUuid = "83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
                 eventUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
                 paid = 20.42f;
-                Source_type = SourceType.Front_End;
+                Source_type = SourceType.Planning;
                 Entity_type = EntityType.ReservationEvent;
                 entityVersion = 2;
                 active = 1;
@@ -3882,6 +3891,225 @@ public interface Helper {
                     e.printStackTrace();
                 }
                 break;
+
+
+            case "50":
+                // Reservation_Session with UUID
+
+                uuid = "0b136ea0-19f3-42de-aff4-2b5ecf1b88cb";
+                System.out.println("Mocking Reservation_Session 'REMOCK' with uuid: '" + uuid + "' ...");
+
+                // 1. Preset variables
+
+                headerDescription = "Mocking Reservation_Event message";
+                // Source_type= ... ;
+                userUuid = "83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
+                String sessionUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
+                paid = 0;
+                Source_type = SourceType.Planning;
+                Entity_type = EntityType.ReservationEvent;
+                entityVersion = 1;
+                active = 1;
+                timestamp = getCurrentDateTimeStamp();
+
+                // 2. Form Reservation_Event object
+
+                mockReservation_Session = new Reservation_Session(0, entityVersion, 1, getCurrentDateTimeStamp(), uuid, userUuid, sessionUuid, paid, false);
+
+                //System.out.println("mockSession toString(): "+mockSession.toString());
+
+                // 3. Form XML
+
+                try {
+                    xmlTotalMessage = getXmlFromReservation_EventObject(headerDescription, Source_type, mockReservation_Event);
+                } catch (JAXBException e) {
+                    e.printStackTrace();
+                }
+
+                //System.out.println("xmlTotalMessage toString(): \n"+xmlTotalMessage);
+
+                // 4. Send XML
+
+                try {
+                    Sender.sendMessage(xmlTotalMessage);
+                } catch (TimeoutException | IOException | JAXBException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case "51":
+                //Reservation_Event with chosen UUID
+
+                System.out.print("You've chosen '" + choice + "': Reservation_Event with chosen UUID ...\n");
+
+                // Set chosen uuid
+                System.out.print("\nEnter the uuid to use: ");
+                scanner = new Scanner(System.in);
+                choice = scanner.next();
+                uuid = choice;
+
+                // 1. Preset variables
+
+                headerDescription = "Mocking Reservation_Event message with chosen uuid";
+                // Source_type= ... ;
+                userUuid = "83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
+                eventUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
+                paid = 0;
+                Source_type = SourceType.Planning;
+                Entity_type = EntityType.ReservationEvent;
+                entityVersion = 1;
+                active = 1;
+                timestamp = getCurrentDateTimeStamp();
+
+                // 2. Form Reservation_Event object
+
+                mockReservation_Event = new Reservation_Event(0, 1, 1, getCurrentDateTimeStamp(), uuid, userUuid, eventUuid, paid, false);
+
+                //System.out.println("mockSession toString(): "+mockSession.toString());
+
+                // 3. Form XML
+
+                try {
+                    xmlTotalMessage = getXmlFromReservation_EventObject(headerDescription, Source_type, mockReservation_Event);
+                } catch (JAXBException e) {
+                    e.printStackTrace();
+                }
+
+                //System.out.println("xmlTotalMessage toString(): \n"+xmlTotalMessage);
+
+                // 4. Send XML
+
+                try {
+                    Sender.sendMessage(xmlTotalMessage);
+                } catch (TimeoutException | IOException | JAXBException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case "52":
+                // new Reservation_Event without UUID
+
+                System.out.println("You've chosen '" + choice + "': New Reservation_Event without UUID ...\n");
+
+                // 1. Preset variables
+
+                headerDescription = "Mocking Reservation_Event message without uuid";
+                // Source_type= ... ;
+                userUuid = "83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
+                eventUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
+                paid = 0;
+                Source_type = SourceType.Planning;
+                Entity_type = EntityType.ReservationEvent;
+                entityVersion = 1;
+                active = 1;
+                timestamp = getCurrentDateTimeStamp();
+
+
+                UuidInsertReturner = "";
+                try {
+                    //UuidInsertReturner = httpPostCreateUuidRecord(Entity_sourceId, Entity_type, Source_type);
+                    UuidInsertReturner = httpPostCreateUuidRecord(50, Entity_type, Source_type);
+
+                    UuidInsertReturner = UuidInsertReturner.substring(1, UuidInsertReturner.length() - 1);
+
+                    //System.out.println("\nMessage From UUID server: " + UuidInsertReturner);
+                } catch (IOException e) {
+                    //e.printStackTrace();
+                    System.out.println("Error during http post request: createUuidRecord();");
+                }
+
+                // handle uuid response to get uuid out of it
+
+                //obj = null;
+
+                try {
+                    Gson gson = new Gson();
+                    UUID_insertUuidRecord firstTest = gson.fromJson(UuidInsertReturner, UUID_insertUuidRecord.class);
+
+                    uuid = firstTest.getUuid();
+
+                } catch (JSONException e) {
+                    //e.printStackTrace();
+                    System.out.println(e);
+                    System.out.println("uuid: " + uuid);
+                }
+
+                System.out.println("Mocking Reservation_Event with uuid: '" + uuid + "' ... Other variables are preset in Helper.java around line 3750");
+
+
+                // 2. Form Reservation_Event object
+
+                mockReservation_Event = new Reservation_Event(0, 1, 1, getCurrentDateTimeStamp(), uuid, userUuid, eventUuid, paid, false);
+
+                //System.out.println("mockSession toString(): "+mockSession.toString());
+
+                // 3. Form XML
+
+                try {
+                    xmlTotalMessage = getXmlFromReservation_EventObject(headerDescription, Source_type, mockReservation_Event);
+                } catch (JAXBException e) {
+                    e.printStackTrace();
+                }
+
+                //System.out.println("xmlTotalMessage toString(): \n"+xmlTotalMessage);
+
+                // 4. Send XML
+
+                try {
+                    Sender.sendMessage(xmlTotalMessage);
+                } catch (TimeoutException | IOException | JAXBException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+
+            case "55":
+
+                // Reservation_Event with UUID
+
+                uuid = "0b136ea0-19f3-42de-aff4-2b5ecf1b88cb";
+
+                System.out.print("You've chosen '" + choice + "': Update Reservation_Event with UUID: '" + uuid + "' ...\n");
+
+                // 1. Preset variables
+
+                headerDescription = "Mocking Reservation_Event UPDATE message with uuid";
+                // Source_type= ... ;
+                userUuid = "83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
+                eventUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
+                paid = 20.42f;
+                Source_type = SourceType.Planning;
+                Entity_type = EntityType.ReservationEvent;
+                entityVersion = 2;
+                active = 1;
+                timestamp = getCurrentDateTimeStamp();
+
+
+                // 2. Form Reservation_Event object
+
+                mockReservation_Event = new Reservation_Event(0, entityVersion, 1, getCurrentDateTimeStamp(), uuid, userUuid, eventUuid, paid, false);
+
+                //System.out.println("mockSession toString(): "+mockSession.toString());
+
+                // 3. Form XML
+
+                try {
+                    xmlTotalMessage = getXmlFromReservation_EventObject(headerDescription, Source_type, mockReservation_Event);
+                } catch (JAXBException e) {
+                    e.printStackTrace();
+                }
+
+                //System.out.println("xmlTotalMessage toString(): \n"+xmlTotalMessage);
+
+                // 4. Send XML
+
+                try {
+                    Sender.sendMessage(xmlTotalMessage);
+                } catch (TimeoutException | IOException | JAXBException e) {
+                    e.printStackTrace();
+                }
+                break;
+
 
             case "0":
 
@@ -3928,4 +4156,4 @@ old code:
         return xmlTotalMessage;
     }
 
- */
+=======*/

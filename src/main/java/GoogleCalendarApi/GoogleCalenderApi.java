@@ -18,9 +18,7 @@ import com.google.api.services.calendar.model.*;
 import jcifs.smb.SmbFile;
 
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -106,7 +104,8 @@ public class GoogleCalenderApi {
         // "smb://github.com/iefken/IPGA-Java-Controller/blob/master/src/main/java/GoogleCalendarApi/cred/client_secret.json"
         // http://dtsl.ehb.be/~ief.falot/Integration/GoogleCalendarApi/client_secret.json
         //InputStream test = in.getInputStream();
-        //InputStream in = new FileInputStream("C:\\Users\\ief.falot\\Documents\\GitHub\\PLANNING\\src\\main\\java\\GoogleCalendarApi\\cred\\client_secret(ief).json");
+
+/*
 
         String url = "https://github.com/iefken/IPGA-Java-Controller/blob/master/src/main/java/GoogleCalendarApi/cred/client_secret.json";
 
@@ -130,8 +129,25 @@ public class GoogleCalenderApi {
         }
 
         InputStream stream = new ByteArrayInputStream(message.getBytes(StandardCharsets.UTF_8));
+*/
+        //InputStream is = new FileInputStream("C:\\Users\\ief.falot\\Documents\\GitHub\\PLANNING\\src\\main\\java\\GoogleCalendarApi\\cred\\client_secret.json");
+        Credential credential = null;
+        HttpURLConnection connec = (HttpURLConnection)new URL("http://dtsl.ehb.be/~ief.falot/Integration/GoogleCalendarApi/client_secret.json").openConnection();
+        if(connec.getResponseCode() != connec.HTTP_OK)
+        {
+            System.err.println("HttpUrlConnection: Not OK");
+            return credential;
+        }else{
 
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(is));
+            System.out.println("HttpUrlConnection: OK!");
+            System.out.println("HttpUrlConnection: length = " + connec.getContentLength());
+            System.out.println("HttpUrlConnection: Type = " + connec.getContentType());
+            System.out.println("HttpUrlConnection: InputStream = {\n" + connec.getInputStream().toString()+"\n}\n");
+        }
+
+        InputStream in = connec.getInputStream();
+//Now you can read the file content with in
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow =
@@ -140,7 +156,7 @@ public class GoogleCalenderApi {
                         .setDataStoreFactory(DATA_STORE_FACTORY)
                         .setAccessType("offline")
                         .build();
-        Credential credential = new AuthorizationCodeInstalledApp(
+        credential = new AuthorizationCodeInstalledApp(
                 flow, new LocalServerReceiver()).authorize("user");
         //System.out.println("Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;

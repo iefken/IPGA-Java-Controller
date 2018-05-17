@@ -7,19 +7,17 @@ public class Reservation_Event extends BaseEntity{
     private String uuid;
     private String userUUID;
     private String eventUUID;
-    //private String type;
     private float paid;
 
 
     public Reservation_Event(int ReservationId, int entity_version, int active, String timestamp,
-                             String reservationUUID, String UserUUID, String EventUUID, float paid) {
+                             String reservationUUID, String userUUID, String eventUUID, float paid) {
 
         super(ReservationId,entity_version,active,timestamp);
 
         this.uuid = reservationUUID;
-        this.userUUID = UserUUID;
-        this.eventUUID = EventUUID;
-        //this.type = Type;
+        this.userUUID = userUUID;
+        this.eventUUID = eventUUID;
         this.paid = paid;
     }
 
@@ -31,19 +29,11 @@ public class Reservation_Event extends BaseEntity{
         this.uuid = reservationUUID;
         this.userUUID = UserUUID;
         this.eventUUID = EventUUID;
-        //this.type = Type;
+        this.userUUID = userUUID;
+        this.eventUUID = eventUUID;
         this.paid = paid;
     }
-    public Reservation_Event(int ReservationId, String reservationUUID, String UserUUID, String EventUUID, String Type, float paid) {
 
-        //super(ReservationId,entity_version,active,Timestamp);
-
-        this.uuid = reservationUUID;
-        this.userUUID = UserUUID;
-        this.eventUUID = EventUUID;
-        //this.type = Type;
-        this.paid = paid;
-    }
 
     public int getReservationId() {
         // get id from inherited class
