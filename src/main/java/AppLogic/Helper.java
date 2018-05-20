@@ -5,6 +5,9 @@ package AppLogic;
 import DatabaseLogic.*;
 import GoogleCalendarApi.GoogleCalenderApi;
 import JsonMessage.JSONException;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.services.calendar.Calendar;
 import com.google.gson.Gson;
 import okhttp3.*;
 import HttpRequest.*;
@@ -41,10 +44,10 @@ public interface Helper {
     String HOST_NAME_LINK = "10.3.50.38";
     int PORT_NUMBER = 5672;
 
-    //For setting CLI options in main
+    //For setting mainCLI options in main
     static String[] getOptions() {
 
-        //Add CLI options here (a.b. : a: choice, b: sort of message
+        //Add CLI options here
         String[] options = {
                 "[01.V] Create new User without UUID (Front-End Call)",
                 "[02.V] Create new Event without UUID (Front-End Call)",
@@ -54,13 +57,59 @@ public interface Helper {
                 "[06.V] Get all UUID's from UUID manager",
                 "[07.V] updateUuidRecordVersion",
                 "[08.V] updateUuidRecordVersionB",
-                "[09.V] List upcoming events (Google calendar 1) *authorize not yet included",
-                "[10.V] Create new event (Google calendar 2)",
-                "[11.V] Create new chosen event (Google calendar 2)",
-                "[12.V] Mock XML message",
-                "/[13.x] /New Session with UUID",
-                "/[14.x] /New Reservation_Session with UUID"
+                "[09.V] Google Calendar Api",
+                "[10.V] Mock XML message",
+                "[11.] /",
+                "[12.] /",
+                "[13.x] /New Session with UUID",
+                "[14.x] /New Reservation_Session with UUID"
 
+        };
+        return options;
+    }
+
+    // For setting xml messages to mock
+    static String[] getXmlMessageOptions() {
+
+        String[] options = {
+                "[10.V] User: New with Uuid: 'fbea0671-1324-4f92-a0b4-cc6e56c537d7' ",
+                "[11.V] User: New with chosen Uuid: ",
+                "[12.x] User: New without Uuid: ",
+                "[15.V] User: Update with Uuid: 'fbea0671-1324-4f92-a0b4-cc6e56c537d7' ",
+                "[20.V] Event: New with Uuid: 'd5b0f1ea-a8db-4186-b3fe-f37654eebe65' ",
+                "[21.V] Event: New with chosen Uuid: ",
+                "[22.V] Event: New without Uuid: ",
+                "[25.V] Event: Update with Uuid: 'd5b0f1ea-a8db-4186-b3fe-f37654eebe65' ",
+                "[30.V] Session: New with Uuid: 'c1a89eff-0a22-454d-aecc-44c19c95c261' ",
+                "[31.V] Session: New with chosen Uuid: ",
+                "[32.V] Session: New without Uuid: ",
+                "[35.V] Session: Update with Uuid: 'c1a89eff-0a22-454d-aecc-44c19c95c261' ",
+                "[40.x] Reservation_Event: New with Uuid: '0b136ea0-19f3-42de-aff4-2b5ecf1b88cb' ",
+                "[41.x] Reservation_Event: New with chosen Uuid: ",
+                "[42.x] Reservation_Event: New without Uuid: ",
+                "[45.x] Reservation_Event: Update with Uuid: '0b136ea0-19f3-42de-aff4-2b5ecf1b88cb' ",
+                "[50.x] Reservation_Session: New with Uuid: '293c7ef1-d8e7-4393-a8ee-b89cd09f927b' ",
+                "[51.x] Reservation_Session: New with chosen Uuid: ",
+                "[52.x] Reservation_Session: New without Uuid: ",
+                "[55.x] Reservation_Session: Update with Uuid: '293c7ef1-d8e7-4393-a8ee-b89cd09f927b' "
+
+        };
+        return options;
+    }
+
+    // for setting google calendar api options
+    static String[] getGoogleCalendarApiOptions() {
+
+        //Add CLI options here
+        String[] options = {
+                "[01.V] GCA: List upcoming events",
+                "[02.V] GCA: Create new dummy event",
+                "[03.V] GCA: Create new event with mocked variables",
+                "[04.V] GCA: Create new event with some chosen variables",
+                "[05.V] GCA: Creating new event, updating it (with preset variables)",
+                "[06.V] GCA: Cancel event by event and a chosen GCAEventId",
+                "[07.x] GCA: Cancel event by chosen GCAEventId ",
+                "[08.x] GCA: Cancel event by chosen Uuid "
         };
         return options;
     }
@@ -586,62 +635,32 @@ public interface Helper {
 
                     break;
 
-                // 09. List upcoming events (Google calendar 1)
+                // 09. Google Calendar Api Calls
                 case "9":
 
-                    System.out.println("\nCase '" + choice + "': List upcoming events (Google calendar 1)!");
+                    boolean continueCalendarApi = true;
+                    int counter = 1;
+                    while (continueCalendarApi) {
+                        // CLI message
 
-                    System.out.println(" [" + messageType + "] Trying to list events... ");
+                        System.out.println("\nCase '" + choice + "': Mock Google Calendar Api Call nr." + counter + "!\n");
+                        continueCalendarApi = googleCalendarApiMocker();
+                        counter++;
 
-                    try {
-                        System.out.println(" [" + messageType + "] 1. Trying to list events... ");
-                        com.google.api.services.calendar.Calendar service = getCalendarService();
-
-                        GoogleCalenderApi.listEvents(service);
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
 
-                    break;
 
-                // 10. Create new dummy event (Google calendar 2)
+                    break;
+                // 9. Mock XML message
                 case "10":
 
-                    System.out.println("\nCase '" + choice + "': Create new dummy event (Google calendar 2)!");
-
-                    try {
-                        System.out.println(" [" + messageType + "] 2. Trying to create dummy event... ");
-                        com.google.api.services.calendar.Calendar service = getCalendarService();
-
-                        GoogleCalenderApi.createDummyEvent(service);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-
-                // 11. Create new event (Google calendar 3)
-                case "11":
-
-                    System.out.println("\nCase '" + choice + "': Create new event (Google calendar 3)!");
-
-                    try {
-                        System.out.println(" [" + messageType + "] 3. Creating new event... ");
-                        com.google.api.services.calendar.Calendar service = getCalendarService();
-
-                        GoogleCalenderApi.createDummyEvent(service);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                // 12. Mock XML message
-                case "12":
-
                     boolean continueMocking = true;
-                    int counter = 1;
+                    counter = 1;
                     while (continueMocking) {
                         // CLI message
                         System.out.println("\nCase '" + choice + "': Mock XML message nr." + counter + "!");
                         continueMocking = xmlMessageMocker();
+                        counter++;
                     }
 
                     break;
@@ -720,6 +739,7 @@ public interface Helper {
                     break;
 
                 case "":
+                    System.out.println("\nReceived 'Empty' (\"\") String as option...!");
                 case "0":
                 default:
 
@@ -763,6 +783,10 @@ public interface Helper {
             if (messageType == "false") {
                 System.out.println("[!!!] ERROR: No messageType found in XML...");
             }
+        }
+
+        if (messageType.toLowerCase() == "pingmessage") {
+            showFullXMLMessage = false;
         }
 
         // get Source from XML (set in sender)
@@ -826,6 +850,28 @@ public interface Helper {
 
                 handleNewMessageReservationEvent(task);
 
+                break;
+
+            case "reservationMessage":
+
+
+                System.out.print("Trying to recover from incorrect reservationMessage from '" + messageSource + "'!");
+                String eventUuid = getSafeXmlProperty(task, "eventUuid");
+                if (eventUuid == "false" || eventUuid == "") {
+                    String sessionUuid = getSafeXmlProperty(task, "sessionUuid");
+                    if (sessionUuid == "false" || sessionUuid == "") {
+                        System.out.print("Failed to recover...");
+                    } else {
+                        //reservationsession message
+                        System.out.print("Trying to recover... This seems to be a reservation for a Session...");
+
+                        handleNewMessageReservationSession(task);
+                    }
+                } else {
+                    //reservationevent message
+                    System.out.print("Trying to recover... This seems to be a reservation for an Event...");
+                    handleNewMessageReservationEvent(task);
+                }
                 break;
 
             case "testmessage":
@@ -901,10 +947,11 @@ public interface Helper {
 
     static void handleNewMessageUser(String task) {
 
-        String userUUID = "";
+        String userUuid = "";
 
         User thisUserInMessage = null;
         Boolean uuidExists = false;
+        //Boolean activeIs1 = false;
 
         EntityType thisEntityType = EntityType.User;
         SourceType Source_type = SourceType.Planning;
@@ -913,9 +960,9 @@ public interface Helper {
         try {
             thisUserInMessage = getUserObjectFromXmlMessage(task);
 
-            System.out.println("thisUserInMessage.toString():\n" + thisUserInMessage.toString() + "\n");
+            userUuid = thisUserInMessage.getUuid();
 
-            userUUID = thisUserInMessage.getUuid();
+            System.out.println("New message for [Event] with Uuid:" + userUuid);
 
 
             //System.out.println("user toString: "+thisUserInMessage.toString());
@@ -928,8 +975,9 @@ public interface Helper {
 
             // 2.1 check if UUID exists in local db
 
+            uuidExists = false;
             try {
-                uuidExists = new BaseEntityDAO().doesUUIDExist("User", userUUID);
+                uuidExists = new BaseEntityDAO().doesUUIDExist("User", userUuid);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -938,124 +986,96 @@ public interface Helper {
 
             if (uuidExists) {
 
-                System.out.println("UUID already exists in our PlanningDB table:[User]");
+                System.out.println("Uuid already exists in our PlanningDB table:[User]\n");
 
-                // 2.2. User record update
-
+                // 2.2 Session record update
                 // 2.2.1. get idUser from userUUID in User
                 String[] propertiesToSelect = {"idUser"};
                 String table = "User";
                 String[] selectors = {"uuid"};
-                String[] values = {"" + userUUID};
+                String[] values = {"" + userUuid};
 
                 String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
 
-                // 2.2.2. get the entityVersion from idUser
-                propertiesToSelect[0] = "entity_version";
-                table = "BaseEntity";
-                selectors[0] = "idBaseEntity";
-                values[0] = selectResults[0];
-                int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
+                // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
+                if (thisUserInMessage.getActive() == 0) {
 
-                //System.out.println("localEntityVersion: "+localEntityVersion + " & thisUserInMessage.getEntityVersion():  "+thisUserInMessage.getEntityVersion());
+                    new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
+                    System.out.println("SoftDelete executed on [User] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+                } else {
 
-                if (localEntityVersion < thisUserInMessage.getEntityVersion()) {
+                    // 2.2.2. get the entityVersion from idUser
+                    propertiesToSelect[0] = "entity_version";
+                    table = "BaseEntity";
+                    selectors[0] = "idBaseEntity";
+                    values[0] = selectResults[0];
+                    int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
 
-                    // 2.3.1.A. set active = 0 on old entity record in db
+                    //System.out.println("localEntityVersion: "+localEntityVersion + " & thisUserInMessage.getEntityVersion():  "+thisUserInMessage.getEntityVersion());
+
+                    try {
+                        thisUserInMessage.setEntityId(Integer.parseInt(selectResults[0]));
+                        System.out.println("thisUserInMessage.getEventId(): " + thisUserInMessage.getIdUser());
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
                     boolean allGood = true;
+                    if (localEntityVersion < thisUserInMessage.getEntityVersion()) {
 
-                    // parse id to int
+                        // 2.3.2. update record in our local db
 
-                    int oldLocalEntityId = Integer.parseInt(selectResults[0]), newLocalEntityId;
-
-                    try {
-                        newLocalEntityId = new User_DAO().UpdateUser(thisUserInMessage, oldLocalEntityId);
-                    } catch (SQLException e) {
-                        System.out.println("Something went wrong updating user: " + e);
-                        //e.printStackTrace();
-                    }
-
-                    /*
-                    try {
-                        allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "active", "0", "int", "idBaseEntity", selectResults[0]);
-                    } catch (Exception e) {
-                        //e.printStackTrace();
-                        System.out.println("ERROR in 2.3.1.A. set active = 0 on old record in db:\n " + e);
-                        allGood = false;
-                    }
-
-                    // 2.3.1.B. set uuid = / on old table record in db
-                    if (allGood) {
-
+                        int updateUuidRecordVersionResponse = 0;
                         try {
-                            allGood = new BaseEntityDAO().updateTablePropertyValue("User", "uuid", "/", "String", "idUser", selectResults[0]);
+                            allGood = new User_DAO().updateUserByObject(thisUserInMessage);
                         } catch (Exception e) {
-                            //e.printStackTrace();
-                            System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n " + e);
-                            allGood = false;
-                        }
-                    }
-
-                    if (allGood) {
-
-                        // 2.3.2. insert new record into local db
-                        int messageUserInsertReturner = 0, updateUuidRecordVersionResponse = 0;
-                        try {
-                            messageUserInsertReturner = new User_DAO().insertIntoUser(thisUserInMessage);
-                        } catch (SQLException e) {
-                            e.printStackTrace();
+                            System.out.println("Error updating user in the database: " + e);
                         }
 
                         // 2.3.3. updateUuidRecordVersion() (To UUID master)
-                        try {
-                            updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, userUUID);
-                        } catch (IOException | TimeoutException | JAXBException e) {
-                            e.printStackTrace();
+
+                        if (allGood) {
+                            try {
+                                updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, userUuid);
+                            } catch (IOException | TimeoutException | JAXBException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            //updateUserError
                         }
 
-                        // 2.3.4. update entity version (on our database)
-                        try {
-                            allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + thisUserInMessage.getEntityVersion(), "int", "idBaseEntity", "" + messageUserInsertReturner);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n " + e);
-                            allGood = false;
-                        }
-*/
-                    System.out.println("We had this User with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisUserInMessage.getEntityVersion() + "'");
+                        System.out.println("We had this [User] with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisUserInMessage.getEntityVersion() + "'");
 
-                } else {
-                    System.out.println("We already had this User with entityVersion: '" + localEntityVersion + "'");
+
+                    } else {
+                        System.out.println("We already had this [User] with entityVersion: '" + localEntityVersion + "'");
+                    }
                 }
-
 
             } else {
                 // New user record
+
                 // 2.4.1. insert new user into local db
+
                 int messageUserInsertReturner = 0;
                 try {
                     messageUserInsertReturner = new User_DAO().insertIntoUser(thisUserInMessage);
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    System.out.println("Error inserting [User] into the database: " + e);
                 }
                 //System.out.println("User.toString(): "+thisUserInMessage.toString());
 
                 // 2.4.2. insertUuidRecord
 
                 try {
-                    Sender.insertUuidRecord("", messageUserInsertReturner, thisEntityType, Source_type, userUUID);
+                    Sender.insertUuidRecord("", messageUserInsertReturner, thisEntityType, Source_type, userUuid);
                 } catch (IOException | TimeoutException | JAXBException e) {
                     e.printStackTrace();
                 }
-                System.out.println("Inserted new user record with id='" + messageUserInsertReturner + "' and UUID='" + userUUID + "'");
+                System.out.println("Inserted new user record with id='" + messageUserInsertReturner + "' and uuid='" + userUuid + "'");
 
 
             }
-        } else {
-            System.out.println("ERROR: Something went wrong getting user object from xml message!");
         }
-
-        //System.out.println(" [END] ");
     }
 
     static void handleNewMessageEvent(String task) {
@@ -1069,17 +1089,17 @@ public interface Helper {
         // 1. transform xml to event-object
         try {
             thisEventInMessage = getEventObjectFromXmlMessage(task);
-            //System.out.println("user toString: "+thisUserInMessage.toString());
+
             eventUuid = thisEventInMessage.getEventUUID();
 
-            System.out.println("New message for EVENT with UUID: " + eventUuid);
+            System.out.println("New message for [Event] with Uuid: " + eventUuid);
 
-            //System.out.println(" [" + messageType + "] for userUUID: " + userUUID);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         if (thisEventInMessage != null) {
+
             // 2.1. check if UUID exists in local db
             uuidExists = false;
             try {
@@ -1090,11 +1110,9 @@ public interface Helper {
 
             if (uuidExists) {
 
-                System.out.println("UUID already exists in our PlanningDB table:\nEvent");
+                System.out.println("Uuid already exists in our PlanningDB table:[Event]");
 
                 // 2.2 Session record update
-                // public String[] getPropertyValueByTableAndProperty(String[] propertiesToSelect, String table, String[] selectors, String[] values)
-
                 // 2.2.1. get idEvent from eventUUID in Event
                 String[] propertiesToSelect = {"idEvent"};
                 String table = "Event";
@@ -1103,76 +1121,70 @@ public interface Helper {
 
                 String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
 
-                //System.out.println("selectResults: " + selectResults[0]);
+                // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
+                if (thisEventInMessage.getActive() == 0) {
 
-                // 2.2.2. get entityVersion from id in BaseEntity
-                propertiesToSelect[0] = "entity_version";
-                table = "BaseEntity";
-                selectors[0] = "idBaseEntity";
-                values[0] = selectResults[0];
-                int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
+                    new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
+                    System.out.println("SoftDelete executed on [Event] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+                } else {
 
-                if (localEntityVersion < thisEventInMessage.getEntityVersion()) {
+                    // 2.2.2. get entityVersion from id in BaseEntity
+                    propertiesToSelect[0] = "entity_version";
+                    table = "BaseEntity";
+                    selectors[0] = "idBaseEntity";
+                    values[0] = selectResults[0];
+                    int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
 
-                    // 2.3.1.A. set active = 0 on old entity record in db
+                    try {
+                        thisEventInMessage.setEntityId(Integer.parseInt(selectResults[0]));
+                        System.out.println("thisEventInMessage.getEventId(): " + thisEventInMessage.getEventId());
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+
                     boolean allGood = true;
-                    try {
-                        allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "active", "0", "int", "idBaseEntity", selectResults[0]);
-                    } catch (Exception e) {
-                        //e.printStackTrace();
-                        System.out.println("ERROR in 2.3.1.A. set active = 0 on old record in db:\n " + e);
-                        allGood = false;
-                    }
 
-                    // 2.3.1.B. set uuid = / on old table record in db
-                    try {
-                        allGood = new BaseEntityDAO().updateTablePropertyValue("Event", "uuid", "/", "String", "idEvent", selectResults[0]);
-                    } catch (Exception e) {
-                        //e.printStackTrace();
-                        System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n " + e);
-                        allGood = false;
-                    }
 
-                    if (allGood) {
+                    if (localEntityVersion < thisEventInMessage.getEntityVersion()) {
 
-                        // 2.3.2. insert new record into local db
-                        int messageEventInsertReturner = 0, updateUuidRecordVersionResponse = 0;
+                        // 2.3.1. update google calender through API
+
+                        // TODO
+
+                        // 2.3.2. update record in our local db
+
+                        int updateUuidRecordVersionResponse = 0;
                         try {
-                            messageEventInsertReturner = new Event_DAO().insertIntoEvent(thisEventInMessage);
-                        } catch (SQLException e) {
-                            e.printStackTrace();
+                            allGood = new Event_DAO().updateEventByObject(thisEventInMessage);
+                        } catch (Exception e) {
+                            System.out.println("Error updating event in the database: " + e);
                         }
 
                         // 2.3.3. updateUuidRecordVersion() (To UUID master)
-                        try {
-                            updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, eventUuid);
-                        } catch (IOException | TimeoutException | JAXBException e) {
-                            e.printStackTrace();
+
+                        if (allGood) {
+                            try {
+                                updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, eventUuid);
+                            } catch (IOException | TimeoutException | JAXBException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            //updateEventError
                         }
 
-                        // 2.3.4. update entity version (on our database)
-                        try {
-                            allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + thisEventInMessage.getEntityVersion(), "int", "idBaseEntity", "" + messageEventInsertReturner);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n " + e);
-                            allGood = false;
-                        }
+
                         System.out.println("We had this event with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisEventInMessage.getEntityVersion() + "'");
 
+                    } else {
+                        // we have the latest version...
+                        System.out.println("We already had this event with entityVersion: '" + localEntityVersion + "'");
                     }
-
-                } else {
-                    // we have the latest version...
-                    System.out.println("We already had this event with entityVersion: '" + localEntityVersion + "'");
-
                 }
 
             } else {
                 // New event record
 
                 // 2.4.1. Add new event to Google calendar
-
 
                 String newEventHtmlLinkAndId = null;
                 try {
@@ -1181,16 +1193,18 @@ public interface Helper {
                     String[] newEventProperties = newEventHtmlLinkAndId.split("-=-");
 
                     thisEventInMessage.setGCAEventId(newEventProperties[1]);
+                    //System.out.println("CGAEventId in newEventProperties[1]: " + newEventProperties[1]);
                     thisEventInMessage.setGCAEventLink(newEventProperties[0]);
+                    //System.out.println("CGAEventLink in newEventProperties[0]: " + newEventProperties[0]);
 
                 } catch (IOException e) {
                     System.out.println("Error adding event to Google calendar API: " + e);
                     //e.printStackTrace();
                 }
-
                 // 2.4.2. insert new event into local db
                 int messageEventInsertReturner = 0;
                 try {
+
                     messageEventInsertReturner = new Event_DAO().insertIntoEvent(thisEventInMessage);
                 } catch (SQLException e) {
                     System.out.println("Error inserting event into the database: " + e);
@@ -1221,7 +1235,7 @@ public interface Helper {
 
     static void handleNewMessageSession(String task) {
 
-        String sessionUUID = "";
+        String sessionUuid = "";
         Session thisSessionInMessage = null;
         Boolean uuidExists = false;
         EntityType thisEntityType = EntityType.Session;
@@ -1231,26 +1245,29 @@ public interface Helper {
         try {
             thisSessionInMessage = getSessionObjectFromXmlMessage(task);
 
-            sessionUUID = thisSessionInMessage.getSessionUUID();
+            sessionUuid = thisSessionInMessage.getSessionUUID();
 
-            System.out.println("New message for SESSION with UUID: " + sessionUUID);
+            System.out.println("New message for [Session] with Uuid: " + sessionUuid);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         if (thisSessionInMessage != null) {
+
             // 2.1. check if UUID exists in local db
             uuidExists = false;
             try {
-                uuidExists = new BaseEntityDAO().doesUUIDExist("Session", sessionUUID);
+                uuidExists = new BaseEntityDAO().doesUUIDExist("Session", sessionUuid);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
+            // 2.1.1 check if session is to be 'deleted'
             if (uuidExists) {
 
-                System.out.println("UUID already exists in our PlanningDB table:\nSession:");
+                System.out.println("UUID already exists in our PlanningDB table:[Session]");
+
 
                 // 2.2 Session record update
 
@@ -1258,66 +1275,70 @@ public interface Helper {
                 String[] propertiesToSelect = {"idSession"};
                 String table = "Session";
                 String[] selectors = {"uuid"};
-                String[] values = {"" + sessionUUID};
+                String[] values = {"" + sessionUuid};
 
                 String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
 
-                //System.out.println("selectResults: " + selectResults[0]);
+                // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
+                if (thisSessionInMessage.getActive() == 0) {
+                    new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
+                    System.out.println("SoftDelete executed on object with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+                } else {
 
-                // 2.2.2. get entityVersion from id in BaseEntity
-                propertiesToSelect[0] = "entity_version";
-                table = "BaseEntity";
-                selectors[0] = "idBaseEntity";
-                values[0] = selectResults[0];
+                    // 2.2.2. get entityVersion from id in BaseEntity
+                    propertiesToSelect[0] = "entity_version";
+                    table = "BaseEntity";
+                    selectors[0] = "idBaseEntity";
+                    values[0] = selectResults[0];
 
-                int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
-
-
-                if (localEntityVersion < thisSessionInMessage.getEntityVersion()) {
-
-                    // 2.3.1.A. set active = 0 on old entity record in db
+                    try {
+                        thisSessionInMessage.setEntityId(Integer.parseInt(selectResults[0]));
+                        System.out.println("thisSessionInMessage.getSessionId(): " + thisSessionInMessage.getSessionId());
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
 
                     boolean allGood = true;
-                    try {
-                        allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "active", "0", "int", "idBaseEntity", selectResults[0]);
-                    } catch (Exception e) {
-                        //e.printStackTrace();
-                        System.out.println("ERROR in 2.3.1.A. set active = 0 on old record in db:\n " + e);
-                        allGood = false;
-                    }
 
-                    // 2.3.1.B. set uuid = / on old table record in db
+                    // 2.2.2. get entityVersion from id in BaseEntity
+                    propertiesToSelect[0] = "entity_version";
+                    table = "BaseEntity";
+                    selectors[0] = "idBaseEntity";
+                    values[0] = selectResults[0];
 
-                    if (allGood) {
+                    int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
+
+
+                    if (localEntityVersion < thisSessionInMessage.getEntityVersion()) {
+
+                        // 2.3.1. update google calender through API
+
+                        // TODO
+
+                        // 2.3.2. update record in our local db
 
                         try {
-                            allGood = new BaseEntityDAO().updateTablePropertyValue("Session", "uuid", "/", "String", "idSession", selectResults[0]);
+                            allGood = new Session_DAO().updateSessionByObject(thisSessionInMessage);
                         } catch (Exception e) {
-                            //e.printStackTrace();
-                            System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n " + e);
-                            allGood = false;
-                        }
-                    }
-
-                    if (allGood) {
-                        // 2.3.2. insert new record into local db
-                        int messageSessionInsertReturner = 0, updateUuidRecordVersionResponse = 0;
-                        try {
-                            messageSessionInsertReturner = new Session_DAO().insertIntoSession(thisSessionInMessage);
-                        } catch (SQLException e) {
-                            e.printStackTrace();
+                            System.out.println("Error updating session in the database: " + e);
                         }
 
                         // 2.3.3. updateUuidRecordVersion() (To UUID master)
-                        try {
-                            updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, sessionUUID);
-                        } catch (IOException | TimeoutException | JAXBException e) {
-                            e.printStackTrace();
+
+                        int updateUuidRecordVersionResponse = 0;
+                        if (allGood) {
+                            try {
+                                updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, sessionUuid);
+                            } catch (IOException | TimeoutException | JAXBException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            //updateEventError
                         }
 
                         // 2.3.4. update entity version (on our database)
                         try {
-                            allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + thisSessionInMessage.getEntityVersion(), "int", "idBaseEntity", "" + messageSessionInsertReturner);
+                            allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + thisSessionInMessage.getEntityVersion(), "int", "idBaseEntity", "" + selectResults[0]);
                         } catch (Exception e) {
                             e.printStackTrace();
                             System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n " + e);
@@ -1325,18 +1346,19 @@ public interface Helper {
                         }
 
                         System.out.println("We had this Session with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisSessionInMessage.getEntityVersion() + "'");
+
+                    } else {
+
+                        // we have the latest version...
+                        System.out.println("We already had this session with entityVersion: '" + localEntityVersion + "'");
+
                     }
-                } else {
-
-                    // we have the latest version...
-                    System.out.println("We already had this session with entityVersion: '" + localEntityVersion + "'");
-
                 }
 
             } else {
+
                 // New session record
 
-                /*
                 // 2.4.1. Add new Session to Google calendar
                 String newSessionHtmlLinkAndId = "";
                 try {
@@ -1350,30 +1372,30 @@ public interface Helper {
                     //System.out.println("thisSessionInMessage.toString()"+thisSessionInMessage.toString());
 
                 } catch (IOException e) {
-                    System.out.println("Error adding session as event to Google calendar API: "+e);
+                    System.out.println("Error adding session as event to Google calendar API: " + e);
                     //e.printStackTrace();
                 }
-                */
+
                 // 2.4.2. insert new session into local db
                 int messageSessionInsertReturner = 0;
                 try {
                     messageSessionInsertReturner = new Session_DAO().insertIntoSession(thisSessionInMessage);
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    System.out.println("Error inserting user into the database: " + e);
                 }
 
                 // 2.4.3. insertUuidRecord
                 try {
-                    Sender.insertUuidRecord("", messageSessionInsertReturner, thisEntityType, Source_type, sessionUUID);
+                    Sender.insertUuidRecord("", messageSessionInsertReturner, thisEntityType, Source_type, sessionUuid);
                 } catch (IOException | TimeoutException | JAXBException e) {
                     e.printStackTrace();
                 }
-                System.out.println("Inserted new session record with id='" + messageSessionInsertReturner + "' and UUID='" + sessionUUID + "'");
+                System.out.println("Inserted new session record with id='" + messageSessionInsertReturner + "' and UUID='" + sessionUuid + "'");
 
 
             }
         } else {
-            System.out.println("Something went wrong getting session object from xml message!");
+            System.out.println("ERROR: Something went wrong getting session object from xml message!");
         }
 
         //System.out.println(" [END] ");
@@ -1392,49 +1414,7 @@ public interface Helper {
 
         EntityType thisEntityType = EntityType.ReservationEvent;
         SourceType Source_type = SourceType.Planning;
-        /*
-        // get UUID's from xml
-        reservationUUID = getSafeXmlProperty(task, "uuid");
-        if (reservationUUID == "false") {
 
-            reservationUUID = getSafeXmlProperty(task, "reservationUUID");
-
-            if (reservationUUID == "false") {
-
-                reservationUUID = getSafeXmlProperty(task, "reservationUuid");
-
-                if (reservationUUID == "false") {
-
-                    System.out.println(" [!!!] ERROR: No uuid, reservationUuid or reservationUUID found in XML...");
-
-                    allGood = false;
-                }
-            }
-        }
-
-        userUUID = getSafeXmlProperty(task, "userUuid");
-        if (userUUID == "false") {
-
-            userUUID = getSafeXmlProperty(task, "userUUID");
-
-            if (userUUID == "false") {
-                System.out.println(" [!!!] ERROR: No userUuid found in XML");
-                allGood = false;
-            }
-        }
-
-        eventUUID = getSafeXmlProperty(task, "eventUuid");
-
-        if (eventUUID == "false" || eventUUID == "") {
-
-            System.out.println(" [!!!] ERROR: No sessionUuid or eventUuid found in XML: ");
-            allGood = false;
-
-        } else {
-
-            System.out.println("New RESERVATION_EVENT for Event with UUID: " + eventUUID);
-        }
-*/
         // 1. transform xml to reservation-object
 
         newReservation_EventObjectFromXml = getReservation_EventObjectFromXmlMessage(task);
@@ -1457,127 +1437,119 @@ public interface Helper {
             e.printStackTrace();
         }
 
+        // 2.1.1 check if reservation event is to be 'deleted'
 
         if (uuidExists) {
 
-            System.out.println("UUID already exists in our PlanningDB table:\n");
+            System.out.println("UUID already exists in our PlanningDB table:[Session]");
 
-            // 2.2. Reservation_Event record update
+            // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
+            if (newReservation_EventObjectFromXml.getActive() == 0) {
+                new BaseEntityDAO().softDeleteBaseEntity(newReservation_EventObjectFromXml.getEntityId());
+                System.out.println("SoftDelete execusted on object with entityId: " + newReservation_EventObjectFromXml.getEntityId() + "\n");
+            } else {
 
-            // Prepare new reservation_event object for sending to database
-            System.out.println("[Reservation_Event]\n");
+                // 2.2. Reservation_Event record update
+                // Prepare new reservation_event object for sending to database
+                System.out.println("[Reservation_Event]\n");
 
-            // 2.2.1 get idSession from sessionUUID in Session
-            String[] propertiesToSelect = {"idReservationEvent"};
-            String table = "Reservation_Event";
-            String[] selectors = {"uuid"};
-            String[] values = {"" + reservationUUID};
+                // 2.2.1 get idSession from sessionUUID in Session
+                String[] propertiesToSelect = {"idReservationEvent"};
+                String table = "Reservation_Event";
+                String[] selectors = {"uuid"};
+                String[] values = {"" + reservationUUID};
 
-            String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
+                String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
 
-            //System.out.println("selectResults: " + selectResults[0]);
+                // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
+                if (newReservation_EventObjectFromXml.getActive() == 0) {
+                    new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
+                    System.out.println("SoftDelete execusted on object with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+                } else {
 
-            // 2.2.2. get entityVersion from id in BaseEntity
-            propertiesToSelect[0] = "entity_version";
-            table = "BaseEntity";
-            selectors[0] = "idBaseEntity";
-            values[0] = selectResults[0];
-            int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
+                    //System.out.println("selectResults: " + selectResults[0]);
 
-            Reservation_Event existingReservation_Event = null;
-            try {
-                existingReservation_Event = getReservation_EventObjectFromXmlMessage(task);
-            } catch (Exception e) {
-                e.printStackTrace();
+                    // 2.2.2. get entityVersion from id in BaseEntity
+                    propertiesToSelect[0] = "entity_version";
+                    table = "BaseEntity";
+                    selectors[0] = "idBaseEntity";
+                    values[0] = selectResults[0];
+                    int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
+
+                    Reservation_Event existingReservation_Event = null;
+                    try {
+                        existingReservation_Event = getReservation_EventObjectFromXmlMessage(task);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    if (localEntityVersion < existingReservation_Event.getEntityVersion()) {
+
+                        // 2.3.1. update google calender through API
+
+                        // TODO
+
+                        // 2.3.2. update record in our local db
+
+                        int updateUuidRecordVersionResponse = 0;
+                        try {
+                            allGood = new Reservation_Event_DAO().updateReservationEventByObject(existingReservation_Event);
+                        } catch (Exception e) {
+                            System.out.println("Error updating reservation event in the database: " + e);
+                        }
+                        // 2.3.3. updateUuidRecordVersion() (To UUID master)
+                        try {
+                            updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, reservationUUID);
+                        } catch (IOException | TimeoutException | JAXBException e) {
+                            e.printStackTrace();
+                        }
+                        // 2.3.4. update entity version (on our database)
+                        try {
+                            allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + existingReservation_Event.getEntityVersion(), "int", "idBaseEntity", "" + selectResults[0]);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            System.out.println("ERROR in 2.3.4. update entity version:\n " + e);
+                            allGood = false;
+                        }
+
+                        System.out.println("We had this Reservation_Event with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + existingReservation_Event.getEntityVersion() + "'");
+
+
+                    } else {
+                        // we have the latest version...
+                        System.out.println("We already had this Reservation_Event with entityVersion: '" + localEntityVersion + "'");
+
+                    }
+                }
+
             }
 
-            if (localEntityVersion < existingReservation_Event.getEntityVersion()) {
-                // 2.3.1.A. set active = 0 on old entity record in db
-                boolean newREAllGood = true;
+            }else{
+
+                // uuid doesn't exit locally yet
+                // # insert record locally with given info
+
+
+                int messageReservationInsertReturner = 0;
+
+                BaseEntity newTempEntity = new BaseEntity();
+                newReservation_EventObjectFromXml.setReservationId(newTempEntity.getEntityId());
                 try {
-                    newREAllGood = new Reservation_Event_DAO().updateTablePropertyValue("BaseEntity", "active", "0", "int", "idBaseEntity", selectResults[0]);
-                } catch (Exception e) {
+                    messageReservationInsertReturner = new Reservation_Event_DAO().insertIntoReservation_Event(newReservation_EventObjectFromXml);
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                // insertUuidRecord
 
-                // 2.3.1.B. set uuid = / on old table record in db
-                if (newREAllGood) {
-
-                    try {
-                        allGood = new BaseEntityDAO().updateTablePropertyValue("Reservation_Event", "uuid", "/", "String", "idReservationEvent", selectResults[0]);
-                    } catch (Exception e) {
-                        //e.printStackTrace();
-                        System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n " + e);
-                        newREAllGood = false;
-                    }
+                try {
+                    Sender.insertUuidRecord("", messageReservationInsertReturner, thisEntityType, Source_type, reservationUUID);
+                } catch (IOException | TimeoutException | JAXBException e) {
+                    e.printStackTrace();
                 }
+                System.out.println("Inserted new Reservation_Event record with Uuid: " + reservationUUID + "!");
 
-                if (newREAllGood) {
-                    // 2.3.2. insert new record into local db
-                    int messageReservation_EventInsertReturner = 0, updateUuidRecordVersionResponse = 0;
-                    try {
-                        messageReservation_EventInsertReturner = new Reservation_Event_DAO().insertIntoReservation_Event(existingReservation_Event);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-
-                    // 2.3.3. updateUuidRecordVersion() (To UUID master)
-                    try {
-                        updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, reservationUUID);
-                    } catch (IOException | TimeoutException | JAXBException e) {
-                        e.printStackTrace();
-                    }
-
-                    // 2.3.4. update entity version (on our database)
-                    try {
-                        allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + existingReservation_Event.getEntityVersion(), "int", "idBaseEntity", "" + messageReservation_EventInsertReturner);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n " + e);
-                        allGood = false;
-                    }
-
-                    System.out.println("We had this Reservation_Event with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + existingReservation_Event.getEntityVersion() + "'");
-
-                }
-
-            } else {
-                // we have the latest version...
-                System.out.println("We already had this Reservation_Event with entityVersion: '" + localEntityVersion + "'");
 
             }
-
-
-            // # send update to uuid manager
-
-
-        } else {
-
-            // uuid doesn't exit locally yet
-            // # insert record locally with given info
-
-            System.out.println("uuid doesn't exit locally yet...");
-
-            int messageReservationInsertReturner = 0;
-
-            // TODO
-
-            BaseEntity newTempEntity = new BaseEntity();
-            newReservation_EventObjectFromXml.setReservationId(newTempEntity.getEntityId());
-            try {
-                messageReservationInsertReturner = new Reservation_Event_DAO().insertIntoReservation_Event(newReservation_EventObjectFromXml);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            // insertUuidRecord
-
-            try {
-                Sender.insertUuidRecord("", messageReservationInsertReturner, thisEntityType, Source_type, eventUUID);
-            } catch (IOException | TimeoutException | JAXBException e) {
-                e.printStackTrace();
-            }
-
-        }
 
     }
 
@@ -1591,45 +1563,6 @@ public interface Helper {
         Boolean allGood = true;
         EntityType thisEntityType = EntityType.ReservationSession;
         SourceType Source_type = SourceType.Planning;
-
-
-        // get UUID's from xml
-        reservationUUID = getSafeXmlProperty(task, "uuid");
-        if (reservationUUID == "false") {
-
-            reservationUUID = getSafeXmlProperty(task, "reservationUUID");
-
-            if (reservationUUID == "false") {
-
-                reservationUUID = getSafeXmlProperty(task, "reservationUuid");
-
-                if (reservationUUID == "false") {
-
-                    System.out.println(" [!!!] ERROR: No uuid, reservationUuid or reservationUUID found in XML...");
-
-                    allGood = false;
-                }
-            }
-        }
-
-        userUUID = getSafeXmlProperty(task, "userUuid");
-        if (userUUID == "false") {
-
-            userUUID = getSafeXmlProperty(task, "userUUID");
-
-            if (userUUID == "false") {
-                System.out.println(" [!!!] ERROR: No userUuid found in XML");
-                allGood = false;
-            }
-        }
-
-        sessionUUID = getSafeXmlProperty(task, "sessionUuid");
-        if (sessionUUID == "false" || sessionUUID == "") {
-
-            System.out.println(" [!!!] ERROR: No sessionUuid or eventUuid found in XML: ");
-            allGood = false;
-
-        }
 
         // 1. transform xml to reservation-object
 
@@ -1651,108 +1584,94 @@ public interface Helper {
             e.printStackTrace();
         }
 
+        // 2.1.1 check if reservation session is to be 'deleted'
 
         if (uuidExists) {
 
-            System.out.println("UUID already exists in our PlanningDB table:\n");
+            System.out.println("UUID already exists in our PlanningDB table:[Reservation_Session]");
 
-            // 2.2. Reservation_Event record update
-
-            // Prepare new reservation_session object for sending to database
-            System.out.println("Reservation_Session");
-
-            // 2.4.1 get idSession from sessionUUID in Session
-            String[] propertiesToSelect = {"idReservationSession"};
-            String table = "Reservation_Session";
-            String[] selectors = {"uuid"};
-            String[] values = {"" + sessionUUID};
-
-            String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
-
-            //System.out.println("selectResults: " + selectResults[0]);
-
-            // 2.4.2. get entityVersion from id in BaseEntity
-            propertiesToSelect[0] = "entity_version";
-            table = "BaseEntity";
-            selectors[0] = "idBaseEntity";
-            values[0] = selectResults[0];
-            int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
-
-            Reservation_Session existingReservation_Session = null;
-            try {
-                existingReservation_Session = getReservation_SessionObjectFromXmlMessage(task);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            if (localEntityVersion < existingReservation_Session.getEntityVersion()) {
-
-                // 2.5.1.A. set active = 0 on old entity record in db
-                boolean newRSAllGood = true;
-                try {
-                    newRSAllGood = new BaseEntityDAO().updateTablePropertyValue("Reservation_Session", "active", "0", "int", "idReservationSession", selectResults[0]);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                if (newRSAllGood) {
-
-                    try {
-                        allGood = new BaseEntityDAO().updateTablePropertyValue("Reservation_Session", "uuid", "/", "String", "idReservationSession", selectResults[0]);
-                    } catch (Exception e) {
-                        //e.printStackTrace();
-                        System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n " + e);
-                        newRSAllGood = false;
-                    }
-                }
-
-
-                if (newRSAllGood) {
-
-                    // 2.5.2. insert new record into local db
-                    int messageReservation_SessionInsertReturner = 0, updateUuidRecordVersionResponse = 0;
-                    try {
-                        messageReservation_SessionInsertReturner = new Reservation_Session_DAO().insertIntoReservation_Session(existingReservation_Session);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-
-                    // 2.3.3. updateUuidRecordVersion() (To UUID master)
-                    try {
-                        updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, reservationUUID);
-                    } catch (IOException | TimeoutException | JAXBException e) {
-                        e.printStackTrace();
-                    }
-
-
-                    // 2.3.4. update entity version (on our database)
-                    try {
-                        allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + existingReservation_Session.getEntityVersion(), "int", "idBaseEntity", "" + existingReservation_Session);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n " + e);
-                        allGood = false;
-                    }
-
-                    System.out.println("We had this Reservation_Session with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + existingReservation_Session.getEntityVersion() + "'");
-
-                }
-
+            // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
+            if (newReservation_SessionObjectFromXml.getActive() == 0) {
+                new BaseEntityDAO().softDeleteBaseEntity(newReservation_SessionObjectFromXml.getEntityId());
+                System.out.println("SoftDelete execusted on object with entityId: " + newReservation_SessionObjectFromXml.getEntityId() + "\n");
             } else {
-                // we have the latest version...
-                System.out.println("We already had this Reservation_Session with entityVersion: '" + localEntityVersion + "'");
+
+                // 2.2. Reservation_Event record update
+                // Prepare new reservation_session object for sending to database
+                System.out.println("[Reservation_Session]");
+
+                // 2.2.1 get idSession from sessionUUID in Session
+                String[] propertiesToSelect = {"idReservationSession"};
+                String table = "Reservation_Session";
+                String[] selectors = {"uuid"};
+                String[] values = {"" + sessionUUID};
+
+                String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
+
+                // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
+                if (newReservation_SessionObjectFromXml.getActive() == 0) {
+                    new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
+                    System.out.println("SoftDelete execusted on [Reservation_Session] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+                } else {
+
+                    // 2.2.2. get entityVersion from id in BaseEntity
+                    propertiesToSelect[0] = "entity_version";
+                    table = "BaseEntity";
+                    selectors[0] = "idBaseEntity";
+                    values[0] = selectResults[0];
+                    int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
+
+                    Reservation_Session existingReservation_Session = null;
+                    try {
+                        existingReservation_Session = getReservation_SessionObjectFromXmlMessage(task);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    int updateUuidRecordVersionResponse = 0;
+
+                    if (localEntityVersion < existingReservation_Session.getEntityVersion()) {
+
+                        // 2.3.1. update google calender through API
+
+                        // TODO
+
+                        // 2.3.3. updateUuidRecordVersion() (To UUID master)
+                        try {
+                            updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, reservationUUID);
+                        } catch (IOException | TimeoutException | JAXBException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        // 2.3.4. update entity version (on our database)
+                        try {
+                            allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + existingReservation_Session.getEntityVersion(), "int", "idBaseEntity", "" + existingReservation_Session);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            System.out.println("ERROR in 2.3.4. update entity version (on our database) :\n " + e);
+                            allGood = false;
+                        }
+
+                        System.out.println("We had this Reservation_Session with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + existingReservation_Session.getEntityVersion() + "'");
+
+
+                    } else {
+                        // we have the latest version...
+                        System.out.println("We already had this Reservation_Session with entityVersion: '" + localEntityVersion + "'");
+                    }
+
+                }
+                // # send update to uuid manager
+
             }
-
-
-            // # send update to uuid manager
-
 
         } else {
 
             // uuid doesn't exit locally yet
             // # insert record locally with given info
 
-            System.out.println("uuid doesn't exit locally yet...");
+            System.out.println("Uuid doesn't exit locally yet...");
 
             int messageReservationInsertReturner = 0;
 
@@ -1764,10 +1683,11 @@ public interface Helper {
             // insertUuidRecord
 
             try {
-                Sender.insertUuidRecord("", messageReservationInsertReturner, thisEntityType, Source_type, sessionUUID);
+                Sender.insertUuidRecord("", messageReservationInsertReturner, thisEntityType, Source_type, reservationUUID);
             } catch (IOException | TimeoutException | JAXBException e) {
                 e.printStackTrace();
             }
+            System.out.println("Inserted new Reservation_Session record with Uuid: " + reservationUUID + "!");
 
         }
 
@@ -1816,7 +1736,9 @@ public interface Helper {
     }
 
     // UUID: POST: insert
-    static String httpPostInsertUuidRecord(String UUID, int Entity_sourceId, EntityType Entity_type, SourceType Source_type) throws IOException {
+    static String httpPostInsertUuidRecord(String UUID, int Entity_sourceId, EntityType
+            Entity_type, SourceType
+                                                   Source_type) throws IOException {
 
         //make new object for HttpRequest.UUID_createUuidRecord(int source_id, EntityType thisEntityType, MessageSource thisMessageSource)
         UUID_insertUuidRecord myLocalUUID_insertUuidRecordObject = new UUID_insertUuidRecord(Entity_sourceId, Entity_type, Source_type, UUID, 1);
@@ -1839,7 +1761,8 @@ public interface Helper {
     }
 
     // UUID: PUT: update1
-    static String httpPutUpdateUuidRecordVersion(String UUID, SourceType Source_type) throws IOException {
+    static String httpPutUpdateUuidRecordVersion(String UUID, SourceType Source_type) throws
+            IOException {
 
         //make new object for HttpRequest.UUID_updateUuidRecordVersion(String myUrl, String UUID, logic.Sender.SourceType Source_type)
         UUID_updateUuidRecordVersion myLocalUUID_updateUuidRecordObject = new UUID_updateUuidRecordVersion(UUID, Source_type);
@@ -1859,7 +1782,9 @@ public interface Helper {
     }
 
     // UUID: PUT: update2
-    static String httpPutUpdateUuidRecordVersionB(String UUID, int Entity_version, SourceType Source_type) throws IOException {
+    static String httpPutUpdateUuidRecordVersionB(String UUID, int Entity_version, SourceType
+            Source_type) throws
+            IOException {
 
         //make new object for HttpRequest.UUID_updateUuidRecordVersion(String myUrl, String UUID, logic.Sender.SourceType Source_type)
         UUID_updateUuidRecordVersionB myLocalUUID_updateUuidRecordObject = new UUID_updateUuidRecordVersionB(UUID, Entity_version, Source_type);
@@ -1930,7 +1855,13 @@ public interface Helper {
 
 
     // User: (params) => XML
-    static String getXmlForNewUser(String xmlHeaderDescription, SourceType Source_type, String userUUID, String lastName, String firstName, String phoneNumber, String email, String street, String houseNr, String city, String postalCode, String country, String company, String type, int entity_version, int active, String timestamp) throws JAXBException {
+    static String getXmlForNewUser(String xmlHeaderDescription, SourceType Source_type, String
+            userUUID, String
+                                           lastName, String firstName, String phoneNumber, String email, String street, String houseNr, String
+                                           city, String
+                                           postalCode, String country, String company, String type, int entity_version, int active, String
+                                           timestamp) throws
+            JAXBException {
 
         String messageType = "userMessage";
         // form xml
@@ -1949,7 +1880,8 @@ public interface Helper {
     }
 
     // User: Object => XML
-    static String getXmlFromUserObject(String xmlHeaderDescription, SourceType Source_type, User user) throws JAXBException {
+    static String getXmlFromUserObject(String xmlHeaderDescription, SourceType Source_type, User user) throws
+            JAXBException {
 
         String userUUID = user.getUuid();
         //System.out.println("HELPER: userUUID: "+userUUID);
@@ -2174,7 +2106,12 @@ public interface Helper {
 
 
     // Session: (params) => XML
-    static String getXmlForNewSession(String xmlHeaderDescription, SourceType Source_type, String sessionUUID, String eventUUID, String sessionName, int maxAttendees, String description, String summary, String location, String speaker, String dateTimeStart, String dateTimeEnd, String type, float price, int entityVersion, int active) throws JAXBException {
+    static String getXmlForNewSession(String xmlHeaderDescription, SourceType Source_type, String
+            sessionUUID, String eventUUID, String sessionName, int maxAttendees, String description, String
+                                              summary, String
+                                              location, String speaker, String dateTimeStart, String dateTimeEnd, String type, float price,
+                                      int entityVersion,
+                                      int active) throws JAXBException {
         String messageType = "sessionMessage";
 
         // form xml
@@ -2189,7 +2126,9 @@ public interface Helper {
     }
 
     // Session: Object => XML
-    static String getXmlFromSessionObject(String headerDescription, SourceType Source_type, Session newSession) throws JAXBException {
+    static String getXmlFromSessionObject(String headerDescription, SourceType Source_type, Session
+            newSession) throws
+            JAXBException {
 
         //SourceType Source_type = Source_type;
         String sessionUUID = newSession.getSessionUUID();
@@ -2407,8 +2346,11 @@ public interface Helper {
 
 
     // Event: (params) => XML
-    static String getXmlForNewEvent(String messageType, String description, SourceType Source_type, String eventUUID, String eventName, int maxAttendees, String eventDescription, String summary,
-                                    String location, String contactPerson, String eventType, float price, int entityVersion, int active, String dateTimeStart, String dateTimeEnd) throws JAXBException {
+    static String getXmlForNewEvent(String messageType, String description, SourceType
+            Source_type, String
+                                            eventUUID, String eventName, int maxAttendees, String eventDescription, String summary,
+                                    String location, String contactPerson, String eventType, float price, int entityVersion,
+                                    int active, String dateTimeStart, String dateTimeEnd) throws JAXBException {
 
         messageType = "eventMessage";
         XmlMessage.Header header = new XmlMessage.Header(messageType, description + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
@@ -2419,7 +2361,9 @@ public interface Helper {
     }
 
     // Event: Object => XML
-    static String getXmlFromEventObject(String headerDescription, SourceType Source_type, Event newEvent) throws JAXBException {
+    static String getXmlFromEventObject(String headerDescription, SourceType Source_type, Event
+            newEvent) throws
+            JAXBException {
 
         //SourceType Source_type = Source_type;
         String eventUUID = newEvent.getEventUUID();
@@ -2595,7 +2539,10 @@ public interface Helper {
 
 
     // Reservation_Session: (params) => XML
-    static String getXmlForNewReservation_Session(String xmlHeaderDescription, SourceType Source_type, String reservationUUID, String userUUID, String sessionUUID, float paid, int entityVersion) throws JAXBException {
+    static String getXmlForNewReservation_Session(String xmlHeaderDescription, SourceType
+            Source_type, String
+                                                          reservationUUID, String userUUID, String sessionUUID, float paid, int entityVersion) throws
+            JAXBException {
 
         String messageType = "reservationSessionMessage";
 
@@ -2613,7 +2560,8 @@ public interface Helper {
     }
 
     // Reservation_Session: object => XML
-    static String getXmlFromReservation_SessionObject(String xmlHeaderDescription, SourceType Source_type, Reservation_Session thisReservationObject) throws JAXBException {
+    static String getXmlFromReservation_SessionObject(String xmlHeaderDescription, SourceType
+            Source_type, Reservation_Session thisReservationObject) throws JAXBException {
 
         String messageType = "reservationSessionMessage";
         // form xml
@@ -2721,7 +2669,10 @@ public interface Helper {
 
 
     // Reservation_Event: (params) => XML
-    static String getXmlForNewReservation_Event(String xmlHeaderDescription, SourceType Source_type, String reservationUUID, String userUUID, String eventUUID, float paid, int entityVersion) throws JAXBException {
+    static String getXmlForNewReservation_Event(String xmlHeaderDescription, SourceType
+            Source_type, String
+                                                        reservationUUID, String userUUID, String eventUUID, float paid, int entityVersion) throws
+            JAXBException {
 
         String messageType = "reservationEventMessage";
 
@@ -2739,7 +2690,8 @@ public interface Helper {
     }
 
     // Reservation_Event: object => XML
-    static String getXmlFromReservation_EventObject(String xmlHeaderDescription, SourceType Source_type, Reservation_Event thisReservationObject) throws JAXBException {
+    static String getXmlFromReservation_EventObject(String xmlHeaderDescription, SourceType
+            Source_type, Reservation_Event thisReservationObject) throws JAXBException {
 
         String messageType = "reservationEventMessage";
         // form xml
@@ -2931,11 +2883,379 @@ public interface Helper {
         return value;
     }
 
+    static boolean googleCalendarApiMocker() {
+
+
+        // get calendar api options
+        String[] calenderApiOptions = getGoogleCalendarApiOptions();
+        boolean continueMocking = true;
+
+        System.out.println("Choose the Google Calendar Api call to mock:\n");
+
+        for (String option : calenderApiOptions) {
+            System.out.println(option);
+        }
+
+        // prompt for input
+        System.out.print("\n[.i.] Choose a number between 1 and " + calenderApiOptions.length + ". [Any other input to quit!][x: coming, o: working]\n");
+
+        // Get chosen number
+        Scanner scanner = new Scanner(System.in);
+        String choice = scanner.next();
+
+        //System.out.print("You've chosen '" + choice + "' ...\n");
+
+        switch (choice) {
+            case "1":
+
+                // List upcoming events (Google calendar 1)
+                System.out.println("\nCase '" + choice + "': List upcoming events (Google calendar 1)!");
+
+                try {
+
+                    GoogleCalenderApi.listEvents();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+
+            case "2":
+
+                // Create new dummy event (Google calendar 2)
+                System.out.println("\nCase '" + choice + "': Create new dummy event (Google calendar 2)!");
+
+                try {
+
+                    com.google.api.services.calendar.Calendar service = getCalendarService();
+
+                    GoogleCalenderApi.createDummyEvent(service);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case "3":
+
+                // Create new event (Google calendar 3)
+                System.out.println("\nCase '" + choice + "': Create new event with set variables (Google calendar 3)!");
+
+                String uuid = "axxxxxd-9xxx-4xxx-bxx2-2xxxxxxxxxxa";
+                System.out.println("Mocking Event 'MockFest' with uuid: '" + uuid + "' ...");
+
+                // 1. Preset variables
+
+                String headerDescription = "Mocking Event message";
+                // Source_type= ... ;
+                String eventName = "Mocked eventName";
+                int maxAttendees = 45;
+                String description = "Mocked description";
+                String summary = "Mocked summary";
+                String location = "Mocked location";
+                String contactPerson = "Mocked contactPerson";
+                String dateTimeStart = "2018-05-28T09:00:00+02:00";
+                dateTimeStart = "2018-05-28T09:00";
+                String dateTimeEnd = "2018-05-29T09:00:00+02:00";
+                dateTimeEnd = "2018-05-29T09:00";
+                String eventType = "MockerNoon";
+                float price = 0;
+                SourceType Source_type = SourceType.Planning;
+                EntityType Entity_type = EntityType.Event;
+                int entityVersion = 1;
+                int active = 1;
+                String timestamp = getCurrentDateTimeStamp();
+
+                // 2. Form Event object
+                Event mockEvent = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price, false);
+
+                String newEventHtmlLinkAndId = null;
+                try {
+                    newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromEventObject(mockEvent);
+
+                    String[] newEventProperties = newEventHtmlLinkAndId.split("-=-");
+
+                    mockEvent.setGCAEventId(newEventProperties[1]);
+                    //System.out.println("CGAEventId in newEventProperties[1]: " + newEventProperties[1]);
+                    mockEvent.setGCAEventLink(newEventProperties[0]);
+                    //System.out.println("CGAEventLink in newEventProperties[0]: " + newEventProperties[0]);
+
+                } catch (IOException e) {
+                    System.out.println("Error adding event to Google calendar API: " + e);
+                    //e.printStackTrace();
+                }
+
+                System.out.println("Created event: " + mockEvent.toString());
+
+                break;
+
+            case "4":
+                // Create new event with chosen variables (Google calendar 4)
+                System.out.println("\nCase '" + choice + "': Create new event (Google calendar 4)!");
+
+                uuid = "axxxxxd-9xxx-4xxx-bxx2-2xxxxxxxxxxa";
+                System.out.println("Mocking Event 'MockFest' with uuid: '" + uuid + "' ...");
+
+                // 1. Preset variables
+
+                headerDescription = "Mocking Event message";
+                // Source_type= ... ;
+                eventName = "Mocked eventName";
+                maxAttendees = 45;
+                description = "Mocked description";
+                summary = "Mocked summary";
+                location = "Mocked location";
+                contactPerson = "Mocked contactPerson";
+                dateTimeStart = "2018-05-28T09:00:00+02:00";
+                dateTimeStart = "2018-05-28T09:00";
+                dateTimeEnd = "2018-05-29T09:00:00+02:00";
+                dateTimeEnd = "2018-05-29T09:00";
+                eventType = "MockerNoon";
+                price = 0;
+                Source_type = SourceType.Planning;
+                Entity_type = EntityType.Event;
+                entityVersion = 1;
+                active = 1;
+                timestamp = getCurrentDateTimeStamp();
+
+                // 2. Form Event object
+                mockEvent = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price, false);
+
+                newEventHtmlLinkAndId = null;
+                try {
+                    newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromEventObject(mockEvent);
+
+                    String[] newEventProperties = newEventHtmlLinkAndId.split("-=-");
+
+                    mockEvent.setGCAEventId(newEventProperties[1]);
+                    //System.out.println("CGAEventId in newEventProperties[1]: " + newEventProperties[1]);
+                    mockEvent.setGCAEventLink(newEventProperties[0]);
+                    //System.out.println("CGAEventLink in newEventProperties[0]: " + newEventProperties[0]);
+
+                } catch (IOException e) {
+                    System.out.println("Error adding event to Google calendar API: " + e);
+                    //e.printStackTrace();
+                }
+
+                System.out.println("Created event: " + mockEvent.toString());
+
+                break;
+
+            case "5":
+
+                // Creating new event and updating it with preset variables  (Google calendar 5)
+
+                uuid = "axxxxxd-9xxx-4xxx-bxx2-2xxxxxxxxxxa";
+                System.out.println("\nCase '" + choice + "': Creating new event and updating it with preset variables (Google calendar 5)!");
+
+                // 1. Preset variables
+
+                headerDescription = "Mocking Event message";
+                // Source_type= ... ;
+                eventName = "Mocked eventName";
+                maxAttendees = 45;
+                description = "Mocked description";
+                summary = "Mocked summary";
+                location = "Mocked location";
+                contactPerson = "Mocked contactPerson";
+                dateTimeStart = "2018-05-28T09:00:00+02:00";
+                dateTimeStart = "2018-05-28T09:00";
+                dateTimeEnd = "2018-05-29T09:00:00+02:00";
+                dateTimeEnd = "2018-05-29T09:00";
+                eventType = "MockerNoon";
+                price = 0;
+                Source_type = SourceType.Planning;
+                Entity_type = EntityType.Event;
+                entityVersion = 1;
+                active = 1;
+                timestamp = getCurrentDateTimeStamp();
+
+                // 2. Form Event object
+                mockEvent = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price, false);
+
+                newEventHtmlLinkAndId = null;
+                try {
+                    newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromEventObject(mockEvent);
+
+                    String[] newEventProperties = newEventHtmlLinkAndId.split("-=-");
+
+                    mockEvent.setGCAEventId(newEventProperties[1]);
+                    mockEvent.setGCAEventLink(newEventProperties[0]);
+                    System.out.println("1. Succesfully created event: " + newEventProperties[0] + " with eventId: " + newEventProperties[1]);
+
+                } catch (IOException e) {
+                    System.out.println("Error adding event to Google calendar API: " + e);
+                    //e.printStackTrace();
+                }
+/*
+                System.out.println("Created event: " + mockEvent.toString());*/
+
+                uuid = "axxxxxd-9xxx-4xxx-bxx2-2xxxxxxxxxxa";
+                System.out.println("2. Updating Event with uuid: '" + uuid + "' ...");
+
+                // 3. Preset variables
+
+                headerDescription = "Mocking Event message Updated";
+                // Source_type= ... ;
+                eventName = "Mocked eventName Updated";
+                maxAttendees = 45;
+                description = "Mocked description Updated";
+                summary = "Mocked summary Updated";
+                location = "Mocked location Updated";
+                contactPerson = "Mocked contactPerson Updated";
+                dateTimeStart = "2018-05-28T09:42:00+02:00";
+                dateTimeStart = "2018-05-28T09:42";
+                dateTimeEnd = "2018-05-29T09:00:00+02:00";
+                dateTimeEnd = "2018-05-29T09:42";
+                eventType = "MockerNoon Updated";
+                price = 0;
+                String GCAEventId = mockEvent.getGCAEventId();
+                String GCAEventLink = mockEvent.getGCAEventLink();
+                Source_type = SourceType.Planning;
+                Entity_type = EntityType.Event;
+                entityVersion = 1;
+                active = 1;
+                timestamp = getCurrentDateTimeStamp();
+
+                // 4. Form Event object
+                mockEvent = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price, GCAEventId, GCAEventLink, false);
+
+                System.out.println("Just before updating... Waiting 5 seconds for update...");
+
+                try {
+
+                    for (int i = 0; i < 5; i++) {
+                        System.out.print(".");
+                        Thread.sleep(1000);
+                    }
+
+                    System.out.println("Starting update Event!");
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                String updateEventAnswer = null;
+                try {
+
+                    GoogleCalenderApi.updateEventWithEventObject(mockEvent);
+
+                    System.out.println("3. Succesfully updated event! ");
+
+
+                } catch (Exception e) {
+                    System.out.println("Error updating event to Google calendar API:\n=> " + e);
+                    //e.printStackTrace();
+                }
+/*
+                // 5. Deleting event from google calendar
+
+                try {
+
+                    GoogleCalenderApi.cancelEventWithEventObject(mockEvent);
+
+                    System.out.println("4. Succesfully cancelled event! ");
+
+
+                } catch (Exception e) {
+                    System.out.println("Error cancelling event to Google calendar API:\n=> " + e);
+                    //e.printStackTrace();
+                }*/
+                break;
+
+            case "6":
+                // GCA: Cancel event by event and a chosen GCAEventId
+                System.out.println("\nCase '" + choice + "': Creating new event and updating it with preset variables (Google calendar 5)!");
+
+                // 1. Preset variables
+                headerDescription = "Cancelling Event message Updated";
+                // Source_type= ... ;
+                uuid = "";
+                eventName = "Mocked eventName Updated";
+                maxAttendees = 45;
+                description = "Mocked description Updated";
+                summary = "Mocked summary Updated";
+                location = "Mocked location Updated";
+                contactPerson = "Mocked contactPerson Updated";
+                dateTimeStart = "2018-05-28T09:42:00+02:00";
+                dateTimeStart = "2018-05-28T09:42";
+                dateTimeEnd = "2018-05-29T09:00:00+02:00";
+                dateTimeEnd = "2018-05-29T09:42";
+                eventType = "MockerNoon Updated";
+                price = 0;
+                GCAEventLink = "";
+                Source_type = SourceType.Planning;
+                Entity_type = EntityType.Event;
+                entityVersion = 1;
+                active = 0;
+                timestamp = getCurrentDateTimeStamp();
+
+
+                do {
+                    System.out.print("Give the Google Calender API eventId to delete (example: 'tcostu045mdm8jd5pmi0ef9qs4') : [0 to quit] \n");
+                    // Get chosen number
+                    scanner = new Scanner(System.in);
+                    GCAEventId = scanner.next();
+                    System.out.print("\nYou've chosen '" + choice + "' ...\n");
+                } while (GCAEventId.length() < 20 && GCAEventId.length() > 30 && GCAEventId != "0");
+
+                if (GCAEventId == "0") {
+                    System.out.print("You've chosen 0 to quit...");
+
+                } else {
+
+                    // 2. Form Event object
+                    mockEvent = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, eventType, price, GCAEventId, GCAEventLink, false);
+
+                    // 3. Deleting event from google calendar
+                    try {
+
+                        GoogleCalenderApi.cancelEventWithEventObject(mockEvent);
+
+                        System.out.println("4. Succesfully cancelled event! ");
+
+
+                    } catch (Exception e) {
+                        System.out.println("Error cancelling event to Google calendar API:\n=> " + e);
+                        //e.printStackTrace();
+                    }
+
+                }
+
+                break;
+
+            case "7":
+                // GCA: Update event by Uuid
+            case "8":
+                // GCA: Cancel event by Uuid
+
+                System.out.println("\nCase '" + choice + "' NOT worked out yet!");
+
+
+            case "0":
+
+                System.out.println("You pressed 0 to quit... Quiting...");
+                continueMocking = false;
+
+                break;
+
+            case "":
+            default:
+
+                System.out.println("You pressed '" + choice + "'... Didn't understand... Quiting...");
+                continueMocking = false;
+                break;
+        }
+
+        return continueMocking;
+
+    }
+
     // Mock Message functionality
     static boolean xmlMessageMocker() {
 
         String responseFromSender = "";
-        String[] senderOptions = getOptions();
+        String[] xmlMessageOptions = getXmlMessageOptions();
 
         //initialize possible variables
         boolean inputSucces = true;
@@ -2979,33 +3299,11 @@ public interface Helper {
         String sessionType = "MockerNoonSessionType";
 
 
-        System.out.println("Choose the message to mock:\n");
+        System.out.println("Choose the xml-message to mock:\n");
 
-        System.out.println("[10.V] User: New with Uuid: 'fbea0671-1324-4f92-a0b4-cc6e56c537d7' ");
-        System.out.println("[11.V] User: New with chosen Uuid: ");
-        System.out.println("[12.x] User: New without Uuid: ");
-        System.out.println("[15.V] User: Update with Uuid: 'fbea0671-1324-4f92-a0b4-cc6e56c537d7' ");
-
-        System.out.println("[20.V] Event: New with Uuid: 'd5b0f1ea-a8db-4186-b3fe-f37654eebe65' ");
-        System.out.println("[21.V] Event: New with chosen Uuid: ");
-        System.out.println("[22.V] Event: New without Uuid: ");
-        System.out.println("[25.V] Event: Update with Uuid: 'd5b0f1ea-a8db-4186-b3fe-f37654eebe65' ");
-
-        System.out.println("[30.V] Session: New with Uuid: 'c1a89eff-0a22-454d-aecc-44c19c95c261' ");
-        System.out.println("[31.V] Session: New with chosen Uuid: ");
-        System.out.println("[32.V] Session: New without Uuid: ");
-        System.out.println("[35.V] Session: Update with Uuid: 'c1a89eff-0a22-454d-aecc-44c19c95c261' ");
-
-        System.out.println("[40.x] Reservation_Event: New with Uuid: '0b136ea0-19f3-42de-aff4-2b5ecf1b88cb' ");
-        System.out.println("[41.x] Reservation_Event: New with chosen Uuid: ");
-        System.out.println("[42.x] Reservation_Event: New without Uuid: ");
-        System.out.println("[45.x] Reservation_Event: Update with Uuid: '0b136ea0-19f3-42de-aff4-2b5ecf1b88cb' ");
-
-        System.out.println("[50.x] Reservation_Session: New with Uuid: '293c7ef1-d8e7-4393-a8ee-b89cd09f927b' ");
-        System.out.println("[51.x] Reservation_Session: New with chosen Uuid: ");
-        System.out.println("[52.x] Reservation_Session: New without Uuid: ");
-        System.out.println("[55.x] Reservation_Session: Update with Uuid: '293c7ef1-d8e7-4393-a8ee-b89cd09f927b' ");
-
+        for (String option : getXmlMessageOptions()) {
+            System.out.println(option);
+        }
 
         System.out.print("\nChoose a number [0 to quit!]\n");
 
@@ -3018,7 +3316,7 @@ public interface Helper {
             case "10":
                 // User with UUID
 
-                uuid = "fbea0671-1324-4f92-a0b4-cc6e56c537d7";
+                uuid = "fxXxXxX1-1xx4-4xx2-axx4-cxxxxxxxxxx7";
                 System.out.print("You've chosen '" + choice + "': User with uuid '" + uuid + "' ...\n");
 
                 System.out.println("Mocking user 'John Parker' ...");
@@ -3129,7 +3427,7 @@ public interface Helper {
 
             case "15":
 
-                uuid = "fbea0671-1324-4f92-a0b4-cc6e56c537d7";
+                uuid = "fxXxXxX1-1xx4-4xx2-axx4-cxxxxxxxxxx7";
                 System.out.print("You've chosen '" + choice + "': Update user with UUID: '" + uuid + "' ...\n");
 
                 // 1. Preset variables
@@ -3178,7 +3476,7 @@ public interface Helper {
             case "20":
                 // Event with UUID
 
-                uuid = "d5b0f1ea-a8db-4186-b3fe-f37654eebe65";
+                uuid = "xxEVENT-9xxx-4xxx-bxx2-2xxxxxxxxxxa";
                 System.out.println("Mocking Event 'MockFest' with uuid: '" + uuid + "' ...");
 
                 // 1. Preset variables
@@ -3192,7 +3490,9 @@ public interface Helper {
                 String location = "Mocked location";
                 String contactPerson = "Mocked contactPerson";
                 dateTimeStart = "2018-05-28T09:00:00+02:00";
+                dateTimeStart = "2018-05-28T09:00";
                 dateTimeEnd = "2018-05-29T09:00:00+02:00";
+                dateTimeEnd = "2018-05-29T09:00";
                 eventType = "MockerNoon";
                 float price = 0;
                 Source_type = SourceType.Planning;
@@ -3251,7 +3551,9 @@ public interface Helper {
                 location = "Mocked location";
                 contactPerson = "Mocked contactPerson";
                 dateTimeStart = "2018-05-28T09:00:00+02:00";
+                dateTimeStart = "2018-05-28T09:00";
                 dateTimeEnd = "2018-05-29T09:00:00+02:00";
+                dateTimeEnd = "2018-05-29T09:00";
                 eventType = "MockerNoon";
                 price = 0;
                 Source_type = SourceType.Planning;
@@ -3379,21 +3681,23 @@ public interface Helper {
             case "25":
                 // Event with UUID
 
-                uuid = "d5b0f1ea-a8db-4186-b3fe-f37654eebe65";
+                uuid = "xxEVENT-9xxx-4xxx-bxx2-2xxxxxxxxxxa";
                 System.out.print("You've chosen '" + choice + "': Update Event with UUID: '" + uuid + "' ...\n");
 
                 // 1. Preset variables
 
                 headerDescription = "Mocking Event message UPDATED";
                 // Source_type= ... ;
-                eventName = "'MockFest' UPDATED";
+                eventName = "MockFest UPDATED";
                 maxAttendees = 45;
                 description = "Mocked description UPDATED";
                 summary = "Mocked summary UPDATED";
                 location = "Mocked location UPDATED";
                 contactPerson = "Mocked contactPerson";
                 dateTimeStart = "2018-05-28T09:00:00+02:00";
+                dateTimeStart = "2018-05-28T09:00";
                 dateTimeEnd = "2018-05-29T09:00:00+02:00";
+                dateTimeEnd = "2018-05-29T09:00";
                 eventType = "MockerNoon";
                 price = 60;
                 Source_type = SourceType.Planning;
@@ -3423,7 +3727,7 @@ public interface Helper {
             case "30":
                 // Session with UUID
 
-                uuid = "c1a89eff-0a22-454d-aecc-44c19c95c261";
+                uuid = "xSession-0a22-454d-aecc-44c19c95c261";
                 System.out.println("Mocking Session 'MockSess' with uuid: '" + uuid + "' ...");
 
                 // 1. Preset variables
@@ -3438,7 +3742,9 @@ public interface Helper {
                 location = "Mocked location";
                 contactPerson = "Mocked contactPerson";
                 dateTimeStart = "2018-05-28T09:00:00+02:00";
+                dateTimeStart = "2018-05-28T09:00";
                 dateTimeEnd = "2018-05-29T09:00:00+02:00";
+                dateTimeEnd = "2018-05-29T09:00";
                 sessionType = "SessionMockerType";
                 price = 0;
                 Source_type = SourceType.Planning;
@@ -3624,25 +3930,27 @@ public interface Helper {
                 break;
 
             case "35":
-                // Session with UUID
+                // update Session with UUID
 
-                uuid = "c1a89eff-0a22-454d-aecc-44c19c95c261";
 
+                uuid = "xSession-0a22-454d-aecc-44c19c95c261";
                 System.out.print("You've chosen '" + choice + "': Update Session with UUID: '" + uuid + "' ...\n");
 
                 // 1. Preset variables
 
-                headerDescription = "Mocking Session message";
+                headerDescription = "Mocking Session message UPDATE";
                 // Source_type= ... ;
                 eventUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
-                sessionName = "Mocked sessionName";
+                sessionName = "Mocked sessionName UPDATE";
                 maxAttendees = 45;
-                description = "Mocked description";
-                summary = "Mocked summary";
-                location = "Mocked location";
-                contactPerson = "Mocked contactPerson";
-                dateTimeStart = "2018-05-28T09:00:00+02:00";
-                dateTimeEnd = "2018-05-29T09:00:00+02:00";
+                description = "Mocked description UPDATE";
+                summary = "Mocked summary UPDATE";
+                location = "Mocked location UPDATE";
+                contactPerson = "Mocked contactPerson UPDATE";
+                dateTimeStart = "2018-05-29T09:00:00+02:00";
+                dateTimeStart = "2018-05-29T09:00";
+                dateTimeEnd = "2018-05-30T09:00:00+02:00";
+                dateTimeEnd = "2018-05-30T09:00";
                 sessionType = "SessionMockerType";
                 price = 0;
                 Source_type = SourceType.Planning;
@@ -3679,7 +3987,7 @@ public interface Helper {
             case "40":
                 // Reservation_Event with UUID
 
-                uuid = "0b136ea0-19f3-42de-aff4-2b5ecf1b88cb";
+                uuid = "RESEVENT-19f3-42de-aff4-2b5ecf1b88cb";
                 System.out.println("Mocking Reservation_Event 'REMOCK' with uuid: '" + uuid + "' ...");
 
                 // 1. Preset variables
@@ -3849,7 +4157,7 @@ public interface Helper {
             case "45":
                 // Reservation_Event with UUID
 
-                uuid = "0b136ea0-19f3-42de-aff4-2b5ecf1b88cb";
+                uuid = "RESEVENT-19f3-42de-aff4-2b5ecf1b88cb";
 
                 System.out.print("You've chosen '" + choice + "': Update Reservation_Event with UUID: '" + uuid + "' ...\n");
 
@@ -3896,23 +4204,23 @@ public interface Helper {
             case "50":
                 // Reservation_Session with UUID
 
-                uuid = "0b136ea0-19f3-42de-aff4-2b5ecf1b88cb";
+                uuid = "RESSESSI-19f3-42de-aff4-2b5ecf1b88cb";
                 System.out.println("Mocking Reservation_Session 'REMOCK' with uuid: '" + uuid + "' ...");
 
                 // 1. Preset variables
 
-                headerDescription = "Mocking Reservation_Event message";
+                headerDescription = "Mocking Reservation_Session message";
                 // Source_type= ... ;
                 userUuid = "83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
                 String sessionUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
-                paid = 0;
+                paid = 10;
                 Source_type = SourceType.Planning;
                 Entity_type = EntityType.ReservationEvent;
                 entityVersion = 1;
                 active = 1;
                 timestamp = getCurrentDateTimeStamp();
 
-                // 2. Form Reservation_Event object
+                // 2. Form Reservation_Session object
 
                 mockReservation_Session = new Reservation_Session(0, entityVersion, 1, getCurrentDateTimeStamp(), uuid, userUuid, sessionUuid, paid, false);
 
@@ -3921,7 +4229,7 @@ public interface Helper {
                 // 3. Form XML
 
                 try {
-                    xmlTotalMessage = getXmlFromReservation_EventObject(headerDescription, Source_type, mockReservation_Event);
+                    xmlTotalMessage = getXmlFromReservation_SessionObject(headerDescription, Source_type, mockReservation_Session);
                 } catch (JAXBException e) {
                     e.printStackTrace();
                 }
@@ -3938,9 +4246,9 @@ public interface Helper {
                 break;
 
             case "51":
-                //Reservation_Event with chosen UUID
+                //Reservation_Session with chosen UUID
 
-                System.out.print("You've chosen '" + choice + "': Reservation_Event with chosen UUID ...\n");
+                System.out.print("You've chosen '" + choice + "': Reservation_Session with chosen UUID ...\n");
 
                 // Set chosen uuid
                 System.out.print("\nEnter the uuid to use: ");
@@ -3950,10 +4258,10 @@ public interface Helper {
 
                 // 1. Preset variables
 
-                headerDescription = "Mocking Reservation_Event message with chosen uuid";
+                headerDescription = "Mocking Reservation_Session message with chosen uuid";
                 // Source_type= ... ;
                 userUuid = "83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
-                eventUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
+                sessionUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
                 paid = 0;
                 Source_type = SourceType.Planning;
                 Entity_type = EntityType.ReservationEvent;
@@ -3963,14 +4271,14 @@ public interface Helper {
 
                 // 2. Form Reservation_Event object
 
-                mockReservation_Event = new Reservation_Event(0, 1, 1, getCurrentDateTimeStamp(), uuid, userUuid, eventUuid, paid, false);
+                mockReservation_Session = new Reservation_Session(0, 1, 1, getCurrentDateTimeStamp(), uuid, userUuid, sessionUuid, paid, false);
 
                 //System.out.println("mockSession toString(): "+mockSession.toString());
 
                 // 3. Form XML
 
                 try {
-                    xmlTotalMessage = getXmlFromReservation_EventObject(headerDescription, Source_type, mockReservation_Event);
+                    xmlTotalMessage = getXmlFromReservation_SessionObject(headerDescription, Source_type, mockReservation_Session);
                 } catch (JAXBException e) {
                     e.printStackTrace();
                 }
@@ -3989,14 +4297,14 @@ public interface Helper {
             case "52":
                 // new Reservation_Event without UUID
 
-                System.out.println("You've chosen '" + choice + "': New Reservation_Event without UUID ...\n");
+                System.out.println("You've chosen '" + choice + "': New Reservation_Session without UUID ...\n");
 
                 // 1. Preset variables
 
-                headerDescription = "Mocking Reservation_Event message without uuid";
+                headerDescription = "Mocking Reservation_Session message without uuid";
                 // Source_type= ... ;
                 userUuid = "83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
-                eventUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
+                sessionUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
                 paid = 0;
                 Source_type = SourceType.Planning;
                 Entity_type = EntityType.ReservationEvent;
@@ -4034,12 +4342,12 @@ public interface Helper {
                     System.out.println("uuid: " + uuid);
                 }
 
-                System.out.println("Mocking Reservation_Event with uuid: '" + uuid + "' ... Other variables are preset in Helper.java around line 3750");
+                System.out.println("Mocking Reservation_Session with uuid: '" + uuid + "' ... Other variables are preset in Helper.java around line 3750");
 
 
                 // 2. Form Reservation_Event object
 
-                mockReservation_Event = new Reservation_Event(0, 1, 1, getCurrentDateTimeStamp(), uuid, userUuid, eventUuid, paid, false);
+                mockReservation_Session = new Reservation_Session(0, 1, 1, getCurrentDateTimeStamp(), uuid, userUuid, sessionUuid, paid, false);
 
                 //System.out.println("mockSession toString(): "+mockSession.toString());
 
@@ -4067,16 +4375,16 @@ public interface Helper {
 
                 // Reservation_Event with UUID
 
-                uuid = "0b136ea0-19f3-42de-aff4-2b5ecf1b88cb";
+                uuid = "RESSESSI-19f3-42de-aff4-2b5ecf1b88cb";
 
-                System.out.print("You've chosen '" + choice + "': Update Reservation_Event with UUID: '" + uuid + "' ...\n");
+                System.out.print("You've chosen '" + choice + "': Update Reservation_Session with UUID: '" + uuid + "' ...\n");
 
                 // 1. Preset variables
 
-                headerDescription = "Mocking Reservation_Event UPDATE message with uuid";
+                headerDescription = "Mocking Reservation_Session UPDATE message with uuid";
                 // Source_type= ... ;
                 userUuid = "83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
-                eventUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
+                sessionUuid = "e319f8aa-1910-442c-8b17-5e809d713ee4";
                 paid = 20.42f;
                 Source_type = SourceType.Planning;
                 Entity_type = EntityType.ReservationEvent;
@@ -4087,14 +4395,14 @@ public interface Helper {
 
                 // 2. Form Reservation_Event object
 
-                mockReservation_Event = new Reservation_Event(0, entityVersion, 1, getCurrentDateTimeStamp(), uuid, userUuid, eventUuid, paid, false);
+                mockReservation_Session = new Reservation_Session(0, entityVersion, 1, getCurrentDateTimeStamp(), uuid, userUuid, sessionUuid, paid, false);
 
                 //System.out.println("mockSession toString(): "+mockSession.toString());
 
                 // 3. Form XML
 
                 try {
-                    xmlTotalMessage = getXmlFromReservation_EventObject(headerDescription, Source_type, mockReservation_Event);
+                    xmlTotalMessage = getXmlFromReservation_SessionObject(headerDescription, Source_type, mockReservation_Session);
                 } catch (JAXBException e) {
                     e.printStackTrace();
                 }
@@ -4155,5 +4463,4 @@ old code:
         //System.out.println("xmlTotalMessage: "+xmlTotalMessage);
         return xmlTotalMessage;
     }
-
-=======*/
+    */

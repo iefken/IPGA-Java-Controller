@@ -12,20 +12,18 @@ public class ReservationEventStructure {
 	private String uuid;
 	private String userUuid;
 	private String eventUuid;
-//	private String sessionUuid;
 	private String reservationType;
 	private float paid;
 	private int entityVersion;
 	private int active;
 	private String timestamp;
 
-	public ReservationEventStructure(String ReservationUUID, String UserUUID, String EventUUID, String Type, float paid,int entityVersion, int active, String Timestamp) {
+	public ReservationEventStructure(String ReservationUUID, String userUUID, String eventUUID, String Type, float paid,int entityVersion, int active, String Timestamp) {
 
 		super();
 		this.uuid = ReservationUUID;
-		this.userUuid = UserUUID;
-		this.eventUuid = EventUUID;
-//		this.sessionUuid = SessionUUID;
+		this.userUuid = userUUID;
+		this.eventUuid = eventUUID;
 		this.reservationType = Type;
 		this.paid=paid;
 		this.entityVersion = entityVersion;
@@ -60,16 +58,6 @@ public class ReservationEventStructure {
 	public void setEventUuid(String eventUUID) {
 		eventUuid = eventUUID;
 	}
-/*
-
-	@XmlElement(name = "sessionUuid")
-	public String getSessionUuid() {
-		return sessionUuid;
-	}
-	public void setSessionUuid(String sessionUUID) {
-		sessionUuid = sessionUUID;
-	}
-*/
 
 	@XmlElement(name = "paid")
 	public float getPaid() {

@@ -130,11 +130,10 @@ public class Reservation_Event_DAO extends BaseEntityDAO{
 */
 
     //UPDATE
+    /*
+    public int UpdateReservationEvent(Reservation_Event newReservationEventFromMessage, int oldEntityId) throws SQLException {
 
-
-    public int UpdateReservationSession (Reservation_Event newReservationEventFromMessage, int oldEntityId) throws SQLException {
-
-        //Maak een nieuwe BaseEntity met incremented entityVersion
+        // maak een nieuwe BaseEntity met incremented entityVersion
         BaseEntity newBaseEntity = new BaseEntity(newReservationEventFromMessage.getEntityId(), newReservationEventFromMessage.getEntityVersion(), newReservationEventFromMessage.getActive(), newReservationEventFromMessage.getTimestamp());
         //execute baseEntity Insert
         int callbackInsertedInt = newBaseEntity.getEntityId();
@@ -142,7 +141,12 @@ public class Reservation_Event_DAO extends BaseEntityDAO{
         String sqlQuery = "INSERT INTO PlanningDB.reservation_event (idReservationEvent, reservationUUID, eventUUID, userUUID, paid, timestampLastUpdated, timestampCreated) VALUES (" + callbackInsertedInt + ",\"" + newReservationEventFromMessage.getReservationId() + "\",\"" + newReservationEventFromMessage.getReservationUUID() + "\",\"" + newReservationEventFromMessage.getEventUUID() + "\",\"" + newReservationEventFromMessage.getUserUUID() + "\",\"" + newReservationEventFromMessage.getPaid() + "\",\"" + newReservationEventFromMessage.getTimestamp() + "\");";
 
         //softdelete oude base entity
-        softDeleteBaseEntity("reservation_event", oldEntityId);
+<<<<<<< HEAD
+        softDeleteBaseEntity( oldEntityId);
+=======
+        softDeleteBaseEntity(oldEntityId);
+
+>>>>>>> DEVBranche_Wissam
         try {
             int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
         } catch (Exception e) {
@@ -151,6 +155,57 @@ public class Reservation_Event_DAO extends BaseEntityDAO{
         }
 
         return callbackInsertedInt;
+
+    }
+*/
+    public boolean updateReservationEventByObject (Reservation_Event newReservationEventFromMessage) {
+
+        String sqlQuery = " UPDATE PlanningDB.reservation_event SET " +
+                "eventUuid=\""+newReservationEventFromMessage.getEventUUID()+"\", " +
+                "userUuid="+newReservationEventFromMessage.getUserUUID()+", " +
+                "paid=\""+newReservationEventFromMessage.getPaid()+"\" " +
+
+                "WHERE uuid=\""+newReservationEventFromMessage.getEventUUID()+"\" " +
+                ";";
+        boolean allGood = true;
+
+        PreparedStatement statement = null;
+        try {
+            if (getConnection().isClosed()) {
+                throw new IllegalStateException("ERROR: Connection closed in updateReservationEventByObject...");
+            }
+            statement = getConnection().prepareStatement(sqlQuery);
+            try{
+                statement.executeUpdate();
+
+                try {
+
+                    allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + newReservationEventFromMessage.getEntityVersion(), "int", "idBaseEntity", "" + newReservationEventFromMessage.getReservationId());
+
+                } catch (Exception e) {
+//                e.printStackTrace();
+                    System.out.println("ERROR updating reservation  event  with query:<\n"+sqlQuery+"\n>\n" + e);
+                }
+                return true;
+            }catch (Exception e) {
+                System.out.println("ERROR: during executing statement: updateReservationEventByObject():\n"+e);
+                //e.printStackTrace();
+                return false;
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());;
+            throw new RuntimeException(e.getMessage());
+        }finally{
+            try{
+                System.out.println("Queried:\nSTART\nInserting reservation event (ev."+newReservationEventFromMessage.getEntityVersion()+") with query:<\n"+sqlQuery+"\n>\nEND\n");
+                if(statement != null)
+
+                    statement.close();
+            }catch(SQLException e){
+                System.out.println(e.getMessage());;
+                throw new RuntimeException("ERROR 02: Error during closing the connection...");
+            }
+        }
 
     }
 

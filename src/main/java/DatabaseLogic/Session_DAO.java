@@ -44,59 +44,66 @@ public class Session_DAO extends BaseEntityDAO {
 
     //READ
 
-/*
-
-    public ArrayList<Reservation_Session> getAllReservation_Sessions() {
-        ResultSet rs = null;
-        ArrayList<Reservation_Session> sessionReservationsList = null;
-
-        String sql = "SELECT * FROM Reservation_Session;";
-
-        try (Statement s = getConnection().createStatement()) {
-
-            if (getConnection().isClosed()) {
-                throw new IllegalStateException("ERROR 01: Connection seems to be closed...");
-            }
-
-            while (rs.next()) {
-                sessionReservationsList.add(new Reservation_Session(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
-            }
-
-            return sessionReservationsList;
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
-    public ArrayList<Reservation_Session> getAllReservation_SessionsFull() {
-        ResultSet rs = null;
-        ArrayList<Reservation_Session> sessionReservationsList = null;
-
-        String sql = "SELECT * FROM Reservation_Session JOIN BaseEntity ON Reservation_Session.reservationId = BaseEntity.entityId;";
-
-        try (Statement s = getConnection().createStatement()) {
-
-            if (getConnection().isClosed()) {
-                throw new IllegalStateException("ERROR 01: Connection seems to be closed...");
-            }
-
-            while (rs.next()) {
-                sessionReservationsList.add(new Reservation_Session(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8)));
-            }
-
-            return sessionReservationsList;
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-*/
-
     //UPDATE
 
+    public boolean updateSessionByObject (Session newSessionFromMessage) {
+
+        String sqlQuery = " UPDATE PlanningDB.session SET " +
+                "eventUuid=\""+newSessionFromMessage.getEventUUID()+"\", " +
+                "sessionName=\""+newSessionFromMessage.getSessionName()+"\", " +
+                "maxAttendees="+newSessionFromMessage.getMaxAttendees()+", " +
+                "description=\""+newSessionFromMessage.getDescription()+"\", " +
+                "summary=\""+newSessionFromMessage.getSummary()+"\", " +
+                "location=\""+newSessionFromMessage.getLocation()+"\", " +
+                "speaker=\""+newSessionFromMessage.getSpeaker()+"\", " +
+                "dateTimeStart=\""+newSessionFromMessage.getDateTimeStart()+"\", " +
+                "dateTimeEnd=\""+newSessionFromMessage.getDateTimeEnd()+"\", " +
+                "type=\""+newSessionFromMessage.getType()+"\", " +
+                "price="+newSessionFromMessage.getPrice()+" " +
+
+                "WHERE uuid=\""+newSessionFromMessage.getSessionUUID()+"\" " +
+
+                ";";
+        boolean allGood = true;
+
+        PreparedStatement statement = null;
+        try {
+            if (getConnection().isClosed()) {
+                throw new IllegalStateException("ERROR: Connection closed in updateSessionByObject...");
+            }
+            statement = getConnection().prepareStatement(sqlQuery);
+            try{
+                statement.executeUpdate();
+
+                try {
+
+                    allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + newSessionFromMessage.getEntityVersion(), "int", "idBaseEntity", "" + newSessionFromMessage.getSessionId());
+
+                } catch (Exception e) {
+//                e.printStackTrace();
+                    System.out.println("ERROR updating Session with query:<\n"+sqlQuery+"\n>\n" + e);
+                }
+                return true;
+            }catch (Exception e) {
+                System.out.println("ERROR: during executing statement: updateSessionByObject():\n"+e);
+                //e.printStackTrace();
+                return false;
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());;
+            throw new RuntimeException(e.getMessage());
+        }finally{
+            try{
+                System.out.println("Queried:\nSTART\nInserting Session (ev."+newSessionFromMessage.getEntityVersion()+") with query:<\n"+sqlQuery+"\n>\nEND\n");
+                if(statement != null)
+
+                    statement.close();
+            }catch(SQLException e){
+                System.out.println(e.getMessage());;
+                throw new RuntimeException("ERROR 02: Error during closing the connection...");
+            }
+        }
+    }
 
     //DELETE
 

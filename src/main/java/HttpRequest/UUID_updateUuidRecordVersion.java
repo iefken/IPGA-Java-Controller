@@ -6,7 +6,7 @@ package HttpRequest;
 
 import AppLogic.Helper;
 
-public class UUID_updateUuidRecordVersion implements Helper{
+public class UUID_updateUuidRecordVersion {
 
     private String Uuid;
     private Helper.SourceType Source;

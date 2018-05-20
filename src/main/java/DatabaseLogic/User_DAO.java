@@ -31,10 +31,6 @@ public class User_DAO extends BaseEntityDAO {
         String sqlQuery = "";
 
         sqlQuery = "INSERT INTO PlanningDB.User (`idUser`, `uuid`, `lastName`, `firstName`, `phonenumber`, `email`, `street`,`houseNr`,`city`,`postalCode`, `country`, `company`, `type`) VALUES (" + callbackInsertedInt + ",\"" + user.getUuid() + "\",\"" + user.getLastname() + "\",\"" + user.getFirstname() + "\",\"" + user.getPhoneNumber() + "\",\"" + user.getEmail() + "\",\"" + user.getStreet() + "\",\"" + user.getHouseNr() + "\",\"" + user.getCity() + "\",\"" + user.getPostalCode() + "\",\"" + user.getCountry() + "\",\""+user.getCompany() + "\",\""+user.getUserType() + "\");";
-        //sqlQuery = "INSERT INTO planningDB.user (`idUser`, `userUUID`, `lastName`, `firstName`, `phonenumber`, `email`, `street`,`houseNr`,`city`,`postalCode`, `country`, `company`, `type`) VALUES (" + callbackInsertedInt + ",\"" + user.getUserUUID() + "\",\"" + user.getLastname() + "\",\"" + user.getFirstname() + "\",\"" + user.getPhonenumber() + "\",\"" + user.getEmail() + "\",\"" + user.getStreet() + "\",\"" + user.getHouseNr() + "\",\"" + user.getCity() + "\",\"" + user.getPostalCode() + "\",\"" + user.getCountry() + "\",\""+user.getCompany() + "\",\""+user.getType() + "\");";
-
-        //INSERT INTO `PlanningDB`.`Session` (`idSession`, `sessionUUID`, `eventUUID`, `sessionName`, `maxAttendees`, `dateTimeStart`, `dateTimeEND`, `speaker`, `local`, `type`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-        //System.out.println("sqlQuery: "+sqlQuery);
 
         int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
         //System.out.println("insertSucces: "+insertSucces+", callbackInsertedInt: "+callbackInsertedInt);
@@ -60,8 +56,6 @@ public class User_DAO extends BaseEntityDAO {
             rs = s.executeQuery(sql);
             if(rs.next())
             {
-                // user constructor: public User(int idUser, int Entity_version, int active, String Timestamp, String userUUID, String lastname, String firstname, String phoneNumber, String email, String street, int houseNr, String city, int postalCode, String country, String company, Helper.EntityType type) {
-
                 // for our enum: tweaked from https://stackoverflow.com/questions/3155967/are-enums-supported-by-jdbc
                 // Helper.EntityType.valueOf(rs.getString("type")
 
@@ -77,77 +71,66 @@ public class User_DAO extends BaseEntityDAO {
             throw new RuntimeException(e.getMessage());
         }
     }
-/*
-
-    public ArrayList<User> getAllUsers() {
-        ResultSet rs = null;
-        ArrayList<User> userList = null;
-
-        String sql = "SELECT * FROM PlanningDB.Reservation_Session;";
-
-        try (Statement s = getConnection().createStatement()) {
-
-            if (getConnection().isClosed()) {
-                throw new IllegalStateException("ERROR 01: Connection seems to be closed...");
-            }
-
-            while (rs.next()) {
-                userList.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
-            }
-
-            return sessionReservationsList;
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-*/
-/*
-
-    public ArrayList<Reservation_Session> getAllReservation_SessionsFull() {
-        ResultSet rs = null;
-        ArrayList<Reservation_Session> sessionReservationsList = null;
-
-        String sql = "SELECT * FROM PlanningDB.Reservation_Session JOIN PlanningDB.BaseEntity ON Reservation_Session.reservationId = BaseEntity.entityId;";
-
-        try (Statement s = getConnection().createStatement()) {
-
-            if (getConnection().isClosed()) {
-                throw new IllegalStateException("ERROR 01: Connection seems to be closed...");
-            }
-
-            while (rs.next()) {
-                sessionReservationsList.add(new Reservation_Session(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8)));
-            }
-
-            return sessionReservationsList;
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-*/
-
     //UPDATE
 
-    public int UpdateUser(User newUserFromMessage, int oldEntityId) throws SQLException {
+    public boolean updateUserByObject (User newUserFromMessage) {
 
-        //Maak een nieuwe BaseEntity met incremented entityVersion
-        BaseEntity newBaseEntity = new BaseEntity(newUserFromMessage.getEntityId(), newUserFromMessage.getEntityVersion(), newUserFromMessage.getActive(), newUserFromMessage.getTimestamp());
-        //execute baseEntity Insert
-        int callbackInsertedInt = newBaseEntity.getEntityId();
+        String sqlQuery = " UPDATE PlanningDB.user SET " +
+                "lastName=\""+newUserFromMessage.getLastName()+"\", " +
+                "firstName=\""+newUserFromMessage.getFirstName()+"\", " +
+                "phonenumber=\""+newUserFromMessage.getPhoneNumber()+"\", " +
+                "email=\""+newUserFromMessage.getEmail()+"\", " +
+                "street=\""+newUserFromMessage.getStreet()+"\", " +
+                "houseNr=\""+newUserFromMessage.getHouseNr()+"\", " +
+                "city=\""+newUserFromMessage.getCity()+"\", " +
+                "postalCode=\""+newUserFromMessage.getPostalCode()+"\", " +
+                "country=\""+newUserFromMessage.getCountry()+"\", " +
+                "company=\""+newUserFromMessage.getCompany()+"\", " +
+                "type=\""+newUserFromMessage.getUserType()+"\" " +
 
-        String sqlQuery = "INSERT INTO PlanningDB.User (idUser, userUUID, lastName, 'firstname', phonenumber, email, street, houseNr,`city`,`postalCode`,`country`,`company`, type) VALUES (" + callbackInsertedInt + ",\"" + newUserFromMessage.getUuid() + "\",\"" + newUserFromMessage.getLastName() + "\",\"" + newUserFromMessage.getFirstName() + "\",\"" + newUserFromMessage.getPhoneNumber() + "\",\"" + newUserFromMessage.getEmail() + "\",\"" + newUserFromMessage.getStreet() + "\",\"" + newUserFromMessage.getHouseNr() + "\",\"" + newUserFromMessage.getCity() + "\",\"" + newUserFromMessage.getPostalCode() + "\",\"" + newUserFromMessage.getCountry() + "\",\"" + newUserFromMessage.getCompany() + "\",\"" + newUserFromMessage.getUserType() + "\");";
+                "WHERE uuid=\""+newUserFromMessage.getUuid()+"\" " +
 
-        //softdelete oude base entity
-        softDeleteBaseEntity("User", oldEntityId);
-        int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
+                ";";
+        boolean allGood = true;
 
-        return callbackInsertedInt;
+        PreparedStatement statement = null;
+        try {
+            if (getConnection().isClosed()) {
+                throw new IllegalStateException("ERROR: Connection closed in updateUserByObject...");
+            }
+            statement = getConnection().prepareStatement(sqlQuery);
+            try{
+                statement.executeUpdate();
+
+                try {
+
+                    allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + newUserFromMessage.getEntityVersion(), "int", "idBaseEntity", "" + newUserFromMessage.getIdUser());
+
+                } catch (Exception e) {
+//                e.printStackTrace();
+                    System.out.println("ERROR updating User with query:<\n"+sqlQuery+"\n>\n" + e);
+                }
+                return true;
+            }catch (Exception e) {
+                System.out.println("ERROR: during executing statement: updateUserByObject():\n"+e);
+                //e.printStackTrace();
+                return false;
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());;
+            throw new RuntimeException(e.getMessage());
+        }finally{
+            try{
+                System.out.println("Queried:\nSTART\nInserting User (ev."+newUserFromMessage.getEntityVersion()+") with query:<\n"+sqlQuery+"\n>\nEND\n");
+                if(statement != null)
+
+                    statement.close();
+            }catch(SQLException e){
+                System.out.println(e.getMessage());;
+                throw new RuntimeException("ERROR 02: Error during closing the connection...");
+            }
+        }
     }
-
     //DELETE
 
 

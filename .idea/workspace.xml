@@ -1,54 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ArtifactsWorkspaceSettings">
-    <artifacts-to-build>
-      <artifact name="cli-java-main-controller:jar" />
-    </artifacts-to-build>
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="e99f31c8-cb7f-4ef1-b01f-5fbda4bb66e6" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/cli_java_controller_jar/cli-java-controller.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/cli_java_main_controller_jar/cli-java-controller.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/HttpRequest/UUID_updateUuidRecordVersion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HttpRequest/UUID_updateUuidRecordVersion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/AppLogic/Helper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AppLogic/Helper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/AppLogic/Receiver$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AppLogic/Receiver$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/BaseEntityDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/BaseEntityDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/Event_DAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/Event_DAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/Reservation_Event_DAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/Reservation_Event_DAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/Reservation_Session_DAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/Reservation_Session_DAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/Session_DAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/Session_DAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/User_DAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/User_DAO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/GoogleCalendarApi/GoogleCalenderApi.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GoogleCalendarApi/GoogleCalenderApi.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/HttpRequest/UUID_updateUuidRecordVersion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/HttpRequest/UUID_updateUuidRecordVersion.class" afterDir="false" />
     </list>
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="DockManager">
-    <window id="1">
-      <content type="file-editors">
-        <state>
-          <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-            <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="-2">
-                    <folding>
-                      <element signature="imports" expanded="true" />
-                    </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
+  <component name="FavoritesManager">
+    <favorites_list name="cli-java-controller" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.7216851">
+    <splitter split-orientation="horizontal" split-proportion="0.3556196">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="ReservationSessionStructure.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/ReservationSessionStructure.java">
+          <file leaf-file-name="BaseEntity.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntity.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="323">
-                  <caret line="21" column="11" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
+                <state relative-caret-position="697">
+                  <caret line="44" column="11" selection-start-line="44" selection-start-column="11" selection-end-line="44" selection-end-column="11" />
+                  <folding>
+                    <element signature="e#1694#1695#0" expanded="true" />
+                    <element signature="e#1729#1730#0" expanded="true" />
+                    <element signature="e#2024#2025#0" expanded="true" />
+                    <element signature="e#2053#2054#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -56,10 +50,13 @@
           <file leaf-file-name="Helper.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="493">
-                  <caret line="1054" column="39" selection-start-line="1054" selection-start-column="39" selection-end-line="1054" selection-end-column="39" />
+                <state relative-caret-position="26724">
+                  <caret line="1595" column="26" selection-start-line="1595" selection-start-column="26" selection-end-line="1595" selection-end-column="26" />
                   <folding>
                     <element signature="imports" expanded="true" />
+                    <element signature="e#1103#1205#0" />
+                    <element signature="e#1211#1281#0" />
+                    <element signature="e#1452#2411#0" />
                   </folding>
                 </state>
               </provider>
@@ -68,32 +65,26 @@
           <file leaf-file-name="Reservation_Session_DAO.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="179">
-                  <caret line="100" lean-forward="true" selection-start-line="100" selection-end-line="102" />
+                <state relative-caret-position="1819">
+                  <caret line="111" column="29" selection-start-line="111" selection-start-column="29" selection-end-line="111" selection-end-column="29" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="GoogleCalenderApi.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
+          <file leaf-file-name="Receiver.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="272">
-                  <caret line="144" column="112" selection-start-line="144" selection-start-column="112" selection-end-line="144" selection-end-column="112" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
+                <state relative-caret-position="459">
+                  <caret line="28" selection-start-line="28" selection-end-line="30" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Event_DAO.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java">
+          <file leaf-file-name="PingSender.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/PingSender.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="544">
-                  <caret line="68" lean-forward="true" selection-start-line="68" selection-end-line="68" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
+                <state relative-caret-position="1459">
+                  <caret line="125" selection-start-line="125" selection-end-line="125" />
                 </state>
               </provider>
             </entry>
@@ -101,58 +92,47 @@
           <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Main.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="153">
-                  <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+                <state relative-caret-position="170">
+                  <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Session_DAO.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java">
+          <file leaf-file-name="PingMessage.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/PingMessage.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-572">
-                  <caret line="29" column="70" selection-start-line="29" selection-start-column="67" selection-end-line="29" selection-end-column="70" />
+                <state relative-caret-position="119">
+                  <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ReservationEventStructure.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/ReservationEventStructure.java">
+          <file leaf-file-name="GoogleCalenderApi.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="153">
-                  <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Reservation_Event.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="221">
-                  <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+                <state relative-caret-position="1632">
+                  <caret line="99" selection-start-line="99" selection-end-line="99" />
                   <folding>
-                    <element signature="method#getReservationId#0;class#Reservation_Event#0" />
-                    <element signature="e#1701#1702#0" expanded="true" />
-                    <element signature="e#1748#1749#0" expanded="true" />
-                    <element signature="e#1790#1791#0" expanded="true" />
-                    <element signature="e#1817#1818#0" expanded="true" />
-                    <element signature="e#1878#1879#0" expanded="true" />
-                    <element signature="e#1921#1922#0" expanded="true" />
-                    <element signature="e#1955#1956#0" expanded="true" />
-                    <element signature="e#1986#1987#0" expanded="true" />
-                    <element signature="e#2032#2033#0" expanded="true" />
-                    <element signature="e#2070#2071#0" expanded="true" />
-                    <element signature="e#2105#2106#0" expanded="true" />
-                    <element signature="e#2137#2138#0" expanded="true" />
-                    <element signature="e#2185#2186#0" expanded="true" />
-                    <element signature="e#2225#2226#0" expanded="true" />
-                    <element signature="e#2255#2256#0" expanded="true" />
-                    <element signature="e#2282#2283#0" expanded="true" />
-                    <element signature="e#2320#2321#0" expanded="true" />
-                    <element signature="e#2352#2353#0" expanded="true" />
-                    <element signature="method#hashCode#0;class#Reservation_Event#0" />
-                    <element signature="method#toString#0;class#Reservation_Event#0" />
+                    <element signature="imports" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Preconditions.class" pinned="false" current-in-tab="false">
+            <entry file="jar://$MAVEN_REPOSITORY$/com/google/http-client/google-http-client/1.23.0/google-http-client-1.23.0.jar!/com/google/api/client/repackaged/com/google/common/base/Preconditions.class">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="2669">
+                  <caret line="165" selection-start-line="165" selection-end-line="165" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Preconditions.java" pinned="false" current-in-tab="false">
+            <entry file="jar://$MAVEN_REPOSITORY$/com/google/http-client/google-http-client/1.23.0/google-http-client-1.23.0-sources.jar!/com/google/api/client/util/Preconditions.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="408">
+                  <caret line="36" selection-start-line="36" selection-end-line="36" />
                 </state>
               </provider>
             </entry>
@@ -164,8 +144,23 @@
           <file leaf-file-name="Helper.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="533">
-                  <caret line="4089" column="53" selection-start-line="4089" selection-start-column="53" selection-end-line="4089" selection-end-column="53" />
+                <state relative-caret-position="923">
+                  <caret line="1053" column="13" selection-start-line="1053" selection-start-column="13" selection-end-line="1053" selection-end-column="13" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                    <element signature="e#1103#1205#0" />
+                    <element signature="e#1211#1281#0" />
+                    <element signature="e#1452#2411#0" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Event_DAO.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1003">
+                  <caret line="63" column="34" selection-start-line="63" selection-start-column="34" selection-end-line="63" selection-end-column="34" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -173,85 +168,43 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="UUID_createUuidRecord.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/HttpRequest/UUID_createUuidRecord.java">
+          <file leaf-file-name="GoogleCalenderApi.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="541">
-                  <caret line="45" column="46" selection-start-line="45" selection-start-column="46" selection-end-line="45" selection-end-column="46" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Receiver.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="965">
-                  <caret line="83" column="56" selection-start-line="83" selection-start-column="56" selection-end-line="83" selection-end-column="56" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Sender.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Sender.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-357">
-                  <caret line="130" column="51" selection-start-line="130" selection-start-column="51" selection-end-line="130" selection-end-column="51" />
+                <state relative-caret-position="171">
+                  <caret line="104" column="8" selection-start-line="104" selection-start-column="8" selection-end-line="104" selection-end-column="8" />
                   <folding>
-                    <element signature="method#createUuidRecord#0;class#Sender#0" />
-                    <element signature="e#1134#1189#0" />
-                    <element signature="e#1401#1472#0" />
-                    <element signature="e#1972#1985#0" />
-                    <element signature="method#insertUuidRecord#0;class#Sender#0" />
-                    <element signature="e#4075#4103#0" />
-                    <element signature="method#updateUuidRecordVersionB#0;class#Sender#0" />
-                    <element signature="method#sendPingMessage#0;class#Sender#0" />
+                    <element signature="docComment;field#APPLICATION_NAME#0;class#GoogleCalenderApi#0" />
+                    <element signature="docComment;field#DATA_STORE_DIR#0;class#GoogleCalenderApi#0" />
+                    <element signature="docComment;field#DATA_STORE_FACTORY#0;class#GoogleCalenderApi#0" />
+                    <element signature="docComment;field#JSON_FACTORY#0;class#GoogleCalenderApi#0" />
+                    <element signature="docComment;field#HTTP_TRANSPORT#0;class#GoogleCalenderApi#0" />
+                    <element signature="docComment;field#SCOPES#0;class#GoogleCalenderApi#0" />
+                    <element signature="initializer##0;class#GoogleCalenderApi#0" />
+                    <element signature="docComment;method#authorize#0;class#GoogleCalenderApi#0" />
+                    <element signature="docComment;method#getCalendarService#0;class#GoogleCalenderApi#0" />
+                    <element signature="method#getCalendarService#0;class#GoogleCalenderApi#0" />
+                    <element signature="method#createEventFromEventObject#0;class#GoogleCalenderApi#0" />
+                    <element signature="e#9522#9541#0" />
+                    <element signature="method#createEventFromSessionObject#0;class#GoogleCalenderApi#0" />
+                    <element signature="e#12348#12367#0" />
+                    <element signature="method#createDummyEvent#0;class#GoogleCalenderApi#0" />
+                    <element signature="e#15340#15359#0" />
+                    <element signature="method#updateEventWithEventObject#0;class#GoogleCalenderApi#0" />
+                    <element signature="method#cancelEventWithEventObject#0;class#GoogleCalenderApi#0" />
+                    <element signature="method#cancelEventByGCAID#0;class#GoogleCalenderApi#0" />
+                    <element signature="method#cancelEventByUuid#0;class#GoogleCalenderApi#0" />
+                    <element signature="method#main#0;class#GoogleCalenderApi#0" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="BaseEntity.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntity.java">
+          <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/pom.xml">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="230">
-                  <caret line="59" column="15" selection-start-line="59" selection-start-column="15" selection-end-line="59" selection-end-column="15" />
-                  <folding>
-                    <element signature="e#1694#1695#0" expanded="true" />
-                    <element signature="e#1729#1730#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Reservation_Event_DAO.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event_DAO.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="232">
-                  <caret line="143" column="25" selection-start-line="143" selection-start-column="25" selection-end-line="143" selection-end-column="25" />
-                  <folding>
-                    <element signature="e#237#254#0" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Reservation_Session.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="68">
-                  <caret line="10" selection-start-line="10" selection-end-line="10" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="User_DAO.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/User_DAO.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="16">
-                  <caret line="134" column="15" selection-start-line="134" selection-start-column="15" selection-end-line="134" selection-end-column="15" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
+                <state relative-caret-position="-745">
+                  <caret line="74" column="54" selection-start-line="74" selection-start-column="54" selection-end-line="74" selection-end-column="54" />
                 </state>
               </provider>
             </entry>
@@ -260,55 +213,17 @@
       </split-second>
     </splitter>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>Front</find>
-      <find>case &quot;9</find>
-      <find>newExistingUserResponse</find>
-    </findStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
-        <option value="$PROJECT_DIR$/db-models/mysqltest-2.txt" />
-        <option value="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/Quickstart.java" />
-        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/MessageStructure.java" />
-        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/Userstructure.java" />
-        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/EventStructure.java" />
-        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationStructure.java" />
-        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/SessionStructure.java" />
-        <option value="$PROJECT_DIR$/src/main/java/HttpRequest/UUID_insertUuidRecord.java" />
-        <option value="$PROJECT_DIR$/src/main/java/HttpRequest/UUID_updateUuidRecordVersion.java" />
-        <option value="$PROJECT_DIR$/src/main/java/AppLogic/PingSender.java" />
-        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/MANIFEST.mf" />
-        <option value="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.mf" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseProperties.java" />
-        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Sender.java" />
-        <option value="$PROJECT_DIR$/src/main/java/HttpRequest/UUID_updateUuidRecordVersionB.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/User.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Event.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Session.java" />
-        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationSessionMessage.java" />
-        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationEventMessage.java" />
-        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationEventStructure.java" />
-        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationSessionStructure.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntity.java" />
-        <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/User_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event_DAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationSessionStructure.java" />
+        <option value="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationEventStructure.java" />
         <option value="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" />
         <option value="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" />
       </list>
@@ -331,6 +246,12 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-3628" />
+    <option name="y" value="-9" />
+    <option name="width" value="1347" />
+    <option name="height" value="724" />
+  </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -339,6 +260,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -350,17 +273,6 @@
               <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
               <item name="PLANNING" type="462c0819:PsiDirectoryNode" />
               <item name=".idea" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PLANNING" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PLANNING" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
@@ -424,18 +336,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\ief.falot\Documents\GitHub\PLANNING\src\main\java" />
-      <recent name="C:\Users\ief.falot\Documents\GitHub\PLANNING\src\META-INF" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\ief.falot\Documents\GitHub\PLANNING\src\main\java\XmlMessage" />
-    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -449,9 +350,31 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="GoogleCalenderApi" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GoogleCalendarApi.GoogleCalenderApi" />
+      <module name="cli-java-controller" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="GoogleCalendarApi.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="AppLogic.Main" />
+      <module name="cli-java-controller" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="AppLogic.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
+    <configuration name="Receiver" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="AppLogic.Receiver" />
       <module name="cli-java-controller" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -502,9 +425,16 @@
       <properties />
       <listeners />
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Receiver" />
+      <item itemvalue="Application.GoogleCalenderApi" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.GoogleCalenderApi" />
+        <item itemvalue="Application.Receiver" />
       </list>
     </recent_temporary>
   </component>
@@ -513,7 +443,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="82177a5e-8973-45d5-9e84-1447e337bd45" name="Default" comment="" />
+      <changelist id="e99f31c8-cb7f-4ef1-b01f-5fbda4bb66e6" name="Default" comment="" />
       <created>1525702215899</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -535,82 +465,58 @@
       <workItem from="1526366561491" duration="698000" />
       <workItem from="1526383686664" duration="44107000" />
       <workItem from="1526458296493" duration="5813000" />
+      <workItem from="1526646047407" duration="5428000" />
+      <workItem from="1526655484473" duration="549000" />
+      <workItem from="1526776109424" duration="1010000" />
+      <workItem from="1526777181375" duration="580000" />
+      <workItem from="1526777819015" duration="4422000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4017000" />
+    <option name="totallyTimeSpent" value="33093000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1608" y="-8" width="1616" height="876" extended-state="6" />
+    <frame x="-3528" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32897604" />
-      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49307036" weight="0.14363144" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49307036" weight="0.3845316" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.45755967" side_tool="true" weight="0.8518519" />
       <window_info anchor="right" id="Maven Projects" order="5" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5424403" visible="true" weight="0.27235773" />
       <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5424403" visible="true" weight="0.50980395" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.4989339" weight="0.41463414" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.59217876" visible="true" weight="0.1940874" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8288889" visible="true" weight="0.15351813" />
       <window_info anchor="right" id="Database" order="4" />
-      <window_info id="Structure" order="1" sideWeight="0.40782124" side_tool="true" visible="true" weight="0.1940874" />
+      <window_info id="Structure" order="1" sideWeight="0.1711111" side_tool="true" visible="true" weight="0.15351813" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="4" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39978212" />
       <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5934959" visible="true" weight="0.21529563" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.4989339" weight="0.41463414" />
-      <window_info id="Structure" order="1" sideWeight="0.40650406" side_tool="true" visible="true" weight="0.21529563" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32897604" />
-      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5424403" weight="0.7516255" />
-      <window_info id="Designer" order="2" />
-      <window_info id="UI Designer" order="4" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39978212" />
-      <window_info anchor="right" id="Database" order="4" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.45755967" side_tool="true" weight="0.8518519" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49307036" weight="0.3845316" />
-      <window_info anchor="right" id="Maven Projects" order="5" />
-      <window_info id="Favorites" order="3" side_tool="true" />
     </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <option name="time" value="8" />
-    </breakpoint-manager>
-  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/db-models/mysqltest-2.txt" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/Quickstart.java" />
-    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_161/src.zip!/javax/xml/bind/annotation/XmlRootElement.java">
+    <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="161" column="18" selection-start-line="161" selection-start-column="18" selection-end-line="161" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_161/src.zip!/java/lang/Thread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="747" selection-start-line="747" selection-end-line="747" />
+        <state relative-caret-position="1258">
+          <caret line="74" column="54" lean-forward="true" selection-start-line="74" selection-start-column="54" selection-end-line="74" selection-end-column="54" />
         </state>
       </provider>
     </entry>
@@ -685,31 +591,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/PingStructure.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.mf">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="148" selection-start-line="148" selection-end-line="148" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/PingSender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1665">
-          <caret line="125" selection-start-line="125" selection-end-line="125" />
         </state>
       </provider>
     </entry>
@@ -748,13 +633,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Event.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="24" column="123" selection-start-line="24" selection-start-column="123" selection-end-line="24" selection-end-column="123" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Session.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="325">
@@ -763,13 +641,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/ReservationStructure.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/PingMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/MessageMessage.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="363">
@@ -791,62 +662,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/ReservationEventStructure.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6324">
-          <caret line="375" selection-start-line="375" selection-end-line="375" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="59" column="15" selection-start-line="59" selection-start-column="15" selection-end-line="59" selection-end-column="15" />
-          <folding>
-            <element signature="e#1694#1695#0" expanded="true" />
-            <element signature="e#1729#1730#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/DatabaseProperties.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="19" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="965">
-          <caret line="83" column="56" selection-start-line="83" selection-start-column="56" selection-end-line="83" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Sender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-357">
-          <caret line="130" column="51" selection-start-line="130" selection-start-column="51" selection-end-line="130" selection-end-column="51" />
-          <folding>
-            <element signature="method#createUuidRecord#0;class#Sender#0" />
-            <element signature="e#1134#1189#0" />
-            <element signature="e#1401#1472#0" />
-            <element signature="e#1972#1985#0" />
-            <element signature="method#insertUuidRecord#0;class#Sender#0" />
-            <element signature="e#4075#4103#0" />
-            <element signature="method#updateUuidRecordVersionB#0;class#Sender#0" />
-            <element signature="method#sendPingMessage#0;class#Sender#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -860,56 +679,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-572">
-          <caret line="29" column="70" selection-start-line="29" selection-start-column="67" selection-end-line="29" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
-          <folding>
-            <element signature="method#getReservationId#0;class#Reservation_Event#0" />
-            <element signature="e#1701#1702#0" expanded="true" />
-            <element signature="e#1748#1749#0" expanded="true" />
-            <element signature="e#1790#1791#0" expanded="true" />
-            <element signature="e#1817#1818#0" expanded="true" />
-            <element signature="e#1878#1879#0" expanded="true" />
-            <element signature="e#1921#1922#0" expanded="true" />
-            <element signature="e#1955#1956#0" expanded="true" />
-            <element signature="e#1986#1987#0" expanded="true" />
-            <element signature="e#2032#2033#0" expanded="true" />
-            <element signature="e#2070#2071#0" expanded="true" />
-            <element signature="e#2105#2106#0" expanded="true" />
-            <element signature="e#2137#2138#0" expanded="true" />
-            <element signature="e#2185#2186#0" expanded="true" />
-            <element signature="e#2225#2226#0" expanded="true" />
-            <element signature="e#2255#2256#0" expanded="true" />
-            <element signature="e#2282#2283#0" expanded="true" />
-            <element signature="e#2320#2321#0" expanded="true" />
-            <element signature="e#2352#2353#0" expanded="true" />
-            <element signature="method#hashCode#0;class#Reservation_Event#0" />
-            <element signature="method#toString#0;class#Reservation_Event#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="68" lean-forward="true" selection-start-line="68" selection-end-line="68" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="-86">
+          <caret line="28" column="36" selection-start-line="28" selection-start-column="36" selection-end-line="28" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
+        <state relative-caret-position="-748">
           <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
@@ -921,10 +700,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="100" lean-forward="true" selection-start-line="100" selection-end-line="102" />
+        <state relative-caret-position="583">
+          <caret line="243" column="28" lean-forward="true" selection-start-line="243" selection-start-column="28" selection-end-line="243" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -937,54 +716,185 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event_DAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="143" column="25" selection-start-line="143" selection-start-column="25" selection-end-line="143" selection-end-column="25" />
-          <folding>
-            <element signature="e#237#254#0" />
-          </folding>
+        <state relative-caret-position="-232">
+          <caret line="135" column="13" selection-start-line="135" selection-start-column="13" selection-end-line="135" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/google/apis/google-api-services-calendar/v3-rev305-1.23.0/google-api-services-calendar-v3-rev305-1.23.0-sources.jar!/com/google/api/services/calendar/model/Event.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="33" column="19" selection-start-line="33" selection-start-column="19" selection-end-line="33" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-493">
+          <caret line="45" selection-start-line="45" selection-end-line="45" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/User_DAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16">
-          <caret line="134" column="15" selection-start-line="134" selection-start-column="15" selection-end-line="134" selection-end-column="15" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="119">
+          <caret line="72" column="5" selection-start-line="72" selection-start-column="5" selection-end-line="72" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Sender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-82">
+          <caret line="111" column="22" selection-start-line="111" selection-start-column="22" selection-end-line="111" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/ReservationSessionStructure.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="21" column="11" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
+        <state relative-caret-position="697">
+          <caret line="51" selection-start-line="51" selection-end-line="51" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/ReservationEventStructure.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="1054" column="39" selection-start-line="1054" selection-start-column="39" selection-end-line="1054" selection-end-column="39" />
+        <state relative-caret-position="204">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/PingStructure.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/XmlMessage/PingMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="44" column="11" selection-start-line="44" selection-start-column="11" selection-end-line="44" selection-end-column="11" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#1694#1695#0" expanded="true" />
+            <element signature="e#1729#1730#0" expanded="true" />
+            <element signature="e#2024#2025#0" expanded="true" />
+            <element signature="e#2053#2054#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        <state relative-caret-position="170">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Event.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-289">
+          <caret line="94" column="11" selection-start-line="94" selection-start-column="11" selection-end-line="94" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1003">
+          <caret line="63" column="34" selection-start-line="63" selection-start-column="34" selection-end-line="63" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1819">
+          <caret line="111" column="29" selection-start-line="111" selection-start-column="29" selection-end-line="111" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/google/http-client/google-http-client/1.23.0/google-http-client-1.23.0.jar!/com/google/api/client/repackaged/com/google/common/base/Preconditions.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2669">
+          <caret line="165" selection-start-line="165" selection-end-line="165" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/google/http-client/google-http-client/1.23.0/google-http-client-1.23.0-sources.jar!/com/google/api/client/util/Preconditions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="28" selection-start-line="28" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/PingSender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1459">
+          <caret line="125" selection-start-line="125" selection-end-line="125" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-745">
+          <caret line="74" column="54" selection-start-line="74" selection-start-column="54" selection-end-line="74" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="923">
+          <caret line="1053" column="13" selection-start-line="1053" selection-start-column="13" selection-end-line="1053" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1103#1205#0" />
+            <element signature="e#1211#1281#0" />
+            <element signature="e#1452#2411#0" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="144" column="112" selection-start-line="144" selection-start-column="112" selection-end-line="144" selection-end-column="112" />
+        <state relative-caret-position="171">
+          <caret line="104" column="8" selection-start-line="104" selection-start-column="8" selection-end-line="104" selection-end-column="8" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="docComment;field#APPLICATION_NAME#0;class#GoogleCalenderApi#0" />
+            <element signature="docComment;field#DATA_STORE_DIR#0;class#GoogleCalenderApi#0" />
+            <element signature="docComment;field#DATA_STORE_FACTORY#0;class#GoogleCalenderApi#0" />
+            <element signature="docComment;field#JSON_FACTORY#0;class#GoogleCalenderApi#0" />
+            <element signature="docComment;field#HTTP_TRANSPORT#0;class#GoogleCalenderApi#0" />
+            <element signature="docComment;field#SCOPES#0;class#GoogleCalenderApi#0" />
+            <element signature="initializer##0;class#GoogleCalenderApi#0" />
+            <element signature="docComment;method#authorize#0;class#GoogleCalenderApi#0" />
+            <element signature="docComment;method#getCalendarService#0;class#GoogleCalenderApi#0" />
+            <element signature="method#getCalendarService#0;class#GoogleCalenderApi#0" />
+            <element signature="method#createEventFromEventObject#0;class#GoogleCalenderApi#0" />
+            <element signature="e#9522#9541#0" />
+            <element signature="method#createEventFromSessionObject#0;class#GoogleCalenderApi#0" />
+            <element signature="e#12348#12367#0" />
+            <element signature="method#createDummyEvent#0;class#GoogleCalenderApi#0" />
+            <element signature="e#15340#15359#0" />
+            <element signature="method#updateEventWithEventObject#0;class#GoogleCalenderApi#0" />
+            <element signature="method#cancelEventWithEventObject#0;class#GoogleCalenderApi#0" />
+            <element signature="method#cancelEventByGCAID#0;class#GoogleCalenderApi#0" />
+            <element signature="method#cancelEventByUuid#0;class#GoogleCalenderApi#0" />
+            <element signature="method#main#0;class#GoogleCalenderApi#0" />
           </folding>
         </state>
       </provider>

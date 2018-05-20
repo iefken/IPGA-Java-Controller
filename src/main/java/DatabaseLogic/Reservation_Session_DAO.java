@@ -98,7 +98,7 @@ public class Reservation_Session_DAO extends BaseEntityDAO {
 */
 
     //UPDATE
-
+/*
     public int UpdateReservationSession (Reservation_Session newReservationSessionFromMessage, int oldEntityId) throws SQLException {
 
         //Maak een nieuwe BaseEntity met incremented entityVersion
@@ -109,7 +109,11 @@ public class Reservation_Session_DAO extends BaseEntityDAO {
         String sqlQuery = "INSERT INTO PlanningDB.reservation_session (idReservationSession, reservationUUID, sessionUUID, userUUID, paid, timestampLastUpdated, timestampCreated) VALUES (" + callbackInsertedInt + ",\"" + newReservationSessionFromMessage.getReservationId() + "\",\"" + newReservationSessionFromMessage.getReservationUUID() + "\",\"" + newReservationSessionFromMessage.getSessionUUID() + "\",\"" + newReservationSessionFromMessage.getUserUUID() + "\",\"" + newReservationSessionFromMessage.getPaid() + "\",\"" + newReservationSessionFromMessage.getTimestamp() + "\");";
 
         //softdelete oude base entity
-        softDeleteBaseEntity("reservation_session", oldEntityId);
+        softDeleteBaseEntity(oldEntityId);
+<<<<<<< HEAD
+=======
+
+>>>>>>> DEVBranche_Wissam
         try {
             int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
         } catch (Exception e) {
@@ -118,6 +122,57 @@ public class Reservation_Session_DAO extends BaseEntityDAO {
         }
 
         return callbackInsertedInt;
+
+    }
+    */
+    public boolean updateReservationSessionByObject (Reservation_Session newReservationSessionFromMessage) {
+
+        String sqlQuery = " UPDATE PlanningDB.reservation_session SET " +
+                "sessionUuid=\""+newReservationSessionFromMessage.getSessionUUID()+"\", " +
+                "userUuid="+newReservationSessionFromMessage.getUserUUID()+", " +
+                "paid=\""+newReservationSessionFromMessage.getPaid()+"\" " +
+
+                "WHERE uuid=\""+newReservationSessionFromMessage.getReservationUUID()+"\" " +
+                ";";
+        boolean allGood = true;
+
+        PreparedStatement statement = null;
+        try {
+            if (getConnection().isClosed()) {
+                throw new IllegalStateException("ERROR: Connection closed in updateReservationSessionByObject...");
+            }
+            statement = getConnection().prepareStatement(sqlQuery);
+            try{
+                statement.executeUpdate();
+
+                try {
+
+                    allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + newReservationSessionFromMessage.getEntityVersion(), "int", "idBaseEntity", "" + newReservationSessionFromMessage.getReservationId());
+
+                } catch (Exception e) {
+//                e.printStackTrace();
+                    System.out.println("ERROR updating reservation session  with query:<\n"+sqlQuery+"\n>\n" + e);
+                }
+                return true;
+            }catch (Exception e) {
+                System.out.println("ERROR: during executing statement: updateReservationSessionByObject():\n"+e);
+                //e.printStackTrace();
+                return false;
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());;
+            throw new RuntimeException(e.getMessage());
+        }finally{
+            try{
+                System.out.println("Queried:\nSTART\nInserting reservation session (ev."+newReservationSessionFromMessage.getEntityVersion()+") with query:<\n"+sqlQuery+"\n>\nEND\n");
+                if(statement != null)
+
+                    statement.close();
+            }catch(SQLException e){
+                System.out.println(e.getMessage());;
+                throw new RuntimeException("ERROR 02: Error during closing the connection...");
+            }
+        }
 
     }
 
