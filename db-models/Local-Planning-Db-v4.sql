@@ -132,9 +132,10 @@ CREATE TABLE IF NOT EXISTS `PlanningDB`.`Reservation_Event` (
   `paid` FLOAT NULL,
   `timestampLastUpdated` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP,
   `timestampCreated` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-  INDEX `fk_Event_has_User_User1_idx` (`userUuid` ASC),
-  INDEX `fk_Event_has_User_Event_idx` (`eventUuid` ASC),
   PRIMARY KEY (`idReservationEvent`),
+  INDEX `fk_Event_has_User_Event_idx` (`eventUuid` ASC),
+  INDEX `fk_Event_has_User_User1_idx` (`userUuid` ASC),
+  INDEX `fk_Reservation_Event_BaseEntity1_idx` (`idReservationEvent` ASC),
   INDEX `fk_uuid_reservationEvent` (`uuid` ASC),
   CONSTRAINT `fk_Event_has_User_Event`
     FOREIGN KEY (`eventUuid`)
@@ -168,7 +169,7 @@ CREATE TABLE IF NOT EXISTS `PlanningDB`.`Reservation_Session` (
   PRIMARY KEY (`idReservationSession`),
   INDEX `fk_Session_has_User_Session1_idx` (`sessionUuid` ASC),
   INDEX `fk_Session_has_User_User1_idx` (`userUuid` ASC),
-  INDEX `fk_Reservation_BaseEntity1_idx` (`idReservationSession` ASC),
+  INDEX `fk_Reservation_Session_BaseEntity1_idx` (`idReservationSession` ASC),
   INDEX `fk_uuid_reservationSession` (`uuid` ASC),
   CONSTRAINT `fk_Session_has_User_Session1`
     FOREIGN KEY (`sessionUuid`)
@@ -180,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `PlanningDB`.`Reservation_Session` (
     REFERENCES `PlanningDB`.`User` (`uuid`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Reservation_BaseEntity1`
+  CONSTRAINT `fk_Reservation_Session_BaseEntity1`
     FOREIGN KEY (`idReservationSession`)
     REFERENCES `PlanningDB`.`BaseEntity` (`idBaseEntity`)
     ON DELETE NO ACTION

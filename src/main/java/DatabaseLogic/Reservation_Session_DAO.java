@@ -15,9 +15,9 @@ public class Reservation_Session_DAO extends BaseEntityDAO {
 
     public int insertIntoReservation_Session(Reservation_Session reservation_session) throws SQLException {
 
+        //execute baseEntity Insert
         BaseEntity newBaseEntity = new BaseEntity(reservation_session.getEntityId(), reservation_session.getEntityVersion(), reservation_session.getActive(), reservation_session.getTimestamp());
 
-        //execute baseEntity Insert
         int callbackInsertedInt = newBaseEntity.getEntityId();
 
         if (reservation_session.getEntityId()!=0 && callbackInsertedInt != reservation_session.getEntityId()) {
@@ -29,7 +29,7 @@ public class Reservation_Session_DAO extends BaseEntityDAO {
         String sqlQuery = "";
 
         if(reservation_session.getEntityId()==0) {
-            sqlQuery = "INSERT INTO PlanningDB.Reservation_Event (`uuid`, `eventUuid`, `userUuid`) VALUES(\"" + reservation_session.getEntityId() + "\",\"" + reservation_session.getSessionUUID() + "\",\"" + reservation_session.getUserUUID() + "\");";
+            sqlQuery = "INSERT INTO PlanningDB.Reservation_Session (`uuid`, `sessionUuid`, `userUuid`) VALUES(\"" + reservation_session.getEntityId() + "\",\"" + reservation_session.getSessionUUID() + "\",\"" + reservation_session.getUserUUID() + "\");";
         }else{
             sqlQuery = "INSERT INTO PlanningDB.Reservation_Session (`idReservationSession`, `uuid`, `sessionUuid`, `userUuid`) VALUES(" + callbackInsertedInt + ",\"" + reservation_session.getReservationUUID() + "\",\"" + reservation_session.getSessionUUID() + "\",\"" + reservation_session.getUserUUID() + "\");";
         }

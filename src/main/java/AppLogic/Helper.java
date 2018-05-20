@@ -1433,7 +1433,7 @@ public interface Helper {
         // 2.1.A. search event table for uuid
 
         try {
-            uuidExists = new BaseEntityDAO().doesUUIDExist("Reservation_Event", newReservation_EventObjectFromXml.getReservationUUID());
+            uuidExists = new BaseEntityDAO().doesUUIDExist("Reservation_Event", reservationUUID);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1442,115 +1442,111 @@ public interface Helper {
 
         if (uuidExists) {
 
-            System.out.println("UUID already exists in our PlanningDB table:[Session]");
+            System.out.println("UUID already exists in our PlanningDB table:[Reservation_Event]");
+
+            // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
+
+
+            // 2.2. Reservation_Event record update
+            // Prepare new reservation_event object for sending to database
+            System.out.println("[Reservation_Event]\n");
+
+            // 2.2.1 get idSession from sessionUUID in Session
+            String[] propertiesToSelect = {"idReservationEvent"};
+            String table = "Reservation_Event";
+            String[] selectors = {"uuid"};
+            String[] values = {"" + reservationUUID};
+
+            String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
 
             // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
             if (newReservation_EventObjectFromXml.getActive() == 0) {
-                new BaseEntityDAO().softDeleteBaseEntity(newReservation_EventObjectFromXml.getEntityId());
-                System.out.println("SoftDelete execusted on object with entityId: " + newReservation_EventObjectFromXml.getEntityId() + "\n");
+                new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
+                System.out.println("SoftDelete execusted on object with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
             } else {
 
-                // 2.2. Reservation_Event record update
-                // Prepare new reservation_event object for sending to database
-                System.out.println("[Reservation_Event]\n");
+                //System.out.println("selectResults: " + selectResults[0]);
 
-                // 2.2.1 get idSession from sessionUUID in Session
-                String[] propertiesToSelect = {"idReservationEvent"};
-                String table = "Reservation_Event";
-                String[] selectors = {"uuid"};
-                String[] values = {"" + reservationUUID};
+                // 2.2.2. get entityVersion from id in BaseEntity
+                propertiesToSelect[0] = "entity_version";
+                table = "BaseEntity";
+                selectors[0] = "idBaseEntity";
+                values[0] = selectResults[0];
+                int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
 
-                String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
+                Reservation_Event existingReservation_Event = null;
+                try {
+                    existingReservation_Event = getReservation_EventObjectFromXmlMessage(task);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-                // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
-                if (newReservation_EventObjectFromXml.getActive() == 0) {
-                    new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
-                    System.out.println("SoftDelete execusted on object with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
-                } else {
+                if (localEntityVersion < existingReservation_Event.getEntityVersion()) {
 
-                    //System.out.println("selectResults: " + selectResults[0]);
+                    // 2.3.1. update google calender through API
 
-                    // 2.2.2. get entityVersion from id in BaseEntity
-                    propertiesToSelect[0] = "entity_version";
-                    table = "BaseEntity";
-                    selectors[0] = "idBaseEntity";
-                    values[0] = selectResults[0];
-                    int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
+                    // TODO
 
-                    Reservation_Event existingReservation_Event = null;
+                    // 2.3.2. update record in our local db
+
+                    int updateUuidRecordVersionResponse = 0;
                     try {
-                        existingReservation_Event = getReservation_EventObjectFromXmlMessage(task);
+                        allGood = new Reservation_Event_DAO().updateReservationEventByObject(existingReservation_Event);
                     } catch (Exception e) {
+                        System.out.println("Error updating reservation event in the database: " + e);
+                    }
+                    // 2.3.3. updateUuidRecordVersion() (To UUID master)
+                    try {
+                        updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, reservationUUID);
+                    } catch (IOException | TimeoutException | JAXBException e) {
                         e.printStackTrace();
                     }
-
-                    if (localEntityVersion < existingReservation_Event.getEntityVersion()) {
-
-                        // 2.3.1. update google calender through API
-
-                        // TODO
-
-                        // 2.3.2. update record in our local db
-
-                        int updateUuidRecordVersionResponse = 0;
-                        try {
-                            allGood = new Reservation_Event_DAO().updateReservationEventByObject(existingReservation_Event);
-                        } catch (Exception e) {
-                            System.out.println("Error updating reservation event in the database: " + e);
-                        }
-                        // 2.3.3. updateUuidRecordVersion() (To UUID master)
-                        try {
-                            updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, reservationUUID);
-                        } catch (IOException | TimeoutException | JAXBException e) {
-                            e.printStackTrace();
-                        }
-                        // 2.3.4. update entity version (on our database)
-                        try {
-                            allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + existingReservation_Event.getEntityVersion(), "int", "idBaseEntity", "" + selectResults[0]);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            System.out.println("ERROR in 2.3.4. update entity version:\n " + e);
-                            allGood = false;
-                        }
-
-                        System.out.println("We had this Reservation_Event with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + existingReservation_Event.getEntityVersion() + "'");
-
-
-                    } else {
-                        // we have the latest version...
-                        System.out.println("We already had this Reservation_Event with entityVersion: '" + localEntityVersion + "'");
-
+                    // 2.3.4. update entity version (on our database)
+                    try {
+                        allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + existingReservation_Event.getEntityVersion(), "int", "idBaseEntity", "" + selectResults[0]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("ERROR in 2.3.4. update entity version:\n " + e);
+                        allGood = false;
                     }
-                }
 
+                    System.out.println("We had this Reservation_Event with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + existingReservation_Event.getEntityVersion() + "'");
+
+
+                } else {
+                    // we have the latest version...
+                    System.out.println("We already had this Reservation_Event with entityVersion: '" + localEntityVersion + "'");
+
+                }
             }
 
-            }else{
 
-                // uuid doesn't exit locally yet
-                // # insert record locally with given info
+        } else {
 
-
-                int messageReservationInsertReturner = 0;
-
-                BaseEntity newTempEntity = new BaseEntity();
-                newReservation_EventObjectFromXml.setReservationId(newTempEntity.getEntityId());
-                try {
-                    messageReservationInsertReturner = new Reservation_Event_DAO().insertIntoReservation_Event(newReservation_EventObjectFromXml);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                // insertUuidRecord
-
-                try {
-                    Sender.insertUuidRecord("", messageReservationInsertReturner, thisEntityType, Source_type, reservationUUID);
-                } catch (IOException | TimeoutException | JAXBException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("Inserted new Reservation_Event record with Uuid: " + reservationUUID + "!");
+            // uuid doesn't exit locally yet
+            // # insert record locally with given info
 
 
+            int messageReservationInsertReturner = 0;
+
+            BaseEntity newTempEntity = new BaseEntity();
+            newReservation_EventObjectFromXml.setReservationId(newTempEntity.getEntityId());
+            try {
+                messageReservationInsertReturner = new Reservation_Event_DAO().insertIntoReservation_Event(newReservation_EventObjectFromXml);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+            // insertUuidRecord
+
+            try {
+                Sender.insertUuidRecord("", messageReservationInsertReturner, thisEntityType, Source_type, reservationUUID);
+            } catch (IOException | TimeoutException | JAXBException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Inserted new Reservation_Event record with Uuid: " + reservationUUID + "!");
+
+
+        }
 
     }
 
@@ -1559,18 +1555,19 @@ public interface Helper {
         String userUUID = "";
         String reservationUUID = "";
         String sessionUUID = "";
+
         Reservation_Session newReservation_SessionObjectFromXml = null;
         Boolean uuidExists = false;
         Boolean allGood = true;
+
         EntityType thisEntityType = EntityType.ReservationSession;
         SourceType Source_type = SourceType.Planning;
 
         // 1. transform xml to reservation-object
 
-
         newReservation_SessionObjectFromXml = getReservation_SessionObjectFromXmlMessage(task);
 
-
+        reservationUUID = newReservation_SessionObjectFromXml.getReservationUUID();
         // System.out.println("sessionUUID: "+sessionUUID);
 
         // 2.1 check if UUID exists in local db
@@ -1580,7 +1577,7 @@ public interface Helper {
         // 2.1.B. search session table for uuid
 
         try {
-            uuidExists = new BaseEntityDAO().doesUUIDExist("Reservation_Session", newReservation_SessionObjectFromXml.getReservationUUID());
+            uuidExists = new BaseEntityDAO().doesUUIDExist("Reservation_Session", reservationUUID);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1592,80 +1589,83 @@ public interface Helper {
             System.out.println("UUID already exists in our PlanningDB table:[Reservation_Session]");
 
             // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
+            // 2.2. Reservation_Event record update
+            // Prepare new reservation_session object for sending to database
+            // System.out.println("[Reservation_Session]");
+
+            // 2.2.1 get idSession from sessionUUID in Session
+            String[] propertiesToSelect = {"idReservationSession"};
+            String table = "Reservation_Session";
+            String[] selectors = {"uuid"};
+            String[] values = {"" + reservationUUID};
+
+            String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
+
+            // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
             if (newReservation_SessionObjectFromXml.getActive() == 0) {
-                new BaseEntityDAO().softDeleteBaseEntity(newReservation_SessionObjectFromXml.getEntityId());
-                System.out.println("SoftDelete execusted on object with entityId: " + newReservation_SessionObjectFromXml.getEntityId() + "\n");
+                new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
+                System.out.println("SoftDelete executed on [Reservation_Session] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
             } else {
 
-                // 2.2. Reservation_Event record update
-                // Prepare new reservation_session object for sending to database
-                System.out.println("[Reservation_Session]");
+                // 2.2.2. get entityVersion from id in BaseEntity
+                propertiesToSelect[0] = "entity_version";
+                table = "BaseEntity";
+                selectors[0] = "idBaseEntity";
+                values[0] = selectResults[0];
+                int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
 
-                // 2.2.1 get idSession from sessionUUID in Session
-                String[] propertiesToSelect = {"idReservationSession"};
-                String table = "Reservation_Session";
-                String[] selectors = {"uuid"};
-                String[] values = {"" + sessionUUID};
+                Reservation_Session existingReservation_Session = null;
+                try {
+                    existingReservation_Session = getReservation_SessionObjectFromXmlMessage(task);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-                String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
+                int updateUuidRecordVersionResponse = 0;
 
-                // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
-                if (newReservation_SessionObjectFromXml.getActive() == 0) {
-                    new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
-                    System.out.println("SoftDelete execusted on [Reservation_Session] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
-                } else {
+                if (localEntityVersion < existingReservation_Session.getEntityVersion()) {
 
-                    // 2.2.2. get entityVersion from id in BaseEntity
-                    propertiesToSelect[0] = "entity_version";
-                    table = "BaseEntity";
-                    selectors[0] = "idBaseEntity";
-                    values[0] = selectResults[0];
-                    int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
+                    // 2.3.1. update google calender through API
 
-                    Reservation_Session existingReservation_Session = null;
+                    // TODO
+
+                    // 2.3.2. update record in our local db
+
+                    updateUuidRecordVersionResponse = 0;
                     try {
-                        existingReservation_Session = getReservation_SessionObjectFromXmlMessage(task);
+                        allGood = new Reservation_Session_DAO().updateReservationSessionByObject(existingReservation_Session);
                     } catch (Exception e) {
+                        System.out.println("Error updating reservation session in the database: " + e);
+                    }
+
+                    // 2.3.3. updateUuidRecordVersion() (To UUID master)
+                    try {
+                        updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, reservationUUID);
+                    } catch (IOException | TimeoutException | JAXBException e) {
                         e.printStackTrace();
                     }
 
-                    int updateUuidRecordVersionResponse = 0;
 
-                    if (localEntityVersion < existingReservation_Session.getEntityVersion()) {
-
-                        // 2.3.1. update google calender through API
-
-                        // TODO
-
-                        // 2.3.3. updateUuidRecordVersion() (To UUID master)
-                        try {
-                            updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, reservationUUID);
-                        } catch (IOException | TimeoutException | JAXBException e) {
-                            e.printStackTrace();
-                        }
-
-
-                        // 2.3.4. update entity version (on our database)
-                        try {
-                            allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + existingReservation_Session.getEntityVersion(), "int", "idBaseEntity", "" + existingReservation_Session);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            System.out.println("ERROR in 2.3.4. update entity version (on our database) :\n " + e);
-                            allGood = false;
-                        }
-
-                        System.out.println("We had this Reservation_Session with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + existingReservation_Session.getEntityVersion() + "'");
-
-
-                    } else {
-                        // we have the latest version...
-                        System.out.println("We already had this Reservation_Session with entityVersion: '" + localEntityVersion + "'");
+                    // 2.3.4. update entity version (on our database)
+                    try {
+                        allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + existingReservation_Session.getEntityVersion(), "int", "idBaseEntity", "" + existingReservation_Session);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("ERROR in 2.3.4. update entity version (on our database) :\n " + e);
+                        allGood = false;
                     }
 
+                    System.out.println("We had this Reservation_Session with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + existingReservation_Session.getEntityVersion() + "'");
+
+
+                } else {
+                    // we have the latest version...
+                    System.out.println("We already had this Reservation_Session with entityVersion: '" + localEntityVersion + "'");
                 }
-                // # send update to uuid manager
 
             }
+            // # send update to uuid manager
+
 
         } else {
 
@@ -1675,6 +1675,10 @@ public interface Helper {
             System.out.println("Uuid doesn't exit locally yet...");
 
             int messageReservationInsertReturner = 0;
+
+            BaseEntity newTempEntity = new BaseEntity();
+            newReservation_SessionObjectFromXml.setReservationId(newTempEntity.getEntityId());
+            //System.out.println("newReservation_SessionObjectFromXml: " + newReservation_SessionObjectFromXml.toString());
 
             try {
                 messageReservationInsertReturner = new Reservation_Session_DAO().insertIntoReservation_Session(newReservation_SessionObjectFromXml);
@@ -2340,7 +2344,7 @@ public interface Helper {
             }
         }
 
-        sessionObject = new Session(0, entityVersion, active, timestamp, sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, location, speaker, dateTimeStart, dateTimeEnd, sessionType, "", "", price);
+        sessionObject = new Session(0, entityVersion, active, timestamp, sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, location, speaker, dateTimeStart, dateTimeEnd, sessionType, "", "", price, false);
         //System.out.println("sessionObject.toString()"+sessionObject.toString());
         return sessionObject;
     }
@@ -2586,7 +2590,6 @@ public interface Helper {
 
         String reservationUUID = "false";
         String userUUID = "false";
-//        String eventUUID = "false";
         String sessionUUID = "false";
         float paid = 0;
         int entityVersion = 0;
@@ -2598,10 +2601,16 @@ public interface Helper {
         reservationUUID = getSafeXmlProperty(xmlMessage, "uuid");
         if (reservationUUID == "false") {
 
-            reservationUUID = getSafeXmlProperty(xmlMessage, "reservationUUID");
+            reservationUUID = getSafeXmlProperty(xmlMessage, "reservationUuid");
+
             if (reservationUUID == "false") {
-                System.out.println(" [!!!] ERROR: No reservationUUID found in XML: ");
-                allGood = false;
+
+                reservationUUID = getSafeXmlProperty(xmlMessage, "reservationUUID");
+
+                if (reservationUUID == "false") {
+                    System.out.println(" [!!!] ERROR: No reservationUUID found in XML: ");
+                    allGood = false;
+                }
             }
         }
         userUUID = getSafeXmlProperty(xmlMessage, "userUuid");
@@ -2611,13 +2620,6 @@ public interface Helper {
             allGood = false;
 
         }
-        /*eventUUID = getSafeXmlProperty(xmlMessage, "eventUuid");
-        if (eventUUID == "false") {
-
-            System.out.println(" [!!!] ERROR: No eventUUID found in XML: ");
-            allGood = false;
-
-        }*/
         sessionUUID = getSafeXmlProperty(xmlMessage, "sessionUuid");
         if (sessionUUID == "false") {
 
@@ -2625,7 +2627,6 @@ public interface Helper {
             allGood = false;
 
         }
-
         try {
             paid = Float.parseFloat(getSafeXmlProperty(xmlMessage, "paid"));
         } catch (NumberFormatException e) {
@@ -3242,7 +3243,7 @@ public interface Helper {
                     GoogleCalenderApi.authorize();
                 } catch (IOException e) {
 
-                    System.out.println("Error authorizing connection: "+e);
+                    System.out.println("Error authorizing connection: " + e);
                 }
 
                 System.out.println("\nCase '" + choice + "' NOT worked out yet!");
