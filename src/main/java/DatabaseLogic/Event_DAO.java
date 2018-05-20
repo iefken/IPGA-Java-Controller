@@ -109,7 +109,7 @@ public class Event_DAO extends BaseEntityDAO {
             throw new RuntimeException(e.getMessage());
         }finally{
             try{
-                System.out.println("Queried:\nSTART\nInserting Event (ev."+newEventFromMessage.getEntityVersion()+") with query:<\n"+sqlQuery+"\n>\nEND\n");
+                //System.out.println("Queried:\nSTART\nInserting Event (ev."+newEventFromMessage.getEntityVersion()+") with query:<\n"+sqlQuery+"\n>\nEND\n");
                 if(statement != null)
 
                     statement.close();

@@ -39,8 +39,6 @@ public class Reservation_Event_DAO extends BaseEntityDAO{
         //System.out.println("sqlQuery= "+sqlQuery);
 
         int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
-        //System.out.println("insertSucces: "+insertSucces+", callbackInsertedInt: "+callbackInsertedInt);
-
 
         return callbackInsertedInt;
 
@@ -48,116 +46,8 @@ public class Reservation_Event_DAO extends BaseEntityDAO{
 
     //READ
 
-//    public BaseEntity getReservationEventByReservationEventId(int thisReservationEventId)
-//    {
-//        ResultSet rs = null;
-//        Event thisReservationEvent = null;
-//
-//        String sql = "SELECT * FROM User t1 JOIN BaseEntity t2 ON t1.idReservationEvent = t2.entityId WHERE thisReservationEventId = \""+thisReservationEventId+"\";";
-//
-//        try(Statement s = getConnection().createStatement()){
-//
-//            if (getConnection().isClosed()) {
-//                throw new IllegalStateException("ERROR 01: Connection seems to be closed...");
-//            }
-//
-//            rs = s.executeQuery(sql);
-//            if(rs.next())
-//            {
-//
-//                thisReservationEvent = new Reservation_Event(rs.getInt(1),rs.getInt(8),rs.getInt(),);
-//
-//                return thisReservationEvent;
-//            }else{
-//                throw new IllegalStateException("ERROR 03: No entity found with id: '"+thisReservationEventId+"'...");
-//            }
-//
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//            throw new RuntimeException(e.getMessage());
-//        }
-//    }
-    /*
-
-    public ArrayList <Reservation_Event> getAllReservation_Events()
-    {
-        ResultSet rs = null;
-        ArrayList<Reservation_Event> eventReservationsList = null;
-
-        String sql = "SELECT * FROM Reservation_Event;";
-
-        try(Statement s = getConnection().createStatement()){
-
-            if (getConnection().isClosed()) {
-                throw new IllegalStateException("ERROR 01: Connection seems to be closed...");
-            }
-
-            while (rs.next()) {
-                eventReservationsList.add(new Reservation_Event(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
-            }
-
-            return eventReservationsList;
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-    public ArrayList <Reservation_Event> getAllReservation_EventsFull()
-    {
-        ResultSet rs = null;
-        ArrayList<Reservation_Event> eventReservationsList = null;
-
-        String sql = "SELECT * FROM Reservation_Event JOIN BaseEntity ON Reservation_Event.reservationId = BaseEntity.entityId;";
-
-        try(Statement s = getConnection().createStatement()){
-
-            if (getConnection().isClosed()) {
-                throw new IllegalStateException("ERROR 01: Connection seems to be closed...");
-            }
-
-            while (rs.next()) {
-                eventReservationsList.add(new Reservation_Event(rs.getInt(1),rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8)));
-            }
-
-            return eventReservationsList;
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-*/
-
     //UPDATE
-    /*
-    public int UpdateReservationEvent(Reservation_Event newReservationEventFromMessage, int oldEntityId) throws SQLException {
 
-        // maak een nieuwe BaseEntity met incremented entityVersion
-        BaseEntity newBaseEntity = new BaseEntity(newReservationEventFromMessage.getEntityId(), newReservationEventFromMessage.getEntityVersion(), newReservationEventFromMessage.getActive(), newReservationEventFromMessage.getTimestamp());
-        //execute baseEntity Insert
-        int callbackInsertedInt = newBaseEntity.getEntityId();
-
-        String sqlQuery = "INSERT INTO PlanningDB.reservation_event (idReservationEvent, reservationUUID, eventUUID, userUUID, paid, timestampLastUpdated, timestampCreated) VALUES (" + callbackInsertedInt + ",\"" + newReservationEventFromMessage.getReservationId() + "\",\"" + newReservationEventFromMessage.getReservationUUID() + "\",\"" + newReservationEventFromMessage.getEventUUID() + "\",\"" + newReservationEventFromMessage.getUserUUID() + "\",\"" + newReservationEventFromMessage.getPaid() + "\",\"" + newReservationEventFromMessage.getTimestamp() + "\");";
-
-        //softdelete oude base entity
-<<<<<<< HEAD
-        softDeleteBaseEntity( oldEntityId);
-=======
-        softDeleteBaseEntity(oldEntityId);
-
->>>>>>> DEVBranche_Wissam
-        try {
-            int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
-        } catch (Exception e) {
-//                e.printStackTrace();
-            System.out.println("ERROR inserting reservation_event: " + e);
-        }
-
-        return callbackInsertedInt;
-
-    }
-*/
     public boolean updateReservationEventByObject (Reservation_Event newReservationEventFromMessage) {
 
         String sqlQuery = " UPDATE PlanningDB.Reservation_Event SET " +
@@ -197,7 +87,7 @@ public class Reservation_Event_DAO extends BaseEntityDAO{
             throw new RuntimeException(e.getMessage());
         }finally{
             try{
-                System.out.println("Queried:\nSTART\nInserting reservation event (ev."+newReservationEventFromMessage.getEntityVersion()+") with query:<\n"+sqlQuery+"\n>\nEND\n");
+                //System.out.println("Queried:\nSTART\nInserting reservation event (ev."+newReservationEventFromMessage.getEntityVersion()+") with query:<\n"+sqlQuery+"\n>\nEND\n");
                 if(statement != null)
 
                     statement.close();

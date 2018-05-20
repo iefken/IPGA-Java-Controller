@@ -164,7 +164,7 @@ public class Reservation_Session_DAO extends BaseEntityDAO {
             throw new RuntimeException(e.getMessage());
         }finally{
             try{
-                System.out.println("Queried:\nSTART\nInserting reservation session (ev."+newReservationSessionFromMessage.getEntityVersion()+") with query:<\n"+sqlQuery+"\n>\nEND\n");
+                //System.out.println("Queried:\nSTART\nInserting reservation session (ev."+newReservationSessionFromMessage.getEntityVersion()+") with query:<\n"+sqlQuery+"\n>\nEND\n");
                 if(statement != null)
 
                     statement.close();

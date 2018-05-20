@@ -47,10 +47,11 @@ public class GoogleCalenderApi {
     // private static final java.io.File DATA_STORE_DIR = new java.io.File( System.getProperty("user.home"), ".credentials/calendar-integration-groupA-java");
     // private static final java.io.File DATA_STORE_DIR2 = new java.io.File( System.getProperty("user.home"), "../opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
 
+    // For server deployment
     private static final java.io.File DATA_STORE_DIR = new java.io.File( "/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
-    //private static final java.io.File DATA_STORE_DIR = new java.io.File( "C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
 
-    // /opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/
+    // For local deployment
+    // private static final java.io.File DATA_STORE_DIR = new java.io.File( "C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
     private static FileDataStoreFactory DATA_STORE_FACTORY;
@@ -105,11 +106,6 @@ public class GoogleCalenderApi {
             try{
                 in = new FileInputStream(DATA_STORE_DIR.getAbsolutePath()+"/client_secret.json");
 
-
-                //calendar-integration-groupA-java
-
-                //in = new FileInputStream(DATA_STORE_DIR.getAbsolutePath()+"\\home\\planning\\.credentials\\client_secret.json");
-
             }catch (FileNotFoundException ee) {
 
                 System.out.print("Exception 2: "+ee);
@@ -123,11 +119,8 @@ public class GoogleCalenderApi {
 
         //Now you can read the file content with in
 
-        //System.out.print("in.toString(): "+in.toString());
 
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-
-        //System.out.print(clientSecrets.getDetails());
 
         // Build flow and trigger user authorization request.
 
@@ -249,11 +242,9 @@ public class GoogleCalenderApi {
                 .setLocation(newSession.getLocation())
                 .setDescription(newSession.getDescription());
 
-        //System.out.println("cefso: 1");
         String dts = newSession.getDateTimeStart()+":00+02:00";
         String dte = newSession.getDateTimeEnd()+":00+02:00";
 
-        //System.out.println("dts: "+dts+" , dte: "+dte);
 
         DateTime startDateTime = new DateTime(dts);
         EventDateTime start = new EventDateTime()
@@ -267,7 +258,6 @@ public class GoogleCalenderApi {
                 .setTimeZone("Europe/Brussels");
         event.setEnd(end);
 
-        //System.out.println("cefso: 2");
         String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=1"};
         event.setRecurrence(Arrays.asList(recurrence));
 

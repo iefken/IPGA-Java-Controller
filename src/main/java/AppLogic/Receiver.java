@@ -32,7 +32,7 @@ public class Receiver {
         // Set your source type here: this will determine what queue you will receive messages from!
         Helper.SourceType yourSourceType = Helper.SourceType.Planning;
 
-        // method for showing some awefull cli design paint tests...
+        // method for showing some awful cli design paint tests...
         Helper.receiverCliStartPaint(yourSourceType);
 
         //uncomment for sending pingmessage in a different thread

@@ -989,7 +989,6 @@ public interface Helper {
 
                 System.out.println("Uuid already exists in our PlanningDB table:[User]\n");
 
-                // 2.2 Session record update
                 // 2.2.1. get idUser from userUUID in User
                 String[] propertiesToSelect = {"idUser"};
                 String table = "User";
@@ -1001,8 +1000,18 @@ public interface Helper {
                 // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
                 if (thisUserInMessage.getActive() == 0) {
 
+                    // 1. Perform soft-delete on local db
                     new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
                     System.out.println("SoftDelete executed on [User] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+
+                    // 2. updateUuidRecordVersion() (To UUID master)
+                    int updateUuidRecordVersionResponse=0;
+                    try {
+                        updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, userUuid);
+                    } catch (IOException | TimeoutException | JAXBException e) {
+                        e.printStackTrace();
+                    }
+
                 } else {
 
                     // 2.2.2. get the entityVersion from idUser
@@ -1010,6 +1019,7 @@ public interface Helper {
                     table = "BaseEntity";
                     selectors[0] = "idBaseEntity";
                     values[0] = selectResults[0];
+
                     int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
 
                     //System.out.println("localEntityVersion: "+localEntityVersion + " & thisUserInMessage.getEntityVersion():  "+thisUserInMessage.getEntityVersion());
@@ -1020,12 +1030,13 @@ public interface Helper {
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
                     }
+
                     boolean allGood = true;
+
                     if (localEntityVersion < thisUserInMessage.getEntityVersion()) {
 
                         // 2.3.2. update record in our local db
 
-                        int updateUuidRecordVersionResponse = 0;
                         try {
                             allGood = new User_DAO().updateUserByObject(thisUserInMessage);
                         } catch (Exception e) {
@@ -1034,6 +1045,7 @@ public interface Helper {
 
                         // 2.3.3. updateUuidRecordVersion() (To UUID master)
 
+                        int updateUuidRecordVersionResponse = 0;
                         if (allGood) {
                             try {
                                 updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, userUuid);
@@ -1267,7 +1279,7 @@ public interface Helper {
             // 2.1.1 check if session is to be 'deleted'
             if (uuidExists) {
 
-                System.out.println("UUID already exists in our PlanningDB table:[Session]");
+                System.out.println("UUID already exists in our PlanningDB table:[Session]\n");
 
 
                 // 2.2 Session record update
@@ -1282,24 +1294,20 @@ public interface Helper {
 
                 // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
                 if (thisSessionInMessage.getActive() == 0) {
+
+                    // 1. Perform soft-delete on local db
                     new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
                     System.out.println("SoftDelete executed on object with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
-                } else {
 
-                    // 2.2.2. get entityVersion from id in BaseEntity
-                    propertiesToSelect[0] = "entity_version";
-                    table = "BaseEntity";
-                    selectors[0] = "idBaseEntity";
-                    values[0] = selectResults[0];
-
+                    // 2. updateUuidRecordVersion() (To UUID master)
+                    int updateUuidRecordVersionResponse=0;
                     try {
-                        thisSessionInMessage.setEntityId(Integer.parseInt(selectResults[0]));
-                        System.out.println("thisSessionInMessage.getSessionId(): " + thisSessionInMessage.getSessionId());
-                    } catch (NumberFormatException e) {
+                        updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, sessionUuid);
+                    } catch (IOException | TimeoutException | JAXBException e) {
                         e.printStackTrace();
                     }
 
-                    boolean allGood = true;
+                } else {
 
                     // 2.2.2. get entityVersion from id in BaseEntity
                     propertiesToSelect[0] = "entity_version";
@@ -1309,6 +1317,14 @@ public interface Helper {
 
                     int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
 
+                    try {
+                        thisSessionInMessage.setEntityId(Integer.parseInt(selectResults[0]));
+                        System.out.println("thisSessionInMessage.getSessionId(): " + thisSessionInMessage.getSessionId());
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+
+                    boolean allGood = true;
 
                     if (localEntityVersion < thisSessionInMessage.getEntityVersion()) {
 
@@ -1336,7 +1352,7 @@ public interface Helper {
                         } else {
                             //updateEventError
                         }
-
+/*
                         // 2.3.4. update entity version (on our database)
                         try {
                             allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + thisSessionInMessage.getEntityVersion(), "int", "idBaseEntity", "" + selectResults[0]);
@@ -1344,7 +1360,7 @@ public interface Helper {
                             e.printStackTrace();
                             System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n " + e);
                             allGood = false;
-                        }
+                        }*/
 
                         System.out.println("We had this Session with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisSessionInMessage.getEntityVersion() + "'");
 
@@ -1586,12 +1602,8 @@ public interface Helper {
 
         if (uuidExists) {
 
-            System.out.println("UUID already exists in our PlanningDB table:[Reservation_Session]");
+            System.out.println("UUID already exists in our PlanningDB table:[Reservation_Session]\n");
 
-            // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
-            // 2.2. Reservation_Event record update
-            // Prepare new reservation_session object for sending to database
-            // System.out.println("[Reservation_Session]");
 
             // 2.2.1 get idSession from sessionUUID in Session
             String[] propertiesToSelect = {"idReservationSession"};
@@ -1603,8 +1615,20 @@ public interface Helper {
 
             // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
             if (newReservation_SessionObjectFromXml.getActive() == 0) {
+
+                // 1. Perform soft-delete on local db
+
                 new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
                 System.out.println("SoftDelete executed on [Reservation_Session] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+
+                // 2. updateUuidRecordVersion() (To UUID master)
+                int updateUuidRecordVersionResponse=0;
+                try {
+                    updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, reservationUUID);
+                } catch (IOException | TimeoutException | JAXBException e) {
+                    e.printStackTrace();
+                }
+
             } else {
 
                 // 2.2.2. get entityVersion from id in BaseEntity

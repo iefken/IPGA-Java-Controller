@@ -121,7 +121,7 @@ public class User_DAO extends BaseEntityDAO {
             throw new RuntimeException(e.getMessage());
         }finally{
             try{
-                System.out.println("Queried:\nSTART\nInserting User (ev."+newUserFromMessage.getEntityVersion()+") with query:<\n"+sqlQuery+"\n>\nEND\n");
+                //System.out.println("Queried:\nSTART\nInserting User (ev."+newUserFromMessage.getEntityVersion()+") with query:<\n"+sqlQuery+"\n>\nEND\n");
                 if(statement != null)
 
                     statement.close();
