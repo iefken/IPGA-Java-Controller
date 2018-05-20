@@ -48,7 +48,7 @@ public class Session_DAO extends BaseEntityDAO {
 
     public boolean updateSessionByObject (Session newSessionFromMessage) {
 
-        String sqlQuery = " UPDATE PlanningDB.session SET " +
+        String sqlQuery = " UPDATE PlanningDB.Session SET " +
                 "eventUuid=\""+newSessionFromMessage.getEventUUID()+"\", " +
                 "sessionName=\""+newSessionFromMessage.getSessionName()+"\", " +
                 "maxAttendees="+newSessionFromMessage.getMaxAttendees()+", " +

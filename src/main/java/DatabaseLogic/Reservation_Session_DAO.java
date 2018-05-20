@@ -127,7 +127,7 @@ public class Reservation_Session_DAO extends BaseEntityDAO {
     */
     public boolean updateReservationSessionByObject (Reservation_Session newReservationSessionFromMessage) {
 
-        String sqlQuery = " UPDATE PlanningDB.reservation_session SET " +
+        String sqlQuery = " UPDATE PlanningDB.Reservation_Session SET " +
                 "sessionUuid=\""+newReservationSessionFromMessage.getSessionUUID()+"\", " +
                 "userUuid="+newReservationSessionFromMessage.getUserUUID()+", " +
                 "paid=\""+newReservationSessionFromMessage.getPaid()+"\" " +

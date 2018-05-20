@@ -1,9 +1,9 @@
-TRUNCATE `PlanningDb`.`Reservation_Session`;
-TRUNCATE `PlanningDb`.`Reservation_Event`;
-TRUNCATE `PlanningDb`.`Session`;
-TRUNCATE `PlanningDb`.`Event`;
-TRUNCATE `PlanningDb`.`User`;
-TRUNCATE `PlanningDb`.`BaseEntity`;
+TRUNCATE `PlanningDB`.`Reservation_Session`;
+TRUNCATE `PlanningDB`.`Reservation_Event`;
+TRUNCATE `PlanningDB`.`Session`;
+TRUNCATE `PlanningDB`.`Event`;
+TRUNCATE `PlanningDB`.`User`;
+TRUNCATE `PlanningDB`.`BaseEntity`;
 
 -- -----------------------------------------------------
 -- Data for table `PlanningDB`.`BaseEntity`

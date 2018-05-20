@@ -75,7 +75,7 @@ public class User_DAO extends BaseEntityDAO {
 
     public boolean updateUserByObject (User newUserFromMessage) {
 
-        String sqlQuery = " UPDATE PlanningDB.user SET " +
+        String sqlQuery = " UPDATE PlanningDB.User SET " +
                 "lastName=\""+newUserFromMessage.getLastName()+"\", " +
                 "firstName=\""+newUserFromMessage.getFirstName()+"\", " +
                 "phonenumber=\""+newUserFromMessage.getPhoneNumber()+"\", " +
