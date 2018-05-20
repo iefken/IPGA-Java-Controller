@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
+      <artifact name="cli-java-controller:jar" />
       <artifact name="cli-java-main-controller:jar" />
     </artifacts-to-build>
   </component>
@@ -105,7 +106,7 @@
             <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="1632">
-                  <caret line="122" selection-start-line="122" selection-end-line="122" />
+                  <caret line="126" selection-start-line="126" selection-end-line="126" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -165,8 +166,8 @@
           <file leaf-file-name="GoogleCalenderApi.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="748">
-                  <caret line="104" column="43" selection-start-line="104" selection-start-column="43" selection-end-line="104" selection-end-column="43" />
+                <state relative-caret-position="340">
+                  <caret line="72" column="12" lean-forward="true" selection-start-line="72" selection-start-column="12" selection-end-line="72" selection-end-column="12" />
                   <folding>
                     <element signature="docComment;field#APPLICATION_NAME#0;class#GoogleCalenderApi#0" />
                     <element signature="docComment;field#DATA_STORE_DIR#0;class#GoogleCalenderApi#0" />
@@ -174,7 +175,6 @@
                     <element signature="docComment;field#JSON_FACTORY#0;class#GoogleCalenderApi#0" />
                     <element signature="docComment;field#HTTP_TRANSPORT#0;class#GoogleCalenderApi#0" />
                     <element signature="docComment;field#SCOPES#0;class#GoogleCalenderApi#0" />
-                    <element signature="initializer##0;class#GoogleCalenderApi#0" />
                     <element signature="docComment;method#getCalendarService#0;class#GoogleCalenderApi#0" />
                     <element signature="method#getCalendarService#0;class#GoogleCalenderApi#0" />
                     <element signature="method#createEventFromEventObject#0;class#GoogleCalenderApi#0" />
@@ -196,7 +196,7 @@
             <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_161/src.zip!/java/io/File.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="178">
-                  <caret line="547" column="51" lean-forward="true" selection-start-line="547" selection-start-column="51" selection-end-line="547" selection-end-column="51" />
+                  <caret line="547" column="51" selection-start-line="547" selection-start-column="51" selection-end-line="547" selection-end-column="51" />
                   <folding>
                     <element signature="e#23018#23019#0" expanded="true" />
                     <element signature="e#23057#23058#0" expanded="true" />
@@ -283,24 +283,6 @@
               <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
               <item name="PLANNING" type="462c0819:PsiDirectoryNode" />
               <item name=".idea" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PLANNING" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PLANNING" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PLANNING" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
-              <item name="cli_java_controller_jar" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
@@ -497,15 +479,16 @@
       <workItem from="1526655484473" duration="549000" />
       <workItem from="1526776109424" duration="1010000" />
       <workItem from="1526777181375" duration="580000" />
-      <workItem from="1526777819015" duration="11390000" />
+      <workItem from="1526777819015" duration="11757000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40061000" />
+    <option name="totallyTimeSpent" value="40428000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1608" y="-8" width="1616" height="876" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32897604" />
@@ -515,12 +498,12 @@
       <window_info anchor="right" id="Maven Projects" order="5" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5424403" weight="0.25745258" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5424403" visible="true" weight="0.11382114" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.4989339" weight="0.41463414" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8590786" visible="true" weight="0.27120823" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.85779816" visible="true" weight="0.27120823" />
       <window_info anchor="right" id="Database" order="4" />
-      <window_info id="Structure" order="1" sideWeight="0.14092141" side_tool="true" visible="true" weight="0.27120823" />
+      <window_info id="Structure" order="1" sideWeight="0.14220184" side_tool="true" visible="true" weight="0.27120823" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -892,7 +875,7 @@
     <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_161/src.zip!/java/io/File.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="178">
-          <caret line="547" column="51" lean-forward="true" selection-start-line="547" selection-start-column="51" selection-end-line="547" selection-end-column="51" />
+          <caret line="547" column="51" selection-start-line="547" selection-start-column="51" selection-end-line="547" selection-end-column="51" />
           <folding>
             <element signature="e#23018#23019#0" expanded="true" />
             <element signature="e#23057#23058#0" expanded="true" />
@@ -902,8 +885,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="104" column="43" selection-start-line="104" selection-start-column="43" selection-end-line="104" selection-end-column="43" />
+        <state relative-caret-position="340">
+          <caret line="72" column="12" lean-forward="true" selection-start-line="72" selection-start-column="12" selection-end-line="72" selection-end-column="12" />
           <folding>
             <element signature="docComment;field#APPLICATION_NAME#0;class#GoogleCalenderApi#0" />
             <element signature="docComment;field#DATA_STORE_DIR#0;class#GoogleCalenderApi#0" />
@@ -911,7 +894,6 @@
             <element signature="docComment;field#JSON_FACTORY#0;class#GoogleCalenderApi#0" />
             <element signature="docComment;field#HTTP_TRANSPORT#0;class#GoogleCalenderApi#0" />
             <element signature="docComment;field#SCOPES#0;class#GoogleCalenderApi#0" />
-            <element signature="initializer##0;class#GoogleCalenderApi#0" />
             <element signature="docComment;method#getCalendarService#0;class#GoogleCalenderApi#0" />
             <element signature="method#getCalendarService#0;class#GoogleCalenderApi#0" />
             <element signature="method#createEventFromEventObject#0;class#GoogleCalenderApi#0" />
