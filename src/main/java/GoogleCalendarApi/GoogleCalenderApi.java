@@ -40,7 +40,7 @@ public class GoogleCalenderApi {
     // 1. Class initializers
 
     /** Application name. */
-    private static final String APPLICATION_NAME = "Integration Project Group A: Google Calendar API Java";
+    private static final String APPLICATION_NAME = "Integration Project Group A: Planning: Google Calendar API";
 
     /** Directory to store user credentials for this application. */
     private static final java.io.File DATA_STORE_DIR = new java.io.File( System.getProperty("user.home"), ".credentials/calendar-integration-groupA-java");
@@ -87,22 +87,43 @@ public class GoogleCalenderApi {
         // see bottom for tests
 
         InputStream in = null;
+
+
         try {
-            in = new FileInputStream("C:/Users/ief.falot/.credentials/client_secret.json");
+
+            String test = DATA_STORE_DIR.getAbsolutePath()+"\\..\\client_secret.json";
+
+            System.out.println("test : "+test);
+
+            in = new FileInputStream(test);
+
+
+            //in = new FileInputStream("C:/Users/ief.falot/.credentials/client_secret.json");
            } catch (FileNotFoundException e) {
-            e.printStackTrace();
+
+            try{
+                in = new FileInputStream("\\home\\planning\\.credentials\\client_secret.json");
+
+
+                //in = new FileInputStream(DATA_STORE_DIR.getAbsolutePath()+"\\home\\planning\\.credentials\\client_secret.json");
+
+            }catch (FileNotFoundException ee) {
+
+                ee.printStackTrace();
+            }
         }
+
 
         //in = new FileInputStream("C:\\Users\\ief.falot\\.credentials\\calendar-integration-groupA-java\\StoredCredential");
         Credential credential = null;
 
         //Now you can read the file content with in
 
-        System.out.print("in tostring: "+in.toString());
+        //System.out.print("in.toString(): "+in.toString());
 
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
-        System.out.print(clientSecrets.getDetails());
+        //System.out.print(clientSecrets.getDetails());
 
         // Build flow and trigger user authorization request.
 
