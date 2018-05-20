@@ -9,6 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e99f31c8-cb7f-4ef1-b01f-5fbda4bb66e6" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/GoogleCalendarApi/GoogleCalenderApi.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GoogleCalendarApi/GoogleCalenderApi.class" afterDir="false" />
     </list>
@@ -46,7 +47,7 @@
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="26724">
-                  <caret line="1595" column="26" selection-start-line="1595" selection-start-column="26" selection-end-line="1595" selection-end-column="26" />
+                  <caret line="1596" column="26" selection-start-line="1596" selection-start-column="26" selection-end-line="1596" selection-end-column="26" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="e#1103#1205#0" />
@@ -136,16 +137,122 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="Helper.java" pinned="false" current-in-tab="false">
+          <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="923">
-                  <caret line="1053" column="13" selection-start-line="1053" selection-start-column="13" selection-end-line="1053" selection-end-column="13" />
+                <state relative-caret-position="417">
+                  <caret line="3241" column="50" lean-forward="true" selection-start-line="3241" selection-start-column="50" selection-end-line="3241" selection-end-column="50" />
                   <folding>
-                    <element signature="imports" expanded="true" />
                     <element signature="e#1103#1205#0" />
                     <element signature="e#1211#1281#0" />
                     <element signature="e#1452#2411#0" />
+                    <element signature="e#2417#4111#0" />
+                    <element signature="e#4876#5281#0" />
+                    <element signature="e#5287#6298#0" />
+                    <element signature="method#startCliInterface#0;class#Helper#0" />
+                    <element signature="e#9359#9393#0" />
+                    <element signature="e#12007#12098#0" />
+                    <element signature="e#13190#13213#0" />
+                    <element signature="e#15763#15784#0" />
+                    <element signature="e#19215#19268#0" />
+                    <element signature="e#20232#20256#0" />
+                    <element signature="e#22343#22367#0" />
+                    <element signature="e#25597#25673#0" />
+                    <element signature="e#26369#26411#0" />
+                    <element signature="e#28188#28216#0" />
+                    <element signature="e#30457#30526#0" />
+                    <element signature="e#31794#31810#0" />
+                    <element signature="e#32630#32678#0" />
+                    <element signature="e#33180#33259#0" />
+                    <element signature="method#handleNewMessage#0;class#Helper#0" />
+                    <element signature="method#handleNewMessageUser#0;class#Helper#0" />
+                    <element signature="e#42039#42108#0" />
+                    <element signature="e#42781#42809#0" />
+                    <element signature="e#46705#46723#0" />
+                    <element signature="e#47120#47191#0" />
+                    <element signature="method#handleNewMessageEvent#0;class#Helper#0" />
+                    <element signature="e#48915#48943#0" />
+                    <element signature="e#51586#51630#0" />
+                    <element signature="e#53142#53161#0" />
+                    <element signature="method#handleNewMessageSession#0;class#Helper#0" />
+                    <element signature="e#54606#54634#0" />
+                    <element signature="e#56720#56764#0" />
+                    <element signature="e#58885#58906#0" />
+                    <element signature="e#60734#67818#0" />
+                    <element signature="e#61676#61727#0" />
+                    <element signature="e#62814#62853#0" />
+                    <element signature="e#63938#63997#0" />
+                    <element signature="e#64871#64915#0" />
+                    <element signature="e#66936#66968#0" />
+                    <element signature="e#67683#73933#0" />
+                    <element signature="e#68618#68669#0" />
+                    <element signature="e#69854#69893#0" />
+                    <element signature="e#72037#72081#0" />
+                    <element signature="e#73808#73840#0" />
+                    <element signature="e#73940#74832#0" />
+                    <element signature="e#74957#75087#0" />
+                    <element signature="e#75595#75613#0" />
+                    <element signature="e#74838#75771#0" />
+                    <element signature="e#76642#76660#0" />
+                    <element signature="e#75777#76950#0" />
+                    <element signature="e#77402#77416#0" />
+                    <element signature="e#77875#77893#0" />
+                    <element signature="e#76956#77879#0" />
+                    <element signature="e#77885#78856#0" />
+                    <element signature="e#78862#80110#0" />
+                    <element signature="e#80117#81673#0" />
+                    <element signature="e#81679#83553#0" />
+                    <element signature="e#83559#89332#0" />
+                    <element signature="e#90642#90664#0" />
+                    <element signature="e#89339#90720#0" />
+                    <element signature="e#90726#92444#0" />
+                    <element signature="e#92450#98461#0" />
+                    <element signature="e#101025#101047#0" />
+                    <element signature="e#98468#99655#0" />
+                    <element signature="e#99661#101256#0" />
+                    <element signature="e#101262#105942#0" />
+                    <element signature="e#105949#107312#0" />
+                    <element signature="e#107318#108659#0" />
+                    <element signature="e#108665#111625#0" />
+                    <element signature="e#111632#113008#0" />
+                    <element signature="e#113014#114409#0" />
+                    <element signature="e#114415#117637#0" />
+                    <element signature="e#117644#118054#0" />
+                    <element signature="e#118060#118892#0" />
+                    <element signature="e#118899#119697#0" />
+                    <element signature="e#119703#120222#0" />
+                    <element signature="e#135481#182933#0" />
+                    <element signature="e#148554#148576#0" />
+                    <element signature="e#150797#150819#0" />
+                    <element signature="e#157564#157585#0" />
+                    <element signature="e#159985#160006#0" />
+                    <element signature="e#160433#160495#0" />
+                    <element signature="e#162592#162637#0" />
+                    <element signature="e#168213#168285#0" />
+                    <element signature="e#168625#168696#0" />
+                    <element signature="e#169782#169828#0" />
+                    <element signature="e#174897#174942#0" />
+                    <element signature="e#178414#178486#0" />
+                    <element signature="e#178826#178897#0" />
+                    <element signature="e#180367#180439#0" />
+                    <element signature="e#180799#180870#0" />
+                    <element signature="e#182551#182623#0" />
+                    <element signature="e#182983#183054#0" />
+                    <element signature="e#185020#185065#0" />
+                    <element signature="e#186015#186087#0" />
+                    <element signature="e#186447#186518#0" />
+                    <element signature="e#188039#188111#0" />
+                    <element signature="e#188471#188542#0" />
+                    <element signature="e#190041#190113#0" />
+                    <element signature="e#190477#190548#0" />
+                    <element signature="e#192243#192315#0" />
+                    <element signature="e#192679#192750#0" />
+                    <element signature="e#194722#194767#0" />
+                    <element signature="e#195725#195797#0" />
+                    <element signature="e#196157#196228#0" />
+                    <element signature="e#197762#197834#0" />
+                    <element signature="e#198198#198269#0" />
+                    <element signature="e#182940#183250#0" />
                   </folding>
                 </state>
               </provider>
@@ -163,11 +270,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="GoogleCalenderApi.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="GoogleCalenderApi.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="238">
-                  <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
+                <state relative-caret-position="1496">
+                  <caret line="143" column="52" selection-start-line="143" selection-start-column="52" selection-end-line="143" selection-end-column="52" />
                   <folding>
                     <element signature="docComment;field#APPLICATION_NAME#0;class#GoogleCalenderApi#0" />
                     <element signature="docComment;field#DATA_STORE_DIR#0;class#GoogleCalenderApi#0" />
@@ -221,6 +328,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>Credentials save</find>
+      <find>home/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -234,8 +342,8 @@
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/User_DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationSessionStructure.java" />
         <option value="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationEventStructure.java" />
-        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" />
         <option value="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" />
+        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" />
       </list>
     </option>
   </component>
@@ -476,12 +584,12 @@
       <workItem from="1526655484473" duration="549000" />
       <workItem from="1526776109424" duration="1010000" />
       <workItem from="1526777181375" duration="580000" />
-      <workItem from="1526777819015" duration="14240000" />
+      <workItem from="1526777819015" duration="15216000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42911000" />
+    <option name="totallyTimeSpent" value="43887000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1608" y="-8" width="1616" height="876" extended-state="6" />
@@ -495,12 +603,12 @@
       <window_info anchor="right" id="Maven Projects" order="5" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5424403" visible="true" weight="0.36585367" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5424403" visible="true" weight="0.0" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.4989339" weight="0.41463414" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8354701" visible="true" weight="0.27120823" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8590786" visible="true" weight="0.27120823" />
       <window_info anchor="right" id="Database" order="4" />
-      <window_info id="Structure" order="1" sideWeight="0.16452992" side_tool="true" visible="true" weight="0.27120823" />
+      <window_info id="Structure" order="1" sideWeight="0.14092141" side_tool="true" visible="true" weight="0.27120823" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -849,19 +957,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="923">
-          <caret line="1053" column="13" selection-start-line="1053" selection-start-column="13" selection-end-line="1053" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1103#1205#0" />
-            <element signature="e#1211#1281#0" />
-            <element signature="e#1452#2411#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/PingSender.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5">
@@ -882,8 +977,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
+        <state relative-caret-position="1496">
+          <caret line="143" column="52" selection-start-line="143" selection-start-column="52" selection-end-line="143" selection-end-column="52" />
           <folding>
             <element signature="docComment;field#APPLICATION_NAME#0;class#GoogleCalenderApi#0" />
             <element signature="docComment;field#DATA_STORE_DIR#0;class#GoogleCalenderApi#0" />
@@ -903,6 +998,125 @@
             <element signature="method#cancelEventByGCAID#0;class#GoogleCalenderApi#0" />
             <element signature="method#cancelEventByUuid#0;class#GoogleCalenderApi#0" />
             <element signature="method#main#0;class#GoogleCalenderApi#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="3241" column="50" lean-forward="true" selection-start-line="3241" selection-start-column="50" selection-end-line="3241" selection-end-column="50" />
+          <folding>
+            <element signature="e#1103#1205#0" />
+            <element signature="e#1211#1281#0" />
+            <element signature="e#1452#2411#0" />
+            <element signature="e#2417#4111#0" />
+            <element signature="e#4876#5281#0" />
+            <element signature="e#5287#6298#0" />
+            <element signature="method#startCliInterface#0;class#Helper#0" />
+            <element signature="e#9359#9393#0" />
+            <element signature="e#12007#12098#0" />
+            <element signature="e#13190#13213#0" />
+            <element signature="e#15763#15784#0" />
+            <element signature="e#19215#19268#0" />
+            <element signature="e#20232#20256#0" />
+            <element signature="e#22343#22367#0" />
+            <element signature="e#25597#25673#0" />
+            <element signature="e#26369#26411#0" />
+            <element signature="e#28188#28216#0" />
+            <element signature="e#30457#30526#0" />
+            <element signature="e#31794#31810#0" />
+            <element signature="e#32630#32678#0" />
+            <element signature="e#33180#33259#0" />
+            <element signature="method#handleNewMessage#0;class#Helper#0" />
+            <element signature="method#handleNewMessageUser#0;class#Helper#0" />
+            <element signature="e#42039#42108#0" />
+            <element signature="e#42781#42809#0" />
+            <element signature="e#46705#46723#0" />
+            <element signature="e#47120#47191#0" />
+            <element signature="method#handleNewMessageEvent#0;class#Helper#0" />
+            <element signature="e#48915#48943#0" />
+            <element signature="e#51586#51630#0" />
+            <element signature="e#53142#53161#0" />
+            <element signature="method#handleNewMessageSession#0;class#Helper#0" />
+            <element signature="e#54606#54634#0" />
+            <element signature="e#56720#56764#0" />
+            <element signature="e#58885#58906#0" />
+            <element signature="e#60734#67818#0" />
+            <element signature="e#61676#61727#0" />
+            <element signature="e#62814#62853#0" />
+            <element signature="e#63938#63997#0" />
+            <element signature="e#64871#64915#0" />
+            <element signature="e#66936#66968#0" />
+            <element signature="e#67683#73933#0" />
+            <element signature="e#68618#68669#0" />
+            <element signature="e#69854#69893#0" />
+            <element signature="e#72037#72081#0" />
+            <element signature="e#73808#73840#0" />
+            <element signature="e#73940#74832#0" />
+            <element signature="e#74957#75087#0" />
+            <element signature="e#75595#75613#0" />
+            <element signature="e#74838#75771#0" />
+            <element signature="e#76642#76660#0" />
+            <element signature="e#75777#76950#0" />
+            <element signature="e#77402#77416#0" />
+            <element signature="e#77875#77893#0" />
+            <element signature="e#76956#77879#0" />
+            <element signature="e#77885#78856#0" />
+            <element signature="e#78862#80110#0" />
+            <element signature="e#80117#81673#0" />
+            <element signature="e#81679#83553#0" />
+            <element signature="e#83559#89332#0" />
+            <element signature="e#90642#90664#0" />
+            <element signature="e#89339#90720#0" />
+            <element signature="e#90726#92444#0" />
+            <element signature="e#92450#98461#0" />
+            <element signature="e#101025#101047#0" />
+            <element signature="e#98468#99655#0" />
+            <element signature="e#99661#101256#0" />
+            <element signature="e#101262#105942#0" />
+            <element signature="e#105949#107312#0" />
+            <element signature="e#107318#108659#0" />
+            <element signature="e#108665#111625#0" />
+            <element signature="e#111632#113008#0" />
+            <element signature="e#113014#114409#0" />
+            <element signature="e#114415#117637#0" />
+            <element signature="e#117644#118054#0" />
+            <element signature="e#118060#118892#0" />
+            <element signature="e#118899#119697#0" />
+            <element signature="e#119703#120222#0" />
+            <element signature="e#135481#182933#0" />
+            <element signature="e#148554#148576#0" />
+            <element signature="e#150797#150819#0" />
+            <element signature="e#157564#157585#0" />
+            <element signature="e#159985#160006#0" />
+            <element signature="e#160433#160495#0" />
+            <element signature="e#162592#162637#0" />
+            <element signature="e#168213#168285#0" />
+            <element signature="e#168625#168696#0" />
+            <element signature="e#169782#169828#0" />
+            <element signature="e#174897#174942#0" />
+            <element signature="e#178414#178486#0" />
+            <element signature="e#178826#178897#0" />
+            <element signature="e#180367#180439#0" />
+            <element signature="e#180799#180870#0" />
+            <element signature="e#182551#182623#0" />
+            <element signature="e#182983#183054#0" />
+            <element signature="e#185020#185065#0" />
+            <element signature="e#186015#186087#0" />
+            <element signature="e#186447#186518#0" />
+            <element signature="e#188039#188111#0" />
+            <element signature="e#188471#188542#0" />
+            <element signature="e#190041#190113#0" />
+            <element signature="e#190477#190548#0" />
+            <element signature="e#192243#192315#0" />
+            <element signature="e#192679#192750#0" />
+            <element signature="e#194722#194767#0" />
+            <element signature="e#195725#195797#0" />
+            <element signature="e#196157#196228#0" />
+            <element signature="e#197762#197834#0" />
+            <element signature="e#198198#198269#0" />
+            <element signature="e#182940#183250#0" />
           </folding>
         </state>
       </provider>

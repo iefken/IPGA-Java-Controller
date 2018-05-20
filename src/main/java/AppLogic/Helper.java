@@ -109,7 +109,8 @@ public interface Helper {
                 "[05.V] GCA: Creating new event, updating it (with preset variables)",
                 "[06.V] GCA: Cancel event by event and a chosen GCAEventId",
                 "[07.x] GCA: Cancel event by chosen GCAEventId ",
-                "[08.x] GCA: Cancel event by chosen Uuid "
+                "[08.x] GCA: Cancel event by chosen Uuid ",
+                "[09.V] GCA: Authorize connection "
         };
         return options;
     }
@@ -3228,6 +3229,21 @@ public interface Helper {
                 // GCA: Update event by Uuid
             case "8":
                 // GCA: Cancel event by Uuid
+
+                System.out.println("\nCase '" + choice + "' NOT worked out yet!");
+                break;
+
+            case "9":
+                // GCA: Authorize connection
+
+                System.out.println("\nCase '" + choice + "': Authorize connection! ");
+
+                try {
+                    GoogleCalenderApi.authorize();
+                } catch (IOException e) {
+
+                    System.out.println("Error authorizing connection: "+e);
+                }
 
                 System.out.println("\nCase '" + choice + "' NOT worked out yet!");
 
