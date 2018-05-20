@@ -43,9 +43,9 @@ public class GoogleCalenderApi {
     private static final String APPLICATION_NAME = "Integration Project Group A: Planning: Google Calendar API";
 
     /** Directory to store user credentials for this application. */
-    private static final java.io.File DATA_STORE_DIR = new java.io.File( System.getProperty("user.home"), ".credentials/calendar-integration-groupA-java");
+    private static final java.io.File DATA_STORE_DIR2 = new java.io.File( System.getProperty("user.home"), ".credentials/calendar-integration-groupA-java");
 
-    private static final java.io.File DATA_STORE_DIR2 = new java.io.File( System.getProperty("user.home"), "Documents/GitHub/PLANNING/src/main/java/GoogleCalendarApi/cred/");
+    private static final java.io.File DATA_STORE_DIR = new java.io.File( "C:/Users/ief.falot/Documents/GitHub/PLANNING/out/");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
     private static FileDataStoreFactory DATA_STORE_FACTORY;
@@ -91,7 +91,7 @@ public class GoogleCalenderApi {
 
         try {
 
-            String test = DATA_STORE_DIR.getAbsolutePath()+"\\..\\client_secret.json";
+            String test = DATA_STORE_DIR.getAbsolutePath()+"/client_secret.json";
 
             System.out.println("test : "+test);
 
@@ -99,11 +99,13 @@ public class GoogleCalenderApi {
 
 
             //in = new FileInputStream("C:/Users/ief.falot/.credentials/client_secret.json");
-           } catch (FileNotFoundException e) {
+           } catch (FileNotFoundException|NullPointerException e) {
 
             try{
-                in = new FileInputStream("\\home\\planning\\.credentials\\client_secret.json");
+                in = new FileInputStream("./out/client_secret.json");
 
+
+                //calendar-integration-groupA-java
 
                 //in = new FileInputStream(DATA_STORE_DIR.getAbsolutePath()+"\\home\\planning\\.credentials\\client_secret.json");
 
@@ -138,6 +140,9 @@ public class GoogleCalenderApi {
             e.printStackTrace();
         } catch (IllegalArgumentException e){
             e.printStackTrace();
+        } catch (NullPointerException e){
+            e.printStackTrace();
+
         }
         try {
             credential = new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
