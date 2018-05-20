@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
+      <artifact name="cli-java-controller:jar" />
       <artifact name="cli-java-main-controller:jar" />
     </artifacts-to-build>
   </component>
@@ -31,14 +32,14 @@
     <favorites_list name="cli-java-controller" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6011004">
+    <splitter split-orientation="horizontal" split-proportion="0.7469051">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="Helper.java" pinned="false" current-in-tab="false">
+          <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="26724">
-                  <caret line="1596" column="26" selection-start-line="1596" selection-start-column="26" selection-end-line="1596" selection-end-column="26" />
+                <state relative-caret-position="-1198">
+                  <caret line="1222" column="18" selection-start-line="1222" selection-start-column="18" selection-end-line="1222" selection-end-column="18" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="e#1103#1205#0" />
@@ -103,11 +104,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="GoogleCalenderApi.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="GoogleCalenderApi.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="301">
-                  <caret line="51" column="4" selection-start-line="51" selection-start-column="4" selection-end-line="51" selection-end-column="4" />
+                <state relative-caret-position="414">
+                  <caret line="373" column="34" lean-forward="true" selection-start-line="373" selection-start-column="34" selection-end-line="373" selection-end-column="34" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -283,7 +284,7 @@
             <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="374">
-                  <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
+                  <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
                   <folding>
                     <element signature="docComment;field#APPLICATION_NAME#0;class#GoogleCalenderApi#0" />
                     <element signature="docComment;field#DATA_STORE_DIR#0;class#GoogleCalenderApi#0" />
@@ -356,6 +357,7 @@
     <findStrings>
       <find>Credentials save</find>
       <find>home/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java</find>
+      <find>Event.toString()</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -367,13 +369,13 @@
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationSessionStructure.java" />
         <option value="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationEventStructure.java" />
-        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" />
         <option value="$PROJECT_DIR$/db-models/emptyTableQuery-Db-v4.sql" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Event_DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Reservation_Session_DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/User_DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" />
+        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" />
       </list>
     </option>
   </component>
@@ -395,10 +397,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-3528" />
+    <option name="x" value="-3401" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="width" value="1347" />
+    <option name="height" value="724" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -638,16 +640,15 @@
       <workItem from="1526655484473" duration="549000" />
       <workItem from="1526776109424" duration="1010000" />
       <workItem from="1526777181375" duration="580000" />
-      <workItem from="1526777819015" duration="17804000" />
+      <workItem from="1526777819015" duration="18322000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46475000" />
+    <option name="totallyTimeSpent" value="46993000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3528" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32897604" />
@@ -657,12 +658,12 @@
       <window_info anchor="right" id="Maven Projects" order="5" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5424403" visible="true" weight="0.30718955" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5424403" weight="0.30718955" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.4989339" weight="0.41463414" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8584906" visible="true" weight="0.2249467" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8594771" visible="true" weight="0.2249467" />
       <window_info anchor="right" id="Database" order="4" />
-      <window_info id="Structure" order="1" sideWeight="0.14150943" side_tool="true" visible="true" weight="0.2249467" />
+      <window_info id="Structure" order="1" sideWeight="0.14052288" side_tool="true" visible="true" weight="0.2249467" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -976,19 +977,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26724">
-          <caret line="1596" column="26" selection-start-line="1596" selection-start-column="26" selection-end-line="1596" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1103#1205#0" />
-            <element signature="e#1211#1281#0" />
-            <element signature="e#1452#2411#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db-models/emptyTableQuery-Db-v4.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -1050,10 +1038,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="51" column="4" selection-start-line="51" selection-start-column="4" selection-end-line="51" selection-end-column="4" />
+        <state relative-caret-position="414">
+          <caret line="373" column="34" lean-forward="true" selection-start-line="373" selection-start-column="34" selection-end-line="373" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1198">
+          <caret line="1222" column="18" selection-start-line="1222" selection-start-column="18" selection-end-line="1222" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1103#1205#0" />
+            <element signature="e#1211#1281#0" />
+            <element signature="e#1452#2411#0" />
           </folding>
         </state>
       </provider>

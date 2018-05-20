@@ -44,10 +44,8 @@ public class GoogleCalenderApi {
 
     /** Directory to store user credentials for this application. */
 
-    //private static final java.io.File DATA_STORE_DIR = new java.io.File( System.getProperty("user.home"), ".credentials/calendar-integration-groupA-java");
-
+    // private static final java.io.File DATA_STORE_DIR = new java.io.File( System.getProperty("user.home"), ".credentials/calendar-integration-groupA-java");
     // private static final java.io.File DATA_STORE_DIR = new java.io.File( "C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
-
     // private static final java.io.File DATA_STORE_DIR2 = new java.io.File( System.getProperty("user.home"), "../opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
     private static final java.io.File DATA_STORE_DIR = new java.io.File( "/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
 
@@ -57,8 +55,7 @@ public class GoogleCalenderApi {
     private static FileDataStoreFactory DATA_STORE_FACTORY;
 
     /** Global instance of the JSON factory. */
-    private static final JsonFactory JSON_FACTORY =
-            JacksonFactory.getDefaultInstance();
+    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
     /** Global instance of the HTTP transport. */
     private static HttpTransport HTTP_TRANSPORT;
@@ -69,8 +66,7 @@ public class GoogleCalenderApi {
      * If modifying these scopes, delete your previously saved credentials
      * at ~/.credentials/calendar-java-quickstart
      */
-    private static final List<String> SCOPES =
-            Arrays.asList(CalendarScopes.CALENDAR);
+    private static final List<String> SCOPES = Arrays.asList(CalendarScopes.CALENDAR);
 
     static {
         try {
@@ -89,17 +85,14 @@ public class GoogleCalenderApi {
      */
     public static Credential authorize() throws IOException {
 
-
         // see bottom for tests
-
         InputStream in = null;
-
 
         try {
 
             String test = DATA_STORE_DIR.getAbsolutePath()+"/client_secret.json";
 
-            System.out.println("test : "+test);
+            //System.out.println("test : "+test);
 
             in = new FileInputStream(test);
 

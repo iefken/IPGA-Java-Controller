@@ -1220,7 +1220,7 @@ public interface Helper {
                     //e.printStackTrace();
                 }
 
-                System.out.println("Event.toString(): " + thisEventInMessage.toString());
+                //System.out.println("Event.toString(): " + thisEventInMessage.toString());
 
                 System.out.println("Inserted new event record with id='" + messageEventInsertReturner + "' and UUID='" + eventUuid + "'");
 
