@@ -1137,8 +1137,20 @@ public interface Helper {
                 // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
                 if (thisEventInMessage.getActive() == 0) {
 
+                    // 1. Cancel Google Calendar event
+                    GoogleCalenderApi.cancelEventWithEventObject(thisEventInMessage);
+
+                    // 2. Perform soft-delete on local db
                     new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
                     System.out.println("SoftDelete executed on [Event] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+
+                    // 3. updateUuidRecordVersion() (To UUID master)
+                    int updateUuidRecordVersionResponse=0;
+                    try {
+                        updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, eventUuid);
+                    } catch (IOException | TimeoutException | JAXBException e) {
+                        e.printStackTrace();
+                    }
                 } else {
 
                     // 2.2.2. get entityVersion from id in BaseEntity
@@ -1162,8 +1174,12 @@ public interface Helper {
 
                         // 2.3.1. update google calender through API
 
-                        // TODO
-
+                        try {
+                            GoogleCalenderApi.updateEventWithEventObject(thisEventInMessage);
+                        }catch (Exception e)
+                        {
+                            System.out.println("Error updating Event with Event object:"+e);
+                        }
                         // 2.3.2. update record in our local db
 
                         int updateUuidRecordVersionResponse = 0;
@@ -1281,7 +1297,6 @@ public interface Helper {
 
                 System.out.println("UUID already exists in our PlanningDB table:[Session]\n");
 
-
                 // 2.2 Session record update
 
                 // 2.2.1. get idSession from sessionUUID in Session
@@ -1295,11 +1310,18 @@ public interface Helper {
                 // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
                 if (thisSessionInMessage.getActive() == 0) {
 
-                    // 1. Perform soft-delete on local db
+                    // 1. Cancel Google Calendar event
+                    try {
+                        GoogleCalenderApi.cancelSessionWithSessionObject(thisSessionInMessage);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    // 2. Perform soft-delete on local db
                     new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
                     System.out.println("SoftDelete executed on object with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
 
-                    // 2. updateUuidRecordVersion() (To UUID master)
+                    // 3. updateUuidRecordVersion() (To UUID master)
                     int updateUuidRecordVersionResponse=0;
                     try {
                         updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, sessionUuid);
@@ -1330,8 +1352,12 @@ public interface Helper {
 
                         // 2.3.1. update google calender through API
 
-                        // TODO
-
+                        try {
+                            GoogleCalenderApi.updateSessionWithSessionObject(thisSessionInMessage);
+                        }catch (Exception e)
+                        {
+                            System.out.println("Error updating Session with Session object:"+e);
+                        }
                         // 2.3.2. update record in our local db
 
                         try {
@@ -1352,15 +1378,7 @@ public interface Helper {
                         } else {
                             //updateEventError
                         }
-/*
-                        // 2.3.4. update entity version (on our database)
-                        try {
-                            allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + thisSessionInMessage.getEntityVersion(), "int", "idBaseEntity", "" + selectResults[0]);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            System.out.println("ERROR in 2.3.1.B. set uuid = / on old record in db:\n " + e);
-                            allGood = false;
-                        }*/
+
 
                         System.out.println("We had this Session with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisSessionInMessage.getEntityVersion() + "'");
 
@@ -1477,8 +1495,18 @@ public interface Helper {
 
             // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
             if (newReservation_EventObjectFromXml.getActive() == 0) {
+
+                // 1. Perform soft-delete on local db
                 new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
                 System.out.println("SoftDelete execusted on object with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+
+                // 2. updateUuidRecordVersion() (To UUID master)
+                int updateUuidRecordVersionResponse=0;
+                try {
+                    updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, reservationUUID);
+                } catch (IOException | TimeoutException | JAXBException e) {
+                    e.printStackTrace();
+                }
             } else {
 
                 //System.out.println("selectResults: " + selectResults[0]);
@@ -1501,7 +1529,7 @@ public interface Helper {
 
                     // 2.3.1. update google calender through API
 
-                    // TODO
+                    GoogleCalenderApi.updateEventsAttendees(existingReservation_Event.getEventUUID(),existingReservation_Event.getUserUUID());
 
                     // 2.3.2. update record in our local db
 
@@ -1616,12 +1644,15 @@ public interface Helper {
             // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
             if (newReservation_SessionObjectFromXml.getActive() == 0) {
 
-                // 1. Perform soft-delete on local db
+                // 1. Delete user from Google Calender Api
 
+                // TODO
+
+                // 2. Perform soft-delete on local db
                 new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
                 System.out.println("SoftDelete executed on [Reservation_Session] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
 
-                // 2. updateUuidRecordVersion() (To UUID master)
+                // 3. updateUuidRecordVersion() (To UUID master)
                 int updateUuidRecordVersionResponse=0;
                 try {
                     updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, reservationUUID);
@@ -1651,7 +1682,7 @@ public interface Helper {
 
                     // 2.3.1. update google calender through API
 
-                    // TODO
+                    GoogleCalenderApi.updateEventsAttendees(existingReservation_Session.getSessionUUID(),existingReservation_Session.getUserUUID());
 
                     // 2.3.2. update record in our local db
 
@@ -1668,7 +1699,6 @@ public interface Helper {
                     } catch (IOException | TimeoutException | JAXBException e) {
                         e.printStackTrace();
                     }
-
 
                     // 2.3.4. update entity version (on our database)
                     try {
