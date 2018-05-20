@@ -44,11 +44,12 @@ public class GoogleCalenderApi {
 
     /** Directory to store user credentials for this application. */
 
-    private static final java.io.File DATA_STORE_DIR2 = new java.io.File( System.getProperty("user.home"), ".credentials/calendar-integration-groupA-java");
+    private static final java.io.File DATA_STORE_DIR = new java.io.File( System.getProperty("user.home"), ".credentials/calendar-integration-groupA-java");
 
     //private static final java.io.File DATA_STORE_DIR = new java.io.File( "C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
 
-    private static final java.io.File DATA_STORE_DIR = new java.io.File( System.getProperty("user.home"), "../opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
+    // private static final java.io.File DATA_STORE_DIR2 = new java.io.File( System.getProperty("user.home"), "../opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
+    // private static final java.io.File DATA_STORE_DIR = new java.io.File( "/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
 
     // /opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/
 
