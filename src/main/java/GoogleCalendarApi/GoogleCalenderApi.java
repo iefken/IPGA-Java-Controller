@@ -23,6 +23,7 @@ import java.net.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import java.io.BufferedReader;
@@ -49,10 +50,16 @@ public class GoogleCalenderApi {
     // private static final java.io.File DATA_STORE_DIR2 = new java.io.File( System.getProperty("user.home"), "../opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
 
     // For server deployment
-    //private static final java.io.File DATA_STORE_DIR = new java.io.File( "/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
+   // private static final java.io.File DATA_STORE_DIR = new java.io.File( "/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
 
     // For local deployment
-    private static final java.io.File DATA_STORE_DIR = new java.io.File( "C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
+    //private static final java.io.File DATA_STORE_DIR = new java.io.File( "C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
+
+    private static final String thisRepo = System.getProperty("user.dir");
+    //epo);
+
+    private static final java.io.File DATA_STORE_DIR = new java.io.File( thisRepo+"/out/calendar-integration-groupA-java");
+
 
     /** Global instance of the {@link FileDataStoreFactory}. */
     private static FileDataStoreFactory DATA_STORE_FACTORY;
@@ -69,7 +76,9 @@ public class GoogleCalenderApi {
      * If modifying these scopes, delete your previously saved credentials
      * at ~/.credentials/calendar-java-quickstart
      */
+
     private static final List<String> SCOPES = Arrays.asList(CalendarScopes.CALENDAR);
+    //private static final List<String> SCOPES = Arrays.asList(CalendarScopes.CALENDAR_READONLY);
 
     static {
         try {
@@ -95,7 +104,7 @@ public class GoogleCalenderApi {
 
             String test = DATA_STORE_DIR.getAbsolutePath()+"/client_secret.json";
 
-            //System.out.println("test : "+test);
+            System.out.println("thisRepo : "+thisRepo);
 
             in = new FileInputStream(test);
 
@@ -198,9 +207,7 @@ public class GoogleCalenderApi {
         event.setRecurrence(Arrays.asList(recurrence));
 
         EventAttendee[] attendees = new EventAttendee[] {
-                new EventAttendee().setEmail("ief.falot@student.ehb.be"),
                 new EventAttendee().setEmail("ieffalot@gmail.com"),
-                new EventAttendee().setEmail("ieffalot@hotmail.com"),
                 new EventAttendee().setEmail("wissam.nasser@student.ehb.be"),
                 new EventAttendee().setEmail("gill.steens@student.ehb.be"),
                 new EventAttendee().setEmail("gillsteens@gmail.com"),
@@ -519,7 +526,7 @@ public class GoogleCalenderApi {
 
     }
 
-    public static void updateEventsAttendeesWithEmailGCAEventId(String GCAEventId, String email){
+    public static void addAttendeeWithEmailToEventWithGCAEventId(String GCAEventId, String email){
 
         // 1. Initialize Calendar service with valid OAuth credentials
         Calendar service = null;
@@ -537,12 +544,8 @@ public class GoogleCalenderApi {
             e.printStackTrace();
         }
 
-        // 3. Change local variables in object
-        EventAttendee[] attendees = new EventAttendee[]{
-                new EventAttendee().setEmail(email)
-        };
-        event.setAttendees(Arrays.asList(attendees));
 
+        event.getAttendees().add(new EventAttendee().setEmail(email));
         // 4. Update the event
         try {
             Event updatedEvent = service.events().update("primary", event.getId(), event).execute();
@@ -782,6 +785,57 @@ public class GoogleCalenderApi {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void deleteAttendeeWithEmailFromEventWithGCAEventId(String GCAEventId, String email){
+
+        // 1. Initialize Calendar service with valid OAuth credentials
+        Calendar service = null;
+        try {
+            service = getCalendarService();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 2. Retrieve the event from the API
+        Event event = null;
+        try {
+            event = service.events().get("primary", GCAEventId).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // https://www.programcreek.com/java-api-examples/index.php?api=com.google.api.services.calendar.model.EventAttendee
+        Iterator<EventAttendee> iterator = event.getAttendees().iterator();
+
+        boolean success = false;
+
+        while (iterator.hasNext()) {
+            EventAttendee attendee = iterator.next();
+            if (attendee.getEmail().equals(email)) {
+                success = event.getAttendees().remove(attendee);
+                break;
+            }
+        }/*
+        event.getAttendees().remove(new EventAttendee().setEmail(email));
+*/
+        // 4. Update the event
+        if(success)
+        {
+            try {
+                Event updatedEvent = service.events().update("primary", event.getId(), event).execute();
+
+                String status = updatedEvent.getStatus();
+                System.out.println("Succes deleting user ('"+email+"') to event with id: '"+event.getId()+"' @ GMT-'"+updatedEvent.getUpdated()+"' \nStatus: "+status);
+
+            } catch (IOException e) {
+                System.out.println("Error adding user ('"+email+"') to event with id: '"+event.getId()+"' @ GMT-"+Helper.getCurrentDateTimeStamp()+" !");
+
+                e.printStackTrace();
+            }
+
+        }
+
     }
 
     public static void main(String[] argv) throws Exception {

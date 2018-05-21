@@ -110,7 +110,8 @@ public interface Helper {
                 "[06.V] GCA: Cancel event by event and a chosen GCAEventId",
                 "[07.x] GCA: Cancel event by chosen GCAEventId ",
                 "[08.x] GCA: Cancel event by chosen Uuid ",
-                "[09.V] GCA: Add user to event by GCAEventId "
+                "[09.V] GCA: Add user to event by GCAEventId ",
+                "[10.V] GCA: Delete user from event by GCAEventId "
         };
         return options;
     }
@@ -775,7 +776,7 @@ public interface Helper {
     static int handleNewMessage(String task, int workCounter) throws JAXBException, IOException, ParserConfigurationException, SAXException, Exception {
 
         //change to true to show full XML message in receiver console when it's received
-        boolean showFullXMLMessage = true;
+        boolean showFullXMLMessage = true, isPingMessage=false;
 
         String messageType = null, xmlTotalMessage = "";
         messageType = getSafeXmlProperty(task, "messageType");
@@ -786,8 +787,12 @@ public interface Helper {
             }
         }
 
+
+
         if (messageType.toLowerCase() == "pingmessage") {
             showFullXMLMessage = false;
+
+            isPingMessage=true;
         }
 
         // get Source from XML (set in sender)
@@ -804,16 +809,17 @@ public interface Helper {
 
         workCounter++;
 
-        System.out.println("_________________________________________________________________________________");
-        System.out.println("_________________________START OF MESSAGE________________________________________");
-        System.out.println("* [.i.] [NEW MESSAGE]: " + workCounter + " [TYPE]: '" + messageType + "' [FROM]: '" + messageSource + "' [.i.] ");
-        //System.out.println("* [.i.] ********* [TYPE]: '" + messageType + "' [FROM]: '" + messageSource + "' ****** [.i.] *");
-        System.out.println("* [.i.] ** [@] '" + getCurrentDateTimeStamp() + "' [MESSAGELENGTH]: '" + task.length() + "' characters ** [.i.] ");
+        if(!isPingMessage) {
+            System.out.println("_________________________________________________________________________________");
+            System.out.println("_________________________START OF MESSAGE________________________________________");
+            System.out.println("* [.i.] [NEW MESSAGE]: " + workCounter + " [TYPE]: '" + messageType + "' [FROM]: '" + messageSource + "' [.i.] ");
+            //System.out.println("* [.i.] ********* [TYPE]: '" + messageType + "' [FROM]: '" + messageSource + "' ****** [.i.] *");
+            System.out.println("* [.i.] ** [@] '" + getCurrentDateTimeStamp() + "' [MESSAGELENGTH]: '" + task.length() + "' characters ** [.i.] ");
 
-        //System.out.println("*[.i.] with length: '" + task.length() + "' characters [.i.]");
-        System.out.println("_________________________________________________________________________________");
-        System.out.println("Message content:");
-
+            //System.out.println("*[.i.] with length: '" + task.length() + "' characters [.i.]");
+            System.out.println("_________________________________________________________________________________");
+            System.out.println("Message content:");
+        }
 
         String UUID = "";
 
@@ -902,7 +908,7 @@ public interface Helper {
                     e.printStackTrace();
                 }
 
-                System.out.print("... PING ...");
+                System.out.print("\n... PING @ ["+Helper.getCurrentDateTimeStamp()+"]...");
 
                 showFullXMLMessage = false;
 
@@ -1577,8 +1583,6 @@ public interface Helper {
 
             // uuid doesn't exit locally yet
             // # insert record locally with given info
-
-
             int messageReservationInsertReturner = 0;
 
             BaseEntity newTempEntity = new BaseEntity();
@@ -1588,8 +1592,8 @@ public interface Helper {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            // insertUuidRecord
 
+            // insertUuidRecord
             try {
                 Sender.insertUuidRecord("", messageReservationInsertReturner, thisEntityType, Source_type, reservationUUID);
             } catch (IOException | TimeoutException | JAXBException e) {
@@ -1597,9 +1601,7 @@ public interface Helper {
             }
             System.out.println("Inserted new Reservation_Event record with Uuid: " + reservationUUID + "!");
 
-
         }
-
     }
 
     static void handleNewMessageReservationSession(String task) {
@@ -1728,7 +1730,6 @@ public interface Helper {
                 }
 
             }
-            // # send update to uuid manager
 
 
         } else {
@@ -2951,7 +2952,6 @@ public interface Helper {
 
     static boolean googleCalendarApiMocker() {
 
-
         // get calendar api options
         String[] calenderApiOptions = getGoogleCalendarApiOptions();
         boolean continueMocking = true;
@@ -3064,18 +3064,44 @@ public interface Helper {
 
                 // 1. Preset variables
 
-                headerDescription = "Mocking Event message";
-                // Source_type= ... ;
-                eventName = "Mocked eventName";
+                // prompt for input
+                System.out.print("Give the headerDescription to add: ");
+
+                // Get chosen email
+                scanner = new Scanner(System.in);
+                headerDescription = scanner.next();
+
+                // prompt for input
+                System.out.print("Give the eventName to add: ");
+
+                // Get chosen eventName
+                scanner = new Scanner(System.in);
+                eventName = scanner.next();
+
                 maxAttendees = 45;
-                description = "Mocked description";
+                description = "Mocked MockFest";
                 summary = "Mocked summary";
                 location = "Mocked location";
                 contactPerson = "Mocked contactPerson";
                 dateTimeStart = "2018-05-28T09:00:00+02:00";
                 dateTimeStart = "2018-05-28T09:00";
+
+                // prompt for input
+                System.out.print("Give the dateTimeStart to add: ("+dateTimeStart+")");
+
+                // Get chosen eventName
+                scanner = new Scanner(System.in);
+                dateTimeStart = scanner.next();
+
                 dateTimeEnd = "2018-05-29T09:00:00+02:00";
                 dateTimeEnd = "2018-05-29T09:00";
+                // prompt for input
+                System.out.print("Give the dateTimeEnd to add: ("+dateTimeEnd+")");
+
+                // Get chosen eventName
+                scanner = new Scanner(System.in);
+                dateTimeEnd = scanner.next();
+
                 eventType = "MockerNoon";
                 price = 0;
                 Source_type = SourceType.Planning;
@@ -3291,7 +3317,30 @@ public interface Helper {
                 break;
 
             case "7":
-                // GCA: Update event by Uuid
+                // GCA: Cancel event by GCAEventId
+
+                // 1. Initialize Calendar service with valid OAuth credentials
+                Calendar service = null;
+                try {
+                    service = getCalendarService();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                // prompt for input
+                System.out.print("Give the GCAEventId to cancel this event: ");
+
+                // Get chosen number
+                scanner = new Scanner(System.in);
+                String GCAEventIdToAddUserTo = scanner.next();
+
+                try {
+                    service.events().delete("primary", GCAEventIdToAddUserTo).execute();
+                    System.out.println("Success cancelling event with id: "+GCAEventIdToAddUserTo+"!");
+                } catch (IOException e) {
+                    System.out.print("Error: Something went wrong executing delete event with GCAID: '"+GCAEventIdToAddUserTo+"':\n=> ");
+                    //e.printStackTrace();
+                }
             case "8":
                 // GCA: Cancel event by Uuid
 
@@ -3306,7 +3355,7 @@ public interface Helper {
                 // prompt for input
                 System.out.print("Give the email to add: ");
 
-                // Get chosen number
+                // Get chosen email
                 scanner = new Scanner(System.in);
                 String emailToAdd = scanner.next();
 
@@ -3315,34 +3364,54 @@ public interface Helper {
 
                 // Get chosen number
                 scanner = new Scanner(System.in);
-                String GCAEventIdToAddUserTo = scanner.next();
-
-                // 1. Initialize Calendar service with valid OAuth credentials
-                Calendar service = null;
-                try {
-                    service = getCalendarService();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                // 2. Retrieve the event from the API
-                com.google.api.services.calendar.model.Event event = null;
-                try {
-                    event = service.events().get("primary", GCAEventIdToAddUserTo).execute();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+                GCAEventIdToAddUserTo = scanner.next();
 
                 try {
-                    GoogleCalenderApi.updateEventsAttendeesWithEmailGCAEventId(GCAEventIdToAddUserTo,emailToAdd);
+                    //GoogleCalenderApi.updateEventsAttendeesWithEmailGCAEventId(GCAEventIdToAddUserTo,emailToAdd);
+
+                    GoogleCalenderApi.addAttendeeWithEmailToEventWithGCAEventId(GCAEventIdToAddUserTo,emailToAdd);
+
+                    System.out.println("User with email '"+emailToAdd+"' should be added to event with id '"+GCAEventIdToAddUserTo);
                 } catch (Exception e) {
 
                     System.out.println("Error in : Case '" + choice + "': Add user to event by GCAEventId: "+ e);
                 }
 
-                System.out.println("\nCase '" + choice + "' NOT worked out yet!");
 
+                break;
+
+            case "10":
+                // GCA: Delete user From event by GCAEventId
+
+                System.out.println("\nCase '" + choice + "': Delete user From event by GCAEventId! ");
+
+                // prompt for input
+                System.out.print("Give the email to delete: ");
+
+                // Get chosen email
+                scanner = new Scanner(System.in);
+                String emailToDelete = scanner.next();
+
+                // prompt for input
+                System.out.print("Give the GCAEventId to delete user '"+emailToDelete+"' from: ");
+
+                // Get chosen number
+                scanner = new Scanner(System.in);
+                String GCAEventIdToDeleteUserFrom = scanner.next();
+
+
+                try {
+                    //GoogleCalenderApi.updateEventsAttendeesWithEmailGCAEventId(GCAEventIdToAddUserTo,emailToAdd);
+
+                    GoogleCalenderApi.deleteAttendeeWithEmailFromEventWithGCAEventId(GCAEventIdToDeleteUserFrom,emailToDelete);
+
+                    System.out.println("User with email '"+emailToDelete+"' should be deleted to event with id '"+GCAEventIdToDeleteUserFrom);
+                } catch (Exception e) {
+
+                    System.out.println("Error in : Case '" + choice + "': Add user to event by GCAEventId: "+ e);
+                }
+
+                break;
 
             case "0":
 
