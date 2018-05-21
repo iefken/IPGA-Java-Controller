@@ -901,8 +901,9 @@ public interface Helper {
                     e.printStackTrace();
                 }
 
-                System.out.println(returnedMessage);
+                System.out.print("... PING ...");
 
+                showFullXMLMessage = false;
 
                 break;
             case "errormessage":
@@ -917,6 +918,7 @@ public interface Helper {
             case "invitemessage":
             case "invoiceMessage":
 
+                showFullXMLMessage = false;
                 System.out.println(" [" + messageType + "] Received from " + getSafeXmlProperty(task, "source"));
 
                 break;
