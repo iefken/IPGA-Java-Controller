@@ -110,7 +110,7 @@ public interface Helper {
                 "[06.V] GCA: Cancel event by event and a chosen GCAEventId",
                 "[07.x] GCA: Cancel event by chosen GCAEventId ",
                 "[08.x] GCA: Cancel event by chosen Uuid ",
-                "[09.V] GCA: Authorize connection "
+                "[09.V] GCA: Add user to event by GCAEventId "
         };
         return options;
     }
@@ -892,7 +892,8 @@ public interface Helper {
                     e.printStackTrace();
                 }
 
-                // 2. send xml message to exchange
+                // 2. send xml message to monitor-queue
+
 
                 String returnedMessage = "";
                 try {
@@ -916,7 +917,7 @@ public interface Helper {
             case "invoicerequestmessage":
             case "creditnotemessage":
             case "invitemessage":
-            case "invoiceMessage":
+            case "invoicemessage":
 
                 showFullXMLMessage = false;
                 System.out.println(" [" + messageType + "] Received from " + getSafeXmlProperty(task, "source"));
@@ -1140,8 +1141,11 @@ public interface Helper {
                 if (thisEventInMessage.getActive() == 0) {
 
                     // 1. Cancel Google Calendar event
-                    GoogleCalenderApi.cancelEventWithEventObject(thisEventInMessage);
+/*
+                    if(makeGCACall) {
+                        GoogleCalenderApi.cancelEventWithEventObject(thisEventInMessage);
 
+                    }*/
                     // 2. Perform soft-delete on local db
                     new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
                     System.out.println("SoftDelete executed on [Event] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
@@ -1175,13 +1179,13 @@ public interface Helper {
                     if (localEntityVersion < thisEventInMessage.getEntityVersion()) {
 
                         // 2.3.1. update google calender through API
-
+/*
                         try {
                             GoogleCalenderApi.updateEventWithEventObject(thisEventInMessage);
                         }catch (Exception e)
                         {
                             System.out.println("Error updating Event with Event object:"+e);
-                        }
+                        }*/
                         // 2.3.2. update record in our local db
 
                         int updateUuidRecordVersionResponse = 0;
@@ -1216,7 +1220,7 @@ public interface Helper {
                 // New event record
 
                 // 2.4.1. Add new event to Google calendar
-
+/*
                 String newEventHtmlLinkAndId = null;
                 try {
                     newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromEventObject(thisEventInMessage);
@@ -1231,7 +1235,7 @@ public interface Helper {
                 } catch (IOException e) {
                     System.out.println("Error adding event to Google calendar API: " + e);
                     //e.printStackTrace();
-                }
+                }*/
                 // 2.4.2. insert new event into local db
                 int messageEventInsertReturner = 0;
                 try {
@@ -1311,13 +1315,13 @@ public interface Helper {
 
                 // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
                 if (thisSessionInMessage.getActive() == 0) {
-
+/*
                     // 1. Cancel Google Calendar event
                     try {
                         GoogleCalenderApi.cancelSessionWithSessionObject(thisSessionInMessage);
                     } catch (Exception e) {
                         e.printStackTrace();
-                    }
+                    }*/
 
                     // 2. Perform soft-delete on local db
                     new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
@@ -1353,13 +1357,13 @@ public interface Helper {
                     if (localEntityVersion < thisSessionInMessage.getEntityVersion()) {
 
                         // 2.3.1. update google calender through API
-
+/*
                         try {
                             GoogleCalenderApi.updateSessionWithSessionObject(thisSessionInMessage);
                         }catch (Exception e)
                         {
                             System.out.println("Error updating Session with Session object:"+e);
-                        }
+                        }*/
                         // 2.3.2. update record in our local db
 
                         try {
@@ -1395,7 +1399,7 @@ public interface Helper {
             } else {
 
                 // New session record
-
+/*
                 // 2.4.1. Add new Session to Google calendar
                 String newSessionHtmlLinkAndId = "";
                 try {
@@ -1411,7 +1415,7 @@ public interface Helper {
                 } catch (IOException e) {
                     System.out.println("Error adding session as event to Google calendar API: " + e);
                     //e.printStackTrace();
-                }
+                }*/
 
                 // 2.4.2. insert new session into local db
                 int messageSessionInsertReturner = 0;
@@ -1530,8 +1534,10 @@ public interface Helper {
                 if (localEntityVersion < existingReservation_Event.getEntityVersion()) {
 
                     // 2.3.1. update google calender through API
+/*
 
                     GoogleCalenderApi.updateEventsAttendees(existingReservation_Event.getEventUUID(),existingReservation_Event.getUserUUID());
+*/
 
                     // 2.3.2. update record in our local db
 
@@ -1683,8 +1689,10 @@ public interface Helper {
                 if (localEntityVersion < existingReservation_Session.getEntityVersion()) {
 
                     // 2.3.1. update google calender through API
+/*
 
                     GoogleCalenderApi.updateEventsAttendees(existingReservation_Session.getSessionUUID(),existingReservation_Session.getUserUUID());
+*/
 
                     // 2.3.2. update record in our local db
 
@@ -3291,15 +3299,46 @@ public interface Helper {
                 break;
 
             case "9":
-                // GCA: Authorize connection
+                // GCA: Add user to event by GCAEventId
 
-                System.out.println("\nCase '" + choice + "': Authorize connection! ");
+                System.out.println("\nCase '" + choice + "': Add user to event by GCAEventId! ");
+
+                // prompt for input
+                System.out.print("Give the email to add: ");
+
+                // Get chosen number
+                scanner = new Scanner(System.in);
+                String emailToAdd = scanner.next();
+
+                // prompt for input
+                System.out.print("Give the GCAEventId to add user '"+emailToAdd+"' to: ");
+
+                // Get chosen number
+                scanner = new Scanner(System.in);
+                String GCAEventIdToAddUserTo = scanner.next();
+
+                // 1. Initialize Calendar service with valid OAuth credentials
+                Calendar service = null;
+                try {
+                    service = getCalendarService();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                // 2. Retrieve the event from the API
+                com.google.api.services.calendar.model.Event event = null;
+                try {
+                    event = service.events().get("primary", GCAEventIdToAddUserTo).execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
 
                 try {
-                    GoogleCalenderApi.authorize();
-                } catch (IOException e) {
+                    GoogleCalenderApi.updateEventsAttendeesWithEmailGCAEventId(GCAEventIdToAddUserTo,emailToAdd);
+                } catch (Exception e) {
 
-                    System.out.println("Error authorizing connection: " + e);
+                    System.out.println("Error in : Case '" + choice + "': Add user to event by GCAEventId: "+ e);
                 }
 
                 System.out.println("\nCase '" + choice + "' NOT worked out yet!");
