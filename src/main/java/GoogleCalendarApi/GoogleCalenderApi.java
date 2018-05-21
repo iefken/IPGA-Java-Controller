@@ -49,10 +49,10 @@ public class GoogleCalenderApi {
     // private static final java.io.File DATA_STORE_DIR2 = new java.io.File( System.getProperty("user.home"), "../opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
 
     // For server deployment
-    private static final java.io.File DATA_STORE_DIR = new java.io.File( "/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
+    //private static final java.io.File DATA_STORE_DIR = new java.io.File( "/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
 
     // For local deployment
-    // private static final java.io.File DATA_STORE_DIR = new java.io.File( "C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
+    private static final java.io.File DATA_STORE_DIR = new java.io.File( "C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
     private static FileDataStoreFactory DATA_STORE_FACTORY;
@@ -103,14 +103,14 @@ public class GoogleCalenderApi {
             //in = new FileInputStream("C:/Users/ief.falot/.credentials/client_secret.json");
            } catch (FileNotFoundException|NullPointerException e) {
 
-            System.out.print("Exception 1: "+e);
+            System.out.print("\n<Exception 1:> "+e);
             try{
                 in = new FileInputStream(DATA_STORE_DIR.getAbsolutePath()+"/client_secret.json");
 
             }catch (FileNotFoundException ee) {
 
-                System.out.print("Exception 2: "+ee);
-                ee.printStackTrace();
+                System.out.print("\n<Exception 2:> "+ee);
+                //ee.printStackTrace();
             }
         }
 
