@@ -3,7 +3,7 @@ package AppLogic;
 //import AppLogic.Sender;
 
 import DatabaseLogic.*;
-import GoogleCalendarApi.GoogleCalenderApi;
+import GoogleCalendarApi.*;
 import JsonMessage.JSONException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -776,7 +776,7 @@ public interface Helper {
     static int handleNewMessage(String task, int workCounter) throws JAXBException, IOException, ParserConfigurationException, SAXException, Exception {
 
         //change to true to show full XML message in receiver console when it's received
-        boolean showFullXMLMessage = true, isPingMessage=false;
+        boolean showFullXMLMessage = true, isPingMessage = false;
 
         String messageType = null, xmlTotalMessage = "";
         messageType = getSafeXmlProperty(task, "messageType");
@@ -788,11 +788,10 @@ public interface Helper {
         }
 
 
-
         if (messageType.toLowerCase() == "pingmessage") {
             showFullXMLMessage = false;
 
-            isPingMessage=true;
+            isPingMessage = true;
         }
 
         // get Source from XML (set in sender)
@@ -809,7 +808,7 @@ public interface Helper {
 
         workCounter++;
 
-        if(!isPingMessage) {
+        if (!isPingMessage) {
             System.out.println("_________________________________________________________________________________");
             System.out.println("_________________________START OF MESSAGE________________________________________");
             System.out.println("* [.i.] [NEW MESSAGE]: " + workCounter + " [TYPE]: '" + messageType + "' [FROM]: '" + messageSource + "' [.i.] ");
@@ -908,7 +907,7 @@ public interface Helper {
                     e.printStackTrace();
                 }
 
-                System.out.print("\n... PING @ ["+Helper.getCurrentDateTimeStamp()+"]...");
+                System.out.print("\n... PING @ [" + Helper.getCurrentDateTimeStamp() + "]...");
 
                 showFullXMLMessage = false;
 
@@ -972,7 +971,7 @@ public interface Helper {
 
             userUuid = thisUserInMessage.getUuid();
 
-            System.out.println("New message for [Event] with Uuid:" + userUuid);
+            System.out.println("New message for [User] with Uuid:" + userUuid);
 
 
             //System.out.println("user toString: "+thisUserInMessage.toString());
@@ -1009,16 +1008,30 @@ public interface Helper {
                 // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
                 if (thisUserInMessage.getActive() == 0) {
 
-                    // 1. Perform soft-delete on local db
-                    new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
-                    System.out.println("SoftDelete executed on [User] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+                    boolean allGood = true;
 
-                    // 2. updateUuidRecordVersion() (To UUID master)
-                    int updateUuidRecordVersionResponse=0;
+                    // 1. Perform soft-delete on local db
+                    int alterThisEntityId = 0;
                     try {
-                        updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, userUuid);
-                    } catch (IOException | TimeoutException | JAXBException e) {
+                        alterThisEntityId = Integer.parseInt(selectResults[0]);
+                    } catch (NumberFormatException e) {
                         e.printStackTrace();
+                        allGood=false;
+                    }
+                    try {
+                        new BaseEntityDAO().softDeleteBaseEntity(alterThisEntityId);
+                        System.out.println("SoftDelete executed on [User] with entityId: " + alterThisEntityId + "\n");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    // 2. update local database entity version
+                    try {
+                        allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + thisUserInMessage.getEntityVersion(), "int", "idBaseEntity", "" + alterThisEntityId);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("ERROR in 3. update entity version (on our database) :\n " + e);
+                        allGood = false;
                     }
 
                 } else {
@@ -1147,17 +1160,14 @@ public interface Helper {
                 if (thisEventInMessage.getActive() == 0) {
 
                     // 1. Cancel Google Calendar event
-/*
-                    if(makeGCACall) {
-                        GoogleCalenderApi.cancelEventWithEventObject(thisEventInMessage);
+                    GoogleCalenderApi.cancelEventWithEventObject(thisEventInMessage);
 
-                    }*/
                     // 2. Perform soft-delete on local db
                     new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
                     System.out.println("SoftDelete executed on [Event] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
 
                     // 3. updateUuidRecordVersion() (To UUID master)
-                    int updateUuidRecordVersionResponse=0;
+                    int updateUuidRecordVersionResponse = 0;
                     try {
                         updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, eventUuid);
                     } catch (IOException | TimeoutException | JAXBException e) {
@@ -1185,15 +1195,14 @@ public interface Helper {
                     if (localEntityVersion < thisEventInMessage.getEntityVersion()) {
 
                         // 2.3.1. update google calender through API
-/*
                         try {
                             GoogleCalenderApi.updateEventWithEventObject(thisEventInMessage);
                         }catch (Exception e)
                         {
                             System.out.println("Error updating Event with Event object:"+e);
-                        }*/
-                        // 2.3.2. update record in our local db
+                        }
 
+                        // 2.3.2. update record in our local db
                         int updateUuidRecordVersionResponse = 0;
                         try {
                             allGood = new Event_DAO().updateEventByObject(thisEventInMessage);
@@ -1202,7 +1211,6 @@ public interface Helper {
                         }
 
                         // 2.3.3. updateUuidRecordVersion() (To UUID master)
-
                         if (allGood) {
                             try {
                                 updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, eventUuid);
@@ -1212,7 +1220,6 @@ public interface Helper {
                         } else {
                             //updateEventError
                         }
-
 
                         System.out.println("We had this event with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisEventInMessage.getEntityVersion() + "'");
 
@@ -1226,7 +1233,7 @@ public interface Helper {
                 // New event record
 
                 // 2.4.1. Add new event to Google calendar
-/*
+
                 String newEventHtmlLinkAndId = null;
                 try {
                     newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromEventObject(thisEventInMessage);
@@ -1241,7 +1248,7 @@ public interface Helper {
                 } catch (IOException e) {
                     System.out.println("Error adding event to Google calendar API: " + e);
                     //e.printStackTrace();
-                }*/
+                }
                 // 2.4.2. insert new event into local db
                 int messageEventInsertReturner = 0;
                 try {
@@ -1321,20 +1328,20 @@ public interface Helper {
 
                 // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
                 if (thisSessionInMessage.getActive() == 0) {
-/*
+
                     // 1. Cancel Google Calendar event
                     try {
                         GoogleCalenderApi.cancelSessionWithSessionObject(thisSessionInMessage);
                     } catch (Exception e) {
                         e.printStackTrace();
-                    }*/
+                    }
 
                     // 2. Perform soft-delete on local db
                     new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
                     System.out.println("SoftDelete executed on object with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
 
                     // 3. updateUuidRecordVersion() (To UUID master)
-                    int updateUuidRecordVersionResponse=0;
+                    int updateUuidRecordVersionResponse = 0;
                     try {
                         updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, sessionUuid);
                     } catch (IOException | TimeoutException | JAXBException e) {
@@ -1363,13 +1370,13 @@ public interface Helper {
                     if (localEntityVersion < thisSessionInMessage.getEntityVersion()) {
 
                         // 2.3.1. update google calender through API
-/*
+
                         try {
                             GoogleCalenderApi.updateSessionWithSessionObject(thisSessionInMessage);
                         }catch (Exception e)
                         {
                             System.out.println("Error updating Session with Session object:"+e);
-                        }*/
+                        }
                         // 2.3.2. update record in our local db
 
                         try {
@@ -1405,7 +1412,7 @@ public interface Helper {
             } else {
 
                 // New session record
-/*
+
                 // 2.4.1. Add new Session to Google calendar
                 String newSessionHtmlLinkAndId = "";
                 try {
@@ -1421,7 +1428,7 @@ public interface Helper {
                 } catch (IOException e) {
                     System.out.println("Error adding session as event to Google calendar API: " + e);
                     //e.printStackTrace();
-                }*/
+                }
 
                 // 2.4.2. insert new session into local db
                 int messageSessionInsertReturner = 0;
@@ -1466,7 +1473,8 @@ public interface Helper {
 
         newReservation_EventObjectFromXml = getReservation_EventObjectFromXmlMessage(task);
 
-        System.out.println("newReservation_EventObjectFromXml.toString():\n" + newReservation_EventObjectFromXml.toString() + "\n");
+        System.out.println("New message for [Reservation_Event] with Uuid: " + newReservation_EventObjectFromXml.getReservationUUID());
+        //System.out.println("newReservation_EventObjectFromXml.toString():\n" + newReservation_EventObjectFromXml.toString() + "\n");
 
 
         reservationUUID = newReservation_EventObjectFromXml.getReservationUUID();
@@ -1490,11 +1498,8 @@ public interface Helper {
 
             System.out.println("UUID already exists in our PlanningDB table:[Reservation_Event]");
 
-            // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
-
-
             // 2.2. Reservation_Event record update
-            // Prepare new reservation_event object for sending to database
+
             System.out.println("[Reservation_Event]\n");
 
             // 2.2.1 get idSession from sessionUUID in Session
@@ -1508,12 +1513,20 @@ public interface Helper {
             // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
             if (newReservation_EventObjectFromXml.getActive() == 0) {
 
-                // 1. Perform soft-delete on local db
-                new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
-                System.out.println("SoftDelete execusted on object with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+                // 1. Delete user from Google calendar api
 
-                // 2. updateUuidRecordVersion() (To UUID master)
-                int updateUuidRecordVersionResponse=0;
+                try {
+                    GoogleCalenderApi.deleteAttendeeFromEventWithREO(newReservation_EventObjectFromXml);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                // 2. Perform soft-delete on local db
+                new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
+                System.out.println("SoftDelete executed on object with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+
+                // 3. updateUuidRecordVersion() (To UUID master)
+                int updateUuidRecordVersionResponse = 0;
                 try {
                     updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, reservationUUID);
                 } catch (IOException | TimeoutException | JAXBException e) {
@@ -1540,10 +1553,12 @@ public interface Helper {
                 if (localEntityVersion < existingReservation_Event.getEntityVersion()) {
 
                     // 2.3.1. update google calender through API
+
 /*
 
                     GoogleCalenderApi.updateEventsAttendees(existingReservation_Event.getEventUUID(),existingReservation_Event.getUserUUID());
 */
+
 
                     // 2.3.2. update record in our local db
 
@@ -1582,7 +1597,13 @@ public interface Helper {
         } else {
 
             // uuid doesn't exit locally yet
-            // # insert record locally with given info
+
+            // 1. Add user to google calendar api event
+
+            GoogleCalenderApi.addAttendeeForEvent(newReservation_EventObjectFromXml.getEventUUID(),newReservation_EventObjectFromXml.getUserUUID());
+
+            // 2. Insert record locally with given info
+
             int messageReservationInsertReturner = 0;
 
             BaseEntity newTempEntity = new BaseEntity();
@@ -1593,7 +1614,7 @@ public interface Helper {
                 e.printStackTrace();
             }
 
-            // insertUuidRecord
+            // 3. InsertUuidRecord
             try {
                 Sender.insertUuidRecord("", messageReservationInsertReturner, thisEntityType, Source_type, reservationUUID);
             } catch (IOException | TimeoutException | JAXBException e) {
@@ -1622,6 +1643,8 @@ public interface Helper {
         newReservation_SessionObjectFromXml = getReservation_SessionObjectFromXmlMessage(task);
 
         reservationUUID = newReservation_SessionObjectFromXml.getReservationUUID();
+
+        System.out.println("New message for [Reservation_Session] with Uuid: " + newReservation_SessionObjectFromXml.getReservationUUID());
         // System.out.println("sessionUUID: "+sessionUUID);
 
         // 2.1 check if UUID exists in local db
@@ -1655,20 +1678,27 @@ public interface Helper {
             if (newReservation_SessionObjectFromXml.getActive() == 0) {
 
                 // 1. Delete user from Google Calender Api
-
-                // TODO
+                try {
+                    GoogleCalenderApi.deleteAttendeeFromEventWithRSO(newReservation_SessionObjectFromXml);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 // 2. Perform soft-delete on local db
                 new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
                 System.out.println("SoftDelete executed on [Reservation_Session] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
 
                 // 3. updateUuidRecordVersion() (To UUID master)
-                int updateUuidRecordVersionResponse=0;
+                int updateUuidRecordVersionResponse = 0;
                 try {
                     updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, reservationUUID);
                 } catch (IOException | TimeoutException | JAXBException e) {
                     e.printStackTrace();
                 }
+
+                //4. update local database entity
+
+
 
             } else {
 
@@ -1737,8 +1767,11 @@ public interface Helper {
             // uuid doesn't exit locally yet
             // # insert record locally with given info
 
-            System.out.println("Uuid doesn't exit locally yet...");
+            // 1. Add user to google calendar api event
 
+            GoogleCalenderApi.addAttendeeForSession(newReservation_SessionObjectFromXml.getSessionUUID(),newReservation_SessionObjectFromXml.getUserUUID());
+
+            // 2. Insert record locally with given info
             int messageReservationInsertReturner = 0;
 
             BaseEntity newTempEntity = new BaseEntity();
@@ -1750,8 +1783,8 @@ public interface Helper {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            // insertUuidRecord
 
+            // 3. InsertUuidRecord
             try {
                 Sender.insertUuidRecord("", messageReservationInsertReturner, thisEntityType, Source_type, reservationUUID);
             } catch (IOException | TimeoutException | JAXBException e) {
@@ -3087,7 +3120,7 @@ public interface Helper {
                 dateTimeStart = "2018-05-28T09:00";
 
                 // prompt for input
-                System.out.print("Give the dateTimeStart to add: ("+dateTimeStart+")");
+                System.out.print("Give the dateTimeStart to add: (" + dateTimeStart + ")");
 
                 // Get chosen eventName
                 scanner = new Scanner(System.in);
@@ -3096,7 +3129,7 @@ public interface Helper {
                 dateTimeEnd = "2018-05-29T09:00:00+02:00";
                 dateTimeEnd = "2018-05-29T09:00";
                 // prompt for input
-                System.out.print("Give the dateTimeEnd to add: ("+dateTimeEnd+")");
+                System.out.print("Give the dateTimeEnd to add: (" + dateTimeEnd + ")");
 
                 // Get chosen eventName
                 scanner = new Scanner(System.in);
@@ -3336,11 +3369,13 @@ public interface Helper {
 
                 try {
                     service.events().delete("primary", GCAEventIdToAddUserTo).execute();
-                    System.out.println("Success cancelling event with id: "+GCAEventIdToAddUserTo+"!");
+                    System.out.println("Success cancelling event with id: " + GCAEventIdToAddUserTo + "!");
                 } catch (IOException e) {
-                    System.out.print("Error: Something went wrong executing delete event with GCAID: '"+GCAEventIdToAddUserTo+"':\n=> ");
+                    System.out.print("Error: Something went wrong executing delete event with GCAID: '" + GCAEventIdToAddUserTo + "':\n=> ");
                     //e.printStackTrace();
                 }
+                break;
+
             case "8":
                 // GCA: Cancel event by Uuid
 
@@ -3360,7 +3395,7 @@ public interface Helper {
                 String emailToAdd = scanner.next();
 
                 // prompt for input
-                System.out.print("Give the GCAEventId to add user '"+emailToAdd+"' to: ");
+                System.out.print("Give the GCAEventId to add user '" + emailToAdd + "' to: ");
 
                 // Get chosen number
                 scanner = new Scanner(System.in);
@@ -3369,12 +3404,12 @@ public interface Helper {
                 try {
                     //GoogleCalenderApi.updateEventsAttendeesWithEmailGCAEventId(GCAEventIdToAddUserTo,emailToAdd);
 
-                    GoogleCalenderApi.addAttendeeWithEmailToEventWithGCAEventId(GCAEventIdToAddUserTo,emailToAdd);
+                    GoogleCalenderApi.addAttendeeWithEmailToEventWithGCAEventId(GCAEventIdToAddUserTo, emailToAdd);
 
-                    System.out.println("User with email '"+emailToAdd+"' should be added to event with id '"+GCAEventIdToAddUserTo);
+                    System.out.println("User with email '" + emailToAdd + "' should be added to event with id '" + GCAEventIdToAddUserTo);
                 } catch (Exception e) {
 
-                    System.out.println("Error in : Case '" + choice + "': Add user to event by GCAEventId: "+ e);
+                    System.out.println("Error in : Case '" + choice + "': Add user to event by GCAEventId: " + e);
                 }
 
 
@@ -3393,7 +3428,7 @@ public interface Helper {
                 String emailToDelete = scanner.next();
 
                 // prompt for input
-                System.out.print("Give the GCAEventId to delete user '"+emailToDelete+"' from: ");
+                System.out.print("Give the GCAEventId to delete user '" + emailToDelete + "' from: ");
 
                 // Get chosen number
                 scanner = new Scanner(System.in);
@@ -3403,12 +3438,12 @@ public interface Helper {
                 try {
                     //GoogleCalenderApi.updateEventsAttendeesWithEmailGCAEventId(GCAEventIdToAddUserTo,emailToAdd);
 
-                    GoogleCalenderApi.deleteAttendeeWithEmailFromEventWithGCAEventId(GCAEventIdToDeleteUserFrom,emailToDelete);
+                    GoogleCalenderApi.deleteAttendeeWithEmailFromEventWithGCAEventId(GCAEventIdToDeleteUserFrom, emailToDelete);
 
-                    System.out.println("User with email '"+emailToDelete+"' should be deleted to event with id '"+GCAEventIdToDeleteUserFrom);
+                    System.out.println("User with email '" + emailToDelete + "' should be deleted to event with id '" + GCAEventIdToDeleteUserFrom);
                 } catch (Exception e) {
 
-                    System.out.println("Error in : Case '" + choice + "': Add user to event by GCAEventId: "+ e);
+                    System.out.println("Error in : Case '" + choice + "': Add user to event by GCAEventId: " + e);
                 }
 
                 break;

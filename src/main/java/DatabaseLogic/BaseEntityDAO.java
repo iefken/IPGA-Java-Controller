@@ -244,7 +244,7 @@ public class BaseEntityDAO extends BaseDAO{
         ResultSet rs = null;
         Boolean executeSucces = false;
 
-        String sql = "UPDATE PlanningDB.BaseEntity SET active = 0 WHERE idBaseEntity = "+entityId+";";
+        String sql = "UPDATE PlanningDB.BaseEntity SET active = 0, entity_version = entity_version + 1 WHERE idBaseEntity = "+entityId+";";
         //String sql = "UPDATE PlanningDB.? SET ? = ? WHERE idUser = ?;";
 
         //System.out.println("sql: "+sql);
@@ -257,6 +257,7 @@ public class BaseEntityDAO extends BaseDAO{
             statement = getConnection().prepareStatement(sql);
             try{
                 statement.executeUpdate();
+
                 return true;
             }catch (Exception e) {
                 e.printStackTrace();
