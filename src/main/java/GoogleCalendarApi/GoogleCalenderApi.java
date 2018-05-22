@@ -58,7 +58,7 @@ public class GoogleCalenderApi {
     private static final String thisRepo = System.getProperty("user.dir");
     //epo);
 
-    private static final java.io.File DATA_STORE_DIR = new java.io.File( thisRepo+"../../calendar-integration-groupA-java");
+    private static final java.io.File DATA_STORE_DIR = new java.io.File( thisRepo+"/../../calendar-integration-groupA-java");
 
 
     /** Global instance of the {@link FileDataStoreFactory}. */
