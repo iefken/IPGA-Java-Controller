@@ -3,6 +3,7 @@
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
       <artifact name="cli-java-controller:jar" />
+      <artifact name="cli-java-main-controller:jar" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
@@ -292,8 +293,8 @@
           <file leaf-file-name="GoogleCalenderApi.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="321">
-                  <caret line="58" column="11" lean-forward="true" selection-start-line="58" selection-start-column="11" selection-end-line="58" selection-end-column="11" />
+                <state relative-caret-position="406">
+                  <caret line="63" column="63" lean-forward="true" selection-start-line="63" selection-start-column="63" selection-end-line="63" selection-end-column="63" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="docComment;field#APPLICATION_NAME#0;class#GoogleCalenderApi#0" />
@@ -432,9 +433,9 @@
         <option value="$PROJECT_DIR$/src/main/java/PlanningTests/FlowTest.java" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/AddUserToEvent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" />
       </list>
     </option>
   </component>
@@ -703,12 +704,12 @@
       <workItem from="1526777181375" duration="580000" />
       <workItem from="1526777819015" duration="34206000" />
       <workItem from="1526903393346" duration="20324000" />
-      <workItem from="1526936100968" duration="12667000" />
+      <workItem from="1526936100968" duration="12839000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="95868000" />
+    <option name="totallyTimeSpent" value="96040000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3528" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1120,8 +1121,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="58" column="11" lean-forward="true" selection-start-line="58" selection-start-column="11" selection-end-line="58" selection-end-column="11" />
+        <state relative-caret-position="406">
+          <caret line="63" column="63" lean-forward="true" selection-start-line="63" selection-start-column="63" selection-end-line="63" selection-end-column="63" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;field#APPLICATION_NAME#0;class#GoogleCalenderApi#0" />
