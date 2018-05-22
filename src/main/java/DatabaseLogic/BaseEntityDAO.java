@@ -205,7 +205,7 @@ public class BaseEntityDAO extends BaseDAO{
 
         String sql = "UPDATE PlanningDB."+table+" SET "+property+" = "+value+" WHERE "+whereProperty+" = "+whereValue+";";
 
-        System.out.println("sql-query: "+sql);
+        //System.out.println("sql-query: "+sql);
 
         PreparedStatement statement = null;
         try {

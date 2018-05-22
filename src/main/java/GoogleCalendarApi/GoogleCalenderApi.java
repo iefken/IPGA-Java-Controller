@@ -2,7 +2,6 @@ package GoogleCalendarApi;
 
 import AppLogic.Helper;
 import DatabaseLogic.*;
-import JsonMessage.JSONObject;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -13,27 +12,19 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
-import com.google.api.client.util.IOUtils;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.*;
 
 import java.io.*;
-import java.net.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.util.stream.Collectors;
+
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 
@@ -41,38 +32,55 @@ public class GoogleCalenderApi {
 
     // 1. Class initializers
 
-    /** Application name. */
+    /**
+     * Application name.
+     */
     private static final String APPLICATION_NAME = "Integration Project Group A: Planning: Google Calendar API";
 
-    /** Directory to store user credentials for this application. */
+    /**
+     * Directory to store user credentials for this application.
+     */
 
+    //private java.io.File DATA_STORE_DIR = null;
+
+    //private static java.io.File DATA_STORE_DIR = new java.io.File(thisRepo + "/out/calendar-integration-groupA-java");
+    //private static final java.io.File DATA_STORE_DIR = new java.io.File( thisRepo+"/../../calendar-integration-groupA-java");
     // private static final java.io.File DATA_STORE_DIR = new java.io.File( System.getProperty("user.home"), ".credentials/calendar-integration-groupA-java");
     // private static final java.io.File DATA_STORE_DIR2 = new java.io.File( System.getProperty("user.home"), "../opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
 
-    // For server deployment
-   // private static final java.io.File DATA_STORE_DIR = new java.io.File( "/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
+    // private static final java.io.File DATA_STORE_DIR = new java.io.File( "/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
 
     // For local deployment
     //private static final java.io.File DATA_STORE_DIR = new java.io.File( "C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
 
     private static final String thisRepo = System.getProperty("user.dir");
-    //epo);
 
-    private static final java.io.File DATA_STORE_DIR = new java.io.File( thisRepo+"/../../calendar-integration-groupA-java");
+    // For local deployment
+    //private static final java.io.File DATA_STORE_DIR = new java.io.File( "C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
+    //private static java.io.File DATA_STORE_DIR = new java.io.File(thisRepo + "/out/calendar-integration-groupA-java");
 
+    // For server deployment
+    private static java.io.File DATA_STORE_DIR = new java.io.File(thisRepo + "/../../calendar-integration-groupA-java");
 
-    /** Global instance of the {@link FileDataStoreFactory}. */
+    /**
+     * Global instance of the {@link FileDataStoreFactory}.
+     */
     private static FileDataStoreFactory DATA_STORE_FACTORY;
 
-    /** Global instance of the JSON factory. */
+    /**
+     * Global instance of the JSON factory.
+     */
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
-    /** Global instance of the HTTP transport. */
+    /**
+     * Global instance of the HTTP transport.
+     */
     private static HttpTransport HTTP_TRANSPORT;
 
 
-    /** Global instance of the scopes required by this quickstart.
-     *
+    /**
+     * Global instance of the scopes required by this quickstart.
+     * <p>
      * If modifying these scopes, delete your previously saved credentials
      * at ~/.credentials/calendar-java-quickstart
      */
@@ -92,6 +100,7 @@ public class GoogleCalenderApi {
 
     /**
      * Creates an authorized Credential object.
+     *
      * @return an authorized Credential object.
      * @throws IOException
      */
@@ -102,23 +111,23 @@ public class GoogleCalenderApi {
 
         try {
 
-            String test = DATA_STORE_DIR.getAbsolutePath()+"/client_secret.json";
+            String test = DATA_STORE_DIR.getAbsolutePath() + "/client_secret.json";
 
-            System.out.println("thisRepo : "+thisRepo);
+            //System.out.println("thisRepo : " + thisRepo);
 
             in = new FileInputStream(test);
 
 
             //in = new FileInputStream("C:/Users/ief.falot/.credentials/client_secret.json");
-           } catch (FileNotFoundException|NullPointerException e) {
+        } catch (FileNotFoundException | NullPointerException e) {
 
-            System.out.print("\n<Exception 1:> "+e);
-            try{
-                in = new FileInputStream(DATA_STORE_DIR.getAbsolutePath()+"/client_secret.json");
+            System.out.print("\n<Exception 1:> " + e);
+            try {
+                in = new FileInputStream(DATA_STORE_DIR.getAbsolutePath() + "/client_secret.json");
 
-            }catch (FileNotFoundException ee) {
+            } catch (FileNotFoundException ee) {
 
-                System.out.print("\n<Exception 2:> "+ee);
+                System.out.print("\n<Exception 2:> " + ee);
                 //ee.printStackTrace();
             }
         }
@@ -143,9 +152,9 @@ public class GoogleCalenderApi {
                     .build();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
 
         }
@@ -154,17 +163,18 @@ public class GoogleCalenderApi {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+        //System.out.println("Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
     }
 
     /**
      * Build and return an authorized Calendar client service.
+     *
      * @return an authorized Calendar client service
      * @throws IOException
      */
     public static com.google.api.services.calendar.Calendar getCalendarService() throws IOException {
-        System.out.print("Authorizing now...");
+        System.out.print("\n<_ ... Authorizing Google Calendar Api now ... _>\n\n");
         Credential credential = authorize();
         return new com.google.api.services.calendar.Calendar.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, credential)
@@ -173,9 +183,8 @@ public class GoogleCalenderApi {
     }
 
 
-
     // 2. CREATE
-    public static String createEventFromEventObject(DatabaseLogic.Event newEvent) throws IOException{
+    public static String createEventFromEventObject(DatabaseLogic.Event newEvent) throws IOException {
         //Create new events
         // Refer to the Java quickstart on how to setup the environment:
         // https://developers.google.com/calendar/quickstart/java
@@ -188,8 +197,8 @@ public class GoogleCalenderApi {
                 .setLocation(newEvent.getLocation())
                 .setDescription(newEvent.getDescription());
 
-        String dts = newEvent.getDateTimeStart()+":00+02:00";
-        String dte = newEvent.getDateTimeEnd()+":00+02:00";
+        String dts = newEvent.getDateTimeStart() + ":00+02:00";
+        String dte = newEvent.getDateTimeEnd() + ":00+02:00";
 
         DateTime startDateTime = new DateTime(dts);
         EventDateTime start = new EventDateTime()
@@ -203,10 +212,10 @@ public class GoogleCalenderApi {
                 .setTimeZone("Europe/Brussels");
         event.setEnd(end);
 
-        String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=1"};
+        String[] recurrence = new String[]{"RRULE:FREQ=DAILY;COUNT=1"};
         event.setRecurrence(Arrays.asList(recurrence));
 
-        EventAttendee[] attendees = new EventAttendee[] {
+        EventAttendee[] attendees = new EventAttendee[]{
                 new EventAttendee().setEmail("ieffalot@gmail.com"),
                 new EventAttendee().setEmail("wissam.nasser@student.ehb.be"),
                 new EventAttendee().setEmail("gill.steens@student.ehb.be"),
@@ -215,7 +224,7 @@ public class GoogleCalenderApi {
         };
         event.setAttendees(Arrays.asList(attendees));
 
-        EventReminder[] reminderOverrides = new EventReminder[] {
+        EventReminder[] reminderOverrides = new EventReminder[]{
                 new EventReminder().setMethod("email").setMinutes(24 * 60),
                 new EventReminder().setMethod("popup").setMinutes(10),
         };
@@ -232,12 +241,12 @@ public class GoogleCalenderApi {
         }
         System.out.printf("Created new Event: %s\n", event.getHtmlLink());
 
-        String toReturn = event.getHtmlLink() + "-=-"+event.getId();
+        String toReturn = event.getHtmlLink() + "-=-" + event.getId();
 
         return toReturn;
     }
 
-    public static String createEventFromSessionObject(DatabaseLogic.Session newSession) throws IOException{
+    public static String createEventFromSessionObject(DatabaseLogic.Session newSession) throws IOException {
         //Create new events
         // Refer to the Java quickstart on how to setup the environment:
         // https://developers.google.com/calendar/quickstart/java
@@ -250,8 +259,8 @@ public class GoogleCalenderApi {
                 .setLocation(newSession.getLocation())
                 .setDescription(newSession.getDescription());
 
-        String dts = newSession.getDateTimeStart()+":00+02:00";
-        String dte = newSession.getDateTimeEnd()+":00+02:00";
+        String dts = newSession.getDateTimeStart() + ":00+02:00";
+        String dte = newSession.getDateTimeEnd() + ":00+02:00";
 
 
         DateTime startDateTime = new DateTime(dts);
@@ -266,10 +275,10 @@ public class GoogleCalenderApi {
                 .setTimeZone("Europe/Brussels");
         event.setEnd(end);
 
-        String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=1"};
+        String[] recurrence = new String[]{"RRULE:FREQ=DAILY;COUNT=1"};
         event.setRecurrence(Arrays.asList(recurrence));
 
-        EventAttendee[] attendees = new EventAttendee[] {
+        EventAttendee[] attendees = new EventAttendee[]{
                 new EventAttendee().setEmail("ief.falot@student.ehb.be"),
                 new EventAttendee().setEmail("ieffalot@gmail.com"),
                 new EventAttendee().setEmail("ieffalot@hotmail.com"),
@@ -280,7 +289,7 @@ public class GoogleCalenderApi {
         };
         event.setAttendees(Arrays.asList(attendees));
 
-        EventReminder[] reminderOverrides = new EventReminder[] {
+        EventReminder[] reminderOverrides = new EventReminder[]{
                 new EventReminder().setMethod("email").setMinutes(24 * 60),
                 new EventReminder().setMethod("popup").setMinutes(10),
         };
@@ -297,12 +306,12 @@ public class GoogleCalenderApi {
         }
         System.out.printf("Created new Session: %s\n", event.getHtmlLink());
 
-        String toReturn = event.getHtmlLink() + "-=-"+event.getId();
+        String toReturn = event.getHtmlLink() + "-=-" + event.getId();
 
         return toReturn;
     }
 
-    public static void createDummyEvent(com.google.api.services.calendar.Calendar service) throws IOException{
+    public static void createDummyEvent(com.google.api.services.calendar.Calendar service) throws IOException {
         //Create new events
         // Refer to the Java quickstart on how to setup the environment:
         // https://developers.google.com/calendar/quickstart/java
@@ -325,10 +334,10 @@ public class GoogleCalenderApi {
                 .setTimeZone("Europe/Brussels");
         event.setEnd(end);
 
-        String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=1"};
+        String[] recurrence = new String[]{"RRULE:FREQ=DAILY;COUNT=1"};
         event.setRecurrence(Arrays.asList(recurrence));
 
-        EventAttendee[] attendees = new EventAttendee[] {
+        EventAttendee[] attendees = new EventAttendee[]{
                 new EventAttendee().setEmail("ief.falot@student.ehb.be"),
                 new EventAttendee().setEmail("ieffalot@gmail.com"),
                 new EventAttendee().setEmail("ieffalot@hotmail.com"),
@@ -339,7 +348,7 @@ public class GoogleCalenderApi {
         };
         event.setAttendees(Arrays.asList(attendees));
 
-        EventReminder[] reminderOverrides = new EventReminder[] {
+        EventReminder[] reminderOverrides = new EventReminder[]{
                 new EventReminder().setMethod("email").setMinutes(24 * 60),
                 new EventReminder().setMethod("popup").setMinutes(10),
         };
@@ -355,12 +364,9 @@ public class GoogleCalenderApi {
 
     // 3. READ
 
-    public static void listEvents() throws IOException
-    {
+    public static void listEvents() throws IOException {
 
-        com.google.api.services.calendar.Calendar service = getCalendarService();
-
-        service = null;
+        com.google.api.services.calendar.Calendar service = null;
         try {
             service = getCalendarService();
         } catch (IOException e) {
@@ -386,7 +392,7 @@ public class GoogleCalenderApi {
                 if (start == null) {
                     start = event.getStart().getDate();
                 }
-                System.out.printf("=> Event "+counter+":\n1. Start: (%s) 2. GCAID: [%s] 3. Summary: [%s]\n4. Link: '%s'\n", start, event.getId(), event.getSummary(), event.getHtmlLink());
+                System.out.printf("=> Event " + counter + ":\n1. Start: (%s) 2. GCAID: [%s] 3. Summary: [%s]\n4. Link: '%s'\n", start, event.getId(), event.getSummary(), event.getHtmlLink());
 
                 counter++;
             }
@@ -395,7 +401,7 @@ public class GoogleCalenderApi {
 
     // 4. UPDATE
 
-    public static void updateEventsAttendees(String eventUuid, String userUuid){
+    public static void updateEventsAttendees(String eventUuid, String userUuid) {
 
         // 1. Initialize Calendar service with valid OAuth credentials
         Calendar service = null;
@@ -408,7 +414,7 @@ public class GoogleCalenderApi {
         String[] propertiesToSelect = {"GCAEventId"};
         String table = "Event";
         String[] selectors = {"uuid"};
-        String[] values= {eventUuid};
+        String[] values = {eventUuid};
 
         String GCAEventId = null;
         try {
@@ -458,7 +464,7 @@ public class GoogleCalenderApi {
         try {
             Event updatedEvent = service.events().update("primary", event.getId(), event).execute();
 
-            System.out.println("Succes adding user ('"+clientEmailAddress+"')to event with id: '"+event.getId()+"' @ GMT-"+updatedEvent.getUpdated());
+            System.out.println("Success adding user ('" + clientEmailAddress + "')to event with id: '" + event.getId() + "' @ GMT-" + updatedEvent.getUpdated());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -466,7 +472,7 @@ public class GoogleCalenderApi {
 
     }
 
-    public static void addAttendeeWithEmailToEventWithGCAEventId(String GCAEventId, String email){
+    public static void addAttendeeWithEmailToEventWithGCAEventId(String GCAEventId, String email) {
 
         // 1. Initialize Calendar service with valid OAuth credentials
         Calendar service = null;
@@ -490,17 +496,17 @@ public class GoogleCalenderApi {
         try {
             Event updatedEvent = service.events().update("primary", event.getId(), event).execute();
 
-            System.out.println("Succes adding user ('"+email+"') to event with id: '"+event.getId()+"' @ GMT-"+updatedEvent.getUpdated());
+            System.out.println("Succes adding user ('" + email + "') to event with id: '" + event.getId() + "' @ GMT-" + updatedEvent.getUpdated());
 
         } catch (IOException e) {
-            System.out.println("Error adding user ('"+email+"') to event with id: '"+event.getId()+"' @ GMT-"+Helper.getCurrentDateTimeStamp()+" !");
+            System.out.println("Error adding user ('" + email + "') to event with id: '" + event.getId() + "' @ GMT-" + Helper.getCurrentDateTimeStamp() + " !");
 
             e.printStackTrace();
         }
 
     }
 
-    public static void addAttendeeForEvent(String eventUuid, String userUuid){
+    public static void addAttendeeForEvent(String eventUuid, String userUuid) {
 
         // 1. Initialize Calendar service with valid OAuth credentials
         Calendar service = null;
@@ -514,7 +520,7 @@ public class GoogleCalenderApi {
         String[] propertiesToSelect = {"GCAEventId"};
         String table = "Event";
         String[] selectors = {"uuid"};
-        String[] values= {eventUuid};
+        String[] values = {eventUuid};
         String GCAEventId = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0];
 
         // 2. Retrieve the event from the API
@@ -530,7 +536,7 @@ public class GoogleCalenderApi {
         propertiesToSelect[0] = "email";
         table = "User";
         selectors[0] = "uuid";
-        values[0]= userUuid;
+        values[0] = userUuid;
         String userEmail = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0];
 
         event.getAttendees().add(new EventAttendee().setEmail(userEmail));
@@ -538,17 +544,17 @@ public class GoogleCalenderApi {
         try {
             Event updatedEvent = service.events().update("primary", event.getId(), event).execute();
 
-            System.out.println("Succes adding user ('"+userEmail+"') to event with id: '"+event.getId()+"' @ GMT-"+updatedEvent.getUpdated());
+            System.out.println("Succes adding user ('" + userEmail + "') to event with id: '" + event.getId() + "' @ GMT-" + updatedEvent.getUpdated());
 
         } catch (IOException e) {
-            System.out.println("Error adding user ('"+userEmail+"') to event with id: '"+event.getId()+"' @ GMT-"+Helper.getCurrentDateTimeStamp()+" !");
+            System.out.println("Error adding user ('" + userEmail + "') to event with id: '" + event.getId() + "' @ GMT-" + Helper.getCurrentDateTimeStamp() + " !");
 
             e.printStackTrace();
         }
 
     }
 
-    public static void addAttendeeForSession(String sessionUuid, String userUuid){
+    public static void addAttendeeForSession(String sessionUuid, String userUuid) {
 
         // 1. Initialize Calendar service with valid OAuth credentials
         Calendar service = null;
@@ -562,7 +568,7 @@ public class GoogleCalenderApi {
         String[] propertiesToSelect = {"GCAEventId"};
         String table = "Session";
         String[] selectors = {"uuid"};
-        String[] values= {sessionUuid};
+        String[] values = {sessionUuid};
         String GCAEventId = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0];
 
         // 3. Retrieve the event from the API
@@ -578,7 +584,7 @@ public class GoogleCalenderApi {
         propertiesToSelect[0] = "email";
         table = "User";
         selectors[0] = "uuid";
-        values[0]= userUuid;
+        values[0] = userUuid;
         String userEmail = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0];
 
 
@@ -587,18 +593,17 @@ public class GoogleCalenderApi {
         try {
             Event updatedEvent = service.events().update("primary", event.getId(), event).execute();
 
-            System.out.println("Succes adding user ('"+userEmail+"') to event with id: '"+event.getId()+"' @ GMT-"+updatedEvent.getUpdated());
+            System.out.println("Succes adding user ('" + userEmail + "') to event with id: '" + event.getId() + "' @ GMT-" + updatedEvent.getUpdated());
 
         } catch (IOException e) {
-            System.out.println("Error adding user ('"+userEmail+"') to event with id: '"+event.getId()+"' @ GMT-"+Helper.getCurrentDateTimeStamp()+" !");
+            System.out.println("Error adding user ('" + userEmail + "') to event with id: '" + event.getId() + "' @ GMT-" + Helper.getCurrentDateTimeStamp() + " !");
 
             e.printStackTrace();
         }
 
     }
 
-    public static void updateEventWithEventObject(DatabaseLogic.Event updateEventObject)
-    {
+    public static void updateEventWithEventObject(DatabaseLogic.Event updateEventObject) {
         // 1. Initialize Calendar service with valid OAuth credentials
         Calendar service = null;
         try {
@@ -613,7 +618,7 @@ public class GoogleCalenderApi {
             String[] propertiesToSelect = {"GCAEventId"};
             String table = "Event";
             String[] selectors = {"uuid"};
-            String[] values= {updateEventObject.getEventUUID()};
+            String[] values = {updateEventObject.getEventUUID()};
             String GCAEventId = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0];
 
             updateEventObject.setGCAEventId(GCAEventId);
@@ -628,14 +633,14 @@ public class GoogleCalenderApi {
             event.setLocation(updateEventObject.getLocation());
             event.setDescription(updateEventObject.getDescription());
 
-            String dts = updateEventObject.getDateTimeStart()+":00+02:00";
+            String dts = updateEventObject.getDateTimeStart() + ":00+02:00";
             DateTime startDateTime = new DateTime(dts);
             EventDateTime start = new EventDateTime()
                     .setDateTime(startDateTime)
                     .setTimeZone("Europe/Brussels");
             event.setStart(start);
 
-            String dte = updateEventObject.getDateTimeEnd()+":00+02:00";
+            String dte = updateEventObject.getDateTimeEnd() + ":00+02:00";
             DateTime endDateTime = new DateTime(dte);
             EventDateTime end = new EventDateTime()
                     .setDateTime(endDateTime)
@@ -646,16 +651,16 @@ public class GoogleCalenderApi {
             Event updatedEvent = service.events().update("primary", event.getId(), event).execute();
 
 
-            System.out.println("Succes updating event with id: '"+event.getId()+"' @ GMT-"+updatedEvent.getUpdated());
+            System.out.println("Succes updating event with id: '" + event.getId() + "' @ GMT-" + updatedEvent.getUpdated());
 
         } catch (Exception e) {
 
-            System.out.println("Error updating event:\n=> "+e);
+            System.out.println("Error updating event:\n=> " + e);
             //e.printStackTrace();
         }
     }
-    public static void updateSessionWithSessionObject(DatabaseLogic.Session updateSessionObject)
-    {
+
+    public static void updateSessionWithSessionObject(DatabaseLogic.Session updateSessionObject) {
         // 1. Initialize Calendar service with valid OAuth credentials
         Calendar service = null;
         try {
@@ -670,7 +675,7 @@ public class GoogleCalenderApi {
             String[] propertiesToSelect = {"GCAEventId"};
             String table = "Session";
             String[] selectors = {"uuid"};
-            String[] values= {updateSessionObject.getSessionUUID()};
+            String[] values = {updateSessionObject.getSessionUUID()};
             String GCAEventId = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0];
 
             updateSessionObject.setGCAEventId(GCAEventId);
@@ -690,14 +695,14 @@ public class GoogleCalenderApi {
             event.setLocation(updateSessionObject.getLocation());
             event.setDescription(updateSessionObject.getDescription());
 
-            String dts = updateSessionObject.getDateTimeStart()+":00+02:00";
+            String dts = updateSessionObject.getDateTimeStart() + ":00+02:00";
             DateTime startDateTime = new DateTime(dts);
             EventDateTime start = new EventDateTime()
                     .setDateTime(startDateTime)
                     .setTimeZone("Europe/Brussels");
             event.setStart(start);
 
-            String dte = updateSessionObject.getDateTimeEnd()+":00+02:00";
+            String dte = updateSessionObject.getDateTimeEnd() + ":00+02:00";
             DateTime endDateTime = new DateTime(dte);
             EventDateTime end = new EventDateTime()
                     .setDateTime(endDateTime)
@@ -708,11 +713,11 @@ public class GoogleCalenderApi {
             Event updatedEvent = service.events().update("primary", event.getId(), event).execute();
 
 
-            System.out.println("Succes updating Session with id: '"+event.getId()+"' @ GMT-"+updatedEvent.getUpdated());
+            System.out.println("Succes updating Session with id: '" + event.getId() + "' @ GMT-" + updatedEvent.getUpdated());
 
         } catch (Exception e) {
 
-            System.out.println("Error updating event:\n=> "+e);
+            System.out.println("Error updating event:\n=> " + e);
             //e.printStackTrace();
         }
     }
@@ -720,8 +725,7 @@ public class GoogleCalenderApi {
 
     // 5. DELETE
 
-    public static void cancelSessionWithSessionObject(DatabaseLogic.Session cancelEventObject)
-    {
+    public static void cancelSessionWithSessionObject(DatabaseLogic.Session cancelEventObject) {
         // 1. Initialize Calendar service with valid OAuth credentials
         Calendar service = null;
         try {
@@ -734,7 +738,7 @@ public class GoogleCalenderApi {
         String[] propertiesToSelect = {"GCAEventId"};
         String table = "Session";
         String[] selectors = {"uuid"};
-        String[] values= {cancelEventObject.getSessionUUID()};
+        String[] values = {cancelEventObject.getSessionUUID()};
         String GCAEventId = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0];
 
         cancelEventObject.setGCAEventId(GCAEventId);
@@ -744,14 +748,14 @@ public class GoogleCalenderApi {
         // 2. Delete the event through the API
         try {
             service.events().delete("primary", eventId).execute();
-            System.out.println("Success cancelling session with id: "+cancelEventObject.getGCAEventId()+"!");
+            System.out.println("Success cancelling session with id: " + cancelEventObject.getGCAEventId() + "!");
         } catch (IOException e) {
-            System.out.print("Error: Something went wrong executing delete session with GCAID: '"+cancelEventObject.getGCAEventId()+"':\n=> ");
+            System.out.print("Error: Something went wrong executing delete session with GCAID: '" + cancelEventObject.getGCAEventId() + "':\n=> ");
             //e.printStackTrace();
         }
     }
-    public static void cancelEventWithEventObject(DatabaseLogic.Event cancelEventObject)
-    {
+
+    public static void cancelEventWithEventObject(DatabaseLogic.Event cancelEventObject) {
         // 1. Initialize Calendar service with valid OAuth credentials
         Calendar service = null;
         try {
@@ -764,7 +768,7 @@ public class GoogleCalenderApi {
         String[] propertiesToSelect = {"GCAEventId"};
         String table = "Event";
         String[] selectors = {"uuid"};
-        String[] values= {cancelEventObject.getEventUUID()};
+        String[] values = {cancelEventObject.getEventUUID()};
         String GCAEventId = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0];
 
         cancelEventObject.setGCAEventId(GCAEventId);
@@ -773,14 +777,14 @@ public class GoogleCalenderApi {
         // 2. Delete the event through the API
         try {
             service.events().delete("primary", eventId).execute();
-            System.out.println("Success cancelling event with id: "+cancelEventObject.getGCAEventId()+"!");
+            System.out.println("Success cancelling event with id: " + cancelEventObject.getGCAEventId() + "!");
         } catch (IOException e) {
-            System.out.print("Error: Something went wrong executing delete event with GCAID: '"+cancelEventObject.getGCAEventId()+"':\n=> ");
+            System.out.print("Error: Something went wrong executing delete event with GCAID: '" + cancelEventObject.getGCAEventId() + "':\n=> ");
             //e.printStackTrace();
         }
     }
-    public static void cancelEventByGCAID(String GCAIDToCancel)
-    {
+
+    public static void cancelEventByGCAID(String GCAIDToCancel) {
         // 1. Initialize Calendar service with valid OAuth credentials
         Calendar service = null;
         try {
@@ -792,14 +796,13 @@ public class GoogleCalenderApi {
         // 2. Delete the event through the API
         try {
             service.events().delete("primary", GCAIDToCancel).execute();
-            System.out.println("Succes cancelling event with GCAID: "+GCAIDToCancel+"!");
+            System.out.println("Succes cancelling event with GCAID: " + GCAIDToCancel + "!");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void cancelEventByUuid(String UuidToCancel)
-    {
+    public static void cancelEventByUuid(String UuidToCancel) {
         // 1. Initialize Calendar service with valid OAuth credentials
         Calendar service = null;
         try {
@@ -819,13 +822,13 @@ public class GoogleCalenderApi {
         // 2. Delete the event through the API
         try {
             service.events().delete("primary", GCAIDToCancel[0]).execute();
-            System.out.println("Succes cancelling event with GCAID: '"+GCAIDToCancel[0]+"' and uuid: '"+UuidToCancel+"'!");
+            System.out.println("Succes cancelling event with GCAID: '" + GCAIDToCancel[0] + "' and uuid: '" + UuidToCancel + "'!");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void deleteAttendeeWithEmailFromEventWithGCAEventId(String GCAEventId, String email){
+    public static void deleteAttendeeWithEmailFromEventWithGCAEventId(String GCAEventId, String email) {
 
         // 1. Initialize Calendar service with valid OAuth credentials
         Calendar service = null;
@@ -858,16 +861,15 @@ public class GoogleCalenderApi {
         event.getAttendees().remove(new EventAttendee().setEmail(email));
 */
         // 4. Update the event
-        if(success)
-        {
+        if (success) {
             try {
                 Event updatedEvent = service.events().update("primary", event.getId(), event).execute();
 
                 String status = updatedEvent.getStatus();
-                System.out.println("Succes deleting user ('"+email+"') to event with id: '"+event.getId()+"' @ GMT-'"+updatedEvent.getUpdated()+"' \nStatus: "+status);
+                System.out.println("Succes deleting user ('" + email + "') to event with id: '" + event.getId() + "' @ GMT-'" + updatedEvent.getUpdated() + "' \nStatus: " + status);
 
             } catch (IOException e) {
-                System.out.println("Error adding user ('"+email+"') to event with id: '"+event.getId()+"' @ GMT-"+Helper.getCurrentDateTimeStamp()+" !");
+                System.out.println("Error adding user ('" + email + "') to event with id: '" + event.getId() + "' @ GMT-" + Helper.getCurrentDateTimeStamp() + " !");
 
                 e.printStackTrace();
             }
@@ -876,8 +878,7 @@ public class GoogleCalenderApi {
 
     }
 
-    public static void deleteAttendeeFromEventWithREO(Reservation_Event thisReservation_EventObject)
-    {
+    public static void deleteAttendeeFromEventWithREO(Reservation_Event thisReservation_EventObject) {
 
         // 1. Initialize Calendar service with valid OAuth credentials
         Calendar service = null;
@@ -892,7 +893,7 @@ public class GoogleCalenderApi {
         String[] propertiesToSelect = {"GCAEventId"};
         String table = "Event";
         String[] selectors = {"uuid"};
-        String[] values= {thisReservation_EventObject.getEventUUID()};
+        String[] values = {thisReservation_EventObject.getEventUUID()};
         String GCAEventId = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0];
 
         // 1.2 get usermail
@@ -900,7 +901,7 @@ public class GoogleCalenderApi {
         propertiesToSelect[0] = "email";
         table = "User";
         selectors[0] = "uuid";
-        values[0]= thisReservation_EventObject.getUserUUID();
+        values[0] = thisReservation_EventObject.getUserUUID();
         String userEmail = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0];
 
 
@@ -927,16 +928,15 @@ public class GoogleCalenderApi {
         event.getAttendees().remove(new EventAttendee().setEmail(email));
 */
         // 4. Update the event
-        if(success)
-        {
+        if (success) {
             try {
                 Event updatedEvent = service.events().update("primary", event.getId(), event).execute();
 
                 String status = updatedEvent.getStatus();
-                System.out.println("Succes deleting user ('"+userEmail+"') from event with id: '"+event.getId()+"' @ GMT-'"+updatedEvent.getUpdated()+"' \nStatus: "+status);
+                System.out.println("Succes deleting user ('" + userEmail + "') from event with id: '" + event.getId() + "' @ GMT-'" + updatedEvent.getUpdated() + "' \nStatus: " + status);
 
             } catch (IOException e) {
-                System.out.println("Error deleting user ('"+userEmail+"') from event with id: '"+event.getId()+"' @ GMT-"+Helper.getCurrentDateTimeStamp()+" !");
+                System.out.println("Error deleting user ('" + userEmail + "') from event with id: '" + event.getId() + "' @ GMT-" + Helper.getCurrentDateTimeStamp() + " !");
 
                 e.printStackTrace();
             }
@@ -944,8 +944,7 @@ public class GoogleCalenderApi {
         }
     }
 
-    public static void deleteAttendeeFromEventWithRSO(Reservation_Session thisReservation_SessionObject)
-    {
+    public static void deleteAttendeeFromEventWithRSO(Reservation_Session thisReservation_SessionObject) {
 
         // 1. Initialize Calendar service with valid OAuth credentials
         Calendar service = null;
@@ -960,7 +959,7 @@ public class GoogleCalenderApi {
         String[] propertiesToSelect = {"GCAEventId"};
         String table = "Session";
         String[] selectors = {"uuid"};
-        String[] values= {thisReservation_SessionObject.getSessionUUID()};
+        String[] values = {thisReservation_SessionObject.getSessionUUID()};
         String GCAEventId = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0];
 
         // 1.2 get usermail
@@ -968,7 +967,7 @@ public class GoogleCalenderApi {
         propertiesToSelect[0] = "email";
         table = "User";
         selectors[0] = "uuid";
-        values[0]= thisReservation_SessionObject.getUserUUID();
+        values[0] = thisReservation_SessionObject.getUserUUID();
         String userEmail = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0];
 
 
@@ -995,16 +994,15 @@ public class GoogleCalenderApi {
         event.getAttendees().remove(new EventAttendee().setEmail(email));
 */
         // 4. Update the event
-        if(success)
-        {
+        if (success) {
             try {
                 Event updatedEvent = service.events().update("primary", event.getId(), event).execute();
 
                 String status = updatedEvent.getStatus();
-                System.out.println("Succes deleting user ('"+userEmail+"') from event with id: '"+event.getId()+"' @ GMT-'"+updatedEvent.getUpdated()+"' \nStatus: "+status);
+                System.out.println("Success deleting user ('" + userEmail + "') from event with id: '" + event.getId() + "' @ GMT-'" + updatedEvent.getUpdated() + "' \nStatus: " + status);
 
             } catch (IOException e) {
-                System.out.println("Error deleting user ('"+userEmail+"') from event with id: '"+event.getId()+"' @ GMT-"+Helper.getCurrentDateTimeStamp()+" !");
+                System.out.println("Error deleting user ('" + userEmail + "') from event with id: '" + event.getId() + "' @ GMT-" + Helper.getCurrentDateTimeStamp() + " !");
 
                 e.printStackTrace();
             }

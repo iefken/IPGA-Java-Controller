@@ -112,6 +112,8 @@ OR in IntelliJ:
 
 # 4.	Latest releases
 
+    22-05-18: v1.6: Google Api Calls for managing attendees (add/delete)
+    21-05-18: v1.5: Google Api Calls for adding, updating and cancelling event or session
     16-05-18: v1.4: Main can 'mock' updates for  user, event, session and reservation messages
     14-05-18: v1.3: Integrated Google Calendar API (GCA) calls into receiver
     10-05-18: v1.2: Main can 'mock' new user, event, session and reservation messages
@@ -263,15 +265,26 @@ Or anywhere you want as long as you send the message to the monitor queue here
 
  For sending PingMessage every 'timeBetweenPings' milliseconds: 
 
-        // Send pingmessage every 'timeBetweenPings' milliseconds
-        int timeBetweenPings = 5000;
+        
+                // 1. Form XML pingMessage
 
-        // make new pingSender object
-        PingSender pingSender = new PingSender(0, Helper.SourceType.Planning, timeBetweenPings);
+                String xmlMessage = "";
+                try {
+                    xmlMessage = getXmlForPingMessage("pingMessage", SourceType.Planning);
+                } catch (JAXBException e) {
+                    e.printStackTrace();
+                }
 
-        // setup new pingSender thread
-        Thread pingThread = new Thread(pingSender);
+                // 2. send xml message to monitor-queue
 
-        // start new pingSender thread
-        pingThread.start();
+
+                String returnedMessage = "";
+                try {
+                    returnedMessage = Sender.sendPingMessage(xmlMessage, SourceType.Planning);
+                } catch (IOException | TimeoutException | JAXBException e) {
+                    e.printStackTrace();
+                }
+
+                System.out.print("\n... PING @ [" + Helper.getCurrentDateTimeStamp() + "]...");
+
 

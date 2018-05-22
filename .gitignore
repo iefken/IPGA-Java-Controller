@@ -11,3 +11,6 @@ out/artifacts/cli_java_main_controller_jar/cli-java-controller.jar
 .idea/workspace.xml
 .idea/workspace.xml
 target/classes/GoogleCalendarApi/GoogleCalenderApi.class
+out/calendar-integration-groupA-java/StoredCredential
+out/calendar-integration-groupA-java/StoredCredential
+out/calendar-integration-groupA-java/StoredCredential

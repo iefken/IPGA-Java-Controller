@@ -59,8 +59,8 @@ public interface Helper {
                 "[08.V] updateUuidRecordVersionB",
                 "[09.V] Google Calendar Api",
                 "[10.V] Mock XML message",
-                "[11.] /",
-                "[12.] /",
+                "[11.V] Start receiver",
+                "[12.x]",
                 "[13.x] /New Session with UUID",
                 "[14.x] /New Reservation_Session with UUID"
 
@@ -108,7 +108,7 @@ public interface Helper {
                 "[04.V] GCA: Create new event with some chosen variables",
                 "[05.V] GCA: Creating new event, updating it (with preset variables)",
                 "[06.V] GCA: Cancel event by event and a chosen GCAEventId",
-                "[07.x] GCA: Cancel event by chosen GCAEventId ",
+                "[07.V] GCA: Cancel event by chosen GCAEventId ",
                 "[08.x] GCA: Cancel event by chosen Uuid ",
                 "[09.V] GCA: Add user to event by GCAEventId ",
                 "[10.V] GCA: Delete user from event by GCAEventId "
@@ -653,7 +653,7 @@ public interface Helper {
 
 
                     break;
-                // 9. Mock XML message
+                // 10. Mock XML message
                 case "10":
 
                     boolean continueMocking = true;
@@ -667,6 +667,27 @@ public interface Helper {
 
                     break;
 
+                    // 11. Start receiver locally
+
+                case "11":
+                    try {
+                        Receiver.startReceiver();
+                        System.out.print("Listening for 3000 seconds... ");
+
+                        for(int i=1;i<=100;i++)
+                        {
+                            Thread.sleep(30000);
+                            System.out.print(3000-i*30+" ... ");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
+                    // 12.
+                case "12":
+
+                    break;
                 // 13. Create new Session with UUID (insertUuidRecord,SessionMessage)
                 // normally when a new message from another team is received
                 case "13":
@@ -1184,7 +1205,7 @@ public interface Helper {
 
                     try {
                         thisEventInMessage.setEntityId(Integer.parseInt(selectResults[0]));
-                        System.out.println("thisEventInMessage.getEventId(): " + thisEventInMessage.getEventId());
+                        //System.out.println("thisEventInMessage.getEventId(): " + thisEventInMessage.getEventId());
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
                     }
@@ -1360,7 +1381,7 @@ public interface Helper {
 
                     try {
                         thisSessionInMessage.setEntityId(Integer.parseInt(selectResults[0]));
-                        System.out.println("thisSessionInMessage.getSessionId(): " + thisSessionInMessage.getSessionId());
+                        //System.out.println("thisSessionInMessage.getSessionId(): " + thisSessionInMessage.getSessionId());
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
                     }
@@ -1500,7 +1521,7 @@ public interface Helper {
 
             // 2.2. Reservation_Event record update
 
-            System.out.println("[Reservation_Event]\n");
+            //System.out.println("[Reservation_Event]\n");
 
             // 2.2.1 get idSession from sessionUUID in Session
             String[] propertiesToSelect = {"idReservationEvent"};
@@ -1695,9 +1716,6 @@ public interface Helper {
                 } catch (IOException | TimeoutException | JAXBException e) {
                     e.printStackTrace();
                 }
-
-                //4. update local database entity
-
 
 
             } else {
