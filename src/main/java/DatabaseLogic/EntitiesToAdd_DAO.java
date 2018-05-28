@@ -18,7 +18,7 @@ public class EntitiesToAdd_DAO extends BaseEntityDAO {
         ResultSet rs = null;
         String sqlQuery = "";
 
-        sqlQuery = "SELECT `idEntitiesToAdd`, `table`, `status` FROM `EntitiesToAdd` WHERE `status` != \"UPTODATE\" ;";
+        sqlQuery = "SELECT `idEntitiesToAdd`, `table`, `status` FROM PlanningDB.EntitiesToAdd WHERE `status` != \"UPTODATE\" ;";
 
         boolean allGood = false;
 

@@ -1,8 +1,6 @@
 package AppLogic;
 
-import DatabaseLogic.BaseEntityDAO;
-import DatabaseLogic.EntitiesToAdd;
-import DatabaseLogic.EntitiesToAdd_DAO;
+import DatabaseLogic.*;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
@@ -24,9 +22,10 @@ public class DatabaseBackupChecker implements Runnable {
         this.timeBetweenChecks = timeBetweenChecks;
         this.timestamp = Helper.getCurrentDateTimeStamp();
         this.numberOfChecks = 5;
-        this.thisSourceType= Helper.SourceType.Planning;
+        this.thisSourceType = Helper.SourceType.Planning;
         //run();
     }
+
     //sends ping message based on chosen time between pings and chosen number of pings.
     public DatabaseBackupChecker(int timeBetweenChecks, int numberOfChecks) {
 
@@ -34,15 +33,16 @@ public class DatabaseBackupChecker implements Runnable {
         this.timeBetweenChecks = timeBetweenChecks;
         this.timestamp = Helper.getCurrentDateTimeStamp();
         this.numberOfChecks = numberOfChecks;
-        this.thisSourceType= Helper.SourceType.Planning;
+        this.thisSourceType = Helper.SourceType.Planning;
         //run();
     }
+
     //sends ping message based on chosen ping id, sourceType and time between pings.
     public DatabaseBackupChecker(int idPing, Helper.SourceType thisSourceType, int timeBetweenChecks) {
 
         super();
 
-        this.idDatabaseBackupChecker=idPing;
+        this.idDatabaseBackupChecker = idPing;
 
         this.thisSourceType = thisSourceType;
         this.timeBetweenChecks = timeBetweenChecks;
@@ -56,6 +56,7 @@ public class DatabaseBackupChecker implements Runnable {
     public int getIdPing() {
         return idDatabaseBackupChecker;
     }
+
     public void setIdPing(int idPing) {
         this.idDatabaseBackupChecker = idPing;
     }
@@ -63,6 +64,7 @@ public class DatabaseBackupChecker implements Runnable {
     public Helper.SourceType getThisSourceType() {
         return thisSourceType;
     }
+
     public void setThisSourceType(Helper.SourceType thisSourceType) {
         this.thisSourceType = thisSourceType;
     }
@@ -70,6 +72,7 @@ public class DatabaseBackupChecker implements Runnable {
     public int getTimeBetweenPings() {
         return timeBetweenChecks;
     }
+
     public void setTimeBetweenPings(int timeBetweenPings) {
         this.timeBetweenChecks = timeBetweenPings;
     }
@@ -77,6 +80,7 @@ public class DatabaseBackupChecker implements Runnable {
     public String getTimestamp() {
         return timestamp;
     }
+
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
@@ -84,6 +88,7 @@ public class DatabaseBackupChecker implements Runnable {
     public void setNumberOfChecks(int numberOfChecks) {
         this.numberOfChecks = numberOfChecks;
     }
+
     public int getNumberOfChecks() {
         return numberOfChecks;
     }
@@ -95,59 +100,412 @@ public class DatabaseBackupChecker implements Runnable {
             System.out.println(i + ". Test: " + this.i);
         */
 
-        for (int i = 1; i < numberOfChecks+1; i++)
-        {
+        for (int i = 1; i < numberOfChecks + 1; i++) {
 
-            //System.out.println("PING "+i);
+            //System.out.println("1. Check: " + i);
             try {
 
-                // setup RMQ channel
+                String errorMessage = "";
 
                 // check for new entities in [EntitiesToAdd]
 
-                List<EntitiesToAdd> entitiesToAddList = new EntitiesToAdd_DAO().getRecordsFromEntitiesToAdd();
+                List<EntitiesToAdd> entitiesToAddList = null;
+                try {
+                    entitiesToAddList = new EntitiesToAdd_DAO().getRecordsFromEntitiesToAdd();
+                } catch (Exception e) {
+                    errorMessage += "ERROR: during query: getRecordsFromEntitiesToAdd: " + e + "\n";
+                    e.printStackTrace();
+                }
 
-                for(EntitiesToAdd thisEntityToAdd: entitiesToAddList)
-                {
-                    // TODO
-
+                for (EntitiesToAdd thisEntityToAdd : entitiesToAddList) {
                     // get correct entity
                     // 2.2.1. get idUser from userUUID in User
                     String[] propertiesToSelect = {"*"};
-                    String table = thisEntityToAdd.getTable() ;
-                    String[] selectors = {"id"+(thisEntityToAdd.getTable())};
+                    String table = thisEntityToAdd.getTable();
+                    String[] selectors = {"id" + (thisEntityToAdd.getTable())};
                     String[] values = {"" + thisEntityToAdd.getIdEntitiesToAdd()};
 
-                    String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
+                    String[] selectResult = new String[0];
+                    try {
+                        selectResult = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
+                    } catch (Exception e) {
+                        errorMessage += "[.!.] ERROR: getting select * from id[Table]: " + e + "\n";
+                        e.printStackTrace();
+                    }
+/*
+                    System.out.println("3. Check: " + i);
 
-                    switch (table){
+                    System.out.println("selectresults.length: " + selectResult.length);
+                    System.out.println("selectresults['last']: " + selectResult[selectResult.length-1]);
+                    */
+                    String objectString = selectResult[selectResult.length - 1];
+                    String[] objectProperties = objectString.split("', '");
+/*
+                    int counter=0;
+                    for(String property: objectProperties)
+                    {
+                        counter++;
+
+                        System.out.println(counter+". property: "+property);
+                    }*/
+
+                    // send rabbitMQ message
+
+                    boolean rmqSendSuccess = false;
+
+                    switch (table) {
                         case "User":
+
+                            System.out.println("In User case!");
+
+                            // 1. setup object
+
+                            User userFromDashboard = null;
+                            try {
+                                userFromDashboard = new User(0, 1, 1, Helper.getCurrentDateTimeStamp(),
+                                        objectProperties[0], objectProperties[1], objectProperties[2], objectProperties[3], objectProperties[4],
+                                        objectProperties[5], objectProperties[6], objectProperties[7], objectProperties[8], objectProperties[9],
+                                        objectProperties[10], objectProperties[11], false);
+                            } catch (NumberFormatException e) {
+                                errorMessage += "[.!.] ERROR: setting User object:\n" + e + "\n";
+                                e.printStackTrace();
+                                break;
+                            }
+
+                            // 2. send to rmq
+
+                            String xmlMessage = "";
+                            try {
+                                xmlMessage = Helper.getXmlFromUserObject("", thisSourceType, userFromDashboard);
+                            } catch (JAXBException e) {
+                                errorMessage += "[.!.] ERROR: getting xml from User object: xmlMessage: " + xmlMessage + "\nError:\n" + e + "\n";
+                                e.printStackTrace();
+                                break;
+                            }
+                            try {
+                                Sender.publishXmlMessageToExchange(Helper.EXCHANGE_NAME, xmlMessage);
+                                System.out.println("[.V.] Xml message seems to be published correctly!");
+                            } catch (IOException | TimeoutException | JAXBException e) {
+                                errorMessage += "[.!.] ERROR: Something went wrong publishing user xml message to the exchange:\n" + e + "\n";
+                                e.printStackTrace();
+                            }
+
+                            // 3. check if an error was catched
+
+                            if (errorMessage != "") {
+                                // 4. Parse error object to xml String
+                                try {
+                                    xmlMessage = Helper.getXmlForErrorMessage(errorMessage, thisSourceType);
+                                } catch (JAXBException e) {
+                                    errorMessage += "[.!.] ERROR: Something went wrong getting error xml message:\n" + e + "\n";
+                                    e.printStackTrace();
+                                }
+                                // 5. Send send new object to rabbitExchange
+                                try {
+                                    Sender.sendMessage(xmlMessage);
+                                } catch (TimeoutException | IOException | JAXBException e) {
+                                    errorMessage += "[.!.] ERROR: Something went wrong publishing error xml message to the exchange:\n" + e + "\n";
+                                    e.printStackTrace();
+                                }
+                            }
 
                             break;
 
                         case "Event":
 
+                            System.out.println("In Event case!");
+                            // 1. setup object
+                            Event eventFromDashboard = null;
+                            try {
+                                eventFromDashboard = new Event(0, 1, 1, Helper.getCurrentDateTimeStamp(),
+                                        objectProperties[0], objectProperties[1], Integer.parseInt(objectProperties[2]), objectProperties[3], objectProperties[4],
+                                        objectProperties[5], objectProperties[6], objectProperties[7], objectProperties[8], objectProperties[9],
+                                        Float.parseFloat(objectProperties[10]), objectProperties[11], objectProperties[12], false);
+                            } catch (NumberFormatException e) {
+                                errorMessage += "[.!.] ERROR: setting event object:\n" + e + "\n";
+                                e.printStackTrace();
+                                break;
+                            }
+                            // 2. send to rmq
+                            xmlMessage = "";
+                            try {
+                                xmlMessage = Helper.getXmlFromEventObject("", thisSourceType, eventFromDashboard);
+                            } catch (JAXBException e) {
+                                errorMessage += "[.!.] ERROR: getting xml from event object: xmlMessage: " + xmlMessage + "\nError:\n" + e + "\n";
+                                e.printStackTrace();
+                                break;
+                            }
+                            try {
+                                Sender.publishXmlMessageToExchange(Helper.EXCHANGE_NAME, xmlMessage);
+                                System.out.println("[.V.] Xml Event seems to be published correctly!");
+                            } catch (IOException | TimeoutException | JAXBException e) {
+
+                                errorMessage += "[.!.] ERROR: Something went wrong publishing event xml message to the exchange:\n" + e + "\n";
+                                e.printStackTrace();
+
+                            }
+                            // 3. check if an error was catched
+                            if (errorMessage != "") {
+                                // 4. Parse error object to xml String
+                                try {
+                                    xmlMessage = Helper.getXmlForErrorMessage(errorMessage, thisSourceType);
+                                } catch (JAXBException e) {
+                                    errorMessage += "[.!.] ERROR: Something went wrong getting error xml message:\n" + e + "\n";
+                                    e.printStackTrace();
+                                }
+                                // 5. Send send new object to rabbitExchange
+                                try {
+                                    Sender.sendMessage(xmlMessage);
+                                } catch (TimeoutException | IOException | JAXBException e) {
+                                    errorMessage += "[.!.] ERROR: Something went wrong publishing error xml message to the exchange:\n" + e + "\n";
+                                    e.printStackTrace();
+                                }
+                            }
+
                             break;
 
                         case "Session":
 
+                            System.out.println("In Session case!");
+                            // TODO
+
+                            // 1. setup object
+
+                            Session sessionFromDashboard = null;
+
+
+                            float thisSessionPrice = 0;
+
+                            System.out.println("objectProperties[13]: "+objectProperties[13]);
+                            if (objectProperties[13] == "0" || objectProperties[13] == null) {
+                                sessionFromDashboard.setPrice(0);
+                            } else {
+                                try {
+                                    thisSessionPrice = Float.parseFloat(objectProperties[13]);
+                                } catch (NumberFormatException e) {
+
+                                    errorMessage += "[.!.] ERROR: setting Session object:\n" + e + "\n";
+                                    e.printStackTrace();
+                                    break;
+
+                                }
+                            }
+                            try {
+
+                                sessionFromDashboard = new Session(0, 1, 1, Helper.getCurrentDateTimeStamp(),
+                                        objectProperties[0], objectProperties[1], objectProperties[2], Integer.parseInt(objectProperties[3]), objectProperties[4],
+                                        objectProperties[5], objectProperties[6], objectProperties[7], objectProperties[8], objectProperties[9],
+                                        objectProperties[10], objectProperties[11], objectProperties[12], thisSessionPrice, false);
+
+                            } catch (NumberFormatException e) {
+
+
+                                errorMessage += "[.!.] ERROR: setting Session object:\n" + e + "\n";
+                                e.printStackTrace();
+                                break;
+
+                            }
+                            //User userFromDashboard = new User(objectProperties[0],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1])
+
+                            // 2. send to rmq
+                            xmlMessage = "";
+                            try {
+                                xmlMessage = Helper.getXmlFromSessionObject("", thisSourceType, sessionFromDashboard);
+                            } catch (JAXBException e) {
+                                errorMessage += "[.!.] ERROR: getting xml from Session object: xmlMessage: " + xmlMessage + "\nError:\n" + e + "\n";
+                                e.printStackTrace();
+                                break;
+                            }
+                            try {
+                                Sender.publishXmlMessageToExchange(Helper.EXCHANGE_NAME, xmlMessage);
+                                System.out.println("[.V.] Session Xml message seems to be published correctly!");
+                            } catch (IOException | TimeoutException | JAXBException e) {
+
+                                errorMessage += "[.!.] ERROR: Something went wrong publishing event xml message to the exchange:\n" + e + "\n";
+                                e.printStackTrace();
+
+                            }
+                            // 3. check if an error was catched
+
+                            if (errorMessage != "") {
+                                // 4. Parse error object to xml String
+                                try {
+                                    xmlMessage = Helper.getXmlForErrorMessage(errorMessage, thisSourceType);
+                                } catch (JAXBException e) {
+                                    errorMessage += "[.!.] ERROR: Something went wrong getting error xml message:\n" + e + "\n";
+                                    e.printStackTrace();
+                                }
+
+                                // 5. Send new error object to rabbitExchange
+
+                                try {
+                                    Sender.sendMessage(xmlMessage);
+                                } catch (TimeoutException | IOException | JAXBException e) {
+                                    errorMessage += "[.!.] ERROR: Something went wrong publishing error xml message to the exchange:\n" + e + "\n";
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            System.out.println("Getting entities for table '" + table + "' is not worked out yet!");
                             break;
 
+
+/*
                         case "Reservation_Event":
 
+                            System.out.println("In Reservation_Event case!");
+                            // TODO
+
+                            // 1. setup object
+
+                            //User userFromDashboard = new User(objectProperties[0],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1])
+
+                            // 2. send to rmq
+
+                            // 3. check if an error was catched
+                            if(errorMessage!="")
+                            {
+                                // 4. Parse error object to xml String
+                                try {
+                                    xmlMessage = Helper.getXmlForErrorMessage(errorMessage, thisSourceType);
+                                } catch (JAXBException e) {
+                                    errorMessage+="[.!.] ERROR: Something went wrong getting error xml message:\n"+e+"\n";
+                                    e.printStackTrace();
+                                }
+
+                                // 5. Send send new object to rabbitExchange
+
+                                try {
+                                    Sender.sendMessage(xmlMessage);
+                                } catch (TimeoutException | IOException | JAXBException e) {
+                                    errorMessage+="[.!.] ERROR: Something went wrong publishing error xml message to the exchange:\n"+e+"\n";
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            System.out.println("Getting entities for table '" + table + "' is not worked out yet!");
                             break;
+
                         case "Reservation_Session":
 
+                            System.out.println("In Reservation_Session case!");
+                            // TODO
+
+                            // 1. setup object
+
+                            //User userFromDashboard = new User(objectProperties[0],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1])
+
+                            // 2. send to rmq
+
+                            // 3. check if an error was catched
+                            if(errorMessage!="")
+                            {
+                                // 4. Parse error object to xml String
+                                try {
+                                    xmlMessage = Helper.getXmlForErrorMessage(errorMessage, thisSourceType);
+                                } catch (JAXBException e) {
+                                    errorMessage+="[.!.] ERROR: Something went wrong getting error xml message:\n"+e+"\n";
+                                    e.printStackTrace();
+                                }
+
+                                // 5. Send send new object to rabbitExchange
+
+                                try {
+                                    Sender.sendMessage(xmlMessage);
+                                } catch (TimeoutException | IOException | JAXBException e) {
+                                    errorMessage+="[.!.] ERROR: Something went wrong publishing error xml message to the exchange:\n"+e+"\n";
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            System.out.println("Getting entities for table '" + table + "' is not worked out yet!");
                             break;
+
                         case "Task":
 
+                            System.out.println("In Task case!");
+                            // TODO
+
+                            // 1. setup object
+
+                            //User userFromDashboard = new User(objectProperties[0],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1])
+
+                            // 2. send to rmq
+
+                            // 3. check if an error was catched
+                            if(errorMessage!="")
+                            {
+                                // 4. Parse error object to xml String
+                                try {
+                                    xmlMessage = Helper.getXmlForErrorMessage(errorMessage, thisSourceType);
+                                } catch (JAXBException e) {
+                                    errorMessage+="[.!.] ERROR: Something went wrong getting error xml message:\n"+e+"\n";
+                                    e.printStackTrace();
+                                }
+
+                                // 5. Send send new object to rabbitExchange
+
+                                try {
+                                    Sender.sendMessage(xmlMessage);
+                                } catch (TimeoutException | IOException | JAXBException e) {
+                                    errorMessage+="[.!.] ERROR: Something went wrong publishing error xml message to the exchange:\n"+e+"\n";
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            System.out.println("Getting entities for table '" + table + "' is not worked out yet!");
                             break;
+
                         case "Assign_Task":
 
+                            System.out.println("In Assign_Task case!");
+                            // TODO
+
+                            // 1. setup object
+
+                            //User userFromDashboard = new User(objectProperties[0],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1])
+
+                            // 2. send to rmq
+
+                            // 3. check if an error was catched
+                            if(errorMessage!="")
+                            {
+                                // 4. Parse error object to xml String
+                                try {
+                                    xmlMessage = Helper.getXmlForErrorMessage(errorMessage, thisSourceType);
+                                } catch (JAXBException e) {
+                                    errorMessage+="[.!.] ERROR: Something went wrong getting error xml message:\n"+e+"\n";
+                                    e.printStackTrace();
+                                }
+
+                                // 5. Send send new object to rabbitExchange
+
+                                try {
+                                    Sender.sendMessage(xmlMessage);
+                                } catch (TimeoutException | IOException | JAXBException e) {
+                                    errorMessage+="[.!.] ERROR: Something went wrong publishing error xml message to the exchange:\n"+e+"\n";
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            System.out.println("Getting entities for table '" + table + "' is not worked out yet!");
+
                             break;
+*/
 
                     }
 
+
+                    // last: update EntitiesToAdd record 'status' to UPTODATE
+                    try {
+                        // updateTablePropertyValue(String table, String property, String value, String valueType, String whereProperty, String whereValue) {
+                        if (!new BaseEntityDAO().updateTablePropertyValue("EntitiesToAdd", "status", "UPTODATE", "String", "idEntitiesToAdd", "" + thisEntityToAdd.getIdEntitiesToAdd())) {
+                            errorMessage += "[.!.] ERROR: updating table with id '" + thisEntityToAdd.getIdEntitiesToAdd() + "'";
+                        }
+                    } catch (Exception e) {
+                        errorMessage += "[.!.] ERROR: Exception during updateTablePropertyValue:\n " + e + "\n ";
+                        e.printStackTrace();
+                    }
 /*
                     if(thisEntityToAdd){
 
@@ -161,39 +519,18 @@ public class DatabaseBackupChecker implements Runnable {
 
                 // foreach newEntity:
                 // {
-                    // 1) check if active == 0
-                    // => softdelete in local db, xmlmessage with active = 0 to queue, api call to cancel from calenar
-                    // 2) check if entity_version > 1 => update in local db, xmlmessage to queue, api call to update calendar
-                    // 3) if entity_version == 1 => insert
+                // 1) check if active == 0
+                // => softdelete in local db, xmlmessage with active = 0 to queue, api call to cancel from calenar
+                // 2) check if entity_version > 1 => update in local db, xmlmessage to queue, api call to update calendar
+                // 3) if entity_version == 1 => insert
 
                 // }
 
 
-                String xmlMessage = "";
-                try {
-                    xmlMessage = Helper.getXmlForPingMessage("pingMessage",this.getThisSourceType());
-                } catch (JAXBException e) {
-                    e.printStackTrace();
-                }
-
-
-                // ## send xml message to exchange
-
-                String returnedMessage="";
-                try {
-                    returnedMessage = Sender.sendMessage(xmlMessage);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (TimeoutException e) {
-                    e.printStackTrace();
-                } catch (JAXBException e) {
-                    e.printStackTrace();
-                }
-
                 // Full message Ping sleeping for 'timeBetweenPings' seconds
                 // System.out.println("Ping ("+i+"/"+numberOfPings+")! 'Sleeping' for '"+this.timeBetweenPings/1000+"' seconds...");
 
-                System.out.print(".");
+                System.out.print("...Starting to sleep...");
                 Thread.sleep(this.timeBetweenChecks);
 
             } catch (InterruptedException e) {
@@ -206,7 +543,7 @@ public class DatabaseBackupChecker implements Runnable {
     public static void main(String[] argv) throws Exception {
 
         System.out.println("1. Start of main\nMaking DatabaseBackupChecker");
-        DatabaseBackupChecker planningBackupDbChecker = new DatabaseBackupChecker(5000,12);
+        DatabaseBackupChecker planningBackupDbChecker = new DatabaseBackupChecker(30000, 12);
         //PingSender ping2 = new PingSender(5);
 
         System.out.println("2. Making Thread");

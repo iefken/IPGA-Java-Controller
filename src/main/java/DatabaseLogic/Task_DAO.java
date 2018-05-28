@@ -21,7 +21,7 @@ public class Task_DAO extends BaseEntityDAO {
         PreparedStatement preparedStatement = null;
         String sqlQuery = "";
 
-        sqlQuery = "INSERT INTO PlanningDB.Task (`idTask`, `uuid`, `eventUuid`,`taskName`, `description`, `dateTimeStart`,`dateTimeEnd`, `GCAEventId`, `GCAEventLink`) VALUES (" + callbackInsertedInt + ",\"" + task.getTaskUuid() + "\",\"" + task.getEventUuid() + "\",\"" + task.getDescription() + "\",\"" + task.getDescription() + "\",\"" + task.getDateTimeStart() + "\",\"" + task.getDateTimeEnd() + "\",\"" + task.getGCAEventId() + "\",\"" + task.getGCAEventLink() + "\");";
+        sqlQuery = "INSERT INTO PlanningDB.Task (`idTask`, `uuid`, `eventUuid`, `taskName`, `description`, `dateTimeStart`,`dateTimeEnd`, `GCAEventId`, `GCAEventLink`) VALUES (" + callbackInsertedInt + ",\"" + task.getTaskUuid() + "\",\"" + task.getEventUuid() + "\",\"" + task.getTaskName() + "\",\"" + task.getDescription() + "\",\"" + task.getDateTimeStart() + "\",\"" + task.getDateTimeEnd() + "\",\"" + task.getGCAEventId() + "\",\"" + task.getGCAEventLink() + "\");";
 
         int insertSuccess = BaseEntityDAO.runInsertQuery(sqlQuery);
 
@@ -43,6 +43,7 @@ public class Task_DAO extends BaseEntityDAO {
         String sqlQuery = " UPDATE PlanningDB.Task SET " +
 
                 "description=\""+newTaskFromMessage.getDescription()+"\", " +
+                "taskName=\""+newTaskFromMessage.getTaskName()+"\", " +
                 "dateTimeStart=\""+newTaskFromMessage.getDateTimeStart()+"\", " +
                 "dateTimeEnd=\""+newTaskFromMessage.getDateTimeEnd()+"\", " +
                 "eventUuid=\""+newTaskFromMessage.getEventUuid()+"\" " +

@@ -49,17 +49,14 @@ public class GoogleCalenderApi {
     //private static final java.io.File DATA_STORE_DIR = new java.io.File( thisRepo+"/../../calendar-integration-groupA-java");
     // private static final java.io.File DATA_STORE_DIR = new java.io.File( System.getProperty("user.home"), ".credentials/calendar-integration-groupA-java");
     // private static final java.io.File DATA_STORE_DIR2 = new java.io.File( System.getProperty("user.home"), "../opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
-
     // private static final java.io.File DATA_STORE_DIR = new java.io.File( "/opt/lampp/htdocs/Java-Application/IPGA-Java-Controller-git/IPGA-Java-Controller/out/calendar-integration-groupA-java");
 
     // For local deployment
-    //private static final java.io.File DATA_STORE_DIR = new java.io.File( "C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
-
     private static final String thisRepo = System.getProperty("user.dir");
-
-    // For local deployment
     //private static final java.io.File DATA_STORE_DIR = new java.io.File("C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
+
     //private static java.io.File DATA_STORE_DIR = new java.io.File(thisRepo + "/out/calendar-integration-groupA-java");
+    //private static final java.io.File DATA_STORE_DIR = new java.io.File( "C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
 
     // For server deployment
     private static java.io.File DATA_STORE_DIR = new java.io.File(thisRepo + "/../../calendar-integration-groupA-java");
@@ -121,7 +118,10 @@ public class GoogleCalenderApi {
 
             System.out.print("\n<Exception 1:> " + e);
             try {
-                in = new FileInputStream(DATA_STORE_DIR.getAbsolutePath() + "/client_secret.json");
+
+                java.io.File DATA_STORE_DIR2 = new java.io.File(thisRepo + "/../../calendar-integration-groupA-java");
+
+                in = new FileInputStream(DATA_STORE_DIR2.getAbsolutePath() + "/client_secret.json");
             } catch (FileNotFoundException ee) {
                 System.out.print("\n<Exception 2:> " + ee);
                 //ee.printStackTrace();

@@ -136,6 +136,7 @@ public class BaseEntityDAO extends BaseDAO{
                 throw new IllegalStateException("ERROR 01: Connection seems to be closed...");
             }
 
+            System.out.println("Sqlquery: "+sql);
             rs = s.executeQuery(sql);
             ResultSetMetaData rsmd = rs.getMetaData();
 
@@ -150,28 +151,27 @@ public class BaseEntityDAO extends BaseDAO{
                     String thisRowString ="";
 
                     for (int i = 1; i <= columnsNumber; i++) {
-                        if (i > 1 && i < columnsNumber)
-                        {
-                            thisRowString+="', '";
-                        }else if(i>1){
 
-                            thisRowString+="';";
-                        }else{
-
-                            //thisRowString+="'";
-                        }
                         String columnValue = rs.getString(i);
                         //thisRowString+=columnValue + " " + rsmd.getColumnName(i);
 
                         thisRowString+=columnValue;
+
+                        resultStringArray[resultCounter] = thisRowString;
+
+                        if (i > 1 && i < columnsNumber){
+                            thisRowString+="', '";
+                        }else if(i==columnsNumber-1){
+
+                            thisRowString+="';";
                         }
+                        resultCounter++;
+                    }
 
-                    resultStringArray[resultCounter] = thisRowString;
-
-                    resultCounter++;
                     //thisBaseEntity = new BaseEntity(rs.getInt(1),rs.getInt(2),rs.getString(3), rs.getString(4));
 
                 }
+                int numberOfProperties = resultStringArray.length;
                 return resultStringArray;
 
             }else{
