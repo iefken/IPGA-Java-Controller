@@ -111,7 +111,8 @@ public interface Helper {
                 "[07.V] GCA: Cancel event by chosen GCAEventId ",
                 "[08.x] GCA: Cancel event by chosen Uuid ",
                 "[09.V] GCA: Add user to event by GCAEventId ",
-                "[10.V] GCA: Delete user from event by GCAEventId "
+                "[10.V] GCA: Delete user from event by GCAEventId ",
+                "[11.x] GCA: Delete events from current user (according to client_secret.json) user from event by GCAEventId "
         };
         return options;
     }
@@ -3466,6 +3467,11 @@ public interface Helper {
 
                 break;
 
+            case "11":
+
+                GoogleCalenderApi.deleteEventsFromCurrentClient();
+
+                break;
             case "0":
 
                 System.out.println("You pressed 0 to quit... Quiting...");

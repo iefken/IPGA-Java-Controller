@@ -24,6 +24,7 @@ import java.util.List;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
@@ -56,11 +57,11 @@ public class GoogleCalenderApi {
     private static final String thisRepo = System.getProperty("user.dir");
 
     // For local deployment
-    //private static final java.io.File DATA_STORE_DIR = new java.io.File( "C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
+    private static final java.io.File DATA_STORE_DIR = new java.io.File("C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
     //private static java.io.File DATA_STORE_DIR = new java.io.File(thisRepo + "/out/calendar-integration-groupA-java");
 
     // For server deployment
-    private static java.io.File DATA_STORE_DIR = new java.io.File(thisRepo + "/../../calendar-integration-groupA-java");
+    //private static java.io.File DATA_STORE_DIR = new java.io.File(thisRepo + "/../../calendar-integration-groupA-java");
 
     /**
      * Global instance of the {@link FileDataStoreFactory}.
@@ -112,21 +113,15 @@ public class GoogleCalenderApi {
         try {
 
             String test = DATA_STORE_DIR.getAbsolutePath() + "/client_secret.json";
-
             //System.out.println("thisRepo : " + thisRepo);
-
             in = new FileInputStream(test);
-
-
             //in = new FileInputStream("C:/Users/ief.falot/.credentials/client_secret.json");
         } catch (FileNotFoundException | NullPointerException e) {
 
             System.out.print("\n<Exception 1:> " + e);
             try {
                 in = new FileInputStream(DATA_STORE_DIR.getAbsolutePath() + "/client_secret.json");
-
             } catch (FileNotFoundException ee) {
-
                 System.out.print("\n<Exception 2:> " + ee);
                 //ee.printStackTrace();
             }
@@ -137,7 +132,6 @@ public class GoogleCalenderApi {
         Credential credential = null;
 
         //Now you can read the file content with in
-
 
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
@@ -1008,6 +1002,78 @@ public class GoogleCalenderApi {
             }
 
         }
+    }
+
+    public static void deleteEventsFromCurrentClient() {
+        // 1. Initialize Calendar service with valid OAuth credentials
+        Calendar service = null;
+        try {
+            service = getCalendarService();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        DateTime now = new DateTime(System.currentTimeMillis());
+
+        List<Event> items = null;
+
+        try {
+            Events events = service.events().list("primary")
+                    .setMaxResults(10)
+                    .setTimeMin(now)
+                    .setOrderBy("startTime")
+                    .setSingleEvents(true)
+                    .execute();
+            items = events.getItems();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (items.size() == 0) {
+            System.out.println("No upcoming events found!");
+        } else {
+            System.out.println("Upcoming events:");
+            int counter = 0;
+
+            String deleteAnswer = "";
+            do {
+                counter++;
+                for (Event event : items) {
+                    DateTime start = event.getStart().getDateTime();
+                    if (start == null) {
+                        start = event.getStart().getDate();
+                    }
+                    String GCAIDToCancel = event.getId();
+                    System.out.printf("=> Event " + counter + ":\n1. Start: (%s) 2. GCAID: [%s] 3. Summary: [%s]\n4. Link: '%s'\n", start, event.getId(), event.getSummary(), event.getHtmlLink());
+
+
+                    System.out.print("\nDo you want de delete this event? (y/n) ['0' to cancel]");
+
+                    Scanner scanner = new Scanner(System.in);
+
+                    deleteAnswer = scanner.next();
+
+                    System.out.println("You've chosen '" + deleteAnswer+"'");
+                    // 2. Delete the event through the API
+                    if (deleteAnswer.toLowerCase().contains("y") || deleteAnswer.toLowerCase().contains("n")) {
+                        try {
+                            service.events().delete("primary", GCAIDToCancel).execute();
+                            System.out.println("Succes cancelling event with GCAID: " + GCAIDToCancel + "!");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else if(deleteAnswer=="0") {
+
+                        System.out.println("You've stopped cancelling events!");
+                    }else{
+                            System.out.println("No valid input: please choose y or n or 0 to cancel");
+
+                    }
+                }
+            } while (deleteAnswer != "0");
+        }
+
+
     }
 
     public static void main(String[] argv) throws Exception {
