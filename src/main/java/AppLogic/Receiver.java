@@ -6,9 +6,7 @@ import com.rabbitmq.client.*;
 
 public class Receiver {
 
-    private static int workCounter = 0;
-
-    public static void startReceiver() throws Exception {
+    public static void startReceiver() {
 
         // this initializes rabbit mq connection with variables set in BaseRMQ().setRmqChannel();
         Channel channel = new BaseRMQ().getRmqChannel();
@@ -17,7 +15,6 @@ public class Receiver {
     public static void main(String[] argv) throws Exception {
 
         startReceiver();
-
 
     } //END of Receiver class
 }

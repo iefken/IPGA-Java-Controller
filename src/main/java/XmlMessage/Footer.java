@@ -31,10 +31,12 @@ public class Footer {
 	
 	public static String generateChecksum(Object o) throws JAXBException {
 		java.io.StringWriter sw = new StringWriter();
+
 		JAXBContext pContext = JAXBContext.newInstance(o.getClass());
 		Marshaller marshaller = pContext.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
 		marshaller.marshal(o, sw);
+
 		return DigestUtils.sha1Hex(sw.toString());
 	}
 	

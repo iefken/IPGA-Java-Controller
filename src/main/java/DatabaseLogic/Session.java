@@ -20,6 +20,7 @@ public class Session extends BaseEntity{
     private String GCAEventLink;
     private float price;
 
+    //CONSTRUCTORS
     public Session(int SessionId, int Entity_version, int active, String timestamp,
                    String SessionUUID, String eventUUID, String SessionName, int maxAttendees, String description, String summary, String DateTimeStart, String DateTimeEnd, String Speaker, String location, String Type, float price) {
 
@@ -42,7 +43,6 @@ public class Session extends BaseEntity{
         this.GCAEventLink="";
 
     }
-
     public Session(int SessionId, int Entity_version, int active, String timestamp,
                    String SessionUUID, String eventUUID, String SessionName, int maxAttendees, String description, String summary, String location, String Speaker, String DateTimeStart, String DateTimeEnd, String Type, String GCAEventId, String GCAEventLink, float price) {
 
@@ -65,8 +65,6 @@ public class Session extends BaseEntity{
         this.GCAEventLink=GCAEventLink;
 
     }
-
-
     public Session(int SessionId, int Entity_version, int active, String timestamp,
                    String SessionUUID, String eventUUID, String SessionName, int maxAttendees, String description, String summary, String DateTimeStart, String DateTimeEnd, String Speaker, String location, String Type, float price, boolean insertBaseEntity) {
 
@@ -89,7 +87,6 @@ public class Session extends BaseEntity{
         this.GCAEventLink="";
 
     }
-
     public Session(int SessionId, int Entity_version, int active, String timestamp,
                    String SessionUUID, String eventUUID, String SessionName, int maxAttendees, String description, String summary, String location, String Speaker, String DateTimeStart, String DateTimeEnd, String Type, String GCAEventId, String GCAEventLink, float price, boolean insertBaseEntity) {
 
@@ -113,7 +110,7 @@ public class Session extends BaseEntity{
 
     }
 
-
+    //GETTERS & SETTERS
     public int getSessionId() {
         // get id from inherited class
         return this.getEntityId();
@@ -220,6 +217,7 @@ public class Session extends BaseEntity{
         this.price = price;
     }
 
+    //OTHER
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

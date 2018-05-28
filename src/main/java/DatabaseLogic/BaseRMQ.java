@@ -20,14 +20,15 @@ public class BaseRMQ {
     private int portNumber = 5672;
 
     private static String TASK_QUEUE_NAME = ("" + yourSourceType).toLowerCase() + "-queue";
+    //TASK_QUEUE_NAME = "test-queue"
     private static String currentExchangeName = "rabbitexchange";
 
+
+    //GETTERS & SETTERS
     public static Channel getRmqChannel() {
 
         return channel;
     }
-    protected static Connection getRmqConnection() {return connection; }
-
     private void setupRmqChannel(Connection connection)  {
 
         setRmqConnection(connection);
@@ -60,6 +61,9 @@ public class BaseRMQ {
             e.printStackTrace();
         }
     }
+
+    protected static Connection getRmqConnection() {return connection; }
+
     private void setRmqConnection(Connection connection) {
         this.connection = connection;
     }

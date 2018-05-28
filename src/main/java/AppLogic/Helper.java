@@ -35,7 +35,7 @@ public interface Helper {
 
     //enum EntityType {VISITOR, EMPLOYEE, ADMIN, SPONSOR, SPEAKER, CONSULTANT}
 
-    enum EntityType {EMPTY, User, Event, Session, ReservationEvent, ReservationSession, Product, Purchase}
+    enum EntityType {EMPTY, User, Event, Session, ReservationEvent, ReservationSession, Product, Purchase, Task, AssignTask}
 
     enum SourceType {Front_End, Planning, Monitor, Kassa, CRM, Facturatie}
 
@@ -62,7 +62,9 @@ public interface Helper {
                 "[11.V] Start receiver",
                 "[12.x]",
                 "[13.x] /New Session with UUID",
-                "[14.x] /New Reservation_Session with UUID"
+                "[14.x] /New Reservation_Session with UUID",
+                "[15.V] Testing message by sending to test queue ",
+                "[16.x] Create new taskMessage and assignTaskMessage, update taskMessage and update assignTaskMessage"
 
         };
         return options;
@@ -668,24 +670,47 @@ public interface Helper {
 
                     break;
 
-                    // 11. Start receiver locally
+                // 11. Start receiver locally
 
                 case "11":
+
+                    // start different thread for database check
+                    try{
+                        // # Send pingmessage every 'timeBetweenPings' milliseconds
+                        int timeBetweenChecks = 5000;
+
+                        // ## make new pingSender object
+                        DatabaseBackupChecker myDatabaseBackupChecker = new DatabaseBackupChecker(5000, 1000);
+
+                        // ## setup new pingSender thread
+                        Thread dbCheckThread = new Thread(myDatabaseBackupChecker);
+
+                        // ## start new pingSender thread
+                        dbCheckThread.start();
+
+                    }catch(Exception e)
+                    {
+                        System.out.println("Error during backupDbChecker thread startup: "+e);
+                    }
+
+
                     try {
                         Receiver.startReceiver();
                         System.out.print("Listening for 3000 seconds... ");
 
-                        for(int i=1;i<=100;i++)
-                        {
-                            Thread.sleep(30000);
-                            System.out.print(3000-i*30+" ... ");
+                        for (int i = 1; i <= 100; i++) {
+                            for(int j = 1; j<=6;j++){
+
+                                Thread.sleep(5000);
+                            }
+                            System.out.print(3000 - i * 30 + " ... ");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     break;
 
-                    // 12.
+                // 12.
                 case "12":
 
                     break;
@@ -762,6 +787,134 @@ public interface Helper {
 
                     break;
 
+                case "15":
+
+                    System.out.println("\nCase " + choice + ": Testing message by sending to test queue: '");
+
+                    // 1. Form XML testMessage
+
+                    String xmlMessage = "";
+                    try {
+                        xmlMessage = getXmlForTestMessage("testMessage", SourceType.Planning);
+                    } catch (JAXBException e) {
+                        e.printStackTrace();
+                    }
+
+                    // 2. send xml message to monitor-queue
+
+
+                    try {
+                        Sender.sendTestMessage(xmlMessage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (TimeoutException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
+                    //"[16.x] Create new taskMessage and assignTaskMessage, update taskMessage and assignTaskMessage"
+                case "16":
+
+                    System.out.println("\nCase " + choice + ": Create new taskMessage and assignTaskMessage: '");
+
+                    String taskUuid = "taskuuid-4203-4xxb-bace-7planningxx7", assignTaskUuid = "xassignx-task-4203-8planningxx7";
+
+                    String userUuid="83a02f40-ee76-4ba1-9bd7-80b5a163c61e";
+                    eventUuid = "11ff6e8f-aef4-4f2b-b6e6-f3dae7e116ce";
+
+
+                    System.out.println("Creating task and assigntask, sleeping for 5 seconds...\n");
+                    // 1. Form XML taskMessage
+
+                    String xmlTaskMessage = "";
+                    try {
+                        xmlTaskMessage = getXmlForNewTask("Header description for test new task Message",SourceType.Planning,taskUuid,eventUuid,"Task Name: Task description","2018-06-01T00:00","2018-07-01T00:00",1,1);
+                    } catch (JAXBException e) {
+                        e.printStackTrace();
+                    }
+
+                    // 2. send XML taskMessage to planning-queue
+
+                    try {
+                        Sender.sendMessage(xmlTaskMessage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (TimeoutException e) {
+                        e.printStackTrace();
+                    }
+
+                    // 3. Form XML assignTaskMessage
+
+                    String assignTaskMessage = "";
+                    try {
+                        xmlTaskMessage = getXmlForNewAssign_Task("Header description for test new assignTaskMessage",SourceType.Planning,assignTaskUuid,userUuid,taskUuid,1);
+                    } catch (JAXBException e) {
+                        e.printStackTrace();
+                    }
+
+                    // 4. send XML assignTaskMessage to planning-queue
+                    try {
+                        Sender.sendMessage(xmlTaskMessage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (TimeoutException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        System.out.println("Created task and assigntask, sleeping for 10 seconds...\n");
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    System.out.println("Updating task and assigntask...\n");
+                    // 5. Form XML update taskMessage
+
+                    String xmlTaskUpdateMessage = "";
+                    try {
+                        xmlTaskUpdateMessage = getXmlForNewTask("Header description for test update task Message",SourceType.Planning,taskUuid,eventUuid,"Task Name: Task description v2","2018-06-05T00:00","2018-07-05T00:00",2,1);
+                    } catch (JAXBException e) {
+                        e.printStackTrace();
+                    }
+
+                    // 6. send XML update taskMessage to planning-queue
+
+                    try {
+                        Sender.sendMessage(xmlTaskUpdateMessage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (TimeoutException e) {
+                        e.printStackTrace();
+                    }
+
+                    // 7. Form XML update assignTaskMessage
+
+                    String assignTaskUpdateMessage = "";
+                    try {
+                        assignTaskUpdateMessage = getXmlForNewAssign_Task("Header description for test update assignTaskMessage",SourceType.Planning,assignTaskUuid,userUuid,taskUuid,2);
+                    } catch (JAXBException e) {
+                        e.printStackTrace();
+                    }
+
+                    // 2. send XML assignTaskMessage to planning-queue
+                    try {
+                        Sender.sendMessage(assignTaskUpdateMessage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (TimeoutException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("Updated task and assigntask...\n");
+
+                    try {
+                        System.out.println("Created task and assigntask, sleeping for 10 seconds...\n");
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
                 case "":
                     System.out.println("\nReceived 'Empty' (\"\") String as option...!");
                 case "0":
@@ -883,7 +1036,7 @@ public interface Helper {
             case "reservationMessage":
 
 
-                System.out.print("Trying to recover from incorrect reservationMessage from '" + messageSource + "'!");
+                System.out.print("Trying to recover from incorrect 'reservationMessage' from '" + messageSource + "'!");
                 String eventUuid = getSafeXmlProperty(task, "eventUuid");
                 if (eventUuid == "false" || eventUuid == "") {
                     String sessionUuid = getSafeXmlProperty(task, "sessionUuid");
@@ -911,7 +1064,6 @@ public interface Helper {
 
 
                 // 1. Form XML pingMessage
-
                 String xmlMessage = "";
                 try {
                     xmlMessage = getXmlForPingMessage("pingMessage", SourceType.Planning);
@@ -920,8 +1072,6 @@ public interface Helper {
                 }
 
                 // 2. send xml message to monitor-queue
-
-
                 String returnedMessage = "";
                 try {
                     returnedMessage = Sender.sendPingMessage(xmlMessage, SourceType.Planning);
@@ -937,6 +1087,21 @@ public interface Helper {
             case "errormessage":
 
                 System.out.println(" [" + messageType + "] Received from " + getSafeXmlProperty(task, "source"));
+                break;
+
+            case "taskmessage":
+                System.out.println(" [" + messageType + "] Received from " + getSafeXmlProperty(task, "source"));
+
+                handleNewMessageTask(task);
+
+
+                break;
+
+            case "assigntaskmessage":
+
+                System.out.println(" [" + messageType + "] Received from " + getSafeXmlProperty(task, "source"));
+
+                handleNewMessageAssignTask(task);
                 break;
 
             case "productmessage":
@@ -1038,7 +1203,7 @@ public interface Helper {
                         alterThisEntityId = Integer.parseInt(selectResults[0]);
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
-                        allGood=false;
+                        allGood = false;
                     }
                     try {
                         new BaseEntityDAO().softDeleteBaseEntity(alterThisEntityId);
@@ -1070,7 +1235,7 @@ public interface Helper {
 
                     try {
                         thisUserInMessage.setEntityId(Integer.parseInt(selectResults[0]));
-                        System.out.println("thisUserInMessage.getEventId(): " + thisUserInMessage.getIdUser());
+                        System.out.println("thisUserInMessage.getIdUser(): " + thisUserInMessage.getIdUser());
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
                     }
@@ -1219,9 +1384,8 @@ public interface Helper {
                         // 2.3.1. update google calender through API
                         try {
                             GoogleCalenderApi.updateEventWithEventObject(thisEventInMessage);
-                        }catch (Exception e)
-                        {
-                            System.out.println("Error updating Event with Event object:"+e);
+                        } catch (Exception e) {
+                            System.out.println("Error updating GCA Event with Event object:" + e);
                         }
 
                         // 2.3.2. update record in our local db
@@ -1243,11 +1407,11 @@ public interface Helper {
                             //updateEventError
                         }
 
-                        System.out.println("We had this event with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisEventInMessage.getEntityVersion() + "'");
+                        System.out.println("We had this [Event] with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisEventInMessage.getEntityVersion() + "'");
 
                     } else {
                         // we have the latest version...
-                        System.out.println("We already had this event with entityVersion: '" + localEntityVersion + "'");
+                        System.out.println("We already had this [Event] with entityVersion: '" + localEntityVersion + "'");
                     }
                 }
 
@@ -1395,9 +1559,8 @@ public interface Helper {
 
                         try {
                             GoogleCalenderApi.updateSessionWithSessionObject(thisSessionInMessage);
-                        }catch (Exception e)
-                        {
-                            System.out.println("Error updating Session with Session object:"+e);
+                        } catch (Exception e) {
+                            System.out.println("Error updating Session with Session object:" + e);
                         }
                         // 2.3.2. update record in our local db
 
@@ -1421,12 +1584,12 @@ public interface Helper {
                         }
 
 
-                        System.out.println("We had this Session with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisSessionInMessage.getEntityVersion() + "'");
+                        System.out.println("We had this [Session] with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisSessionInMessage.getEntityVersion() + "'");
 
                     } else {
 
                         // we have the latest version...
-                        System.out.println("We already had this session with entityVersion: '" + localEntityVersion + "'");
+                        System.out.println("We already had this [Session] with entityVersion: '" + localEntityVersion + "'");
 
                     }
                 }
@@ -1475,6 +1638,181 @@ public interface Helper {
         }
 
         //System.out.println(" [END] ");
+    }
+
+    static void handleNewMessageTask(String task) {
+
+        String taskUuid = "";
+        Task thisTaskInMessage = null;
+        Boolean uuidExists = false;
+        EntityType thisEntityType = EntityType.Task;
+        SourceType Source_type = SourceType.Planning;
+
+        // 1. transform xml to event-object
+        try {
+            thisTaskInMessage = getTaskObjectFromXmlMessage(task);
+
+            taskUuid = thisTaskInMessage.getTaskUuid();
+
+            System.out.println("New message for [Task] with Uuid: " + taskUuid);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (thisTaskInMessage != null) {
+
+            // 2.1. check if UUID exists in local db
+            uuidExists = false;
+            try {
+                uuidExists = new BaseEntityDAO().doesUUIDExist("Task", taskUuid);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (uuidExists) {
+
+                System.out.println("Uuid already exists in our PlanningDB table:[Task]");
+
+                // 2.2 Task record update
+                // 2.2.1. get idTask by uuid in Task
+                String[] propertiesToSelect = {"idTask"};
+                String table = "Task";
+                String[] selectors = {"uuid"};
+                String[] values = {"" + taskUuid};
+
+                String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
+
+                // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
+                if (thisTaskInMessage.getActive() == 0) {
+
+                    // 1. Cancel Google Calendar event
+                    String[] propertiesToSelect2 = {"GCAEventId"};
+                    String table2 = "Task";
+                    String[] selectors2 = {"uuid"};
+                    String[] values2 = {"" + taskUuid};
+
+                    String[] selectResults2 = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect2, table2, selectors2, values2);
+                    GoogleCalenderApi.cancelEventByGCAID(selectResults2[0]);
+
+                    // 2. Perform soft-delete on local db
+                    new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
+                    System.out.println("SoftDelete executed on [Task] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+
+                    // 3. updateUuidRecordVersion() (To UUID master)
+                    int updateUuidRecordVersionResponse = 0;
+                    try {
+                        updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, taskUuid);
+                    } catch (IOException | TimeoutException | JAXBException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+
+                    // 2.2.2. get entityVersion from id in BaseEntity
+                    propertiesToSelect[0] = "entity_version";
+                    table = "BaseEntity";
+                    selectors[0] = "idBaseEntity";
+                    values[0] = selectResults[0];
+                    int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
+
+                    try {
+                        thisTaskInMessage.setEntityId(Integer.parseInt(selectResults[0]));
+                        //System.out.println("thisEventInMessage.getEventId(): " + thisEventInMessage.getEventId());
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+
+                    boolean allGood = true;
+
+
+                    if (localEntityVersion < thisTaskInMessage.getEntityVersion()) {
+
+                        // 2.3.1. update google calender through API
+
+                        try {
+                            GoogleCalenderApi.updateTaskWithTaskObject(thisTaskInMessage);
+                        } catch (Exception e) {
+                            System.out.println("Error updating Event with Event object:" + e);
+                        }
+
+                        // 2.3.2. update record in our local db
+                        int updateUuidRecordVersionResponse = 0;
+                        try {
+                            //System.out.println("2.3.2. update record in our local db: thisTaskInMessage.toString(): "+thisTaskInMessage.toString());
+                            allGood = new Task_DAO().updateTaskByObject(thisTaskInMessage);
+                        } catch (Exception e) {
+                            System.out.println("Error updating event in the database: " + e);
+                        }
+
+                        // 2.3.3. updateUuidRecordVersion() (To UUID master)
+                        if (allGood) {
+                            try {
+                                updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, taskUuid);
+                            } catch (IOException | TimeoutException | JAXBException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            //updateEventError
+                        }
+
+                        System.out.println("We had this [Task] with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisTaskInMessage.getEntityVersion() + "'");
+
+                    } else {
+                        // we have the latest version...
+                        System.out.println("We already had this [Task] with entityVersion: '" + localEntityVersion + "'");
+                    }
+                }
+
+            } else {
+                // New Task record
+
+                // 2.4.1. Add new Task as event to Google calendar
+
+                String newEventHtmlLinkAndId = null;
+                try {
+                    newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromTaskObject(thisTaskInMessage);
+
+                    String[] newEventProperties = newEventHtmlLinkAndId.split("-=-");
+
+                    thisTaskInMessage.setGCAEventId(newEventProperties[1]);
+                    //System.out.println("CGAEventId in newEventProperties[1]: " + newEventProperties[1]);
+                    thisTaskInMessage.setGCAEventLink(newEventProperties[0]);
+                    //System.out.println("CGAEventLink in newEventProperties[0]: " + newEventProperties[0]);
+
+                } catch (IOException e) {
+                    System.out.println("Error adding event to Google calendar API: " + e);
+                    //e.printStackTrace();
+                }
+                // 2.4.2. insert new task into local db
+                int messageTaskInsertReturner = 0;
+                try {
+
+                    messageTaskInsertReturner = new Task_DAO().insertIntoTask(thisTaskInMessage);
+                    System.out.println("Inserted new task record with id='" + messageTaskInsertReturner + "' and UUID='" + taskUuid + "'");
+                } catch (SQLException e) {
+                    System.out.println("Error inserting task into the database: " + e);
+                    //e.printStackTrace();
+                }
+
+                // 2.4.3. insertUuidRecord
+                try {
+                    Sender.insertUuidRecord("", messageTaskInsertReturner, thisEntityType, Source_type, taskUuid);
+                } catch (IOException | TimeoutException | JAXBException e) {
+                    System.out.println("Error inserting record into the Uuid Master: " + e);
+                    //e.printStackTrace();
+                }
+
+                //System.out.println("Event.toString(): " + thisEventInMessage.toString());
+
+
+
+            }
+        } else {
+            System.out.println("Something went wrong getting task object from xml message!");
+        }
+
+        //System.out.println(" [END] ");
+
     }
 
     static void handleNewMessageReservationEvent(String task) {
@@ -1576,11 +1914,7 @@ public interface Helper {
 
                     // 2.3.1. update google calender through API
 
-/*
-
-                    GoogleCalenderApi.updateEventsAttendees(existingReservation_Event.getEventUUID(),existingReservation_Event.getUserUUID());
-*/
-
+                    GoogleCalenderApi.updateEventsAttendees(existingReservation_Event.getEventUUID(),existingReservation_Event.getUserUUID(), "Event");
 
                     // 2.3.2. update record in our local db
 
@@ -1622,7 +1956,7 @@ public interface Helper {
 
             // 1. Add user to google calendar api event
 
-            GoogleCalenderApi.addAttendeeForEvent(newReservation_EventObjectFromXml.getEventUUID(),newReservation_EventObjectFromXml.getUserUUID());
+            GoogleCalenderApi.addAttendeeForEvent(newReservation_EventObjectFromXml.getEventUUID(), newReservation_EventObjectFromXml.getUserUUID());
 
             // 2. Insert record locally with given info
 
@@ -1673,7 +2007,7 @@ public interface Helper {
 
         uuidExists = false;
 
-        // 2.1.B. search session table for uuid
+        // 2.1.B. search Reservation_Session table for uuid
 
         try {
             uuidExists = new BaseEntityDAO().doesUUIDExist("Reservation_Session", reservationUUID);
@@ -1740,10 +2074,10 @@ public interface Helper {
                 if (localEntityVersion < existingReservation_Session.getEntityVersion()) {
 
                     // 2.3.1. update google calender through API
-/*
 
-                    GoogleCalenderApi.updateEventsAttendees(existingReservation_Session.getSessionUUID(),existingReservation_Session.getUserUUID());
-*/
+
+                    GoogleCalenderApi.updateEventsAttendees(existingReservation_Session.getSessionUUID(),existingReservation_Session.getUserUUID(), "Session");
+
 
                     // 2.3.2. update record in our local db
 
@@ -1788,7 +2122,7 @@ public interface Helper {
 
             // 1. Add user to google calendar api event
 
-            GoogleCalenderApi.addAttendeeForSession(newReservation_SessionObjectFromXml.getSessionUUID(),newReservation_SessionObjectFromXml.getUserUUID());
+            GoogleCalenderApi.addAttendeeForSession(newReservation_SessionObjectFromXml.getSessionUUID(), newReservation_SessionObjectFromXml.getUserUUID());
 
             // 2. Insert record locally with given info
             int messageReservationInsertReturner = 0;
@@ -1810,6 +2144,171 @@ public interface Helper {
                 e.printStackTrace();
             }
             System.out.println("Inserted new Reservation_Session record with Uuid: " + reservationUUID + "!");
+
+        }
+
+    }
+
+    static void handleNewMessageAssignTask(String task) {
+
+        String userUuid = "";
+        String assignTaskUuid = "";
+        String taskUuid = "";
+
+        Assign_Task newAssign_TaskObjectFromXml = null;
+        Boolean uuidExists = false;
+        Boolean allGood = true;
+
+        EntityType thisEntityType = EntityType.AssignTask;
+        SourceType Source_type = SourceType.Planning;
+
+        // 1. transform xml to Assign_Task-object
+
+        newAssign_TaskObjectFromXml = getAssign_TaskObjectFromXmlMessage(task);
+
+        assignTaskUuid = newAssign_TaskObjectFromXml.getAssignTaskUuid();
+
+        System.out.println("New message for [Assign_Task] with Uuid: " + assignTaskUuid);
+        // System.out.println("sessionUUID: "+sessionUUID);
+
+        // 2.1 check if UUID exists in local db
+
+        uuidExists = false;
+
+        // 2.1.B. search Assign_Task table for uuid
+
+        try {
+            uuidExists = new BaseEntityDAO().doesUUIDExist("Assign_Task", assignTaskUuid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // 2.1.1 check if reservation session is to be 'deleted'
+
+        if (uuidExists) {
+
+            System.out.println("UUID already exists in our PlanningDB table:[Assign_Task]\n");
+
+
+            // 2.2.1 get idSession from sessionUUID in Session
+            String[] propertiesToSelect = {"idAssignTask"};
+            String table = "Assign_Task";
+            String[] selectors = {"uuid"};
+            String[] values = {"" + assignTaskUuid};
+
+            String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
+
+            // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
+            if (newAssign_TaskObjectFromXml.getActive() == 0) {
+
+//                 1. Delete user from Google Calender Api
+                try {
+                    GoogleCalenderApi.deleteAttendeeFromEventWithATO(newAssign_TaskObjectFromXml);
+                } catch (Exception e) {
+                   e.printStackTrace();
+                }
+
+                // 2. Perform soft-delete on local db
+                new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
+                System.out.println("SoftDelete executed on [Assign_Task] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+
+                // 3. updateUuidRecordVersion() (To UUID master)
+                int updateUuidRecordVersionResponse = 0;
+                try {
+                    updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, assignTaskUuid);
+                } catch (IOException | TimeoutException | JAXBException e) {
+                    e.printStackTrace();
+                }
+
+
+            } else {
+
+                // 2.2.2. get entityVersion from id in BaseEntity
+                propertiesToSelect[0] = "entity_version";
+                table = "BaseEntity";
+                selectors[0] = "idBaseEntity";
+                values[0] = selectResults[0];
+                int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
+
+                Assign_Task existingAssign_Task = null;
+                try {
+                    existingAssign_Task = getAssign_TaskObjectFromXmlMessage(task);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                int updateUuidRecordVersionResponse = 0;
+
+                if (localEntityVersion < existingAssign_Task.getEntityVersion()) {
+
+                    // 2.3.1. update google calender through API
+
+                    GoogleCalenderApi.updateEventsAttendees(existingAssign_Task.getTaskUuid(),existingAssign_Task.getUserUuid(), "Task");
+
+                    // 2.3.2. update record in our local db
+
+                    System.out.println("Current task to be updated .toString: "+existingAssign_Task.toString());
+                    try {
+                        allGood = new Assign_Task_DAO().updateAssignTaskByObject(existingAssign_Task);
+                    } catch (Exception e) {
+                        System.out.println("Error updating assign task in the database: " + e);
+                    }
+
+                    // 2.3.3. updateUuidRecordVersion() (To UUID master)
+                    try {
+                        updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, assignTaskUuid);
+                    } catch (IOException | TimeoutException | JAXBException e) {
+                        e.printStackTrace();
+                    }
+
+                    // 2.3.4. update entity version (on our database)
+                    try {
+                        allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + existingAssign_Task.getEntityVersion(), "int", "idBaseEntity", "" + existingAssign_Task.getAssignTaskId());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("ERROR in 2.3.4. update entity version (on our database) :\n " + e);
+                        allGood = false;
+                    }
+
+                    System.out.println("We had this Assign_Task with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + existingAssign_Task.getEntityVersion() + "'");
+
+
+                } else {
+                    // we have the latest version...
+                    System.out.println("We already had this Assign_Task with entityVersion: '" + localEntityVersion + "'");
+                }
+
+            }
+
+
+        } else {
+
+            // uuid doesn't exit locally yet
+            // # insert record locally with given info
+
+            // 1. Add employee to google calendar api event
+            GoogleCalenderApi.addEmployeeForTask(newAssign_TaskObjectFromXml.getTaskUuid(), newAssign_TaskObjectFromXml.getUserUuid());
+
+            // 2. Insert record locally with given info
+            int messageAssignTaskInsertReturner = 0;
+
+            BaseEntity newTempEntity = new BaseEntity();
+            newAssign_TaskObjectFromXml.setAssignTaskId(newTempEntity.getEntityId());
+            //System.out.println("newReservation_SessionObjectFromXml: " + newReservation_SessionObjectFromXml.toString());
+
+            try {
+                messageAssignTaskInsertReturner = new Assign_Task_DAO().insertIntoAssign_Task(newAssign_TaskObjectFromXml);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            // 3. InsertUuidRecord
+            try {
+                Sender.insertUuidRecord("", messageAssignTaskInsertReturner, thisEntityType, Source_type, assignTaskUuid);
+            } catch (IOException | TimeoutException | JAXBException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Inserted new Assign_Task record with Uuid: " + assignTaskUuid + "!");
 
         }
 
@@ -2229,9 +2728,7 @@ public interface Helper {
 
     // Session: (params) => XML
     static String getXmlForNewSession(String xmlHeaderDescription, SourceType Source_type, String
-            sessionUUID, String eventUUID, String sessionName, int maxAttendees, String description, String
-                                              summary, String
-                                              location, String speaker, String dateTimeStart, String dateTimeEnd, String type, float price,
+            sessionUUID, String eventUUID, String sessionName, int maxAttendees, String description, String summary, String location, String speaker, String dateTimeStart, String dateTimeEnd, String type, float price,
                                       int entityVersion,
                                       int active) throws JAXBException {
         String messageType = "sessionMessage";
@@ -2466,6 +2963,165 @@ public interface Helper {
         return sessionObject;
     }
 
+    // Task: (params) => XML
+    static String getXmlForNewTask(String xmlHeaderDescription, SourceType Source_type, String
+            taskUuid, String eventUuid, String description, String dateTimeStart, String dateTimeEnd, int entityVersion, int active) throws JAXBException {
+        String messageType = "taskMessage";
+        String taskName = "Task name";
+
+        // form xml
+        XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
+        // set datastructure
+        XmlMessage.TaskStructure TaskStructure = new XmlMessage.TaskStructure(taskUuid, eventUuid, taskName, description,  dateTimeStart, dateTimeEnd, entityVersion, active, getCurrentDateTimeStamp());
+        // steek header en datastructure (TaskStructure) in message klasse
+
+        XmlMessage.TaskMessage TaskMessage = new XmlMessage.TaskMessage(header, TaskStructure);
+        String xmlTotalMessage = TaskMessage.generateXML();
+        return xmlTotalMessage;
+    }
+
+    // Task: Object => XML
+    static String getXmlFromTaskObject(String headerDescription, SourceType Source_type, Task
+            newTask) throws
+            JAXBException {
+
+        //SourceType Source_type = Source_type;
+        String taskUuid = newTask.getTaskUuid();
+        String eventUuid = newTask.getEventUuid();
+        String taskDescription = newTask.getDescription();
+        int entityVersion = newTask.getEntityVersion();
+        int active = newTask.getActive();
+        String dateTimeStart = newTask.getDateTimeStart();
+        String dateTimeEnd = newTask.getDateTimeEnd();
+        String taskName = newTask.getTaskName();
+
+        String messageType = "taskMessage";
+        XmlMessage.Header header = new XmlMessage.Header(messageType, headerDescription + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
+        XmlMessage.TaskStructure eventStructure = new XmlMessage.TaskStructure(taskUuid, eventUuid, taskName, taskDescription, dateTimeStart, dateTimeEnd, entityVersion, active, getCurrentDateTimeStamp());
+        XmlMessage.TaskMessage xmlReservationMessage = new XmlMessage.TaskMessage(header, eventStructure);
+        String xmlTotalMessage = xmlReservationMessage.generateXML();
+        return xmlTotalMessage;
+    }
+
+    // Task: XML => Object
+    static Task getTaskObjectFromXmlMessage(String xmlMessage) {
+
+        boolean allGood = true;
+        Task taskObject = null;
+
+        String taskUuid = "false";
+        String eventUuid = "false";
+        String description = "false";
+        String dateTimeStart = "false";
+        String dateTimeEnd = "false";
+        int entityVersion = 0;
+        int active = 0;
+        String timestamp = "false";
+
+        // xmlMessage parsing
+
+        taskUuid = getSafeXmlProperty(xmlMessage, "uuid");
+
+        if (taskUuid == "false") {
+
+            taskUuid = getSafeXmlProperty(xmlMessage, "UUID");
+
+            if (taskUuid == "false") {
+
+                taskUuid = getSafeXmlProperty(xmlMessage, "taskUUID");
+
+                if (taskUuid == "false") {
+                    System.out.println(" [!!!] ERROR: No sessionUUID found in XML: ");
+                    allGood = false;
+                }
+            }
+        }
+        eventUuid = getSafeXmlProperty(xmlMessage, "eventUuid");
+        if (eventUuid == "false") {
+
+            System.out.println(" [!!!] ERROR: No eventUUID found in XML: ");
+            allGood = false;
+
+        }
+
+
+        description = getSafeXmlProperty(xmlMessage, "description");
+        if (description == "false") {
+
+            System.out.println(" [!!!] ERROR: No description found in XML: ");
+            allGood = false;
+
+        }
+
+        dateTimeStart = getSafeXmlProperty(xmlMessage, "dateTimeStart");
+        if (dateTimeStart == "false") {
+
+            System.out.println(" [!!!] ERROR: No dateTimeStart found in XML: ");
+            allGood = false;
+
+        }
+        dateTimeEnd = getSafeXmlProperty(xmlMessage, "dateTimeEnd");
+        if (dateTimeEnd == "false") {
+
+            System.out.println(" [!!!] ERROR: No dateTimeEnd found in XML: ");
+            allGood = false;
+
+        }
+
+        try {
+            entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, "entityVersion"));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        if (entityVersion < 0) {
+
+            System.out.println(" [!!!] ERROR: No entityVersion found in XML: ");
+            allGood = false;
+
+        }
+
+        try {
+            active = Integer.parseInt(getSafeXmlProperty(xmlMessage, "active"));
+        } catch (NumberFormatException e) {
+            //e.printStackTrace();
+
+            //catch boolean instead of int
+            if (getSafeXmlProperty(xmlMessage, "active") == "true") {
+                active = 1;
+            } else if (getSafeXmlProperty(xmlMessage, "active") == "false") {
+                active = 0;
+            } else {
+                active = -1;
+            }
+        }
+        if (active < 0) {
+
+            System.out.println(" [!!!] ERROR: No active found in XML: ");
+            allGood = false;
+
+        }
+        timestamp = getSafeXmlProperty(xmlMessage, "timestamp");
+        if (timestamp == "false") {
+
+            timestamp = getSafeXmlProperty(xmlMessage, "Timestamp");
+
+            if (timestamp == "false") {
+
+                timestamp = getSafeXmlProperty(xmlMessage, "TimeStamp");
+
+                if (timestamp == "false") {
+
+                    System.out.println(" [!!!] ERROR: No timestamp found in XML: ");
+                    allGood = false;
+                }
+            }
+        }
+
+        taskObject = new Task(0, entityVersion, active, timestamp, taskUuid, eventUuid, description, dateTimeStart, dateTimeEnd, "", "", false);
+        //System.out.println("sessionObject.toString()"+sessionObject.toString());
+        return taskObject;
+    }
+
 
     // Event: (params) => XML
     static String getXmlForNewEvent(String messageType, String description, SourceType
@@ -2571,7 +3227,10 @@ public interface Helper {
             System.out.println(" [!!!] ERROR: No description found in XML: ");
             allGood = false;
 
+        }else{
+            description = "Name: '"+eventName+" "+description;
         }
+
         summary = getSafeXmlProperty(xmlMessage, "summary");
         if (summary == "false") {
 
@@ -2786,6 +3445,134 @@ public interface Helper {
         return reservationSessionObject;
     }
 
+    // Assign_Task: (params) => XML
+    static String getXmlForNewAssign_Task(String xmlHeaderDescription, SourceType
+            Source_type, String assignTaskUuid, String userUuid, String taskUuid, int entityVersion) throws
+            JAXBException {
+
+        String messageType = "assignTaskMessage";
+
+        // form xml
+        XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
+        // set datastructure
+        XmlMessage.AssignTaskStructure assignTaskStructure = new XmlMessage.AssignTaskStructure(assignTaskUuid, userUuid, taskUuid, entityVersion, 1, getCurrentDateTimeStamp());
+        // steek header en datastructure (Reservationstructure) in message klasse
+        XmlMessage.AssignTaskMessage xmlAssignTaskMessage = new XmlMessage.AssignTaskMessage(header, assignTaskStructure);
+        // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)
+        String xmlTotalMessage = xmlAssignTaskMessage.generateXML();
+
+        //System.out.println("xmlTotalMessage: "+xmlTotalMessage);
+        return xmlTotalMessage;
+    }
+
+    // Assign_Task: object => XML
+    static String getXmlFromAssign_TaskObject(String xmlHeaderDescription, SourceType
+            Source_type, Assign_Task thisAssignTaskObject) throws JAXBException {
+
+        String messageType = "assignTaskMessage";
+        // form xml
+        XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
+        // set datastructure
+        XmlMessage.AssignTaskStructure AssignTaskStructure = new XmlMessage.AssignTaskStructure(thisAssignTaskObject.getAssignTaskUuid(), thisAssignTaskObject.getUserUuid(), thisAssignTaskObject.getTaskUuid(), 1, 1, getCurrentDateTimeStamp());
+        // steek header en datastructure (Reservationstructure) in message klasse
+        XmlMessage.AssignTaskMessage xmlAssignTaskMessage = new XmlMessage.AssignTaskMessage(header, AssignTaskStructure);
+        // genereer uit de huidige data de XML, de footer met bijhorende checksum wordt automatisch gegenereerd (via XmlMessage.Footer Static functie)
+        String xmlTotalMessage = xmlAssignTaskMessage.generateXML();
+
+        //System.out.println("xmlTotalMessage: "+xmlTotalMessage);
+        return xmlTotalMessage;
+    }
+
+    // Assign_Task: XML => Object
+    static Assign_Task getAssign_TaskObjectFromXmlMessage(String xmlMessage) {
+
+        boolean allGood = true;
+        Assign_Task assignTaskObject = null;
+
+        String assignTaskUuid = "false";
+        String userUuid = "false";
+        String taskUuid = "false";
+        float paid = 0;
+        int entityVersion = 0;
+        int active = 0;
+        String timestamp = "false";
+        String errorMessage = "";
+
+        // xmlMessage parsing
+
+        assignTaskUuid = getSafeXmlProperty(xmlMessage, "uuid");
+        if (assignTaskUuid == "false") {
+
+            assignTaskUuid = getSafeXmlProperty(xmlMessage, "assignTaskUuid");
+
+            if (assignTaskUuid == "false") {
+
+                assignTaskUuid = getSafeXmlProperty(xmlMessage, "assignTaskUUID");
+
+                if (assignTaskUuid == "false") {
+                    errorMessage += " [!!!] ERROR: No reservationUUID found in XML\n ";
+                    allGood = false;
+                }
+            }
+        }
+        userUuid = getSafeXmlProperty(xmlMessage, "userUuid");
+        if (userUuid == "false") {
+
+            errorMessage += " [!!!] ERROR: No userUuid found in XML\n ";
+
+            allGood = false;
+
+        }
+        taskUuid = getSafeXmlProperty(xmlMessage, "taskUuid");
+        if (taskUuid == "false") {
+
+            System.out.println(" [!!!] ERROR: No taskUuid found in XML: ");
+            allGood = false;
+
+        }
+
+        try {
+            entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, "entityVersion"));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            System.out.println(" [!!!] ERROR(in tc): No entityVersion found in XML: ");
+            allGood = false;
+        }
+
+        if (entityVersion == 0) {
+
+            System.out.println(" [!!!] ERROR: No entityVersion found in XML: ");
+            allGood = false;
+
+        }
+        active = Integer.parseInt(getSafeXmlProperty(xmlMessage, "active"));
+        if (active == 0) {
+
+            System.out.println(" [!!!] ERROR: No active found in XML: ");
+            allGood = false;
+
+        }
+        timestamp = getSafeXmlProperty(xmlMessage, "timestamp");
+        if (timestamp == "false") {
+
+            System.out.println(" [!!!] ERROR: No timestamp found in XML: ");
+            allGood = false;
+
+        }
+
+        if(errorMessage=="")
+        {
+
+            assignTaskObject = new Assign_Task(0, entityVersion, active, timestamp, assignTaskUuid, userUuid, taskUuid, false);
+
+            return assignTaskObject;
+        }else{
+            // send xml error message to everyone//monitor
+            return assignTaskObject;
+        }
+
+    }
+
 
     // Reservation_Event: (params) => XML
     static String getXmlForNewReservation_Event(String xmlHeaderDescription, SourceType
@@ -2960,6 +3747,16 @@ public interface Helper {
         return xmlTotalMessage;
     }
 
+    static String getXmlForTestMessage(String messageType, SourceType sourceType) throws JAXBException {
+
+        XmlMessage.Header header = new XmlMessage.Header(messageType, "", sourceType.toString());
+        XmlMessage.MessageStructure messageStructure = new XmlMessage.MessageStructure();
+
+        XmlMessage.MessageMessage xmlTestMessage = new XmlMessage.MessageMessage(header, messageStructure);
+        String xmlTotalMessage = xmlTestMessage.generateXML();
+        return xmlTotalMessage;
+
+    }
 
     static String getPropertyFromXml(String xml, String property) throws
             ParserConfigurationException, SAXException, IOException, NullPointerException {
@@ -2970,7 +3767,6 @@ public interface Helper {
         DocumentBuilder db = dbf.newDocumentBuilder();
 
         Document doc = db.parse(is);
-
 
         NodeList nodes = doc.getElementsByTagName(property);
 
@@ -2983,7 +3779,6 @@ public interface Helper {
         }
 
         return thisMessageType;
-
         //END of getPropertyFromXml();
     }
 

@@ -7,10 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Event_DAO extends BaseEntityDAO {
+
     //CRUD Statements
-
     //CREATE
-
     public int insertIntoEvent(Event event) throws SQLException {
 
         BaseEntity newBaseEntity = new BaseEntity(event.getEntityId(), event.getEntityVersion(), event.getActive(), event.getTimestamp());
@@ -39,28 +38,6 @@ public class Event_DAO extends BaseEntityDAO {
 
 
     //UPDATE
-/*
-    public int UpdateEvent(Event newEventFromMessage, int oldEntityId) {
-        //Maak een nieuwe BaseEntity met incremented entityVersion
-        BaseEntity newBaseEntity = new BaseEntity(newEventFromMessage.getEntityId(), newEventFromMessage.getEntityVersion(), newEventFromMessage.getActive(), newEventFromMessage.getTimestamp());
-        //execute baseEntity Insert
-        int callbackInsertedInt = newBaseEntity.getEntityId();
-
-        String sqlQuery = "INSERT INTO PlanningDB.Event (idEvent, uuid, eventName, maxAttendees, description, summary, location,`contactPerson`,`dateTimeStart`,`dateTimeEnd`, type, price) VALUES (" + callbackInsertedInt + ",\"" + newEventFromMessage.getEventUUID() + "\",\"" + newEventFromMessage.getEventName() + "\",\"" + newEventFromMessage.getMaxAttendees() + "\",\"" + newEventFromMessage.getDescription() + "\",\"" + newEventFromMessage.getSummary() + "\",\"" + newEventFromMessage.getLocation() + "\",\"" + newEventFromMessage.getContactPerson() + "\",\"" + newEventFromMessage.getDateTimeStart() + "\",\"" + newEventFromMessage.getDateTimeEnd() + "\",\"" + newEventFromMessage.getType() + "\",\"" + newEventFromMessage.getPrice() + "\");";
-
-        //softdelete oude base entity
-        softDeleteBaseEntity(oldEntityId);
-        try {
-            int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
-        } catch (Exception e) {
-//                e.printStackTrace();
-            System.out.println("ERROR inserting Event: " + e);
-        }
-
-        return callbackInsertedInt;
-
-    }
-*/
     public boolean updateEventByObject (Event newEventFromMessage) {
 
         String sqlQuery = " UPDATE PlanningDB.Event SET " +

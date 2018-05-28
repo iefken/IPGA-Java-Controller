@@ -9,6 +9,7 @@ public class Reservation_Session extends BaseEntity{
     private String sessionUUID;
     private float paid;
 
+    //CONSTRUCTOR
     public Reservation_Session(int ReservationId, int entity_version, int active, String timestamp,
                                String reservationUUID, String userUUID, String sessionUUID, float paid) {
 
@@ -19,7 +20,6 @@ public class Reservation_Session extends BaseEntity{
         this.sessionUUID = sessionUUID;
         this.paid = paid;
     }
-
     public Reservation_Session(int ReservationId, int entity_version, int active, String timestamp,
                                String reservationUUID, String userUUID, String sessionUUID, float paid, boolean insertBaseEntity) {
 
@@ -30,17 +30,16 @@ public class Reservation_Session extends BaseEntity{
         this.sessionUUID = sessionUUID;
         this.paid = paid;
     }
-
     public Reservation_Session(int ReservationId, String reservationUUID, String userUUID, String sessionUUID, float paid) {
 
         //super(ReservationId,entity_version,Status, Timestamp);
-
         this.reservationUUID = reservationUUID;
         this.userUUID = userUUID;
         this.sessionUUID = sessionUUID;
         this.paid = paid;
     }
 
+    //GETTERS & SETTERS
     public int getReservationId() {
         // get id from inherited class
         return this.getEntityId();
@@ -48,7 +47,6 @@ public class Reservation_Session extends BaseEntity{
     public void setReservationId(int reservationId) {
         this.setEntityId(reservationId);
     }
-
 
     public String getReservationUUID() {
         return reservationUUID;
@@ -78,6 +76,7 @@ public class Reservation_Session extends BaseEntity{
         this.paid = paid;
     }
 
+    //OTHER
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

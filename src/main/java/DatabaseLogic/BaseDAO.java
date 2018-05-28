@@ -10,6 +10,7 @@ public abstract class BaseDAO {
         return connection;
     }
 
+    //GETTERS & SETTERS
     protected void setConnection(Connection connection) {
         this.connection = connection;
     }

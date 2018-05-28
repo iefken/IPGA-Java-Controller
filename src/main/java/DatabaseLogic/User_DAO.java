@@ -12,9 +12,7 @@ import java.util.ArrayList;
 public class User_DAO extends BaseEntityDAO {
 
     //CRUD Statements
-
     //CREATE
-
     public int insertIntoUser(User user) throws SQLException {
 
         BaseEntity newBaseEntity = new BaseEntity(user.getEntityId(), user.getEntityVersion(), user.getActive(), user.getTimestamp());
@@ -39,9 +37,7 @@ public class User_DAO extends BaseEntityDAO {
     }
 
     //READ
-
-    public BaseEntity getUserByUserId(int thisUserId)
-    {
+    public BaseEntity getUserByUserId(int thisUserId) {
         ResultSet rs = null;
         User thisUser = null;
 
@@ -71,8 +67,8 @@ public class User_DAO extends BaseEntityDAO {
             throw new RuntimeException(e.getMessage());
         }
     }
-    //UPDATE
 
+    //UPDATE
     public boolean updateUserByObject (User newUserFromMessage) {
 
         String sqlQuery = " UPDATE PlanningDB.User SET " +
@@ -131,9 +127,11 @@ public class User_DAO extends BaseEntityDAO {
             }
         }
     }
+
     //DELETE
 
 
     //OTHER
+
 
 }

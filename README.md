@@ -111,9 +111,11 @@ OR in IntelliJ:
     To read and/or see the mysql database: go to the 'db-models' repository and use MySQLWorkbench (see: https://www.mysql.com/products/workbench/) to open the file.
 
 # 4.	Latest releases
-
+    
+    28-05-18: v1.8: Google Api Calls for CRUD tasks as events and assignTaskMessages as adding attendees
+    27-05-18: v1.7: Receiver handles taskMessages and assignTaskMessages now 
     22-05-18: v1.6: Google Api Calls for managing attendees (add/delete)
-    21-05-18: v1.5: Google Api Calls for adding, updating and cancelling event or session
+    21-05-18: v1.5: Google Api Calls for CRUD event or session
     16-05-18: v1.4: Main can 'mock' updates for  user, event, session and reservation messages
     14-05-18: v1.3: Integrated Google Calendar API (GCA) calls into receiver
     10-05-18: v1.2: Main can 'mock' new user, event, session and reservation messages

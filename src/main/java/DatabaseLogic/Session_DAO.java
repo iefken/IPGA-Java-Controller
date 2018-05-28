@@ -10,9 +10,7 @@ import java.util.ArrayList;
 public class Session_DAO extends BaseEntityDAO {
 
     //CRUD Statements
-
     //CREATE
-
     public int insertIntoSession(Session session) throws SQLException {
 
         BaseEntity newBaseEntity = new BaseEntity(session.getEntityId(), session.getEntityVersion(), session.getActive(), session.getTimestamp());
@@ -44,8 +42,8 @@ public class Session_DAO extends BaseEntityDAO {
 
     //READ
 
-    //UPDATE
 
+    //UPDATE
     public boolean updateSessionByObject (Session newSessionFromMessage) {
 
         String sqlQuery = " UPDATE PlanningDB.Session SET " +

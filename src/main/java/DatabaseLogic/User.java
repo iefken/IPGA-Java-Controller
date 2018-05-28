@@ -20,7 +20,7 @@ public class User extends BaseEntity{
 
     //public enum UserType {VISITOR,EMPLOYEE,ADMIN,SPONSOR,SPEAKER}
 
-
+    //CONSTRUCTOR
     public User(int idUser, int Entity_version, int active, String timestamp,
                 String userUUID, String lastname, String firstname, String phoneNumber, String email, String street, String houseNr, String city, String postalCode, String country, String company, String type) {
 
@@ -39,7 +39,6 @@ public class User extends BaseEntity{
         this.company = company;
         this.userType = type;
     }
-
     public User(int idUser, int Entity_version, int active, String Timestamp,
                 String userUUID, String lastname, String firstname, String phoneNumber, String email, String street, String houseNr, String city, String postalCode, String country, String company, String type, boolean insertBaseEntity) {
 
@@ -59,7 +58,7 @@ public class User extends BaseEntity{
         this.userType = type;
     }
 
-
+    //GETTERS & SETTERS
     public int getIdUser() {
         // get id from inherited class
         return this.getEntityId();
@@ -166,6 +165,7 @@ public class User extends BaseEntity{
         this.userType = type;
     }
 
+    //OTHER
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

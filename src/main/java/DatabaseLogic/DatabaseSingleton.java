@@ -9,6 +9,7 @@ public class DatabaseSingleton {
 
     private Connection connection;
 
+    //CONSTRUCTORS
     private DatabaseSingleton() {
 		try {
 
@@ -19,12 +20,14 @@ public class DatabaseSingleton {
 		}
     }
 
+    //GETTER
     public static DatabaseSingleton getDatabaseSingleton() {
         if (ref == null)
             ref = new DatabaseSingleton();
         return ref;
     }
 
+    //OTHER
     public Object clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
 

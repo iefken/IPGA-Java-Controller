@@ -10,9 +10,7 @@ import java.util.ArrayList;
 public class Reservation_Session_DAO extends BaseEntityDAO {
 
     //CRUD Statements
-
     //CREATE
-
     public int insertIntoReservation_Session(Reservation_Session reservation_session) throws SQLException {
 
         //execute baseEntity Insert
@@ -46,85 +44,8 @@ public class Reservation_Session_DAO extends BaseEntityDAO {
 
     //READ
 
-/*
-
-    public ArrayList<Reservation_Session> getAllReservation_Sessions() {
-        ResultSet rs = null;
-        ArrayList<Reservation_Session> sessionReservationsList = null;
-
-        String sql = "SELECT * FROM Reservation_Session;";
-
-        try (Statement s = getConnection().createStatement()) {
-
-            if (getConnection().isClosed()) {
-                throw new IllegalStateException("ERROR 01: Connection seems to be closed...");
-            }
-
-            while (rs.next()) {
-                sessionReservationsList.add(new Reservation_Session(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
-            }
-
-            return sessionReservationsList;
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
-    public ArrayList<Reservation_Session> getAllReservation_SessionsFull() {
-        ResultSet rs = null;
-        ArrayList<Reservation_Session> sessionReservationsList = null;
-
-        String sql = "SELECT * FROM Reservation_Session JOIN BaseEntity ON Reservation_Session.reservationId = BaseEntity.entityId;";
-
-        try (Statement s = getConnection().createStatement()) {
-
-            if (getConnection().isClosed()) {
-                throw new IllegalStateException("ERROR 01: Connection seems to be closed...");
-            }
-
-            while (rs.next()) {
-                sessionReservationsList.add(new Reservation_Session(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8)));
-            }
-
-            return sessionReservationsList;
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-*/
 
     //UPDATE
-/*
-    public int UpdateReservationSession (Reservation_Session newReservationSessionFromMessage, int oldEntityId) throws SQLException {
-
-        //Maak een nieuwe BaseEntity met incremented entityVersion
-        BaseEntity newBaseEntity = new BaseEntity(newReservationSessionFromMessage.getEntityId(), newReservationSessionFromMessage.getEntityVersion(), newReservationSessionFromMessage.getActive(), newReservationSessionFromMessage.getTimestamp());
-        //execute baseEntity Insert
-        int callbackInsertedInt = newBaseEntity.getEntityId();
-
-        String sqlQuery = "INSERT INTO PlanningDB.reservation_session (idReservationSession, reservationUUID, sessionUUID, userUUID, paid, timestampLastUpdated, timestampCreated) VALUES (" + callbackInsertedInt + ",\"" + newReservationSessionFromMessage.getReservationId() + "\",\"" + newReservationSessionFromMessage.getReservationUUID() + "\",\"" + newReservationSessionFromMessage.getSessionUUID() + "\",\"" + newReservationSessionFromMessage.getUserUUID() + "\",\"" + newReservationSessionFromMessage.getPaid() + "\",\"" + newReservationSessionFromMessage.getTimestamp() + "\");";
-
-        //softdelete oude base entity
-        softDeleteBaseEntity(oldEntityId);
-<<<<<<< HEAD
-=======
-
->>>>>>> DEVBranche_Wissam
-        try {
-            int insertSucces = BaseEntityDAO.runInsertQuery(sqlQuery);
-        } catch (Exception e) {
-//                e.printStackTrace();
-            System.out.println("ERROR inserting reservation_session: " + e);
-        }
-
-        return callbackInsertedInt;
-
-    }
-    */
     public boolean updateReservationSessionByObject (Reservation_Session newReservationSessionFromMessage) {
 
         String sqlQuery = " UPDATE PlanningDB.Reservation_Session SET " +

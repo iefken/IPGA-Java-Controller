@@ -10,6 +10,7 @@ public class Reservation_Event extends BaseEntity{
     private float paid;
 
 
+    //CONSTRUCTOR
     public Reservation_Event(int ReservationId, int entity_version, int active, String timestamp,
                              String reservationUUID, String userUUID, String eventUUID, float paid) {
 
@@ -20,7 +21,6 @@ public class Reservation_Event extends BaseEntity{
         this.eventUUID = eventUUID;
         this.paid = paid;
     }
-
     public Reservation_Event(int ReservationId, int entity_version, int active, String timestamp,
                              String reservationUUID, String userUUID, String eventUUID, float paid, boolean insertBaseEntity) {
 
@@ -32,7 +32,7 @@ public class Reservation_Event extends BaseEntity{
         this.paid = paid;
     }
 
-
+    //GETTERS & SETTERS
     public int getReservationId() {
         // get id from inherited class
         return this.getEntityId();
@@ -70,6 +70,7 @@ public class Reservation_Event extends BaseEntity{
         this.paid = paid;
     }
 
+    //OTHER
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

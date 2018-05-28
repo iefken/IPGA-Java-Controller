@@ -67,7 +67,6 @@ public class Sender {
 
     }
 
-
     // 2=insertUuidRecord
     // for registering an object to the UUID manager to let it know your local id of it
     public static String insertUuidRecord(String messageType, int Entity_sourceId, Helper.EntityType Entity_type, Helper.SourceType Source_type, String UUID) throws IOException, TimeoutException, JAXBException {
@@ -105,7 +104,6 @@ public class Sender {
         return sendMessage(xmlTotalMessage);
         */
     }
-
 
     // 3=updateUuidRecord
     // for letting the UUID manager know you changed something in your own database so this Source_type should be yours
@@ -145,8 +143,7 @@ public class Sender {
 
     }
 
-
-    //4=updateUuidRecordOnChanged
+    // 4=updateUuidRecordOnChanged
     // for changing the Entity_version of a certain record
     public static String updateUuidRecordVersionB(String messageType, Helper.SourceType Source_type, String UUID, int Entity_version) throws IOException, TimeoutException, JAXBException {
 
@@ -186,14 +183,11 @@ public class Sender {
     }
 
 
-
-    //all messages come here to effectively send their message to our RabbitMQ
-    public static String sendMessage(String xmlMessage) throws IOException, TimeoutException, JAXBException {
-
-        //setup RabbitMQ connection, publish message to queue/exchange
+    // setting rabbitMQ connection
+    public static ConnectionFactory getNewFactoryFromConnectionFactory(){
 
         ConnectionFactory factory = new ConnectionFactory();
-        String TASK_QUEUE_NAME = "planning-queue";
+
         String username = "Planning";
         String password = "planning";
         String virtualHost = "/";
@@ -205,8 +199,16 @@ public class Sender {
         factory.setHost(Helper.HOST_NAME_LINK);
         factory.setPort(Helper.PORT_NUMBER);
 
+        return factory;
+
+    }
+    // for publishing message to queue
+    public static String publishXmlMessageToQueue(String queue, String xmlMessage) throws IOException, TimeoutException, JAXBException{
+
+        // setup rabbitMQ connection and channel
+        ConnectionFactory factory = getNewFactoryFromConnectionFactory();
         Connection connection = factory.newConnection();
-        Channel channel = connection.createChannel();
+        Channel channel =  connection.createChannel();
 
         //publish to exchange
         /*
@@ -224,7 +226,7 @@ public class Sender {
         //publish to channel //queue
 
         try {
-            channel.basicPublish("", TASK_QUEUE_NAME, null, xmlMessage.getBytes());
+            channel.basicPublish("", queue, null, xmlMessage.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -232,55 +234,87 @@ public class Sender {
         channel.close();
         connection.close();
 
-        //return " [.x.] Sending to exchange:   '" + Helper.EXCHANGE_NAME + "' @ '" + Helper.getCurrentDateTimeStamp() + "' message with '" + xmlMessage.length()+"' characters.";
+        return " [x] Sending to queue:   '" + queue + "' message with length: '" + xmlMessage.length() + "'";
 
-        return " [x] Sending to queue:   '" + TASK_QUEUE_NAME + "' message with length: '" + xmlMessage.length() + "'";
+    }
+    // for publishing message to exchange
+    public static String publishXmlMessageToExchange(String exchange, String xmlMessage) throws IOException, TimeoutException, JAXBException{
 
-        //channel.exchangeDeclare(EXCHANGE_NAME, "fanout"); // other options: direct, topic, headers and fanout
-        //channel.queueDeclare(TASK_QUEUE_NAME, false, false, false, null);
-        //channel.queueBind(TASK_QUEUE_NAME, EXCHANGE_NAME, "");
+        // setup rabbitMQ connection and channel
+        ConnectionFactory factory = getNewFactoryFromConnectionFactory();
+        Connection connection = factory.newConnection();
+        Channel channel =  connection.createChannel();
+
+        //publish to exchange
+        /*
+        try {
+
+            channel.basicPublish(Helper.EXCHANGE_NAME, "", null, xmlMessage.getBytes());
+            //System.out.println(" [.x.] Sending to exchange:   '" + Helper.EXCHANGE_NAME + "'@ '" + Helper.getCurrentDateTimeStamp() + "'");
+            Thread.sleep(1000);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        */
+        //publish to exchange
+
+        try {
+            channel.basicPublish(exchange, "", null, xmlMessage.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        channel.close();
+        connection.close();
+
+        return " [x] Sending to exchange:   '" + exchange + "' message with length: '" + xmlMessage.length() + "'";
+
+    }
+
+    public static String sendTestMessage(String xmlMessage)throws IOException, TimeoutException, JAXBException{
+
+        // publish message to queue/exchange
+        String TASK_QUEUE_NAME = "test-queue";
+
+        String publishMessage = publishXmlMessageToQueue(TASK_QUEUE_NAME,xmlMessage);
+
+        return publishMessage;
 
     }
 
     //all messages come here to effectively send their message to our RabbitMQ
     public static String sendPingMessage(String xmlMessage,Helper.SourceType thisSourceType) throws IOException, TimeoutException, JAXBException {
 
-        ConnectionFactory factory = new ConnectionFactory();
+        // publish message to queue
         String TASK_QUEUE_NAME = "monitor-queue";
-        String username = "Planning";
-        String password = "planning";
-        String virtualHost = "/";
-
-        factory.setUsername(username);
-        factory.setPassword(password);
-        factory.setVirtualHost(virtualHost);
-        factory.setHost(Helper.HOST_NAME_LINK);
-        factory.setPort(Helper.PORT_NUMBER);
-
-        Connection connection = factory.newConnection();
-        Channel channel = connection.createChannel();
 
         //publish to queue
+        String publishMessage = publishXmlMessageToQueue(TASK_QUEUE_NAME,xmlMessage);
 
-        String message = "ERROR";
-
-        try {
-            channel.basicPublish("", TASK_QUEUE_NAME, null, xmlMessage.getBytes());
-            message="SUCCES: Sending as '"+thisSourceType+"' to queue: '" + TASK_QUEUE_NAME + "' with message length: '" + xmlMessage.length() + "'";
-        } catch (IOException e) {
-            //e.printStackTrace();
-            message="ERROR: "+e;
-        }
-
-        channel.close();
-        connection.close();
-
-        return message;
-
-
+        return publishMessage;
     }
 
+    //all messages come here to effectively send their message to our RabbitMQ
+    public static String sendMessage(String xmlMessage) throws IOException, TimeoutException, JAXBException {
 
+        //setup RabbitMQ connection, publish message to queue/exchange
+
+        // publish message to queue
+        String TASK_QUEUE_NAME = "planning-queue";
+        String publishMessage = publishXmlMessageToQueue(TASK_QUEUE_NAME,xmlMessage);
+
+        //publish to exchange
+        //String publishXmlMessageToExchange = publishXmlMessageToExchange(Helper.EXCHANGE_NAME,xmlMessage);
+
+        return publishMessage;
+
+        //channel.exchangeDeclare(EXCHANGE_NAME, "fanout"); // other options: direct, topic, headers and fanout
+        //channel.queueDeclare(TASK_QUEUE_NAME, false, false, false, null);
+        //channel.queueBind(TASK_QUEUE_NAME, EXCHANGE_NAME, "");
+
+    }
 
 }
 

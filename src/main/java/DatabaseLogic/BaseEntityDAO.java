@@ -8,9 +8,7 @@ import java.util.ArrayList;
 public class BaseEntityDAO extends BaseDAO{
 
     //CRUD Statements
-
     //CREATE
-
     public static int insertIntoBaseEntity(BaseEntity thisBaseEntity) throws SQLException {
 
         PreparedStatement preparedStatement = null;
@@ -72,9 +70,7 @@ public class BaseEntityDAO extends BaseDAO{
     }
 
     //READ
-
-    public BaseEntity getBaseEntityByEntityId(int thisEntityId)
-    {
+    public BaseEntity getBaseEntityByEntityId(int thisEntityId) {
         ResultSet rs = null;
         BaseEntity thisBaseEntity = null;
 
@@ -101,9 +97,7 @@ public class BaseEntityDAO extends BaseDAO{
             throw new RuntimeException(e.getMessage());
         }
     }
-
-    public String[] getPropertyValueByTableAndProperty(String[] propertiesToSelect, String table, String[] selectors, String[] values)
-    {
+    public String[] getPropertyValueByTableAndProperty(String[] propertiesToSelect, String table, String[] selectors, String[] values) {
         ResultSet rs = null;
         BaseEntity thisBaseEntity = null;
 
@@ -191,9 +185,7 @@ public class BaseEntityDAO extends BaseDAO{
     }
 
     //UPDATE
-
-    public boolean updateTablePropertyValue(String table, String property, String value, String valueType, String whereProperty, String whereValue)
-    {
+    public boolean updateTablePropertyValue(String table, String property, String value, String valueType, String whereProperty, String whereValue) {
         ResultSet rs = null;
         Boolean executeSucces = false;
 
@@ -238,9 +230,7 @@ public class BaseEntityDAO extends BaseDAO{
     }
 
     //DELETE
-
-    public boolean softDeleteBaseEntity(int entityId)
-    {
+    public boolean softDeleteBaseEntity(int entityId) {
         ResultSet rs = null;
         Boolean executeSucces = false;
 
@@ -279,9 +269,7 @@ public class BaseEntityDAO extends BaseDAO{
     }
 
     //OTHER
-
-    public boolean doesUUIDExist(String tableToCheck, String UUID)
-    {
+    public boolean doesUUIDExist(String tableToCheck, String UUID) {
         ResultSet rs = null;
         Boolean uuidExists = false;
         String idFromTableToCheck ="id";
@@ -327,10 +315,7 @@ public class BaseEntityDAO extends BaseDAO{
             throw new RuntimeException(e.getMessage());
         }
     }
-
-
-    public static int runInsertQuery(String sqlQuery)
-    {
+    public static int runInsertQuery(String sqlQuery) {
         PreparedStatement preparedStatement = null;
         try {
 
@@ -371,10 +356,7 @@ public class BaseEntityDAO extends BaseDAO{
             }
         }
     }
-
-
-    public boolean isActive1(String tableToCheck, String UUID)
-    {
+    public boolean isActive1(String tableToCheck, String UUID) {
         ResultSet rs = null;
         Boolean activeIs1 = false;
         String idFromTableToCheck ="id";

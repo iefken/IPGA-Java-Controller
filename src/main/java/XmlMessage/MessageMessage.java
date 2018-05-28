@@ -61,7 +61,9 @@ public class MessageMessage {
 		footer = new Footer(checksum);
 		
 		m.marshal(this, sw);
-		
+
+		System.out.println("sw.toString(): "+sw.toString());
+
 		return sw.toString();
 	}
 	

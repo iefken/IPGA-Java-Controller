@@ -20,6 +20,8 @@ public class Event extends BaseEntity{
     private String GCAEventLink;
     private float price;
 
+
+    //CONSTRUCTORS
     public Event(int eventId, int entityVersion, int active, String timestamp,
                  String eventUUID, String eventName, int maxAttendees, String description, String summary,
                  String location, String contactPerson,String dateTimeStart, String dateTimeEnd, String type, float price) {
@@ -46,7 +48,7 @@ public class Event extends BaseEntity{
 
     public Event(int eventId, int entityVersion, int active, String timestamp,
                  String eventUUID, String eventName, int maxAttendees, String description, String summary,
-                 String location, String contactPerson,String dateTimeStart, String dateTimeEnd, String type, float price, boolean insertBaseEntity) {
+                 String location, String contactPerson, String dateTimeStart, String dateTimeEnd, String type, float price, boolean insertBaseEntity) {
 
         super(eventId, entityVersion, active, timestamp, insertBaseEntity);
 
@@ -118,8 +120,7 @@ public class Event extends BaseEntity{
     }
 
 
-    //INSERT INTO `PlanningDB`.`BaseEntity` (`entityId`, `entity_version`, `active`, `timestamp`, `timestampLastUpdated`, `timestampCreated`) VALUES (NULL, NULL, NULL, NULL, NULL, NULL);
-
+    //GETTER & SETTERS
     public int getEventId() {
         // get id from inherited class
         return this.getEntityId();
@@ -233,6 +234,7 @@ public class Event extends BaseEntity{
         this.GCAEventLink = eventLink;
     }
 
+    //OTHER
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

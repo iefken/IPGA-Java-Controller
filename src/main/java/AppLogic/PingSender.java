@@ -12,6 +12,7 @@ public class PingSender implements Runnable {
     private String timestamp;
     private int numberOfPings;
 
+    //sends ping message based on chosen time between pings.
     public PingSender(int timeBetweenPings) {
 
         //super();
@@ -21,6 +22,7 @@ public class PingSender implements Runnable {
         this.thisSourceType= Helper.SourceType.Monitor;
         //run();
     }
+    //sends ping message based on chosen time between pings and chosen number of pings.
     public PingSender(int timeBetweenPings, int numberOfPings) {
 
         //super();
@@ -30,6 +32,7 @@ public class PingSender implements Runnable {
         this.thisSourceType= Helper.SourceType.Monitor;
         //run();
     }
+    //sends ping message based on chosen ping id, sourceType and time between pings.
     public PingSender(int idPing, Helper.SourceType thisSourceType,int timeBetweenPings) {
 
         super();
@@ -43,6 +46,7 @@ public class PingSender implements Runnable {
         this.timestamp = Helper.getCurrentDateTimeStamp();
 
     }
+    //sneds ping message based on chosen ping id, sourceType and time between pings and number of pings.
     public PingSender(int idPing, Helper.SourceType thisSourceType,int timeBetweenPings, int numberOfPings) {
 
         super();
@@ -60,7 +64,7 @@ public class PingSender implements Runnable {
     }
 
 
-
+    //GETTERS & SETTERS
     public int getIdPing() {
         return idPing;
     }

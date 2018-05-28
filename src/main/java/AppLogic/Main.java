@@ -36,7 +36,6 @@ public class Main {
             }
         } catch (Exception e) {
             System.out.println("\n\nProcess terminated incorrectly: "+e+"\n\n");
-
             e.printStackTrace();
         }
     }//end main

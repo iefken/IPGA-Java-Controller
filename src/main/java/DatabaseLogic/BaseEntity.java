@@ -12,6 +12,8 @@ public class BaseEntity {
     private int active;
     private String timestamp;
 
+
+    //CONSTRUCTORS
     public BaseEntity(int entityId, int entityVersion, int active, String timestamp, boolean insertBaseEntity) {
 
         this.entityVersion = entityVersion;
@@ -19,7 +21,6 @@ public class BaseEntity {
         this.timestamp = timestamp;
         this.idBaseEntity = entityId;
     }
-
     public BaseEntity(int entityId, int entityVersion, int active, String timestamp) {
 
         this.entityVersion = entityVersion;
@@ -57,6 +58,8 @@ public class BaseEntity {
         }
     }
 
+
+    //GETTERS & SETTERS
     public int getEntityId() {
         return idBaseEntity;
     }
@@ -85,6 +88,7 @@ public class BaseEntity {
         this.timestamp = timestamp;
     }
 
+    //OTHER
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

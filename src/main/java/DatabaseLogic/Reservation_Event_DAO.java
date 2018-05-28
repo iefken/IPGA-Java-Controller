@@ -11,9 +11,7 @@ import java.sql.Statement;
 public class Reservation_Event_DAO extends BaseEntityDAO{
 
     //CRUD Statements
-
     //CREATE
-
     public int insertIntoReservation_Event(Reservation_Event reservation_event) throws SQLException {
 
         BaseEntity newBaseEntity = new BaseEntity(reservation_event.getEntityId(),reservation_event.getEntityVersion(),reservation_event.getActive(),reservation_event.getTimestamp());
@@ -47,7 +45,6 @@ public class Reservation_Event_DAO extends BaseEntityDAO{
     //READ
 
     //UPDATE
-
     public boolean updateReservationEventByObject (Reservation_Event newReservationEventFromMessage) {
 
         String sqlQuery = " UPDATE PlanningDB.Reservation_Event SET " +
@@ -100,7 +97,6 @@ public class Reservation_Event_DAO extends BaseEntityDAO{
     }
 
     //DELETE
-
 
 
     //OTHER
