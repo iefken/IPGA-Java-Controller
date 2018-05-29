@@ -1538,7 +1538,7 @@ public interface Helper {
                     } else {
                         // we have the latest version...
                         System.out.println("We already had this [Event] with entityVersion: '" + localEntityVersion + "'");
-                        if (thisEventInMessage.getEntityVersion() == 1 && getSafeXmlProperty(task, "messageSource") == "Planning") {
+                        if (thisEventInMessage.getEntityVersion() == 1 && getSafeXmlProperty(task, "source") == "Planning") {
                             System.out.println("TEST");
 
                             String newEventHtmlLinkAndId = null;

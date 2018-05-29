@@ -46,8 +46,8 @@
           <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="306">
-                  <caret line="1561" column="119" selection-start-line="1561" selection-start-column="119" selection-end-line="1561" selection-end-column="119" />
+                <state relative-caret-position="272">
+                  <caret line="1543" column="64" lean-forward="true" selection-start-line="1543" selection-start-column="64" selection-end-line="1543" selection-end-column="64" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -225,29 +225,28 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>pingm</find>
       <find>getx</find>
       <find>HEAD</find>
       <find>&quot;pingm</find>
       <find>&quot;task</find>
-      <find>case &quot;tas</find>
-      <find>case &quot;16</find>
+      <find />
+      <find />
       <find>2018-05-25T09:00</find>
       <find>getXmlForNewT</find>
       <find>getXmlForNew</find>
       <find>headerDescription</find>
       <find>upd</find>
-      <find>case &quot;11</find>
-      <find>Exception 1</find>
+      <find />
+      <find />
       <find>thisUserInMessage.getIdU</find>
-      <find>transform xml to u</find>
-      <find>new mess</find>
+      <find />
+      <find />
       <find>gettas</find>
-      <find>Start of</find>
+      <find />
       <find>System</find>
       <find>system.</find>
-      <find>in T</find>
-      <find>[.V.] No error message s</find>
+      <find />
+      <find />
       <find>&quot;userm</find>
       <find>join</find>
       <find>task</find>
@@ -255,6 +254,7 @@
       <find>&quot;t</find>
       <find>thisEntityToAdd</find>
       <find>handlenewmessagee</find>
+      <find>messagesou</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -589,12 +589,12 @@
       <workItem from="1527311046907" duration="4208000" />
       <workItem from="1527422170687" duration="3982000" />
       <workItem from="1527462616207" duration="7371000" />
-      <workItem from="1527588157237" duration="25941000" />
+      <workItem from="1527588157237" duration="26273000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="173763000" />
+    <option name="totallyTimeSpent" value="174095000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -1050,8 +1050,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="1561" column="119" selection-start-line="1561" selection-start-column="119" selection-end-line="1561" selection-end-column="119" />
+        <state relative-caret-position="272">
+          <caret line="1543" column="64" lean-forward="true" selection-start-line="1543" selection-start-column="64" selection-end-line="1543" selection-end-column="64" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
