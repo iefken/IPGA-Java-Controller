@@ -122,14 +122,24 @@ public class DatabaseBackupChecker implements Runnable {
                     // 2.2.1. get idUser from userUUID in User
                     String[] propertiesToSelect = {"*"};
                     String table = thisEntityToAdd.getTable();
-                    String[] selectors = {"id" + (thisEntityToAdd.getTable())};
+
+                    String tableForId = table;
+                    if(tableForId.equals("Reservation_Event") || tableForId.equals("Reservation_Session") || tableForId.equals("Assign_Task")  )
+                    {
+                        String[] splitter = table.split("_");
+                        tableForId = splitter[0]+splitter[1];
+                        System.out.println("tableForId: "+tableForId);
+                    }
+
+
+                    String[] selectors = {"id" + tableForId};
                     String[] values = {"" + thisEntityToAdd.getIdEntitiesToAdd()};
 
                     System.out.println("thisEntityToAdd: "+thisEntityToAdd.toString());
 
                     String[] selectResult = new String[0];
                     try {
-                        selectResult = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
+                        selectResult = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, tableForId, selectors, values);
                     } catch (Exception e) {
                         errorMessage += "[.!.] ERROR: getting select * from id[Table]: " + e + "\n";
                         e.printStackTrace();
@@ -451,7 +461,9 @@ public class DatabaseBackupChecker implements Runnable {
 
                             try {
                                 reservation_SessionFromDashboard = new Reservation_Session(Integer.parseInt(objectProperties[0]), thisEntityToAdd.getEntity_version(), thisEntityToAdd.getActive(), Helper.getCurrentDateTimeStamp(),
-                                        objectProperties[1], objectProperties[2], objectProperties[3], Float.parseFloat(objectProperties[3]),false);
+                                        objectProperties[1], objectProperties[2], objectProperties[3], Float.parseFloat(objectProperties[4]),false);
+
+
                             } catch (NumberFormatException e) {
                                 errorMessage += "[.!.] ERROR: setting Reservation_Session object:\n" + e + "\n";
                                 e.printStackTrace();

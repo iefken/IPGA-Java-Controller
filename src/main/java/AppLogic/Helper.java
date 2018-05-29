@@ -45,6 +45,10 @@ public interface Helper {
     String HOST_NAME_LINK = "10.3.50.38";
     int PORT_NUMBER = 5672;
     SourceType Source_type = SourceType.Planning;
+    //default
+    //String errorReceiver = "monitor-queue";
+    //testing
+    String errorReceiver = "planning-queue";
 
     //For setting mainCLI options in main
     static String[] getOptions() {
@@ -120,9 +124,6 @@ public interface Helper {
         };
         return options;
     }
-
-    //String errorReceiver="monitor-queue";
-    String errorREceiver="planning-queue";
 
 
     // MAIN CLI
@@ -1146,7 +1147,6 @@ public interface Helper {
         if (thisUserInMessage != null) {
 
             // 2.1 check if UUID exists in local db
-
             uuidExists = false;
             try {
                 uuidExists = new BaseEntityDAO().doesUUIDExist("User", userUuid);
@@ -1157,7 +1157,6 @@ public interface Helper {
             }
 
             // 2.1.1 check if user is to be 'deleted'
-
             if (uuidExists) {
 
                 System.out.println("Uuid already exists in our PlanningDB table:[User]\n");
@@ -1205,7 +1204,6 @@ public interface Helper {
                     }
 
                     // 3. update uuid master
-
                     int updateUuidRecordVersionResponse = 0;
                     if (allGood) {
                         try {
@@ -1228,8 +1226,6 @@ public interface Helper {
                     values[0] = selectResults[0];
 
                     int localEntityVersion = Integer.parseInt(new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0]);
-
-                    //System.out.println("localEntityVersion: "+localEntityVersion + " & thisUserInMessage.getEntityVersion():  "+thisUserInMessage.getEntityVersion());
 
                     try {
                         thisUserInMessage.setEntityId(Integer.parseInt(selectResults[0]));
@@ -1283,13 +1279,11 @@ public interface Helper {
                             }
 
                         } else {
-
                             System.out.println("We already had this [User] with entityVersion: '" + localEntityVersion + "'");
                         }
                         //if(localEntityVersion==1 && messageSource == Source_type.Pl)
                     }
                     System.out.println("We had this [User] with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisUserInMessage.getEntityVersion() + "'");
-
                 }
 
             } else {
@@ -1334,7 +1328,7 @@ public interface Helper {
 
             // 6. Send
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue", xmlTotalMessage);
+                Sender.publishXmlMessageToQueue(errorReceiver, xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
                 System.out.println("ERROR: handleNewMessageUser - message sender for errorMessage:");
                 e.printStackTrace();
@@ -1545,7 +1539,7 @@ public interface Helper {
 
             // 6. Send
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue", xmlTotalMessage);
+                Sender.publishXmlMessageToQueue(errorReceiver, xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
                 System.out.print("\nERROR: handleNewMessageEvent - message sender for errorMessage:\n");
                 e.printStackTrace();
@@ -1758,7 +1752,7 @@ public interface Helper {
             // 6. Send
 
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue",xmlTotalMessage);
+                Sender.publishXmlMessageToQueue(errorReceiver,xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
                 System.out.print("\nERROR: handleNewMessageSession - message sender for errorMessage:\n");
                 e.printStackTrace();
@@ -1976,7 +1970,7 @@ public interface Helper {
 
             // 6. Send
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue",xmlTotalMessage);
+                Sender.publishXmlMessageToQueue(errorReceiver,xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
                 System.out.print("\nERROR: handleNewMessageTask - message sender for errorMessage:\n");
                 e.printStackTrace();
@@ -2195,7 +2189,7 @@ public interface Helper {
 
             // 6. Send
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue",xmlTotalMessage);
+                Sender.publishXmlMessageToQueue(errorReceiver,xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
                 System.out.println("ERROR: handleNewMessageReservationEvent - message sender for errorMessage:");
                 e.printStackTrace();
@@ -2416,15 +2410,13 @@ public interface Helper {
             // 6. Send
 
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue",xmlTotalMessage);
+                Sender.publishXmlMessageToQueue(errorReceiver,xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
                 System.out.println("ERROR: handleNewMessageReservationEvent - message sender for errorMessage:");
                 e.printStackTrace();
             }
         }
     }
-
-    //TODO ERROR MESSAGE STUREN 4 hieronder
     //Handler for assigntaskmessage
     static void handleNewMessageAssignTask(String task, String errors) {
 
@@ -2435,7 +2427,7 @@ public interface Helper {
         Boolean uuidExists = false;
         Boolean allGood = true;
         String xmlTotalMessage = "";
-        String errorMessage = "";
+        String errorMessage = errors;
         String messageSource = getSafeXmlProperty(task,"source");
 
         EntityType thisEntityType = EntityType.AssignTask;
@@ -2465,7 +2457,6 @@ public interface Helper {
         if (uuidExists) {
 
             System.out.println("UUID already exists in our PlanningDB table:[Assign_Task]\n");
-
 
             // 2.2.1 get idSession from sessionUUID in Session
             String[] propertiesToSelect = {"idAssignTask"};
@@ -2505,7 +2496,6 @@ public interface Helper {
                     errorMessage += "[!!!] ERROR: handleNewMessageAssignTask - 3. updateUuidRecordVersion() (To UUID master) FAILED:\n" + e.toString() + "\n";
                     //e.printStackTrace();
                 }
-
 
             } else {
 
@@ -2576,7 +2566,6 @@ public interface Helper {
 
             // uuid doesn't exit locally yet
             // # insert record locally with given info
-
             // 1. Add employee to google calendar api event
             try {
                 GoogleCalenderApi.addEmployeeForTask(newAssign_TaskObjectFromXml.getTaskUuid(), newAssign_TaskObjectFromXml.getUserUuid());
@@ -2598,7 +2587,6 @@ public interface Helper {
                 errorMessage += "[!!!] ERROR: handleNewMessageAssignTask - \n" + e.toString() + "\n";
                 //e.printStackTrace();
             }
-
 
             try {
                 messageAssignTaskInsertReturner = new Assign_Task_DAO().insertIntoAssign_Task(newAssign_TaskObjectFromXml);
@@ -2636,7 +2624,7 @@ public interface Helper {
 
             // 6. Send
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue",xmlTotalMessage);
+                Sender.publishXmlMessageToQueue(errorReceiver,xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
                 System.out.println("ERROR: handleNewMessageAssignTask - message sender for errorMessage:");
                 e.printStackTrace();
@@ -3060,7 +3048,7 @@ public interface Helper {
             // 6. Send
 
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue",xmlTotalMessage);
+                Sender.publishXmlMessageToQueue(errorReceiver,xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
                 System.out.print("ERROR: getUserObjectFromXmlMessage - message sender for errorMessage: " + e);
             }
@@ -3297,7 +3285,7 @@ public interface Helper {
 
             // 6. Send
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue",xmlTotalMessage);
+                Sender.publishXmlMessageToQueue(errorReceiver,xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
                 System.out.print("ERROR: message sender for errorMessage: " + e.toString());
             }
@@ -3474,7 +3462,7 @@ public interface Helper {
             // 6. Send
 
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue",xmlTotalMessage);
+                Sender.publishXmlMessageToQueue(errorReceiver,xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
                 System.out.print("ERROR: getTaskObjectFromXmlMessage - message sender for errorMessage: " + e.toString());
             }
@@ -3678,7 +3666,7 @@ public interface Helper {
             // 6. Send
 
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue", xmlTotalMessage);
+                Sender.publishXmlMessageToQueue(errorReceiver, xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
                 System.out.print("ERROR: getEventObjectFromXmlMessage - message sender for errorMessage: " + e.toString());
             }
@@ -3824,7 +3812,7 @@ public interface Helper {
 
             // 6. Send
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue", xmlTotalMessage);
+                Sender.publishXmlMessageToQueue(errorReceiver, xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
                 System.out.print("ERROR: getReservation_SessionObjectFromXmlMessage - message sender for errorMessage: " + e.toString());
                 e.printStackTrace();
@@ -3958,7 +3946,7 @@ public interface Helper {
 
             // 6. Send
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue", xmlTotalMessage);
+                Sender.publishXmlMessageToQueue(errorReceiver, xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
                 System.out.print("ERROR: getAssign_TaskObjectFromXmlMessage - message sender for errorMessage: " + e.toString());
                 e.printStackTrace();
@@ -4106,7 +4094,7 @@ public interface Helper {
             // 6. Send
 
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue", xmlTotalMessage);
+                Sender.publishXmlMessageToQueue(errorReceiver, xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
                 System.out.print("ERROR: message sender for errorMessage: " + e);
                 //e.printStackTrace();
@@ -4193,7 +4181,7 @@ public interface Helper {
             // 6. Send
 
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue", xmlTotalMessage);
+                Sender.publishXmlMessageToQueue(errorReceiver, xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
                 System.out.print("ERROR: message sender for errorMessage: " + e);
             }

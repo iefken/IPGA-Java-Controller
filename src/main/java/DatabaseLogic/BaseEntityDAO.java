@@ -101,12 +101,7 @@ public class BaseEntityDAO extends BaseDAO{
         ResultSet rs = null;
         BaseEntity thisBaseEntity = null;
 
-        if(table == "Reservation_Event" || table == "Reservation_Session" || table == "Assign_Task"  )
-        {
-            String[] splitter = table.split("_");
-            table = splitter[0]+splitter[1];
-        }
-
+        System.out.println("table: "+table);
         String sql = "SELECT ";
         for (int i=0;i<propertiesToSelect.length;i++)
         {
