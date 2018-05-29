@@ -1562,6 +1562,8 @@ public interface Helper {
                                 System.out.println("Something went wrong updating event: "+thisEventInMessage.toString());
                             }
 
+                        }else{
+                            System.out.println("thisEventInMessage.getEntityVersion(): "+thisEventInMessage.getEntityVersion()+ "getSafeXmlProperty(task, 'source'): "+getSafeXmlProperty(task, "source"));
                         }
                     }
                 }
