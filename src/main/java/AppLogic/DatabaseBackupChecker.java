@@ -123,38 +123,33 @@ public class DatabaseBackupChecker implements Runnable {
                     String[] propertiesToSelect = {"*"};
                     String table = thisEntityToAdd.getTable();
 
-                    String tableForId = table;
-                    if(tableForId.equals("Reservation_Event") || tableForId.equals("Reservation_Session") || tableForId.equals("Assign_Task")  )
-                    {
-                        String[] splitter = table.split("_");
-                        tableForId = splitter[0]+splitter[1];
-                        System.out.println("tableForId: "+tableForId);
-                    }
 
 
-                    String[] selectors = {"id" + tableForId};
+                    String[] selectors = {"id" + table};
                     String[] values = {"" + thisEntityToAdd.getIdEntitiesToAdd()};
 
-                    System.out.println("thisEntityToAdd: "+thisEntityToAdd.toString());
+                    //System.out.println("thisEntityToAdd: "+thisEntityToAdd.toString());
 
                     String[] selectResult = new String[0];
                     try {
-                        selectResult = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, tableForId, selectors, values);
+                        selectResult = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
                     } catch (Exception e) {
                         errorMessage += "[.!.] ERROR: getting select * from id[Table]: " + e + "\n";
                         e.printStackTrace();
                     }
 //
+/*
                     System.out.println("3. Check: " + i);
 
                     System.out.println("selectresults.length: " + selectResult.length);
                     System.out.println("selectresults['last']: " + selectResult[selectResult.length-1]);
+*/
 
                     String[] objectProperties = new String[0];
                     try {
                         String objectString = selectResult[selectResult.length - 1];
 
-                        System.out.println("ObjectSTring: "+objectString);
+                        //System.out.println("ObjectSTring: "+objectString);
                         objectProperties = objectString.split("', '");
                     } catch (Exception e) {
                         System.out.println("Error: "+e);
