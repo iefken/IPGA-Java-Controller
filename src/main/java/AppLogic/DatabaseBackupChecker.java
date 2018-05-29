@@ -168,20 +168,26 @@ public class DatabaseBackupChecker implements Runnable {
                             // 1. setup object
 
                             User userFromDashboard = null;
+
+                            // 1.2. Check if active = 0
+
+
                             try {
-                                userFromDashboard = new User(0, 1, 1, Helper.getCurrentDateTimeStamp(),
-                                        objectProperties[0], objectProperties[1], objectProperties[2], objectProperties[3], objectProperties[4],
+                                userFromDashboard = new User(Integer.parseInt(objectProperties[0]), 1, 1, Helper.getCurrentDateTimeStamp(),
+                                        objectProperties[1], objectProperties[2], objectProperties[3], objectProperties[4],
                                         objectProperties[5], objectProperties[6], objectProperties[7], objectProperties[8], objectProperties[9],
-                                        objectProperties[10], objectProperties[11], false);
+                                        objectProperties[10], objectProperties[11],objectProperties[12], false);
                             } catch (NumberFormatException e) {
                                 errorMessage += "[.!.] ERROR: setting User object:\n" + e + "\n";
                                 e.printStackTrace();
                                 break;
                             }
 
+                            System.out.println("User object from Dashboard (planning db EntitiesToAdd) => RabbitMQ:\n" +
+                                    "userFromDashboard.toString(): "+userFromDashboard.toString());
                             // 2. send to rmq
-
                             String xmlMessage = "";
+/*
                             try {
                                 xmlMessage = Helper.getXmlFromUserObject("", thisSourceType, userFromDashboard);
                             } catch (JAXBException e) {
@@ -214,7 +220,7 @@ public class DatabaseBackupChecker implements Runnable {
                                     errorMessage += "[.!.] ERROR: Something went wrong publishing error xml message to the exchange:\n" + e + "\n";
                                     e.printStackTrace();
                                 }
-                            }
+                            }*/
 
                             break;
 
@@ -226,12 +232,12 @@ public class DatabaseBackupChecker implements Runnable {
                             Event eventFromDashboard = null;
                             float thisEventPrice = 0;
 
-                            System.out.println("objectProperties[11]: "+objectProperties[10]);
-                            if (objectProperties[10] == "0" || objectProperties[10] == null) {
+                            System.out.println("objectProperties[11]: "+objectProperties[11]);
+                            if (objectProperties[11] == "0" || objectProperties[11] == null) {
                                 eventFromDashboard.setPrice(0);
                             } else {
                                 try {
-                                    thisEventPrice = Float.parseFloat(objectProperties[10]);
+                                    thisEventPrice = Float.parseFloat(objectProperties[11]);
                                 } catch (NumberFormatException e) {
 
                                     errorMessage += "[.!.] ERROR: setting Session object:\n" + e + "\n";
@@ -240,19 +246,21 @@ public class DatabaseBackupChecker implements Runnable {
 
                                 }
                             }
-                            Float.parseFloat(objectProperties[10]);
+
+                            System.out.println("Prop[0] (id): "+objectProperties[0]+" , prop[1]: "+objectProperties[1]);
 
                             try {
-                                eventFromDashboard = new Event(0, 1, 1, Helper.getCurrentDateTimeStamp(),
-                                        objectProperties[0], objectProperties[1], Integer.parseInt(objectProperties[2]), objectProperties[3], objectProperties[4],
+                                eventFromDashboard = new Event(Integer.parseInt(objectProperties[0]), 1, 1, Helper.getCurrentDateTimeStamp(),
+                                        objectProperties[1], objectProperties[2], Integer.parseInt(objectProperties[3]), objectProperties[4],
                                         objectProperties[5], objectProperties[6], objectProperties[7], objectProperties[8], objectProperties[9],
-                                        thisEventPrice, objectProperties[11], objectProperties[12], false);
+                                        objectProperties[10], thisEventPrice, objectProperties[12], objectProperties[13], false);
                             } catch (NumberFormatException e) {
                                 errorMessage += "[.!.] ERROR: setting event object:\n" + e + "\n";
                                 e.printStackTrace();
                                 break;
                             }
                             // 2. send to rmq
+
                             xmlMessage = "";
                             try {
                                 xmlMessage = Helper.getXmlFromEventObject("", thisSourceType, eventFromDashboard);
@@ -316,10 +324,10 @@ public class DatabaseBackupChecker implements Runnable {
                             }
                             try {
 
-                                sessionFromDashboard = new Session(0, 1, 1, Helper.getCurrentDateTimeStamp(),
-                                        objectProperties[0], objectProperties[1], objectProperties[2], Integer.parseInt(objectProperties[3]), objectProperties[4],
+                                sessionFromDashboard = new Session(Integer.parseInt(objectProperties[0]), 1, 1, Helper.getCurrentDateTimeStamp(),
+                                        objectProperties[1], objectProperties[2], objectProperties[3], Integer.parseInt(objectProperties[4]),
                                         objectProperties[5], objectProperties[6], objectProperties[7], objectProperties[8], objectProperties[9],
-                                        objectProperties[10], objectProperties[14], objectProperties[15], thisSessionPrice, false);
+                                        objectProperties[10], objectProperties[14], objectProperties[15], objectProperties[16], thisSessionPrice, false);
 
                             } catch (NumberFormatException e) {
 
@@ -374,18 +382,33 @@ public class DatabaseBackupChecker implements Runnable {
                             break;
 
 
-/*
                         case "Reservation_Event":
 
                             System.out.println("In Reservation_Event case!");
-                            // TODO
+                            // TODO TEST THIS
 
                             // 1. setup object
 
-                            //User userFromDashboard = new User(objectProperties[0],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1])
+                            Reservation_Event reservation_EventFromDashboard = null;
 
+                            try {
+                                reservation_EventFromDashboard = new Reservation_Event(Integer.parseInt(objectProperties[0]), 1, 1, Helper.getCurrentDateTimeStamp(),
+                                        objectProperties[1], objectProperties[2], objectProperties[3], Float.parseFloat(objectProperties[4]),false);
+                            } catch (NumberFormatException e) {
+                                errorMessage += "[.!.] ERROR: setting Reservation_Event object:\n" + e + "\n";
+                                e.printStackTrace();
+                                break;
+                            }
                             // 2. send to rmq
 
+                            xmlMessage = "";
+                            try {
+                                xmlMessage = Helper.getXmlFromReservation_EventObject("", thisSourceType, reservation_EventFromDashboard);
+                            } catch (JAXBException e) {
+                                errorMessage += "[.!.] ERROR: getting xml from Reservation_Event object: xmlMessage: " + xmlMessage + "\nError:\n" + e + "\n";
+                                e.printStackTrace();
+                                break;
+                            }
                             // 3. check if an error was catched
                             if(errorMessage!="")
                             {
@@ -413,14 +436,32 @@ public class DatabaseBackupChecker implements Runnable {
                         case "Reservation_Session":
 
                             System.out.println("In Reservation_Session case!");
-                            // TODO
+                            // TODO TEST THIS
 
                             // 1. setup object
 
+                            Reservation_Session reservation_SessionFromDashboard = null;
+
+                            try {
+                                reservation_SessionFromDashboard = new Reservation_Session(Integer.parseInt(objectProperties[0]), 1, 1, Helper.getCurrentDateTimeStamp(),
+                                        objectProperties[1], objectProperties[2], objectProperties[3], Float.parseFloat(objectProperties[3]),false);
+                            } catch (NumberFormatException e) {
+                                errorMessage += "[.!.] ERROR: setting Reservation_Session object:\n" + e + "\n";
+                                e.printStackTrace();
+                                break;
+                            }
                             //User userFromDashboard = new User(objectProperties[0],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1])
 
                             // 2. send to rmq
 
+                            xmlMessage = "";
+                            try {
+                                xmlMessage = Helper.getXmlFromReservation_SessionObject("", thisSourceType, reservation_SessionFromDashboard);
+                            } catch (JAXBException e) {
+                                errorMessage += "[.!.] ERROR: getting xml from Reservation_Session object: xmlMessage: " + xmlMessage + "\nError:\n" + e + "\n";
+                                e.printStackTrace();
+                                break;
+                            }
                             // 3. check if an error was catched
                             if(errorMessage!="")
                             {
@@ -448,14 +489,30 @@ public class DatabaseBackupChecker implements Runnable {
                         case "Task":
 
                             System.out.println("In Task case!");
-                            // TODO
+                            // TODO TEST THIS
 
                             // 1. setup object
 
-                            //User userFromDashboard = new User(objectProperties[0],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1])
+                            Task taskFromDashboard = null;
+
+                            try {
+                                taskFromDashboard = new Task(Integer.parseInt(objectProperties[0]), 1, 1, Helper.getCurrentDateTimeStamp(),
+                                        objectProperties[1], objectProperties[2], objectProperties[3], objectProperties[4], objectProperties[5], false);
+                            } catch (NumberFormatException e) {
+                                errorMessage += "[.!.] ERROR: setting event object:\n" + e + "\n";
+                                e.printStackTrace();
+                                break;
+                            }
 
                             // 2. send to rmq
-
+                            xmlMessage = "";
+                            try {
+                                xmlMessage = Helper.getXmlFromTaskObject("", thisSourceType, taskFromDashboard);
+                            } catch (JAXBException e) {
+                                errorMessage += "[.!.] ERROR: getting xml from Session object: xmlMessage: " + xmlMessage + "\nError:\n" + e + "\n";
+                                e.printStackTrace();
+                                break;
+                            }
                             // 3. check if an error was catched
                             if(errorMessage!="")
                             {
@@ -483,14 +540,32 @@ public class DatabaseBackupChecker implements Runnable {
                         case "Assign_Task":
 
                             System.out.println("In Assign_Task case!");
-                            // TODO
+                            // TODO TEST THIS
 
                             // 1. setup object
 
+                            Assign_Task assign_TaskFromDashboard = null;
+
+                            try {
+                                assign_TaskFromDashboard = new Assign_Task(Integer.parseInt(objectProperties[0]), 1, 1, Helper.getCurrentDateTimeStamp(),
+                                        objectProperties[1], objectProperties[2], objectProperties[3], false);
+                            } catch (NumberFormatException e) {
+                                errorMessage += "[.!.] ERROR: setting event object:\n" + e + "\n";
+                                e.printStackTrace();
+                                break;
+                            }
                             //User userFromDashboard = new User(objectProperties[0],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1])
 
                             // 2. send to rmq
 
+                            xmlMessage = "";
+                            try {
+                                xmlMessage = Helper.getXmlFromAssign_TaskObject("", thisSourceType, assign_TaskFromDashboard);
+                            } catch (JAXBException e) {
+                                errorMessage += "[.!.] ERROR: getting xml from Session object: xmlMessage: " + xmlMessage + "\nError:\n" + e + "\n";
+                                e.printStackTrace();
+                                break;
+                            }
                             // 3. check if an error was catched
                             if(errorMessage!="")
                             {
@@ -515,20 +590,22 @@ public class DatabaseBackupChecker implements Runnable {
                             System.out.println("Getting entities for table '" + table + "' is not worked out yet!");
 
                             break;
-*/
+                        /**/
 
                     }
 
 
                     // last: update EntitiesToAdd record 'status' to UPTODATE
-                    try {
-                        // updateTablePropertyValue(String table, String property, String value, String valueType, String whereProperty, String whereValue) {
-                        if (!new BaseEntityDAO().updateTablePropertyValue("EntitiesToAdd", "status", "UPTODATE", "String", "idEntitiesToAdd", "" + thisEntityToAdd.getIdEntitiesToAdd())) {
-                            errorMessage += "[.!.] ERROR: updating table with id '" + thisEntityToAdd.getIdEntitiesToAdd() + "'";
+                    if(errorMessage=="") {
+                        try {
+                            // updateTablePropertyValue(String table, String property, String value, String valueType, String whereProperty, String whereValue) {
+                            if (!new BaseEntityDAO().updateTablePropertyValue("EntitiesToAdd", "status", "UPTODATE", "String", "idEntitiesToAdd", "" + thisEntityToAdd.getIdEntitiesToAdd())) {
+                                errorMessage += "[.!.] ERROR: updating table with id '" + thisEntityToAdd.getIdEntitiesToAdd() + "'";
+                            }
+                        } catch (Exception e) {
+                            errorMessage += "[.!.] ERROR: Exception during updateTablePropertyValue:\n " + e + "\n ";
+                            e.printStackTrace();
                         }
-                    } catch (Exception e) {
-                        errorMessage += "[.!.] ERROR: Exception during updateTablePropertyValue:\n " + e + "\n ";
-                        e.printStackTrace();
                     }
 /*
                     if(thisEntityToAdd){

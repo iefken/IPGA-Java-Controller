@@ -992,7 +992,7 @@ public interface Helper {
 
         if (!isPingMessage) {
             System.out.println("_________________________________________________________________________________");
-            System.out.println("_________________________START OF KUTMESSAGE________________________________________");
+            System.out.println("_________________________START OF MESSAGE________________________________________");
             System.out.println("* [.i.] [NEW MESSAGE]: " + workCounter + " [TYPE]: '" + messageType + "' [FROM]: '" + messageSource + "' [.i.] ");
             //System.out.println("* [.i.] ********* [TYPE]: '" + messageType + "' [FROM]: '" + messageSource + "' ****** [.i.] *");
             System.out.println("* [.i.] ** [@] '" + getCurrentDateTimeStamp() + "' [MESSAGELENGTH]: '" + task.length() + "' characters ** [.i.] ");
@@ -1100,6 +1100,7 @@ public interface Helper {
             case "creditnotemessage":
             case "invitemessage":
             case "invoicemessage":
+            case "vatmessage":
 
                 showFullXMLMessage = false;
                 System.out.println(" [" + messageType + "] Received from " + getSafeXmlProperty(task, "source"));
@@ -1280,23 +1281,24 @@ public interface Helper {
 
                         // 2.3.3. updateUuidRecordVersion() (To UUID master)
 
-                        int updateUuidRecordVersionResponse = 0;
-                        if (allGood) {
-                            try {
-                                updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, userUuid);
-                            } catch (IOException | TimeoutException | JAXBException e) {
-                                errorMessage += " [!!!] ERROR: updateUuidRecordVersion FAILED \n" + e.toString() + "\n";
-                                System.out.println(" [!!!] ERROR: updateUuidRecordVersion FAILED \n" + e.toString());
-                            }
-                        } else {
-                            errorMessage +=" [!!!] ERROR: updatingUserByObject FAILED\n";
-                            System.out.println(" [!!!] ERROR: updatingUserByObject FAILED");
-                        }
-                        System.out.println("We had this [User] with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisUserInMessage.getEntityVersion() + "'");
 
                     } else {
                         System.out.println("We already had this [User] with entityVersion: '" + localEntityVersion + "'");
                     }
+                    int updateUuidRecordVersionResponse = 0;
+                    if (allGood) {
+                        try {
+                            updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, userUuid);
+                        } catch (IOException | TimeoutException | JAXBException e) {
+                            errorMessage += " [!!!] ERROR: updateUuidRecordVersion FAILED \n" + e.toString() + "\n";
+                            System.out.println(" [!!!] ERROR: updateUuidRecordVersion FAILED \n" + e.toString());
+                        }
+                    } else {
+                        errorMessage +=" [!!!] ERROR: updatingUserByObject FAILED\n";
+                        System.out.println(" [!!!] ERROR: updatingUserByObject FAILED");
+                    }
+                    System.out.println("We had this [User] with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisUserInMessage.getEntityVersion() + "'");
+
                 }
 
             } else {
@@ -1704,7 +1706,6 @@ public interface Helper {
                         } else {
                             //updateEventError
                         }
-
 
                         System.out.println("We had this [Session] with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisSessionInMessage.getEntityVersion() + "'");
 
@@ -3148,6 +3149,7 @@ public interface Helper {
 
         String taskUuid = "false";
         String eventUuid = "false";
+        String taskName = "false";
         String description = "false";
         String dateTimeStart = "false";
         String dateTimeEnd = "false";
@@ -3182,6 +3184,12 @@ public interface Helper {
             allGood = false;
         }
 
+        taskName = getSafeXmlProperty(xmlMessage, "taskName");
+        if (description == "false") {
+            System.out.println(" [!!!] ERROR: No taskName found in XML: ");
+            errorMessage += " [!!!] ERROR: No taskName found in XML:\n";
+            allGood = false;
+        }
 
         description = getSafeXmlProperty(xmlMessage, "description");
         if (description == "false") {
