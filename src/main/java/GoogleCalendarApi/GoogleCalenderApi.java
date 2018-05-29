@@ -53,13 +53,13 @@ public class GoogleCalenderApi {
 
     // For local deployment
     private static final String thisRepo = System.getProperty("user.dir");
-    // private static final java.io.File DATA_STORE_DIR = new java.io.File("C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
+    private static final java.io.File DATA_STORE_DIR = new java.io.File("C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
 
     // private static java.io.File DATA_STORE_DIR = new java.io.File(thisRepo + "/out/calendar-integration-groupA-java");
     // private static final java.io.File DATA_STORE_DIR = new java.io.File( "C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
 
     // For server deployment
-    private static java.io.File DATA_STORE_DIR = new java.io.File(thisRepo + "/../../calendar-integration-groupA-java");
+    //private static java.io.File DATA_STORE_DIR = new java.io.File(thisRepo + "/../../calendar-integration-groupA-java");
 
     /**
      * Global instance of the {@link FileDataStoreFactory}.
@@ -253,7 +253,6 @@ public class GoogleCalenderApi {
 
         String dts = newSession.getDateTimeStart() + ":00+02:00";
         String dte = newSession.getDateTimeEnd() + ":00+02:00";
-
 
         DateTime startDateTime = new DateTime(dts);
         EventDateTime start = new EventDateTime()

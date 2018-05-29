@@ -20,6 +20,8 @@ public class BaseRMQ {
     private int portNumber = 5672;
 
     private static String TASK_QUEUE_NAME = ("" + yourSourceType).toLowerCase() + "-queue";
+    //private static String TASK_QUEUE_NAME = "kassa-queue";
+
     //TASK_QUEUE_NAME = "test-queue"
     private static String currentExchangeName = "rabbitexchange";
 

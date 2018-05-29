@@ -132,12 +132,12 @@ public class DatabaseBackupChecker implements Runnable {
                         errorMessage += "[.!.] ERROR: getting select * from id[Table]: " + e + "\n";
                         e.printStackTrace();
                     }
-/*
+
                     System.out.println("3. Check: " + i);
 
                     System.out.println("selectresults.length: " + selectResult.length);
                     System.out.println("selectresults['last']: " + selectResult[selectResult.length-1]);
-                    */
+
                     String[] objectProperties = new String[0];
                     try {
                         String objectString = selectResult[selectResult.length - 1];
@@ -147,14 +147,14 @@ public class DatabaseBackupChecker implements Runnable {
                         System.out.println("Error: "+e);
                         e.printStackTrace();
                     }
-/*
+
                     int counter=0;
                     for(String property: objectProperties)
                     {
                         counter++;
 
                         System.out.println(counter+". property: "+property);
-                    }*/
+                    }
 
                     // send rabbitMQ message
 
@@ -222,12 +222,31 @@ public class DatabaseBackupChecker implements Runnable {
 
                             System.out.println("In Event case!");
                             // 1. setup object
+
                             Event eventFromDashboard = null;
+                            float thisEventPrice = 0;
+
+                            System.out.println("objectProperties[11]: "+objectProperties[10]);
+                            if (objectProperties[10] == "0" || objectProperties[10] == null) {
+                                eventFromDashboard.setPrice(0);
+                            } else {
+                                try {
+                                    thisEventPrice = Float.parseFloat(objectProperties[10]);
+                                } catch (NumberFormatException e) {
+
+                                    errorMessage += "[.!.] ERROR: setting Session object:\n" + e + "\n";
+                                    e.printStackTrace();
+                                    break;
+
+                                }
+                            }
+                            Float.parseFloat(objectProperties[10]);
+
                             try {
                                 eventFromDashboard = new Event(0, 1, 1, Helper.getCurrentDateTimeStamp(),
                                         objectProperties[0], objectProperties[1], Integer.parseInt(objectProperties[2]), objectProperties[3], objectProperties[4],
                                         objectProperties[5], objectProperties[6], objectProperties[7], objectProperties[8], objectProperties[9],
-                                        Float.parseFloat(objectProperties[10]), objectProperties[11], objectProperties[12], false);
+                                        thisEventPrice, objectProperties[11], objectProperties[12], false);
                             } catch (NumberFormatException e) {
                                 errorMessage += "[.!.] ERROR: setting event object:\n" + e + "\n";
                                 e.printStackTrace();
@@ -274,21 +293,19 @@ public class DatabaseBackupChecker implements Runnable {
                         case "Session":
 
                             System.out.println("In Session case!");
-                            // TODO
 
                             // 1. setup object
 
                             Session sessionFromDashboard = null;
 
-
                             float thisSessionPrice = 0;
 
-                            System.out.println("objectProperties[13]: "+objectProperties[13]);
-                            if (objectProperties[13] == "0" || objectProperties[13] == null) {
+                            System.out.println("objectProperties[11]: "+objectProperties[11]);
+                            if (objectProperties[11] == "0" || objectProperties[11] == null) {
                                 sessionFromDashboard.setPrice(0);
                             } else {
                                 try {
-                                    thisSessionPrice = Float.parseFloat(objectProperties[13]);
+                                    thisSessionPrice = Float.parseFloat(objectProperties[11]);
                                 } catch (NumberFormatException e) {
 
                                     errorMessage += "[.!.] ERROR: setting Session object:\n" + e + "\n";
@@ -302,7 +319,7 @@ public class DatabaseBackupChecker implements Runnable {
                                 sessionFromDashboard = new Session(0, 1, 1, Helper.getCurrentDateTimeStamp(),
                                         objectProperties[0], objectProperties[1], objectProperties[2], Integer.parseInt(objectProperties[3]), objectProperties[4],
                                         objectProperties[5], objectProperties[6], objectProperties[7], objectProperties[8], objectProperties[9],
-                                        objectProperties[10], objectProperties[11], objectProperties[12], thisSessionPrice, false);
+                                        objectProperties[10], objectProperties[14], objectProperties[15], thisSessionPrice, false);
 
                             } catch (NumberFormatException e) {
 
