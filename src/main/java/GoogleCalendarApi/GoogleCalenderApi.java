@@ -112,9 +112,9 @@ public class GoogleCalenderApi {
 
             System.out.println();
             String test = DATA_STORE_DIR.getAbsolutePath() + "/client_secret.json";
-
+/*
             System.out.println("1. "+DATA_STORE_DIR.getAbsolutePath()+"\n");
-            System.out.println("2. "+test+"\n");
+            System.out.println("2. "+test+"\n");*/
             //System.out.println("thisRepo : " + thisRepo);
             in = new FileInputStream(test);
             //in = new FileInputStream("C:/Users/ief.falot/.credentials/client_secret.json");
@@ -174,7 +174,7 @@ public class GoogleCalenderApi {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+//        System.out.println("Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
     }
 
