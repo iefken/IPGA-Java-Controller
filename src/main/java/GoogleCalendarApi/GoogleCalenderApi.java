@@ -110,7 +110,11 @@ public class GoogleCalenderApi {
 
         try {
 
+            System.out.println();
             String test = DATA_STORE_DIR.getAbsolutePath() + "/client_secret.json";
+
+            System.out.println("1. "+DATA_STORE_DIR.getAbsolutePath()+"\n");
+            System.out.println("2. "+test+"\n");
             //System.out.println("thisRepo : " + thisRepo);
             in = new FileInputStream(test);
             //in = new FileInputStream("C:/Users/ief.falot/.credentials/client_secret.json");
@@ -120,10 +124,11 @@ public class GoogleCalenderApi {
             try {
 
                 java.io.File DATA_STORE_DIR2 = new java.io.File(thisRepo + "/../../calendar-integration-groupA-java");
-
+                System.out.println("3. TC: "+DATA_STORE_DIR.getAbsolutePath()+"\n");
                 in = new FileInputStream(DATA_STORE_DIR2.getAbsolutePath() + "/client_secret.json");
             } catch (FileNotFoundException ee) {
                 System.out.print("\n<Exception 2:> " + ee);
+                System.out.println("3. TC: "+in.toString()+"\n");
                 //ee.printStackTrace();
             }
         }
