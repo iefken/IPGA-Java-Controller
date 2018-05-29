@@ -53,13 +53,13 @@ public class GoogleCalenderApi {
 
     // For local deployment
     private static final String thisRepo = System.getProperty("user.dir");
-    private static final java.io.File DATA_STORE_DIR = new java.io.File("C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
+    //private static final java.io.File DATA_STORE_DIR = new java.io.File("C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
 
     // private static java.io.File DATA_STORE_DIR = new java.io.File(thisRepo + "/out/calendar-integration-groupA-java");
     // private static final java.io.File DATA_STORE_DIR = new java.io.File( "C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
 
     // For server deployment
-//    private static java.io.File DATA_STORE_DIR = new java.io.File(thisRepo + "/../../calendar-integration-groupA-java");
+    private static java.io.File DATA_STORE_DIR = new java.io.File(thisRepo + "/../../calendar-integration-groupA-java");
 
     /**
      * Global instance of the {@link FileDataStoreFactory}.
@@ -247,7 +247,7 @@ public class GoogleCalenderApi {
 
         com.google.api.services.calendar.Calendar service = getCalendarService();
         Event event = new Event()
-                .setSummary(newSession.getSessionName()+":")
+                .setSummary(newSession.getSessionName()+" :")
                 .setLocation(newSession.getLocation())
                 .setDescription("Summary: "+newSession.getSummary()+". Description: "+newSession.getDescription());
 

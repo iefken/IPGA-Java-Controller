@@ -53,7 +53,7 @@ WHERE `status` !="UPTODATE";
 
                     EntitiesToAdd newEntityToAdd = null;
                     try {
-                        newEntityToAdd = new EntitiesToAdd(rs.getInt("idEntitiesToAdd"),rs.getString("table"),EntitiesToAdd.EntityToAddStatus.valueOf(rs.getString("status")));
+                        newEntityToAdd = new EntitiesToAdd(rs.getInt("idEntitiesToAdd"),rs.getString("table"),EntitiesToAdd.EntityToAddStatus.valueOf(rs.getString("status")), rs.getInt("entity_version"),rs.getInt("active"));
                     } catch (SQLException e) {
                         System.out.println("Error: 'SQLException' while getting EntitiesToAdd from rs: "+e);
                         e.printStackTrace();
