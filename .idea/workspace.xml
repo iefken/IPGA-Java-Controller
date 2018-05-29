@@ -63,17 +63,43 @@
     <window id="1">
       <content type="file-editors">
         <state>
-          <leaf>
-            <file leaf-file-name="DatabaseBackupChecker.java" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="423">
-                    <caret line="276" lean-forward="true" selection-start-line="276" selection-end-line="276" />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
+          <splitter split-orientation="horizontal" split-proportion="0.5">
+            <split-first>
+              <leaf>
+                <file leaf-file-name="DatabaseBackupChecker.java" pinned="false" current-in-tab="true">
+                  <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
+                    <provider selected="true" editor-type-id="text-editor">
+                      <state relative-caret-position="-2397">
+                        <caret line="133" column="59" selection-start-line="133" selection-start-column="59" selection-end-line="133" selection-end-column="59" />
+                      </state>
+                    </provider>
+                  </entry>
+                </file>
+                <file leaf-file-name="Helper.java" pinned="false" current-in-tab="false">
+                  <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
+                    <provider selected="true" editor-type-id="text-editor">
+                      <state relative-caret-position="17">
+                        <caret line="1277" column="33" lean-forward="true" selection-start-line="1277" selection-start-column="33" selection-end-line="1277" selection-end-column="33" />
+                      </state>
+                    </provider>
+                  </entry>
+                </file>
+              </leaf>
+            </split-first>
+            <split-second>
+              <leaf>
+                <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
+                  <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
+                    <provider selected="true" editor-type-id="text-editor">
+                      <state relative-caret-position="17">
+                        <caret line="1277" column="33" selection-start-line="1277" selection-start-column="33" selection-end-line="1277" selection-end-column="33" />
+                      </state>
+                    </provider>
+                  </entry>
+                </file>
+              </leaf>
+            </split-second>
+          </splitter>
         </state>
       </content>
     </window>
@@ -86,8 +112,8 @@
       <file leaf-file-name="BaseEntityDAO.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="255" column="42" lean-forward="true" selection-start-line="255" selection-start-column="42" selection-end-line="255" selection-end-column="42" />
+            <state relative-caret-position="90">
+              <caret line="103" selection-start-line="103" selection-end-line="103" />
             </state>
           </provider>
         </entry>
@@ -103,9 +129,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>&quot;task</find>
-      <find>case &quot;tas</find>
-      <find>case &quot;16</find>
       <find>2018-05-25T09:00</find>
       <find>getXmlForNewT</find>
       <find>getXmlForNew</find>
@@ -133,6 +156,9 @@
       <find>message seems to</find>
       <find>&quot;res</find>
       <find>&quot;_&quot;</find>
+      <find>assign</find>
+      <find>id+</find>
+      <find>getPropertyValueByTableAndProperty</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -405,7 +431,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="180134000" />
+    <option name="totallyTimeSpent" value="181216000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3528" y="-8" width="1936" height="1056" extended-state="6" />
@@ -418,10 +444,10 @@
       <window_info anchor="right" id="Maven Projects" order="5" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5424403" visible="true" weight="0.6721133" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5424403" weight="0.5577342" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.4989339" weight="0.41463414" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.73519737" visible="true" weight="0.16897655" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.73519737" visible="true" weight="0.16897655" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info id="Structure" order="1" sideWeight="0.26480263" side_tool="true" weight="0.1625964" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -827,25 +853,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-192">
+        <state relative-caret-position="17">
           <caret line="1277" column="33" lean-forward="true" selection-start-line="1277" selection-start-column="33" selection-end-line="1277" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="276" lean-forward="true" selection-start-line="276" selection-end-line="276" />
+        <state relative-caret-position="-2397">
+          <caret line="133" column="59" selection-start-line="133" selection-start-column="59" selection-end-line="133" selection-end-column="59" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="255" column="42" lean-forward="true" selection-start-line="255" selection-start-column="42" selection-end-line="255" selection-end-column="42" />
+        <state relative-caret-position="90">
+          <caret line="103" selection-start-line="103" selection-end-line="103" />
         </state>
       </provider>
     </entry>

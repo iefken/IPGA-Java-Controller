@@ -102,13 +102,6 @@ public class BaseEntityDAO extends BaseDAO{
         BaseEntity thisBaseEntity = null;
 
 
-        String tableForId = table;
-        if(tableForId.equals("Reservation_Event") || tableForId.equals("Reservation_Session") || tableForId.equals("Assign_Task")  )
-        {
-            String[] splitter = table.split("_");
-            tableForId = splitter[0]+splitter[1];
-            System.out.println("tableForId: "+tableForId);
-        }
 
         System.out.println("table: "+table);
         String sql = "SELECT ";
@@ -122,7 +115,7 @@ public class BaseEntityDAO extends BaseDAO{
             }
         }
 
-        sql += " FROM PlanningDB."+tableForId+" WHERE ";
+        sql += " FROM PlanningDB."+table+" WHERE ";
 
         for (int i=0;i<selectors.length;i++)
         {

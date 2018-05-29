@@ -123,12 +123,18 @@ public class DatabaseBackupChecker implements Runnable {
                     String[] propertiesToSelect = {"*"};
                     String table = thisEntityToAdd.getTable();
 
+                    String tableForId = table;
+                    if(tableForId.equals("Reservation_Event") || tableForId.equals("Reservation_Session") || tableForId.equals("Assign_Task")  )
+                    {
+                        String[] splitter = table.split("_");
+                        tableForId = splitter[0]+splitter[1];
+                        System.out.println("tableForId: "+tableForId);
+                    }
 
-
-                    String[] selectors = {"id" + table};
+                    String[] selectors = {"id" + tableForId};
                     String[] values = {"" + thisEntityToAdd.getIdEntitiesToAdd()};
 
-                    //System.out.println("thisEntityToAdd: "+thisEntityToAdd.toString());
+                    System.out.println("thisEntityToAdd: "+thisEntityToAdd.toString()+" table: "+table);
 
                     String[] selectResult = new String[0];
                     try {
