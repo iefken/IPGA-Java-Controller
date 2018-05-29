@@ -124,11 +124,22 @@ public class GoogleCalenderApi {
             try {
 
                 java.io.File DATA_STORE_DIR2 = new java.io.File(thisRepo + "/../../calendar-integration-groupA-java");
-                System.out.println("3. TC: "+DATA_STORE_DIR.getAbsolutePath()+"\n");
+                System.out.println("3. TC 'SERVER FORCED BY SET FAILED': "+DATA_STORE_DIR2.getAbsolutePath()+"\n");
                 in = new FileInputStream(DATA_STORE_DIR2.getAbsolutePath() + "/client_secret.json");
             } catch (FileNotFoundException ee) {
                 System.out.print("\n<Exception 2:> " + ee);
                 System.out.println("3. TC: "+in.toString()+"\n");
+                try{
+
+                    java.io.File DATA_STORE_DIR2 = new java.io.File(thisRepo + "/calendar-integration-groupA-java");
+                    System.out.println("4. TC 'LOCAL FORCED BY SET AND SERVER FAILED': "+DATA_STORE_DIR2.getAbsolutePath()+"\n");
+                    in = new FileInputStream(DATA_STORE_DIR2.getAbsolutePath() + "/client_secret.json");
+                }catch (FileNotFoundException eee) {
+
+                    System.out.print("\n<Exception 3:> " + eee);
+                    System.out.println("3. TC: "+in.toString()+"\n");
+
+                }
                 //ee.printStackTrace();
             }
         }
@@ -163,7 +174,7 @@ public class GoogleCalenderApi {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //System.out.println("Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+        System.out.println("Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
     }
 
