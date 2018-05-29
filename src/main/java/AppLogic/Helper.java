@@ -1323,7 +1323,7 @@ public interface Helper {
                     } else {
 
                         if (localEntityVersion == 1) {
-                            String messageSource = getSafeXmlProperty(task, "messageSource");
+                            String messageSource = getSafeXmlProperty(task, "source");
 
                             if (messageSource != "false" && messageSource != "0" && messageSource != null) {
 
