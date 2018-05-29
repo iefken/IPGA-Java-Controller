@@ -280,7 +280,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.DatabaseBackupChecker">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="DatabaseBackupChecker" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="AppLogic.DatabaseBackupChecker" />
       <module name="cli-java-controller" />
@@ -378,9 +378,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.DatabaseBackupChecker" />
         <item itemvalue="Application.Receiver" />
-        <item itemvalue="Application.Main" />
         <item itemvalue="JAR Application.cli-java-controller.jar" />
         <item itemvalue="Application.GoogleCalenderApi" />
       </list>
