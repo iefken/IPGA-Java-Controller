@@ -39,7 +39,6 @@ public interface Helper {
 
     enum SourceType {Front_End, Planning, Monitor, Kassa, CRM, Facturatie}
 
-    public SourceType messageSource = SourceType.Planning;
 
     //String TASK_QUEUE_NAME = "planning-queue";
     String EXCHANGE_NAME = "rabbitexchange";
@@ -121,6 +120,9 @@ public interface Helper {
         };
         return options;
     }
+
+    //String errorReceiver="monitor-queue";
+    String errorREceiver="planning-queue";
 
 
     // MAIN CLI
@@ -693,7 +695,7 @@ public interface Helper {
                         System.out.print("Listening for 3000 seconds... ");
 
                         for (int i = 1; i <= 100; i++) {
-                            for (int j = 1; j <= 6; j++) {
+                            for(int j = 1; j<=6;j++){
 
                                 Thread.sleep(5000);
                             }
@@ -790,9 +792,7 @@ public interface Helper {
                     String xmlMessage = "";
                     try {
                         xmlMessage = getXmlForTestMessage("testMessage", SourceType.Planning);
-                    } catch (JAXBException e) {
-                        e.printStackTrace();
-                    }
+                    } catch (JAXBException e) { e.printStackTrace(); }
 
                     // 2. send xml message to monitor-queue
 
@@ -909,21 +909,6 @@ public interface Helper {
                     }
 
                     break;
-                case "17":
-                    //String xmlHeaderDescription, SourceType Source_type, String timestamp;
-
-                    // 5. Parse error message to xml String
-                    xmlTotalMessage = getXmlForErrorMessage(headerDescription, Source_type);
-
-                    // 6. Send new object to rabbitExchange
-
-                    try {
-                        Sender.sendMessage(xmlTotalMessage);
-                    } catch (TimeoutException | IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    break;
                 case "":
                     System.out.println("\nReceived 'Empty' (\"\") String as option...!");
                 case "0":
@@ -963,37 +948,27 @@ public interface Helper {
 
         String errorMessage = "";
         String xmlTotalMessage = "";
+        String messageType = getSafeXmlProperty(task, "messageType");
+        String messageSource = getSafeXmlProperty(task, "source");
 
         //change to true to show full XML message in receiver console when it's received
         boolean showFullXMLMessage = true, isPingMessage = false;
 
-        String messageType = null;
-        messageType = getSafeXmlProperty(task, "messageType");
-        if (messageType == "false") {
-            messageType = getSafeXmlProperty(task, "MessageType");
-            if (messageType == "false") {
-                System.out.println("[!!!] ERROR: No messageType found in XML...");
-                errorMessage += " [!!!] ERROR: No messageType found in XML...\n";
-            }
-        }
+        // get Source from XML (set in sender)
 
+            if (messageType == "false") {
+                System.out.println(" [!!!] ERROR: No source found in XML from '"+ messageSource +"' messageType: [" + messageType+"]");
+                errorMessage += " [!!!] ERROR: No source found in XML from '"+ messageSource +"' messageType: [" + messageType+"]";
+            }
+
+            if (messageSource == "false") {
+                System.out.println("[!!!] ERROR: No messageType found in XML from '"+ messageSource +"' messageType: [" + messageType+"]");
+                errorMessage += " [!!!] ERROR: No messageType found in XML from '"+ messageSource +" messageType: [" + messageType+"]";
+            }
 
         if (messageType.equals("pingMessage")) {
-
             showFullXMLMessage = false;
             isPingMessage = true;
-        }
-
-
-        // get Source from XML (set in sender)
-        String messageSource = null;
-        messageSource = getSafeXmlProperty(task, "source");
-        if (messageSource == "false") {
-            messageType = getSafeXmlProperty(task, "Source");
-            if (messageType == "false") {
-                System.out.println(" [!!!] ERROR: No source found in XML...");
-                errorMessage += " [!!!] ERROR: No source found in XML...\n";
-            }
         }
 
         // Check XML for message
@@ -1018,45 +993,45 @@ public interface Helper {
         switch (messageType.toLowerCase()) {
 
             case "usermessage":
-                handleNewMessageUser(task);
+                handleNewMessageUser(task, errorMessage);
                 break;
 
             case "eventmessage":
-                handleNewMessageEvent(task);
+                handleNewMessageEvent(task, errorMessage);
                 break;
 
             case "sessionmessage":
-                handleNewMessageSession(task);
+                handleNewMessageSession(task, errorMessage);
                 break;
 
             case "reservationSessionMessage":
             case "reservationsessionmessage":
-                handleNewMessageReservationSession(task);
+                handleNewMessageReservationSession(task, errorMessage);
                 break;
 
 
             case "reservationEventMessage":
             case "reservationeventmessage":
-                handleNewMessageReservationEvent(task);
+                handleNewMessageReservationEvent(task, errorMessage);
                 break;
 
             case "reservationMessage":
-                System.out.print("Trying to recover from incorrect 'reservationMessage' from '" + messageSource + "'!");
+                System.out.print("Trying to recover from incorrect 'reservationMessage' from [" + messageSource + "]!");
                 String eventUuid = getSafeXmlProperty(task, "eventUuid");
                 if (eventUuid == "false" || eventUuid == "") {
                     String sessionUuid = getSafeXmlProperty(task, "sessionUuid");
                     if (sessionUuid == "false" || sessionUuid == "") {
-                        System.out.print("Failed to recover...");
-                        errorMessage += "Failed to recover...\n";
+                        System.out.print("Failed to recover in  case \"reservationMessage\":");
+                        errorMessage += "Failed to recover in  case \"reservationMessage\":\n";
                     } else {
                         //reservationsession message
-                        System.out.print("Trying to recover... This seems to be a reservation for a Session...");
-                        handleNewMessageReservationSession(task);
+                        System.out.print("Trying to recover... This seems to be a reservation for a Session from ["+messageSource+"]");
+                        handleNewMessageReservationSession(task, errorMessage);
                     }
                 } else {
                     //reservationevent message
-                    System.out.print("Trying to recover... This seems to be a reservation for an Event...");
-                    handleNewMessageReservationEvent(task);
+                    System.out.print("Trying to recover... This seems to be a reservation for an Event from ["+messageSource+"]");
+                    handleNewMessageReservationEvent(task, errorMessage);
                 }
                 break;
 
@@ -1064,12 +1039,15 @@ public interface Helper {
                 System.out.println(" [" + messageType + "] for UUID: " + UUID);
                 break;
 
+                //TODO ERROR HANDLING
             case "pingmessage":
                 // 1. Form XML pingMessage
                 String xmlMessage = "";
                 try {
                     xmlMessage = getXmlForPingMessage("pingMessage", SourceType.Planning);
                 } catch (JAXBException e) {
+                    System.out.println(" [!!!] ERROR: No source found in XML from ["+ messageSource +"] :\n" +e.toString());
+                    errorMessage += " [!!!] ERROR: No source found in XML from ["+ messageSource +"] :\n" + e.toString() + "\n";
                     System.out.println(" [!!!] ERROR: No source found in XML...\n" + e.toString());
                     errorMessage += " [!!!] ERROR: No source found in XML...\n" + e.toString() + "\n";
                     //e.printStackTrace();
@@ -1080,8 +1058,8 @@ public interface Helper {
                 try {
                     returnedMessage = Sender.sendPingMessage(xmlMessage, SourceType.Planning);
                 } catch (IOException | TimeoutException | JAXBException e) {
-                    System.out.println(" [!!!]Failed to execute Sender.sendPingMessage: " + e.toString());
-                    errorMessage += " [!!!]Failed to execute Sender.sendPingMessage: " + e.toString() + "\n";
+                    System.out.println(" [!!!] Failed to execute Sender.sendPingMessage: " + e.toString());
+                   errorMessage += " [!!!] Failed to execute Sender.sendPingMessage: " + e.toString() + "\n";
                     //e.printStackTrace();
                 }
 
@@ -1091,17 +1069,17 @@ public interface Helper {
                 break;
 
             case "errormessage":
-                System.out.println(" [" + messageType + "] Received from " + getSafeXmlProperty(task, "source"));
+                System.out.println(" [" + messageType + "] Received from [" + messageSource+"]");
                 break;
 
             case "taskmessage":
-                System.out.println(" [" + messageType + "] Received from " + getSafeXmlProperty(task, "source"));
-                handleNewMessageTask(task);
+                System.out.println(" [" + messageType + "] Received from [" + messageSource+"]");
+                handleNewMessageTask(task, errorMessage);
                 break;
 
             case "assigntaskmessage":
-                System.out.println(" [" + messageType + "] Received from " + getSafeXmlProperty(task, "source"));
-                handleNewMessageAssignTask(task);
+                System.out.println(" [" + messageType + "] Received from [" + messageSource+"]");
+                handleNewMessageAssignTask(task, errorMessage);
                 break;
 
             case "productmessage":
@@ -1113,14 +1091,13 @@ public interface Helper {
             case "vatmessage":
 
                 showFullXMLMessage = false;
-                System.out.println(" [" + messageType + "] Received from " + getSafeXmlProperty(task, "source"));
+                System.out.println(" [" + messageType + "] Received from ["+ messageSource+"]");
 
                 break;
             case "":
             default:
-
-                System.out.println(" [.!.] ERROR: Message type NOT recognized: '" + messageType + "' ...");
-                errorMessage += " [.!.] ERROR: Message type NOT recognized: '" + messageType + "' ... \n";
+                System.out.println(" [!!!] ERROR: Message type NOT recognized: '" + messageType + "' from ["+messageSource+"]");
+                errorMessage += " [!!!] ERROR: Message type NOT recognized: '" + messageType + "' from ["+messageSource+"]";
                 break;
         }
 
@@ -1132,47 +1109,17 @@ public interface Helper {
             System.out.println("\n [.!.] XML not shown... Change boolean 'showFullXMLMessage' to show this.\n");
         }
 
-
-        if (errorMessage == "") {
-            if (!isPingMessage) {
-                //System.out.println("\n [.V.] No error message sent.");
-            }
-        } else {
-            System.out.println("\n [.!.] Error-message sent.");
-            //4. String xmlHeaderDescription, SourceType Source_type, String timestamp;
-            String headerDescription = errorMessage;
-
-            SourceType Source_type = SourceType.Planning;
-
-            // 5. Parse user object to xml String
-            try {
-                xmlTotalMessage = getXmlForErrorMessage(headerDescription, Source_type);
-            } catch (JAXBException e) {
-                System.out.print("\nERROR: parser for getXmlForErrorMessage:\n");
-                e.printStackTrace();
-            }
-
-            // 6. Send
-            try {
-                Sender.publishXmlMessageToQueue("monitor-queue", xmlTotalMessage);
-            } catch (TimeoutException | IOException | JAXBException e) {
-                System.out.print("\nERROR: message sender for errorMessage:\n");
-                e.printStackTrace();
-            }
-        }
-
-        if (!isPingMessage) {
+        if(!isPingMessage) {
             System.out.println("__________________________END OF MESSAGE______________________________________");
-            System.out.println("_________________________________________________________________________________");
-            //System.out.println(" [.i.] END OF WORK [************************************************************************]");
-        } else {
+            System.out.println("______________________________________________________________________________");
+        }else{
             System.out.println(".pINg.");
         }
         return workCounter;
     }
 
     //Handler for usermessage
-    static void handleNewMessageUser(String task) {
+    static void handleNewMessageUser(String task, String errors) {
 
         String userUuid = "";
         User thisUserInMessage = null;
@@ -1180,7 +1127,9 @@ public interface Helper {
         EntityType thisEntityType = EntityType.User;
         SourceType Source_type = SourceType.Planning;
         String xmlTotalMessage = "";
-        String errorMessage = "";
+        String errorMessage = errors;
+        String messageType = getSafeXmlProperty(task, "messageType");
+        String messageSource = getSafeXmlProperty(task, "source");
 
         // 1. transform xml to user-object
         try {
@@ -1240,8 +1189,8 @@ public interface Helper {
                         new BaseEntityDAO().softDeleteBaseEntity(alterThisEntityId);
                         System.out.println("SoftDelete executed on [User] with entityId: " + alterThisEntityId + "\n");
                     } catch (Exception e) {
-                        System.out.println(" [!!!] ERROR: handleNewMessageUser - softDelete FAIL :\n" + e.toString());
-                        errorMessage += " [!!!] ERROR: handleNewMessageUser - softDelete FAIL :\n" + e.toString() + "\n";
+                        System.out.println(" [!!!] ERROR: handleNewMessageUser - softDelete FAILED:\n"+e.toString());
+                        errorMessage += " [!!!] ERROR: handleNewMessageUser - softDelete FAILED:\n"+e.toString()+"\n";
                         //e.printStackTrace();
                     }
 
@@ -1249,8 +1198,8 @@ public interface Helper {
                     try {
                         allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + thisUserInMessage.getEntityVersion(), "int", "idBaseEntity", "" + alterThisEntityId);
                     } catch (Exception e) {
-                        System.out.println("ERROR in 3. update entity version (on our database) :\n " + e.toString());
-                        errorMessage += "ERROR in 3. update entity version (on our database) :\n" + e.toString() + "\n";
+                        System.out.println("ERROR handleNewMessageUser - 3. update entity version (on our database) :\n " + e.toString());
+                        errorMessage += "ERROR handleNewMessageUser - 3. update entity version (on our database) :\n" + e.toString() +"\n";
                         //e.printStackTrace();
                         allGood = false;
                     }
@@ -1286,8 +1235,8 @@ public interface Helper {
                         thisUserInMessage.setEntityId(Integer.parseInt(selectResults[0]));
                         //System.out.println("thisUserInMessage.getIdUser(): " + thisUserInMessage.getIdUser());
                     } catch (NumberFormatException e) {
-                        System.out.println("get the entityVersion from idUser FAILED\n" + e.toString());
-                        errorMessage += "get the entityVersion from idUser FAILED\n" + e.toString() + "\n";
+                        System.out.println(" [!!!] ERROR: handleNewMessageUser - get the entityVersion from idUser FAILED:\n"+e.toString());
+                        errorMessage += "[!!!] ERROR: handleNewMessageUser - get the entityVersion from idUser FAILED:\n"+e.toString()+"\n";
                         //e.printStackTrace();
                     }
 
@@ -1296,34 +1245,34 @@ public interface Helper {
                     if (localEntityVersion < thisUserInMessage.getEntityVersion()) {
 
                         // 2.3.2. update record in our local db
-
                         try {
                             allGood = new User_DAO().updateUserByObject(thisUserInMessage);
                         } catch (Exception e) {
-                            errorMessage += " [!!!] ERROR: updating user in the database FAILED:\n" + e.toString() + "\n";
-                            System.out.println(" [!!!] ERROR: updating user in the database FAILED: " + e.toString());
+                            errorMessage +=" [!!!] ERROR: updating user in the database FAILED:\n" + e.toString() + "\n";
+                            System.out.println(" [!!!] ERROR: updating user in the database FAILED:\n" + e.toString());
                             //e.printStackTrace();
                         }
 
                         // 2.3.3. updateUuidRecordVersion() (To UUID master)
-
                         int updateUuidRecordVersionResponse = 0;
                         if (allGood) {
                             try {
                                 updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, userUuid);
                             } catch (IOException | TimeoutException | JAXBException e) {
-                                errorMessage += " [!!!] ERROR: updateUuidRecordVersion FAILED \n" + e.toString() + "\n";
-                                System.out.println(" [!!!] ERROR: updateUuidRecordVersion FAILED \n" + e.toString());
+                                errorMessage += " [!!!] ERROR: handleNewMessageUser - updateUuidRecordVersion FAILED \n" + e.toString() + "\n";
+                                System.out.println(" [!!!] ERROR: handleNewMessageUser - updateUuidRecordVersion FAILED \n" + e.toString());
                             }
                         } else {
-                            errorMessage += " [!!!] ERROR: updatingUserByObject FAILED\n";
-                            System.out.println(" [!!!] ERROR: updatingUserByObject FAILED");
+                            errorMessage +=" [!!!] ERROR: handleNewMessageUser - updatingUserByObject FAILED\n";
+                            System.out.println(" [!!!] ERROR: handleNewMessageUser - updatingUserByObject FAILED");
                         }
 
                     } else {
 
                         if (localEntityVersion == 1) {
-                            String messageSource = getSafeXmlProperty(task, "source");
+
+                            messageSource = getSafeXmlProperty(task, "source");
+
 
                             if (messageSource != "false" && messageSource != "0" && messageSource != null) {
 
@@ -1345,61 +1294,55 @@ public interface Helper {
 
             } else {
                 // New user record
-
                 // 2.4.1. insert new user into local db
-
                 int messageUserInsertReturner = 0;
                 try {
                     messageUserInsertReturner = new User_DAO().insertIntoUser(thisUserInMessage);
                 } catch (SQLException e) {
-                    errorMessage += " [!!!] ERROR: inserting [User] into the database:\n" + e.toString() + "\n";
-                    System.out.println(" [!!!] ERROR: inserting [User] into the database:\n" + e.toString());
+                    errorMessage += " [!!!] ERROR: handleNewMessageUser - inserting [User] into the database:\n" + e.toString() + "\n";
+                    System.out.println(" [!!!] ERROR: handleNewMessageUser - inserting [User] into the database:\n" + e.toString());
                 }
+
                 //System.out.println("User.toString(): "+thisUserInMessage.toString());
-
                 // 2.4.2. insertUuidRecord
-
                 try {
                     Sender.insertUuidRecord("", messageUserInsertReturner, thisEntityType, Source_type, userUuid);
                 } catch (IOException | TimeoutException | JAXBException e) {
-                    errorMessage += " [!!!] ERROR: insertUuidRecord FAILED:\n" + e.toString() + "\n";
-                    System.out.println(" [!!!] ERROR: insertUuidRecord FAILED:\n" + e.toString());
+                    errorMessage += " [!!!] ERROR: handleNewMessageUser - insertUuidRecord FAILED:\n" + e.toString() + "\n";
+                    System.out.println(" [!!!] ERROR: handleNewMessageUser - insertUuidRecord FAILED:\n" + e.toString());
                     //e.printStackTrace();
                 }
                 System.out.println("Inserted new user record with id='" + messageUserInsertReturner + "' and uuid='" + userUuid + "'");
-
-
             }
         }
+
         if (errorMessage == "") {
             System.out.println("\n [.i.] No error-message sent.");
 
         } else {
             System.out.println("\n [.!.] Error-message sent.");
             //4. String xmlHeaderDescription, SourceType Source_type, String timestamp;
-            String headerDescription = errorMessage;
+            String headerDescription = errorMessage+"\nMessage source: "+messageSource;
 
             // 5. Parse user object to xml String
             try {
                 xmlTotalMessage = getXmlForErrorMessage(headerDescription, Source_type);
-            } catch (JAXBException e) {
-                System.out.print("\nERROR: parser for getXmlForErrorMessage:\n");
+            } catch (JAXBException e){
+                System.out.println("ERROR: handleNewMessageUser - parser for getXmlForErrorMessage:");
                 e.printStackTrace();
             }
 
             // 6. Send
-
             try {
                 Sender.publishXmlMessageToQueue("monitor-queue", xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
-                System.out.print("\nERROR: message sender for errorMessage:\n");
+                System.out.println("ERROR: handleNewMessageUser - message sender for errorMessage:");
                 e.printStackTrace();
             }
         }
     }
-
     //Handler for eventmessage
-    static void handleNewMessageEvent(String task) {
+    static void handleNewMessageEvent(String task, String errors) {
 
         String eventUuid = "";
         Event thisEventInMessage = null;
@@ -1407,7 +1350,8 @@ public interface Helper {
         EntityType thisEntityType = EntityType.Event;
         SourceType Source_type = SourceType.Planning;
         String xmlTotalMessage = "";
-        String errorMessage = "";
+        String errorMessage = errors;
+        String messageSource = getSafeXmlProperty(task,"source");
 
         // 1. transform xml to event-object
         try {
@@ -1433,8 +1377,8 @@ public interface Helper {
                 //e.printStackTrace();
             }
 
-            if (uuidExists) {
-
+            if (uuidExists)
+            {
                 System.out.println("Uuid already exists in our PlanningDB table:[Event]");
 
                 // 2.2 Session record update
@@ -1468,6 +1412,7 @@ public interface Helper {
                         //e.printStackTrace();
                     }
 
+
                     // 3. updateUuidRecordVersion() (To UUID master)
                     int updateUuidRecordVersionResponse = 0;
                     try {
@@ -1497,15 +1442,14 @@ public interface Helper {
 
                     boolean allGood = true;
 
-
                     if (localEntityVersion < thisEventInMessage.getEntityVersion()) {
 
                         // 2.3.1. update google calender through API
                         try {
                             GoogleCalenderApi.updateEventWithEventObject(thisEventInMessage);
                         } catch (Exception e) {
-                            System.out.println(" [!!!] ERROR: updating GCA Event with Event object:\n" + e.toString());
-                            errorMessage += " [!!!] ERROR: updating GCA Event with Event object:\n" + e.toString() + "\n";
+                            System.out.println(" [!!!] ERROR: handleNewMessageEvent - updating GCA Event with Event object:\n"+e.toString());
+                            errorMessage += " [!!!] ERROR: handleNewMessageEvent - updating GCA Event with Event object:\n"+e.toString()+"\n";
                             //e.printStackTrace();
                         }
 
@@ -1514,8 +1458,8 @@ public interface Helper {
                         try {
                             allGood = new Event_DAO().updateEventByObject(thisEventInMessage);
                         } catch (Exception e) {
-                            System.out.println(" [!!!] ERROR: updating event in the database:\n" + e.toString());
-                            errorMessage += " [!!!] ERROR: updating event in the database:\n" + e.toString() + "\n";
+                            System.out.println(" [!!!] ERROR: handleNewMessageEvent - updating event in the database:\n"+e.toString());
+                            errorMessage += " [!!!] ERROR: handleNewMessageEvent - updating event in the database:\n"+e.toString()+"\n";
                             //e.printStackTrace();
                         }
 
@@ -1524,13 +1468,13 @@ public interface Helper {
                             try {
                                 updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, eventUuid);
                             } catch (IOException | TimeoutException | JAXBException e) {
-                                System.out.println(" [!!!] ERROR: updateUuidRecordVersion:\n" + e.toString());
-                                errorMessage += " [!!!] ERROR: updateUuidRecordVersion:\n" + e.toString() + "\n";
+                                System.out.println(" [!!!] ERROR: handleNewMessageEvent - updateUuidRecordVersion:\n"+e.toString());
+                                errorMessage += " [!!!] ERROR: handleNewMessageEvent - updateUuidRecordVersion:\n"+e.toString()+"\n";
                                 //e.printStackTrace();
                             }
                         } else {
-                            System.out.println(" [!!!] ERROR: updateUuidRecordVersion:");
-                            errorMessage += " [!!!] ERROR: updateUuidRecordVersion:\n";
+                            System.out.println(" [!!!] ERROR: handleNewMessageEvent - updateUuidRecordVersion:");
+                            errorMessage += " [!!!] ERROR: handleNewMessageEvent - updateUuidRecordVersion:\n";
                         }
 
                         System.out.println("We had this [Event] with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisEventInMessage.getEntityVersion() + "'");
@@ -1538,33 +1482,6 @@ public interface Helper {
                     } else {
                         // we have the latest version...
                         System.out.println("We already had this [Event] with entityVersion: '" + localEntityVersion + "'");
-                        if (thisEventInMessage.getEntityVersion() == 1 && getSafeXmlProperty(task, "source") == "Planning") {
-                            System.out.println("TEST");
-
-                            String newEventHtmlLinkAndId = null;
-                            try {
-                                newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromEventObject(thisEventInMessage);
-                                String[] newEventProperties = newEventHtmlLinkAndId.split("-=-");
-                                thisEventInMessage.setGCAEventId(newEventProperties[1]);
-                                thisEventInMessage.setGCAEventLink(newEventProperties[0]);
-                            } catch (IOException e) {
-                                System.out.println(" [!!!] ERROR:  adding event to Google calendar API:\n" + e.toString());
-                                errorMessage += " [!!!] ERROR:  adding event to Google calendar API:\n" + e.toString() + "\n";
-                                //e.printStackTrace();
-                            }
-
-                            // 2.4.2. insert new event into local db
-                            int messageEventInsertReturner = 0;
-
-                            if (new Event_DAO().updateEventByObject(thisEventInMessage)) {
-                                System.out.println("Success updating event: " + thisEventInMessage.toString());
-                            }else{
-                                System.out.println("Something went wrong updating event: "+thisEventInMessage.toString());
-                            }
-
-                        }else{
-                            System.out.println("thisEventInMessage.getEntityVersion(): "+thisEventInMessage.getEntityVersion()+ "getSafeXmlProperty(task, 'source'): "+getSafeXmlProperty(task, "source"));
-                        }
                     }
                 }
 
@@ -1580,18 +1497,17 @@ public interface Helper {
                     thisEventInMessage.setGCAEventId(newEventProperties[1]);
                     thisEventInMessage.setGCAEventLink(newEventProperties[0]);
                 } catch (IOException e) {
-                    System.out.println(" [!!!] ERROR:  adding event to Google calendar API:\n" + e.toString());
-                    errorMessage += " [!!!] ERROR:  adding event to Google calendar API:\n" + e.toString() + "\n";
+                    System.out.println(" [!!!] ERROR: handleNewMessageEvent - adding event to Google calendar API:\n" + e.toString());
+                    errorMessage += " [!!!] ERROR: handleNewMessageEvent - adding event to Google calendar API:\n" + e.toString() + "\n";
                     //e.printStackTrace();
                 }
                 // 2.4.2. insert new event into local db
                 int messageEventInsertReturner = 0;
                 try {
-
                     messageEventInsertReturner = new Event_DAO().insertIntoEvent(thisEventInMessage);
                 } catch (SQLException e) {
-                    System.out.println(" [!!!] ERROR:  inserting event into the database:\n" + e.toString());
-                    errorMessage += " [!!!] ERROR:  inserting event into the database:\n" + e.toString() + "\n";
+                    System.out.println(" [!!!] ERROR: handleNewMessageEvent - 2.4.2. insert new event into local db FAILED:\n" + e.toString());
+                    errorMessage += " [!!!] ERROR: handleNewMessageEvent - 2.4.2. insert new event into local db FAILED:\n" + e.toString() + "\n";
                     //e.printStackTrace();
                 }
 
@@ -1599,58 +1515,55 @@ public interface Helper {
                 try {
                     Sender.insertUuidRecord("", messageEventInsertReturner, thisEntityType, Source_type, eventUuid);
                 } catch (IOException | TimeoutException | JAXBException e) {
-                    System.out.println(" [!!!] ERROR:  inserting record into the Uuid Master:\n" + e.toString());
-                    errorMessage += " [!!!] ERROR:  inserting record into the Uuid Master:\n" + e.toString() + "\n";
+                    System.out.println(" [!!!] ERROR: handleNewMessageEvent - 2.4.3. insertUuidRecord FAILED:\n" + e.toString());
+                    errorMessage += " [!!!] ERROR: handleNewMessageEvent - 2.4.3. insertUuidRecord FAILED:\n" + e.toString() + "\n";
                     //e.printStackTrace();
                 }
-
                 //System.out.println("Event.toString(): " + thisEventInMessage.toString());
-
                 System.out.println("Inserted new event record with id='" + messageEventInsertReturner + "' and UUID='" + eventUuid + "'");
-
-
             }
         } else {
             System.out.println("Something went wrong getting event object from xml message!");
+            System.out.println(" [!!!] ERROR: handleNewMessageEvent - 2.4.3. insertUuidRecord FAILED:\n");
+            errorMessage += " [!!!] ERROR: handleNewMessageEvent - 2.4.3. insertUuidRecord FAILED:\n";
         }
 
         if (errorMessage == "") {
             System.out.println("\n [.i.] No error-message sent.");
-
         } else {
             System.out.println("\n [.!.] Error-message sent.");
             //4. String xmlHeaderDescription, SourceType Source_type, String timestamp;
-            String headerDescription = errorMessage;
+            String headerDescription = errorMessage+"\nMessage source: "+messageSource;
 
             // 5. Parse user object to xml String
             try {
                 xmlTotalMessage = getXmlForErrorMessage(headerDescription, Source_type);
-            } catch (JAXBException e) {
-                System.out.print("\nERROR: parser for getXmlForErrorMessage:\n");
+            } catch (JAXBException e){
+                System.out.print("\nERROR: handleNewMessageEvent - parser for getXmlForErrorMessage:\n");
                 e.printStackTrace();
             }
 
             // 6. Send
-
             try {
                 Sender.publishXmlMessageToQueue("monitor-queue", xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
-                System.out.print("\nERROR: message sender for errorMessage:\n");
+                System.out.print("\nERROR: handleNewMessageEvent - message sender for errorMessage:\n");
                 e.printStackTrace();
             }
         }
 
     }
-
     //Handler for sessionmessage
-    static void handleNewMessageSession(String task) {
+    static void handleNewMessageSession(String task, String errors) {
 
         String sessionUuid = "";
         Session thisSessionInMessage = null;
         Boolean uuidExists = false;
         EntityType thisEntityType = EntityType.Session;
         SourceType Source_type = SourceType.Planning;
-        String errorMessage = "";
+        String errorMessage = errors;
+        String messageSource = getSafeXmlProperty(task,"source");
+        String xmlTotalMessage = "";
 
         // 1. transform xml to session-object
         try {
@@ -1681,13 +1594,11 @@ public interface Helper {
                 System.out.println("UUID already exists in our PlanningDB table:[Session]\n");
 
                 // 2.2 Session record update
-
                 // 2.2.1. get idSession from sessionUUID in Session
                 String[] propertiesToSelect = {"idSession"};
                 String table = "Session";
                 String[] selectors = {"uuid"};
                 String[] values = {"" + sessionUuid};
-
                 String[] selectResults = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values);
 
                 // Check if active is still 1 for local object, otherwise softdelete it in baseEntity
@@ -1697,8 +1608,8 @@ public interface Helper {
                     try {
                         GoogleCalenderApi.cancelSessionWithSessionObject(thisSessionInMessage);
                     } catch (Exception e) {
-                        System.out.println(" [!!!] ERROR: handleNewMessageSession - cancleSessionGCA FAIL :\n" + e.toString());
-                        errorMessage += " [!!!] ERROR: handleNewMessageSession - cancleSessionGCA FAIL :\n" + e.toString() + "\n";
+                        System.out.println(" [!!!] ERROR: handleNewMessageSession - cancelSessionGCA FAIL :\n"+e.toString());
+                        errorMessage += " [!!!] ERROR: handleNewMessageSession - cancelSessionGCA FAIL :\n"+e.toString()+"\n";
                         //e.printStackTrace();
                     }
 
@@ -1712,13 +1623,14 @@ public interface Helper {
                         //e.printStackTrace();
                     }
 
-
                     // 3. updateUuidRecordVersion() (To UUID master)
                     int updateUuidRecordVersionResponse = 0;
                     try {
                         updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, sessionUuid);
                     } catch (IOException | TimeoutException | JAXBException e) {
-                        e.printStackTrace();
+                        System.out.println(" [!!!] ERROR: handleNewMessageSession - softDelete FAILED:\n"+e.toString());
+                        errorMessage += " [!!!] ERROR: handleNewMessageSession - softDelete FAILED:\n"+e.toString()+"\n";
+                        //e.printStackTrace();
                     }
 
                 } else {
@@ -1735,7 +1647,9 @@ public interface Helper {
                         thisSessionInMessage.setEntityId(Integer.parseInt(selectResults[0]));
                         //System.out.println("thisSessionInMessage.getSessionId(): " + thisSessionInMessage.getSessionId());
                     } catch (NumberFormatException e) {
-                        e.printStackTrace();
+                        System.out.println(" [!!!] ERROR: handleNewMessageSession - setEntityId(Integer.parseInt(selectResults[0])); FAILED:\n"+e.toString());
+                        errorMessage += " [!!!] ERROR: handleNewMessageSession - setEntityId(Integer.parseInt(selectResults[0])); FAILED:\n"+e.toString()+"\n";
+                        //e.printStackTrace();
                     }
 
                     boolean allGood = true;
@@ -1743,46 +1657,42 @@ public interface Helper {
                     if (localEntityVersion < thisSessionInMessage.getEntityVersion()) {
 
                         // 2.3.1. update google calender through API
-
                         try {
                             GoogleCalenderApi.updateSessionWithSessionObject(thisSessionInMessage);
                         } catch (Exception e) {
-                            System.out.println(" [!!!] ERROR: handleNewMessageSession - updateSessionGCA FAIL :\n" + e.toString());
-                            errorMessage += " [!!!] ERROR: handleNewMessageSession - updateSessionGCA FAIL :\n" + e.toString() + "\n";
+                            System.out.println(" [!!!] ERROR: handleNewMessageSession - 2.3.1. update google calender through API FAIL :\n"+e.toString());
+                            errorMessage += " [!!!] ERROR: handleNewMessageSession - 2.3.1. update google calender through API FAIL :\n"+e.toString()+"\n";
                             //e.printStackTrace();
                         }
-                        // 2.3.2. update record in our local db
 
+                        // 2.3.2. update record in our local db
                         try {
                             allGood = new Session_DAO().updateSessionByObject(thisSessionInMessage);
                         } catch (Exception e) {
-                            System.out.println(" [!!!] ERROR: handleNewMessageSession - softDelete FAIL :\n" + e.toString());
-                            errorMessage += " [!!!] ERROR: handleNewMessageSession - softDelete FAIL :\n" + e.toString() + "\n";
+                            System.out.println(" [!!!] ERROR: handleNewMessageSession - 3.2. update record in our local db FAILED:\n"+e.toString());
+                            errorMessage += " [!!!] ERROR: handleNewMessageSession - 3.2. update record in our local db FAILED:\n"+e.toString()+"\n";
                             //e.printStackTrace();
                         }
 
                         // 2.3.3. updateUuidRecordVersion() (To UUID master)
-
                         int updateUuidRecordVersionResponse = 0;
                         if (allGood) {
                             try {
                                 updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, sessionUuid);
                             } catch (IOException | TimeoutException | JAXBException e) {
-                                System.out.println(" [!!!] ERROR:  updating records of into the Uuid Master:\n" + e.toString());
-                                errorMessage += " [!!!] ERROR:  updating records of the Uuid Master:\n" + e.toString() + "\n";
+                                System.out.println(" [!!!] ERROR:  handleNewMessageSession - 2.3.3. updateUuidRecordVersion() (To UUID master)FAILED:\n" + e.toString());
+                                errorMessage += " [!!!] ERROR:  handleNewMessageSession - 2.3.3. updateUuidRecordVersion() (To UUID master) FAILED:\n" + e.toString() + "\n";
                                 //e.printStackTrace();
                             }
                         } else {
-                            //updateEventError
+                            System.out.println(" [!!!] ERROR: handleNewMessageSession - updateUuidReecordVersion FAILED:");
+                            errorMessage += " [!!!] ERROR: handleNewMessageSession - updateUuidReecordVersion FAILED :\n";
+                            //e.printStackTrace();
                         }
-
                         System.out.println("We had this [Session] with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisSessionInMessage.getEntityVersion() + "'");
-
                     } else {
-
                         // we have the latest version...
                         System.out.println("We already had this [Session] with entityVersion: '" + localEntityVersion + "'");
-
                     }
                 }
 
@@ -1795,15 +1705,13 @@ public interface Helper {
                 try {
                     newSessionHtmlLinkAndId = GoogleCalenderApi.createEventFromSessionObject(thisSessionInMessage);
 
-                    //System.out.println("newSessionHtmlLinkAndId: "+newSessionHtmlLinkAndId);
                     String[] newSessionProperties = newSessionHtmlLinkAndId.split("-=-");
-
                     thisSessionInMessage.setGCAEventId(newSessionProperties[1]);
                     thisSessionInMessage.setGCAEventLink(newSessionProperties[0]);
-                    //System.out.println("thisSessionInMessage.toString()"+thisSessionInMessage.toString());
 
                 } catch (IOException e) {
-                    System.out.println("Error adding session as event to Google calendar API: " + e);
+                    System.out.println(" [!!!] ERROR: handleNewMessageSession - adding session as event to Google calendar API FAILED:");
+                    errorMessage += " [!!!] ERROR: handleNewMessageSession - adding session as event to Google calendar API FAILED:\n";
                     //e.printStackTrace();
                 }
 
@@ -1812,35 +1720,62 @@ public interface Helper {
                 try {
                     messageSessionInsertReturner = new Session_DAO().insertIntoSession(thisSessionInMessage);
                 } catch (SQLException e) {
-                    System.out.println("Error inserting user into the database: " + e);
+                    System.out.println(" [!!!] ERROR: handleNewMessageSession - 2.4.2. insert new session into local db FAILED:");
+                    errorMessage += " [!!!] ERROR: handleNewMessageSession - 2.4.2. insert new session into local db FAILED :\n";
+                    //e.printStackTrace();
                 }
 
                 // 2.4.3. insertUuidRecord
                 try {
                     Sender.insertUuidRecord("", messageSessionInsertReturner, thisEntityType, Source_type, sessionUuid);
                 } catch (IOException | TimeoutException | JAXBException e) {
-                    e.printStackTrace();
+                    System.out.println(" [!!!] ERROR: handleNewMessageSession - 2.4.3. insertUuidRecord FAILED:");
+                    errorMessage += " [!!!] ERROR: handleNewMessageSession - 2.4.3. insertUuidRecord FAILED :\n";
+                    //e.printStackTrace();
                 }
                 System.out.println("Inserted new session record with id='" + messageSessionInsertReturner + "' and UUID='" + sessionUuid + "'");
-
-
             }
         } else {
-            System.out.println("ERROR: Something went wrong getting session object from xml message!");
+            System.out.println(" [!!!] ERROR: handleNewMessageSession - Something went wrong getting session object from xml message!");
+            errorMessage += " [!!!] ERROR: handleNewMessageSession - Something went wrong getting session object from xml message!\n";
         }
+        if (errorMessage == "") {
+            System.out.println("\n [.i.] No error-message sent.");
 
-        //System.out.println(" [END] ");
+        } else {
+            System.out.println("\n [.!.] Error-message sent.");
+            //4. String xmlHeaderDescription, SourceType Source_type, String timestamp;
+            String headerDescription = errorMessage+"\nMessage source: "+messageSource;
+
+            // 5. Parse user object to xml String
+            try {
+                xmlTotalMessage = getXmlForErrorMessage(headerDescription, Source_type);
+            } catch (JAXBException e){
+                System.out.print("\nERROR: handleNewMessageSession - parser for getXmlForErrorMessage:\n");
+                e.printStackTrace();
+            }
+
+            // 6. Send
+
+            try {
+                Sender.publishXmlMessageToQueue("monitor-queue",xmlTotalMessage);
+            } catch (TimeoutException | IOException | JAXBException e) {
+                System.out.print("\nERROR: handleNewMessageSession - message sender for errorMessage:\n");
+                e.printStackTrace();
+            }
+        }
     }
-
-    //TODO ERROR MESSAGE STUREN 4 hieronder
     //Handler for taskmessage
-    static void handleNewMessageTask(String task) {
+    static void handleNewMessageTask(String task, String errors) {
 
         String taskUuid = "";
         Task thisTaskInMessage = null;
         Boolean uuidExists = false;
         EntityType thisEntityType = EntityType.Task;
         SourceType Source_type = SourceType.Planning;
+        String errorMessage = errors;
+        String xmlTotalMessage = "";
+        String messageSource = getSafeXmlProperty(task, "source");
 
         // 1. transform xml to event-object
         try {
@@ -1849,7 +1784,9 @@ public interface Helper {
             System.out.println("New message for [Task] with Uuid: " + taskUuid);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(" [!!!] ERROR: handleNewMessageTask - 1. transform xml to task-object :\n" + e.toString());
+            errorMessage += " [!!!] ERROR: handleNewMessageTask - 1. transform xml to task-object :\n" + e.toString() + "\n";
+            //e.printStackTrace();
         }
 
         if (thisTaskInMessage != null) {
@@ -1859,7 +1796,9 @@ public interface Helper {
             try {
                 uuidExists = new BaseEntityDAO().doesUUIDExist("Task", taskUuid);
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(" [!!!] ERROR: handleNewMessageTask - 2. Check if UUID exists in local db :\n" + e.toString());
+                errorMessage += " [!!!] ERROR: handleNewMessageTask - 2. Check if UUID exists in local db :\n" + e.toString() + "\n";
+                //e.printStackTrace();
             }
 
             if (uuidExists) {
@@ -1885,18 +1824,32 @@ public interface Helper {
                     String[] values2 = {"" + taskUuid};
 
                     String[] selectResults2 = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect2, table2, selectors2, values2);
-                    GoogleCalenderApi.cancelEventByGCAID(selectResults2[0]);
-
+                    try {
+                        GoogleCalenderApi.cancelEventByGCAID(selectResults2[0]);
+                    } catch(Exception e){
+                        System.out.println(" [!!!] ERROR: handleNewMessageTask - cancelTaskGCA FAIL :\n"+e.toString());
+                        errorMessage += " [!!!] ERROR: handleNewMessageTsk - cancelTaskGCA FAIL :\n"+e.toString()+"\n";
+                        //e.printStackTrace();
+                    }
                     // 2. Perform soft-delete on local db
-                    new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
-                    System.out.println("SoftDelete executed on [Task] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+                    try {
+                        new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
+                        System.out.println("SoftDelete executed on [Task] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+                    } catch (Exception e){
+                        System.out.println(" [!!!] ERROR: handleNewMessageTask - softDelete FAIL :\n"+e.toString());
+                        errorMessage += " [!!!] ERROR: handleNewMessageTask - softDelete FAIL :\n"+e.toString()+"\n";
+                        //e.printStackTrace();
+                    }
+
 
                     // 3. updateUuidRecordVersion() (To UUID master)
                     int updateUuidRecordVersionResponse = 0;
                     try {
                         updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, taskUuid);
                     } catch (IOException | TimeoutException | JAXBException e) {
-                        e.printStackTrace();
+                        System.out.println("[!!!] ERROR: handleNewMessageTask - 3. updateUuidRecordVersion() (To UUID master)" + e.toString());
+                        errorMessage += "[!!!] ERROR: handleNewMessageTask - 3. updateUuidRecordVersion() (To UUID master)\n" + e.toString() + "\n";
+                        //e.printStackTrace();
                     }
                 } else {
 
@@ -1911,7 +1864,9 @@ public interface Helper {
                         thisTaskInMessage.setEntityId(Integer.parseInt(selectResults[0]));
                         //System.out.println("thisEventInMessage.getEventId(): " + thisEventInMessage.getEventId());
                     } catch (NumberFormatException e) {
-                        e.printStackTrace();
+                        System.out.println("[!!!] ERROR: handleNewMessageTask - 2.2.2. get entityVersion from id in BaseEntity FAILED:" + e.toString());
+                        errorMessage += "[!!!] ERROR: handleNewMessageTask - 2.2.2. get entityVersion from id in BaseEntity FAILED:\n" + e.toString() + "\n";
+                        //e.printStackTrace();
                     }
 
                     boolean allGood = true;
@@ -1919,11 +1874,12 @@ public interface Helper {
                     if (localEntityVersion < thisTaskInMessage.getEntityVersion()) {
 
                         // 2.3.1. update google calender through API
-
                         try {
                             GoogleCalenderApi.updateTaskWithTaskObject(thisTaskInMessage);
                         } catch (Exception e) {
-                            System.out.println("Error updating Event with Event object:" + e);
+                            System.out.println("[!!!] ERROR: handleNewMessageTask - 2.3.1. update google calender through API FAILED:" + e.toString());
+                            errorMessage += "[!!!] ERROR: handleNewMessageTask - 2.3.1. update google calender through API FAILED:\n" + e.toString() + "\n";
+                            //e.printStackTrace();
                         }
 
                         // 2.3.2. update record in our local db
@@ -1932,7 +1888,9 @@ public interface Helper {
                             //System.out.println("2.3.2. update record in our local db: thisTaskInMessage.toString(): "+thisTaskInMessage.toString());
                             allGood = new Task_DAO().updateTaskByObject(thisTaskInMessage);
                         } catch (Exception e) {
-                            System.out.println("Error updating event in the database: " + e);
+                            System.out.println(" [!!!] ERROR: handleNewMessageTask - 2.3.2. update record in our local db FAILED:" + e.toString());
+                            errorMessage += " [!!!] ERROR: handleNewMessageTask - 2.3.2. update record in our local db FAILED:\n"+ e.toString()+"\n";
+                            //e.printStackTrace();
                         }
 
                         // 2.3.3. updateUuidRecordVersion() (To UUID master)
@@ -1940,10 +1898,13 @@ public interface Helper {
                             try {
                                 updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, taskUuid);
                             } catch (IOException | TimeoutException | JAXBException e) {
-                                e.printStackTrace();
+                                System.out.println(" [!!!] ERROR: handleNewMessageTask - updateUuidRecordVersion FAILED\n " + e.toString());
+                                errorMessage += " [!!!] ERROR: handleNewMessageTask - updateUuidRecordVersion FAILED\n\n"+ e.toString()+"\n";
+                                //e.printStackTrace();
                             }
                         } else {
-                            //updateEventError
+                            System.out.println(" [!!!] ERROR: handleNewMessageTask - updateUuidRecordVersion allGood FAIL " );
+                            errorMessage += " [!!!] ERROR: handleNewMessageTask - updateUuidRecordVersion allGood FAIL \n";
                         }
 
                         System.out.println("We had this [Task] with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisTaskInMessage.getEntityVersion() + "'");
@@ -1961,26 +1922,25 @@ public interface Helper {
                 String newEventHtmlLinkAndId = null;
                 try {
                     newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromTaskObject(thisTaskInMessage);
-
                     String[] newEventProperties = newEventHtmlLinkAndId.split("-=-");
-
                     thisTaskInMessage.setGCAEventId(newEventProperties[1]);
                     //System.out.println("CGAEventId in newEventProperties[1]: " + newEventProperties[1]);
                     thisTaskInMessage.setGCAEventLink(newEventProperties[0]);
                     //System.out.println("CGAEventLink in newEventProperties[0]: " + newEventProperties[0]);
 
                 } catch (IOException e) {
-                    System.out.println("Error adding event to Google calendar API: " + e);
+                    System.out.println(" [!!!] ERROR: handleNewMessageTask - adding event to Google calendar API:" + e.toString());
+                    errorMessage += " [!!!] ERROR: handleNewMessageTask - adding event to Google calendar API:\n"+ e.toString()+"\n";
                     //e.printStackTrace();
                 }
                 // 2.4.2. insert new task into local db
                 int messageTaskInsertReturner = 0;
                 try {
-
                     messageTaskInsertReturner = new Task_DAO().insertIntoTask(thisTaskInMessage);
                     System.out.println("Inserted new task record with id='" + messageTaskInsertReturner + "' and UUID='" + taskUuid + "'");
                 } catch (SQLException e) {
-                    System.out.println("Error inserting task into the database: " + e);
+                    System.out.println(" [!!!] ERROR: handleNewMessageTask - 2.4.2. insert new task into local db FAILED:\n" + e.toString());
+                    errorMessage += " [!!!] ERROR: handleNewMessageTask - 2.4.2. insert new task into local db FAILED:\n"+ e.toString()+"\n";
                     //e.printStackTrace();
                 }
 
@@ -1988,55 +1948,83 @@ public interface Helper {
                 try {
                     Sender.insertUuidRecord("", messageTaskInsertReturner, thisEntityType, Source_type, taskUuid);
                 } catch (IOException | TimeoutException | JAXBException e) {
-                    System.out.println("Error inserting record into the Uuid Master: " + e);
+                    System.out.println(" [!!!] ERROR: handleNewMessageTask - 2.4.3. insertUuidRecord FAILED:\n" + e.toString());
+                    errorMessage += " [!!!] ERROR: handleNewMessageTask - 2.4.3. insertUuidRecord FAILED:\n"+ e.toString()+"\n";
                     //e.printStackTrace();
                 }
             }
         } else {
             System.out.println("Something went wrong getting task object from xml message!");
+            System.out.println(" [!!!] ERROR: handleNewMessageTask - Something went wrong getting task object from xml message!");
+            errorMessage += " [!!!] ERROR: handleNewMessageTask - Something went wrong getting task object from xml message!\n";
+            //e.printStackTrace();
+        }
+        if (errorMessage == "") {
+            System.out.println("\n [.i.] No error-message sent.");
+        } else {
+            System.out.println("\n [.!.] Error-message sent.");
+            //4. String xmlHeaderDescription, SourceType Source_type, String timestamp;
+            String headerDescription = errorMessage+"\nMessage source: "+messageSource;
+
+            // 5. Parse user object to xml String
+            try {
+                xmlTotalMessage = getXmlForErrorMessage(headerDescription, Source_type);
+            } catch (JAXBException e){
+                System.out.print("\nERROR: handleNewMessageTask - parser for getXmlForErrorMessage:\n");
+                e.printStackTrace();
+            }
+
+            // 6. Send
+            try {
+                Sender.publishXmlMessageToQueue("monitor-queue",xmlTotalMessage);
+            } catch (TimeoutException | IOException | JAXBException e) {
+                System.out.print("\nERROR: handleNewMessageTask - message sender for errorMessage:\n");
+                e.printStackTrace();
+            }
         }
     }
-
     //Handler for resservationeventmessage
-    static void handleNewMessageReservationEvent(String task) {
+    static void handleNewMessageReservationEvent(String task, String errors) {
 
         String userUUID = "";
         String reservationUUID = "";
         String eventUUID = "";
-
         Reservation_Event newReservation_EventObjectFromXml = null;
-
         Boolean uuidExists = false;
         Boolean allGood = true;
+        String errorMessage = errors;
+        String xmlTotalMessage = "";
+        String messageSource = getSafeXmlProperty(task,"source");
 
         EntityType thisEntityType = EntityType.ReservationEvent;
         SourceType Source_type = SourceType.Planning;
 
         // 1. transform xml to reservation-object
-
         newReservation_EventObjectFromXml = getReservation_EventObjectFromXmlMessage(task);
 
         System.out.println("New message for [Reservation_Event] with Uuid: " + newReservation_EventObjectFromXml.getReservationUUID());
         //System.out.println("newReservation_EventObjectFromXml.toString():\n" + newReservation_EventObjectFromXml.toString() + "\n");
-
-
-        reservationUUID = newReservation_EventObjectFromXml.getReservationUUID();
-        // System.out.println("sessionUUID: "+sessionUUID);
+        try {
+            reservationUUID = newReservation_EventObjectFromXml.getReservationUUID();
+        } catch (Exception e){
+            System.out.println("[!!!] ERROR: handleNewMessageReservationEvent - 1. transform xml to reservation-object" + e.toString());
+            errorMessage += "[!!!] ERROR: handleNewMessageReservationEvent - 1. transform xml to reservation-object\n" + e.toString() + "\n";
+            //e.printStackTrace();
+        }
 
         // 2.1 check if UUID exists in local db
-
         uuidExists = false;
 
         // 2.1.A. search event table for uuid
-
         try {
             uuidExists = new BaseEntityDAO().doesUUIDExist("Reservation_Event", reservationUUID);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("[!!!] ERROR: handleNewMessageReservationEvent - 2.1.A. search event table for uuid" + e.toString());
+            errorMessage += "[!!!] ERROR: handleNewMessageReservationEvent - 2.1.A. search event table for uuid\n" + e.toString() + "\n";
+            //e.printStackTrace();
         }
 
         // 2.1.1 check if reservation event is to be 'deleted'
-
         if (uuidExists) {
 
             System.out.println("UUID already exists in our PlanningDB table:[Reservation_Event]");
@@ -2057,23 +2045,31 @@ public interface Helper {
             if (newReservation_EventObjectFromXml.getActive() == 0) {
 
                 // 1. Delete user from Google calendar api
-
                 try {
                     GoogleCalenderApi.deleteAttendeeFromEventWithREO(newReservation_EventObjectFromXml);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println("[!!!] ERROR: handleNewMessageReservationEvent - 1. Delete user from Google calendar api FAILED:" + e.toString());
+                    errorMessage += "[!!!] ERROR: handleNewMessageReservationEvent - 1. Delete user from Google calendar api FAILED:\n" + e.toString() + "\n";
+                    //e.printStackTrace();
                 }
 
                 // 2. Perform soft-delete on local db
-                new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
-                System.out.println("SoftDelete executed on object with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
-
+                try {
+                    new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
+                    System.out.println("SoftDelete executed on object with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+                } catch (Exception e){
+                    System.out.println("[!!!] ERROR: handleNewMessageReservationEvent - softDelete FAILED:" + e.toString());
+                    errorMessage += "[!!!] ERROR: handleNewMessageReservationEvent - softDelete FAILED:\n" + e.toString() + "\n";
+                    //e.printStackTrace();
+                }
                 // 3. updateUuidRecordVersion() (To UUID master)
                 int updateUuidRecordVersionResponse = 0;
                 try {
                     updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, reservationUUID);
                 } catch (IOException | TimeoutException | JAXBException e) {
-                    e.printStackTrace();
+                    System.out.println("[!!!] ERROR: handleNewMessageReservationEvent - 3. updateUuidRecordVersion() (To UUID master) FAILED:" + e.toString());
+                    errorMessage += "[!!!] ERROR: handleNewMessageReservationEvent - 3. updateUuidRecordVersion() (To UUID master) FAILED:\n" + e.toString() + "\n";
+                    //e.printStackTrace();
                 }
             } else {
 
@@ -2090,87 +2086,131 @@ public interface Helper {
                 try {
                     existingReservation_Event = getReservation_EventObjectFromXmlMessage(task);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println("[!!!] ERROR: handleNewMessageReservationEvent - 2.2.2. get entityVersion from id in BaseEntity FAILED:\n" + e.toString());
+                    errorMessage += "[!!!] ERROR: handleNewMessageReservationEvent - 2.2.2. get entityVersion from id in BaseEntity FAILED:\n" + e.toString() + "\n";
+                    //e.printStackTrace();
                 }
 
                 if (localEntityVersion < existingReservation_Event.getEntityVersion()) {
 
                     // 2.3.1. update google calender through API
-
-                    GoogleCalenderApi.updateEventsAttendees(existingReservation_Event.getEventUUID(), existingReservation_Event.getUserUUID(), "Event");
-
+                    try {
+                        GoogleCalenderApi.updateEventsAttendees(existingReservation_Event.getEventUUID(), existingReservation_Event.getUserUUID(), "Event");
+                    } catch (Exception e){
+                        System.out.println("[!!!] ERROR: handleNewMessageReservationEvent - 2.3.1. update google calender through API FAILED:\n" + e.toString());
+                        errorMessage += "[!!!] ERROR: handleNewMessageReservationEvent - 2.3.1. update google calender through API FAILED:\n" + e.toString() + "\n";
+                        //e.printStackTrace();
+                    }
                     // 2.3.2. update record in our local db
 
                     int updateUuidRecordVersionResponse = 0;
                     try {
                         allGood = new Reservation_Event_DAO().updateReservationEventByObject(existingReservation_Event);
                     } catch (Exception e) {
-                        System.out.println("Error updating reservation event in the database: " + e);
+                        System.out.println("[!!!] ERROR: handleNewMessageReservationEvent - 2.3.2. update record in our local db FAILED:\n" + e.toString());
+                        errorMessage += "[!!!] ERROR: handleNewMessageReservationEvent - 2.3.2. update record in our local db FAILED:\n" + e.toString() + "\n";
+                        //e.printStackTrace();
                     }
                     // 2.3.3. updateUuidRecordVersion() (To UUID master)
                     try {
                         updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, reservationUUID);
                     } catch (IOException | TimeoutException | JAXBException e) {
-                        e.printStackTrace();
+                        System.out.println("[!!!] ERROR: handleNewMessageReservationEvent - 2.3.3. updateUuidRecordVersion() (To UUID master) FAILED:\n" + e.toString());
+                        errorMessage += "[!!!] ERROR: handleNewMessageReservationEvent - 2.3.3. updateUuidRecordVersion() (To UUID master) FAILED:\n" + e.toString() + "\n";
+                        //e.printStackTrace();
                     }
                     // 2.3.4. update entity version (on our database)
                     try {
                         allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + existingReservation_Event.getEntityVersion(), "int", "idBaseEntity", "" + selectResults[0]);
                     } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("ERROR in 2.3.4. update entity version:\n " + e);
+                        System.out.println("[!!!] ERROR: handleNewMessageReservationEvent - 2.3.4. update entity version FAILED:\n" + e.toString());
+                        errorMessage += "[!!!] ERROR: handleNewMessageReservationEvent - 2.3.4. update entity version FAILED:\n" + e.toString() + "\n";
+                        //e.printStackTrace();
                         allGood = false;
                     }
-
                     System.out.println("We had this Reservation_Event with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + existingReservation_Event.getEntityVersion() + "'");
-
-
                 } else {
                     // we have the latest version...
                     System.out.println("We already had this Reservation_Event with entityVersion: '" + localEntityVersion + "'");
-
                 }
             }
-
-
         } else {
 
             // uuid doesn't exit locally yet
 
             // 1. Add user to google calendar api event
-
-            GoogleCalenderApi.addAttendeeForEvent(newReservation_EventObjectFromXml.getEventUUID(), newReservation_EventObjectFromXml.getUserUUID());
+            try {
+                GoogleCalenderApi.addAttendeeForEvent(newReservation_EventObjectFromXml.getEventUUID(), newReservation_EventObjectFromXml.getUserUUID());
+            }catch (Exception e){
+                System.out.println("[!!!] ERROR: handleNewMessageReservationEvent - 1. Add user to google calendar api event FAILED:\n" + e.toString());
+                errorMessage += "[!!!] ERROR: handleNewMessageReservationEvent - 1. Add user to google calendar api event FAILED:\n" + e.toString() + "\n";
+                //e.printStackTrace();
+            }
 
             // 2. Insert record locally with given info
-
             int messageReservationInsertReturner = 0;
-
             BaseEntity newTempEntity = new BaseEntity();
-            newReservation_EventObjectFromXml.setReservationId(newTempEntity.getEntityId());
+
+            try {
+                newReservation_EventObjectFromXml.setReservationId(newTempEntity.getEntityId());
+            } catch (Exception e){
+                System.out.println("[!!!] ERROR: handleNewMessageReservationEvent - 2. Insert record locally with given info FAILED:\n" + e.toString());
+                errorMessage += "[!!!] ERROR: handleNewMessageReservationEvent - 2. Insert record locally with given info FAILED:\n" + e.toString() + "\n";
+                //e.printStackTrace();
+            }
+
             try {
                 messageReservationInsertReturner = new Reservation_Event_DAO().insertIntoReservation_Event(newReservation_EventObjectFromXml);
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println("[!!!] ERROR: handleNewMessageReservationEvent - 2. Insert record locally with given info FAILED:\n" + e.toString());
+                errorMessage += "[!!!] ERROR: handleNewMessageReservationEvent - 2. Insert record locally with given info FAILED:\n" + e.toString() + "\n";
+                //e.printStackTrace();
             }
 
             // 3. InsertUuidRecord
             try {
                 Sender.insertUuidRecord("", messageReservationInsertReturner, thisEntityType, Source_type, reservationUUID);
             } catch (IOException | TimeoutException | JAXBException e) {
-                e.printStackTrace();
+                System.out.println("[!!!] ERROR: handleNewMessageReservationEvent - 3. InsertUuidRecord FAILED:\n" + e.toString());
+                errorMessage += "[!!!] ERROR: handleNewMessageReservationEvent - 3. InsertUuidRecord FAILED:\n" + e.toString() + "\n";
+                //e.printStackTrace();
             }
             System.out.println("Inserted new Reservation_Event record with Uuid: " + reservationUUID + "!");
+        }
 
+        if (errorMessage == "") {
+            System.out.println("\n [.i.] No error-message sent.");
+        } else {
+            System.out.println("\n [.!.] Error-message sent.");
+            //4. String xmlHeaderDescription, SourceType Source_type, String timestamp;
+            String headerDescription = errorMessage+"\nMessage source: "+messageSource;
+
+            // 5. Parse user object to xml String
+            try {
+                xmlTotalMessage = getXmlForErrorMessage(headerDescription, Source_type);
+            } catch (JAXBException e){
+                System.out.println("ERROR: handleNewMessageReservationEvent - parser for getXmlForErrorMessage:");
+                e.printStackTrace();
+            }
+
+            // 6. Send
+            try {
+                Sender.publishXmlMessageToQueue("monitor-queue",xmlTotalMessage);
+            } catch (TimeoutException | IOException | JAXBException e) {
+                System.out.println("ERROR: handleNewMessageReservationEvent - message sender for errorMessage:");
+                e.printStackTrace();
+            }
         }
     }
-
     //Handler for resservationsessionmessage
-    static void handleNewMessageReservationSession(String task) {
+    static void handleNewMessageReservationSession(String task, String errors) {
 
         String userUUID = "";
         String reservationUUID = "";
         String sessionUUID = "";
-
+        String errorMessage = errors;
+        String xmlTotalMessage = "";
+        String messageSource = getSafeXmlProperty(task, "source");
         Reservation_Session newReservation_SessionObjectFromXml = null;
         Boolean uuidExists = false;
         Boolean allGood = true;
@@ -2179,11 +2219,8 @@ public interface Helper {
         SourceType Source_type = SourceType.Planning;
 
         // 1. transform xml to reservation-object
-
         newReservation_SessionObjectFromXml = getReservation_SessionObjectFromXmlMessage(task);
-
         reservationUUID = newReservation_SessionObjectFromXml.getReservationUUID();
-
         System.out.println("New message for [Reservation_Session] with Uuid: " + newReservation_SessionObjectFromXml.getReservationUUID());
         // System.out.println("sessionUUID: "+sessionUUID);
 
@@ -2196,7 +2233,9 @@ public interface Helper {
         try {
             uuidExists = new BaseEntityDAO().doesUUIDExist("Reservation_Session", reservationUUID);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println( " [!!!] ERROR: handleNewMessageReservationEvent - 2.1.B. search Reservation_Session table for uuid FAILED:\n"+e.toString());
+            errorMessage += " [!!!] ERROR handleNewMessageReservationEvent - 2.1.B. search Reservation_Session table for uuid FAILED:\n"+e.toString()+"\n";
         }
 
         // 2.1.1 check if reservation session is to be 'deleted'
@@ -2221,24 +2260,31 @@ public interface Helper {
                 try {
                     GoogleCalenderApi.deleteAttendeeFromEventWithRSO(newReservation_SessionObjectFromXml);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println( " [!!!] ERROR: handleNewMessageReservationEvent - 1. Delete user from Google Calender Api FAILED:\n" +e.toString());
+                    errorMessage += " [!!!] ERROR: handleNewMessageReservationEvent - 1. Delete user from Google Calender Api FAILED:\n"+e.toString()+"\n";
+                    //e.printStackTrace();
                 }
 
                 // 2. Perform soft-delete on local db
-                new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
-                System.out.println("SoftDelete executed on [Reservation_Session] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
-
+                try {
+                    new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
+                    System.out.println("SoftDelete executed on [Reservation_Session] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+                } catch (Exception e){
+                    System.out.println(" [!!!] ERROR: handleNewMessageReservationEvent - 2. Perform soft-delete on local db FAILED:\n" + e.toString());
+                    errorMessage += " [!!!] ERROR: handleNewMessageReservationEvent - 2. Perform soft-delete on local db FAILED:\n" + e.toString()+ "\n";
+                    //e.printStackTrace();
+                }
                 // 3. updateUuidRecordVersion() (To UUID master)
                 int updateUuidRecordVersionResponse = 0;
                 try {
                     updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, reservationUUID);
                 } catch (IOException | TimeoutException | JAXBException e) {
-                    e.printStackTrace();
+                    System.out.println( " [!!!] ERROR: handleNewMessageReservationEvent - 3. updateUuidRecordVersion() (To UUID master) FAILED:\n" + e.toString());
+                    errorMessage += " [!!!] ERROR: handleNewMessageReservationEvent - 3. updateUuidRecordVersion() (To UUID master) FAILED:\n" + e.toString()+"\n";
+                    //e.printStackTrace();
                 }
 
-
             } else {
-
                 // 2.2.2. get entityVersion from id in BaseEntity
                 propertiesToSelect[0] = "entity_version";
                 table = "BaseEntity";
@@ -2250,7 +2296,9 @@ public interface Helper {
                 try {
                     existingReservation_Session = getReservation_SessionObjectFromXmlMessage(task);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println( " [!!!] ERROR: handleNewMessageReservationEvent - 2.2.2. get entityVersion from id in BaseEntity FAILED:\n" + e.toString());
+                    errorMessage += " [!!!] ERROR: handleNewMessageReservationEvent - 2.2.2. get entityVersion from id in BaseEntity FAILED:\n"+e.toString()+"\n";
+                    //e.printStackTrace();
                 }
 
                 int updateUuidRecordVersionResponse = 0;
@@ -2258,10 +2306,13 @@ public interface Helper {
                 if (localEntityVersion < existingReservation_Session.getEntityVersion()) {
 
                     // 2.3.1. update google calender through API
-
-
-                    GoogleCalenderApi.updateEventsAttendees(existingReservation_Session.getSessionUUID(), existingReservation_Session.getUserUUID(), "Session");
-
+                    try {
+                        GoogleCalenderApi.updateEventsAttendees(existingReservation_Session.getSessionUUID(),existingReservation_Session.getUserUUID(), "Session");
+                    } catch (Exception e){
+                        //e.printStackTrace();
+                        System.out.println( " [!!!] ERROR: handleNewMessageReservationEvent - 2.3.1. update google calender through API FAILED:\n" + e.toString());
+                        errorMessage += " [!!!] ERROR: handleNewMessageReservationEvent - 2.3.1. update google calender through API FAILED:\n"+e.toString()+"\n";
+                    }
 
                     // 2.3.2. update record in our local db
 
@@ -2270,34 +2321,35 @@ public interface Helper {
                         allGood = new Reservation_Session_DAO().updateReservationSessionByObject(existingReservation_Session);
                     } catch (Exception e) {
                         System.out.println("Error updating reservation session in the database: " + e);
+                        //e.printStackTrace();
+                        System.out.println( " [!!!] ERROR: handleNewMessageReservationEvent - 2.3.2. update record in our local db FAILED:\n"+e.toString());
+                        errorMessage += " [!!!] ERROR: handleNewMessageReservationEvent - 2.3.2. update record in our local db FAILED:\n"+e.toString()+"\n";
                     }
 
                     // 2.3.3. updateUuidRecordVersion() (To UUID master)
                     try {
                         updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, reservationUUID);
                     } catch (IOException | TimeoutException | JAXBException e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        System.out.println( " [!!!] ERROR: handleNewMessageReservationEvent - 2.3.3. updateUuidRecordVersion() (To UUID master) FAILED:\n"+e.toString());
+                        errorMessage += " [!!!] ERROR: handleNewMessageReservationEvent - 2.3.3. updateUuidRecordVersion() (To UUID master) FAILED:\n"+e.toString()+"\n";
                     }
 
                     // 2.3.4. update entity version (on our database)
                     try {
                         allGood = new BaseEntityDAO().updateTablePropertyValue("BaseEntity", "entity_version", "" + existingReservation_Session.getEntityVersion(), "int", "idBaseEntity", "" + existingReservation_Session);
                     } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("ERROR in 2.3.4. update entity version (on our database) :\n " + e);
+                        System.out.println( " [!!!] ERROR: handleNewMessageReservationEvent - 2.3.4. update entity version (on our database) FAILED:\n"+e.toString());
+                        errorMessage += " [!!!] ERROR: handleNewMessageReservationEvent - 2.3.4. update entity version (on our database) FAILED:\n"+e.toString()+"\n";
                         allGood = false;
+                        //e.printStackTrace();
                     }
-
                     System.out.println("We had this Reservation_Session with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + existingReservation_Session.getEntityVersion() + "'");
-
-
                 } else {
                     // we have the latest version...
                     System.out.println("We already had this Reservation_Session with entityVersion: '" + localEntityVersion + "'");
                 }
-
             }
-
 
         } else {
 
@@ -2305,54 +2357,93 @@ public interface Helper {
             // # insert record locally with given info
 
             // 1. Add user to google calendar api event
-
-            GoogleCalenderApi.addAttendeeForSession(newReservation_SessionObjectFromXml.getSessionUUID(), newReservation_SessionObjectFromXml.getUserUUID());
-
+            try {
+                GoogleCalenderApi.addAttendeeForSession(newReservation_SessionObjectFromXml.getSessionUUID(), newReservation_SessionObjectFromXml.getUserUUID());
+            } catch (Exception e){
+                //e.printStackTrace();
+                System.out.println( " [!!!] ERROR: handleNewMessageReservationEvent - 1. Add user to google calendar api event FAILED:\n"+e.toString());
+                errorMessage += " [!!!] ERROR: handleNewMessageReservationEvent - 1. Add user to google calendar api event FAILED:\n"+e.toString()+"\n";
+            }
             // 2. Insert record locally with given info
             int messageReservationInsertReturner = 0;
 
             BaseEntity newTempEntity = new BaseEntity();
-            newReservation_SessionObjectFromXml.setReservationId(newTempEntity.getEntityId());
+            try {
+                newReservation_SessionObjectFromXml.setReservationId(newTempEntity.getEntityId());
+            } catch (Exception e){
+                //e.printStackTrace();
+                System.out.println( " [!!!] ERROR: handleNewMessageReservationEvent - 2. Insert record locally with given info FAILED:\n"+e.toString());
+                errorMessage += " [!!!] ERROR: handleNewMessageReservationEvent - 2. Insert record locally with given info FAILED:\n"+e.toString()+"\n";
+            }
+
             //System.out.println("newReservation_SessionObjectFromXml: " + newReservation_SessionObjectFromXml.toString());
 
             try {
                 messageReservationInsertReturner = new Reservation_Session_DAO().insertIntoReservation_Session(newReservation_SessionObjectFromXml);
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println( " [!!!] ERROR: handleNewMessageReservationEvent - Reservation_Session_DAO().insertIntoReservation_Session(newReservation_SessionObjectFromXml); FAILED:\n"+e.toString());
+                errorMessage += " [!!!] ERROR: handleNewMessageReservationEvent - Reservation_Session_DAO().insertIntoReservation_Session(newReservation_SessionObjectFromXml); FAILED:\n"+e.toString()+"\n";
+                //e.printStackTrace();
             }
 
             // 3. InsertUuidRecord
             try {
                 Sender.insertUuidRecord("", messageReservationInsertReturner, thisEntityType, Source_type, reservationUUID);
             } catch (IOException | TimeoutException | JAXBException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                System.out.println( " [!!!] ERROR: handleNewMessageReservationEvent - 3. InsertUuidRecord FAILED:\n"+e.toString());
+                errorMessage += " [!!!] ERROR: handleNewMessageReservationEvent - 3. InsertUuidRecord FAILED:\n"+e.toString()+"\n";
             }
             System.out.println("Inserted new Reservation_Session record with Uuid: " + reservationUUID + "!");
-
         }
 
+        if (errorMessage == "") {
+            System.out.println("\n [.i.] No error-message sent.");
+
+        } else {
+            System.out.println("\n [.!.] Error-message sent.");
+            //4. String xmlHeaderDescription, SourceType Source_type, String timestamp;
+            String headerDescription = errorMessage+"\nMessage source: "+messageSource;
+
+            // 5. Parse user object to xml String
+            try {
+                xmlTotalMessage = getXmlForErrorMessage(headerDescription, Source_type);
+            } catch (JAXBException e){
+                System.out.println(" [!!!] ERROR: handleNewMessageReservationEvent - parser for getXmlForErrorMessage:");
+                e.printStackTrace();
+            }
+
+            // 6. Send
+
+            try {
+                Sender.publishXmlMessageToQueue("monitor-queue",xmlTotalMessage);
+            } catch (TimeoutException | IOException | JAXBException e) {
+                System.out.println("ERROR: handleNewMessageReservationEvent - message sender for errorMessage:");
+                e.printStackTrace();
+            }
+        }
     }
 
+    //TODO ERROR MESSAGE STUREN 4 hieronder
     //Handler for assigntaskmessage
-    static void handleNewMessageAssignTask(String task) {
+    static void handleNewMessageAssignTask(String task, String errors) {
 
         String userUuid = "";
         String assignTaskUuid = "";
         String taskUuid = "";
-
         Assign_Task newAssign_TaskObjectFromXml = null;
         Boolean uuidExists = false;
         Boolean allGood = true;
+        String xmlTotalMessage = "";
+        String errorMessage = "";
+        String messageSource = getSafeXmlProperty(task,"source");
 
         EntityType thisEntityType = EntityType.AssignTask;
         SourceType Source_type = SourceType.Planning;
 
         // 1. transform xml to Assign_Task-object
-
         newAssign_TaskObjectFromXml = getAssign_TaskObjectFromXmlMessage(task);
-
         assignTaskUuid = newAssign_TaskObjectFromXml.getAssignTaskUuid();
-
         System.out.println("New message for [Assign_Task] with Uuid: " + assignTaskUuid);
         // System.out.println("sessionUUID: "+sessionUUID);
 
@@ -2361,11 +2452,12 @@ public interface Helper {
         uuidExists = false;
 
         // 2.1.B. search Assign_Task table for uuid
-
         try {
             uuidExists = new BaseEntityDAO().doesUUIDExist("Assign_Task", assignTaskUuid);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("[!!!] ERROR: handleNewMessageAssignTask - 2.1.B. search Assign_Task table for uuid FAILED:\n" + e.toString());
+            errorMessage += "[!!!] ERROR: handleNewMessageAssignTask - 2.1.B. search Assign_Task table for uuid FAILED:\n" + e.toString() + "\n";
+            //e.printStackTrace();
         }
 
         // 2.1.1 check if reservation session is to be 'deleted'
@@ -2390,19 +2482,28 @@ public interface Helper {
                 try {
                     GoogleCalenderApi.deleteAttendeeFromEventWithATO(newAssign_TaskObjectFromXml);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println("[!!!] ERROR: handleNewMessageAssignTask - 1. Delete user from Google Calender Api FAILED:\n" + e.toString());
+                    errorMessage += "[!!!] ERROR: handleNewMessageAssignTask - 1. Delete user from Google Calender Api FAILED:\n" + e.toString() + "\n";
+                   //e.printStackTrace();
                 }
 
                 // 2. Perform soft-delete on local db
-                new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
-                System.out.println("SoftDelete executed on [Assign_Task] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
-
+                try {
+                    new BaseEntityDAO().softDeleteBaseEntity(Integer.parseInt(selectResults[0]));
+                    System.out.println("SoftDelete executed on [Assign_Task] with entityId: " + Integer.parseInt(selectResults[0]) + "\n");
+                }catch (Exception e){
+                    System.out.println("[!!!] ERROR: handleNewMessageAssignTask - 2. Perform soft-delete on local db FAILED:\n" + e.toString());
+                    errorMessage += "[!!!] ERROR: handleNewMessageAssignTask - 2. Perform soft-delete on local db FAILED:\n" + e.toString() + "\n";
+                    //e.printStackTrace();
+                }
                 // 3. updateUuidRecordVersion() (To UUID master)
                 int updateUuidRecordVersionResponse = 0;
                 try {
                     updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, assignTaskUuid);
                 } catch (IOException | TimeoutException | JAXBException e) {
-                    e.printStackTrace();
+                    System.out.println("[!!!] ERROR: handleNewMessageAssignTask - 3. updateUuidRecordVersion() (To UUID master) FAILED:\n" + e.toString());
+                    errorMessage += "[!!!] ERROR: handleNewMessageAssignTask - 3. updateUuidRecordVersion() (To UUID master) FAILED:\n" + e.toString() + "\n";
+                    //e.printStackTrace();
                 }
 
 
@@ -2419,7 +2520,9 @@ public interface Helper {
                 try {
                     existingAssign_Task = getAssign_TaskObjectFromXmlMessage(task);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println("[!!!] ERROR: handleNewMessageAssignTask - getAssign_TaskObjectFromXmlMessage FAILED:\n" + e.toString());
+                    errorMessage += "[!!!] ERROR: handleNewMessageAssignTask - getAssign_TaskObjectFromXmlMessage FAILED:\n" + e.toString() + "\n";
+                    //e.printStackTrace();
                 }
 
                 int updateUuidRecordVersionResponse = 0;
@@ -2427,23 +2530,31 @@ public interface Helper {
                 if (localEntityVersion < existingAssign_Task.getEntityVersion()) {
 
                     // 2.3.1. update google calender through API
-
-                    GoogleCalenderApi.updateEventsAttendees(existingAssign_Task.getTaskUuid(), existingAssign_Task.getUserUuid(), "Task");
-
+                    try {
+                        GoogleCalenderApi.updateEventsAttendees(existingAssign_Task.getTaskUuid(), existingAssign_Task.getUserUuid(), "Task");
+                    } catch (Exception e){
+                        System.out.println("[!!!] ERROR: handleNewMessageAssignTask - 2.3.1. update google calender through API FAILED:\n" + e.toString());
+                        errorMessage += "[!!!] ERROR: handleNewMessageAssignTask - 2.3.1. update google calender through API FAILED:\n" + e.toString() + "\n";
+                        //e.printStackTrace();
+                    }
                     // 2.3.2. update record in our local db
 
                     System.out.println("Current task to be updated .toString: " + existingAssign_Task.toString());
                     try {
                         allGood = new Assign_Task_DAO().updateAssignTaskByObject(existingAssign_Task);
                     } catch (Exception e) {
-                        System.out.println("Error updating assign task in the database: " + e);
+                        System.out.println("[!!!] ERROR: handleNewMessageAssignTask - 2.3.2. update record in our local db FAILED:\n" + e.toString());
+                        errorMessage += "[!!!] ERROR: handleNewMessageAssignTask - 2.3.2. update record in our local db FAILED:\n" + e.toString() + "\n";
+                        //e.printStackTrace();
                     }
 
                     // 2.3.3. updateUuidRecordVersion() (To UUID master)
                     try {
                         updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, assignTaskUuid);
                     } catch (IOException | TimeoutException | JAXBException e) {
-                        e.printStackTrace();
+                        System.out.println("[!!!] ERROR: handleNewMessageAssignTask - 2.3.3. updateUuidRecordVersion() (To UUID master) FAILED:\n" + e.toString());
+                        errorMessage += "[!!!] ERROR: handleNewMessageAssignTask - 2.3.3. updateUuidRecordVersion() (To UUID master) FAILED:\n" + e.toString() + "\n";
+                        //e.printStackTrace();
                     }
 
                     // 2.3.4. update entity version (on our database)
@@ -2454,17 +2565,12 @@ public interface Helper {
                         System.out.println("ERROR in 2.3.4. update entity version (on our database) :\n " + e);
                         allGood = false;
                     }
-
                     System.out.println("We had this Assign_Task with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + existingAssign_Task.getEntityVersion() + "'");
-
-
                 } else {
                     // we have the latest version...
                     System.out.println("We already had this Assign_Task with entityVersion: '" + localEntityVersion + "'");
                 }
-
             }
-
 
         } else {
 
@@ -2472,33 +2578,71 @@ public interface Helper {
             // # insert record locally with given info
 
             // 1. Add employee to google calendar api event
-            GoogleCalenderApi.addEmployeeForTask(newAssign_TaskObjectFromXml.getTaskUuid(), newAssign_TaskObjectFromXml.getUserUuid());
+            try {
+                GoogleCalenderApi.addEmployeeForTask(newAssign_TaskObjectFromXml.getTaskUuid(), newAssign_TaskObjectFromXml.getUserUuid());
+            } catch (Exception e){
+                System.out.println("[!!!] ERROR: handleNewMessageAssignTask - \n" + e.toString());
+                errorMessage += "[!!!] ERROR: handleNewMessageAssignTask - \n" + e.toString() + "\n";
+                //e.printStackTrace();
+            }
 
             // 2. Insert record locally with given info
             int messageAssignTaskInsertReturner = 0;
 
             BaseEntity newTempEntity = new BaseEntity();
-            newAssign_TaskObjectFromXml.setAssignTaskId(newTempEntity.getEntityId());
-            //System.out.println("newReservation_SessionObjectFromXml: " + newReservation_SessionObjectFromXml.toString());
+            try {
+                newAssign_TaskObjectFromXml.setAssignTaskId(newTempEntity.getEntityId());
+                //System.out.println("newReservation_SessionObjectFromXml: " + newReservation_SessionObjectFromXml.toString());
+            } catch (Exception e){
+                System.out.println("[!!!] ERROR: handleNewMessageAssignTask - \n" + e.toString());
+                errorMessage += "[!!!] ERROR: handleNewMessageAssignTask - \n" + e.toString() + "\n";
+                //e.printStackTrace();
+            }
+
 
             try {
                 messageAssignTaskInsertReturner = new Assign_Task_DAO().insertIntoAssign_Task(newAssign_TaskObjectFromXml);
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println("[!!!] ERROR: handleNewMessageAssignTask - \n" + e.toString());
+                errorMessage += "[!!!] ERROR: handleNewMessageAssignTask - \n" + e.toString() + "\n";
+                //e.printStackTrace();
             }
 
             // 3. InsertUuidRecord
             try {
                 Sender.insertUuidRecord("", messageAssignTaskInsertReturner, thisEntityType, Source_type, assignTaskUuid);
             } catch (IOException | TimeoutException | JAXBException e) {
-                e.printStackTrace();
+                System.out.println("[!!!] ERROR: handleNewMessageAssignTask - \n" + e.toString());
+                errorMessage += "[!!!] ERROR: handleNewMessageAssignTask - \n" + e.toString() + "\n";
+                //e.printStackTrace();
             }
             System.out.println("Inserted new Assign_Task record with Uuid: " + assignTaskUuid + "!");
-
         }
+        if (errorMessage == "") {
+            System.out.println("\n [.i.] No error-message sent.");
 
+        } else {
+            System.out.println("\n [.!.] Error-message sent.");
+            //4. String xmlHeaderDescription, SourceType Source_type, String timestamp;
+            String headerDescription = errorMessage+"\nMessage source: "+ messageSource;
+
+            // 5. Parse user object to xml String
+            try {
+                xmlTotalMessage = getXmlForErrorMessage(headerDescription, Source_type);
+            } catch (JAXBException e){
+                System.out.println("ERROR: handleNewMessageAssignTask - parser for getXmlForErrorMessage:");
+                e.printStackTrace();
+            }
+
+            // 6. Send
+            try {
+                Sender.publishXmlMessageToQueue("monitor-queue",xmlTotalMessage);
+            } catch (TimeoutException | IOException | JAXBException e) {
+                System.out.println("ERROR: handleNewMessageAssignTask - message sender for errorMessage:");
+                e.printStackTrace();
+            }
+        }
     }
-
 
     // HTTP REQUESTS
     // UUID: GET: all
@@ -2521,7 +2665,6 @@ public interface Helper {
         return myLocalUUID_Response_JSON_String;
 
     }
-
     // UUID: POST: create
     static String httpPostCreateUuidRecord(int Entity_sourceId, EntityType Entity_type, SourceType Source_type) throws IOException {
 
@@ -2541,7 +2684,6 @@ public interface Helper {
         return myLocalUUID_Response_JSON_String;
 
     }
-
     // UUID: POST: insert
     static String httpPostInsertUuidRecord(String UUID, int Entity_sourceId, EntityType Entity_type, SourceType Source_type) throws IOException {
 
@@ -2564,7 +2706,6 @@ public interface Helper {
         return myLocalUUID_Response_JSON_String;
 
     }
-
     // UUID: PUT: update1
     static String httpPutUpdateUuidRecordVersion(String UUID, SourceType Source_type) throws IOException {
 
@@ -2584,7 +2725,6 @@ public interface Helper {
         return myLocalUUID_Response_JSON_String;
 
     }
-
     // UUID: PUT: update2
     static String httpPutUpdateUuidRecordVersionB(String UUID, int Entity_version, SourceType Source_type) throws IOException {
 
@@ -2603,7 +2743,6 @@ public interface Helper {
         return myLocalUUID_Response_JSON_String;
 
     }
-
     // UUID: General HttpRequest
     static String doHttpRequest(String myUrl, String json, String method) throws IOException {
 
@@ -2678,7 +2817,7 @@ public interface Helper {
     // User: (params) => XML
     static String getXmlForNewUser(String xmlHeaderDescription, SourceType Source_type, String
             userUUID, String lastName, String firstName, String phoneNumber, String email, String street, String houseNr, String
-                                           city, String postalCode, String country, String company, String type, int entity_version, int active, String timestamp)
+            city, String postalCode, String country, String company, String type, int entity_version, int active, String timestamp)
             throws JAXBException {
 
         String messageType = "userMessage";
@@ -2696,7 +2835,6 @@ public interface Helper {
         return xmlTotalMessage;
 
     }
-
     // User: Object => XML
     static String getXmlFromUserObject(String xmlHeaderDescription, SourceType Source_type, User user) throws JAXBException {
 
@@ -2755,6 +2893,7 @@ public interface Helper {
         String timestamp = "false";
         String errorMessage = "";
         String xmlTotalMessage = "";
+        String messageSource = getSafeXmlProperty(xmlMessage,"source");
 
         uuid = getSafeXmlProperty(xmlMessage, "uuid");
         if (uuid == "false") {
@@ -2780,62 +2919,62 @@ public interface Helper {
         }
         lastName = getSafeXmlProperty(xmlMessage, "lastName");
         if (lastName == "false") {
-            System.out.println(" [!!!] ERROR: No lastName found in XML: ");
-            errorMessage += " [!!!] ERROR: No lastName found in XML:\n";
+            System.out.println(" [!!!] ERROR: getUserObjectFromXmlMessage - No lastName found in XML: ");
+            errorMessage += " [!!!] ERROR: getUserObjectFromXmlMessage - No lastName found in XML:\n";
             allGood = false;
         }
         firstName = getSafeXmlProperty(xmlMessage, "firstName");
         if (firstName == "false") {
-            System.out.println(" [!!!] ERROR: No firstName found in XML: ");
-            errorMessage += " [!!!] ERROR: No firstName found in XML:\n";
+            System.out.println(" [!!!] ERROR: getUserObjectFromXmlMessage - No firstName found in XML: ");
+            errorMessage += " [!!!] ERROR: getUserObjectFromXmlMessage - No firstName found in XML:\n";
             allGood = false;
         }
         phoneNumber = getSafeXmlProperty(xmlMessage, "phoneNumber");
         if (phoneNumber == "false") {
-            System.out.println(" [!!!] ERROR: No phoneNumber found in XML: ");
-            errorMessage += " [!!!] ERROR: No phoneNumber found in XML:\n";
+            System.out.println(" [!!!] ERROR: getUserObjectFromXmlMessage - No phoneNumber found in XML: ");
+            errorMessage += " [!!!] ERROR: getUserObjectFromXmlMessage - No phoneNumber found in XML:\n";
             allGood = false;
         }
         email = getSafeXmlProperty(xmlMessage, "email");
         if (email == "false") {
-            System.out.println(" [!!!] ERROR: No email found in XML: ");
-            errorMessage += " [!!!] ERROR: No email found in XML:\n";
+            System.out.println(" [!!!] ERROR: getUserObjectFromXmlMessage - No email found in XML: ");
+            errorMessage += " [!!!] ERROR: getUserObjectFromXmlMessage - No email found in XML:\n";
             allGood = false;
         }
         street = getSafeXmlProperty(xmlMessage, "street");
         if (street == "false") {
-            System.out.println(" [!!!] ERROR: No street found in XML: ");
-            errorMessage += " [!!!] ERROR: No street found in XML:\n";
+            System.out.println(" [!!!] ERROR: getUserObjectFromXmlMessage - No street found in XML: ");
+            errorMessage += " [!!!] ERROR: getUserObjectFromXmlMessage - No street found in XML:\n";
             allGood = false;
         }
         houseNr = getSafeXmlProperty(xmlMessage, "houseNr");
         if (houseNr == "false") {
-            System.out.println(" [!!!] ERROR: No houseNr found in XML: ");
-            errorMessage += " [!!!] ERROR: No houseNr found in XML:\n";
+            System.out.println(" [!!!] ERROR: getUserObjectFromXmlMessage - No houseNr found in XML: ");
+            errorMessage += " [!!!] ERROR: getUserObjectFromXmlMessage - No houseNr found in XML:\n";
             allGood = false;
         }
         city = getSafeXmlProperty(xmlMessage, "city");
         if (city == "false") {
-            System.out.println(" [!!!] ERROR: No city found in XML: ");
-            errorMessage += " [!!!] ERROR: No city found in XML:\n";
+            System.out.println(" [!!!] ERROR: getUserObjectFromXmlMessage - No city found in XML: ");
+            errorMessage += " [!!!] ERROR: getUserObjectFromXmlMessage - No city found in XML:\n";
             allGood = false;
         }
         postalCode = getSafeXmlProperty(xmlMessage, "postalCode");
         if (postalCode == "false") {
-            System.out.println(" [!!!] ERROR: No postalCode found in XML: ");
-            errorMessage += " [!!!] ERROR: No postalCode found in XML:\n";
+            System.out.println(" [!!!] ERROR: getUserObjectFromXmlMessage - No postalCode found in XML: ");
+            errorMessage += " [!!!] ERROR: getUserObjectFromXmlMessage - No postalCode found in XML:\n";
             allGood = false;
         }
         country = getSafeXmlProperty(xmlMessage, "country");
         if (country == "false") {
-            System.out.println(" [!!!] ERROR: No country found in XML: ");
-            errorMessage += " [!!!] ERROR: No country found in XML:\n";
+            System.out.println(" [!!!] ERROR: getUserObjectFromXmlMessage - No country found in XML: ");
+            errorMessage += " [!!!] ERROR: getUserObjectFromXmlMessage - No country found in XML:\n";
             allGood = false;
         }
         company = getSafeXmlProperty(xmlMessage, "company");
         if (company == "false") {
-            System.out.println(" [!!!] ERROR: No company found in XML: ");
-            errorMessage += " [!!!] ERROR: No company found in XML:\n";
+            System.out.println(" [!!!] ERROR: getUserObjectFromXmlMessage - No company found in XML: ");
+            errorMessage += " [!!!] ERROR: getUserObjectFromXmlMessage - No company found in XML:\n";
             allGood = false;
         }
         //type = EntityType.valueOf(getSafeXmlProperty(xmlMessage, "type"));
@@ -2850,8 +2989,8 @@ public interface Helper {
                 userType = getSafeXmlProperty(xmlMessage, "Type");
 
                 if (userType == "false") {
-                    System.out.println(" [!!!] ERROR: No userType found in XML: ");
-                    errorMessage += " [!!!] ERROR: No userType found in XML:\n";
+                    System.out.println(" [!!!] ERROR: getUserObjectFromXmlMessage - No userType found in XML: ");
+                    errorMessage += " [!!!] ERROR: getUserObjectFromXmlMessage - No userType found in XML:\n";
                     allGood = false;
                 }
             }
@@ -2859,8 +2998,8 @@ public interface Helper {
         }
         entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, "entityVersion"));
         if (entityVersion == 0) {
-            System.out.println(" [!!!] ERROR: No entityVersion found in XML: ");
-            errorMessage += " [!!!] ERROR: No entityVersion found in XML:\n";
+            System.out.println(" [!!!] ERROR: getUserObjectFromXmlMessage - No entityVersion found in XML: ");
+            errorMessage += " [!!!] ERROR: getUserObjectFromXmlMessage - No entityVersion found in XML:\n";
             allGood = false;
 
         }
@@ -2880,8 +3019,8 @@ public interface Helper {
             }
         }
         if (active < 0) {
-            System.out.println(" [!!!] ERROR: No active found in XML: ");
-            errorMessage += " [!!!] ERROR: No active found in XML:\n";
+            System.out.println(" [!!!] ERROR: getUserObjectFromXmlMessage - No active found in XML: ");
+            errorMessage += " [!!!] ERROR: getUserObjectFromXmlMessage - No active found in XML:\n";
             allGood = false;
 
         }
@@ -2895,38 +3034,38 @@ public interface Helper {
                 timestamp = getSafeXmlProperty(xmlMessage, "TimeStamp");
 
                 if (timestamp == "false") {
-                    System.out.println(" [!!!] ERROR: No timestamp found in XML: ");
-                    errorMessage += " [!!!] ERROR: No timestamp found in XML:\n";
+                    System.out.println(" [!!!] ERROR: getUserObjectFromXmlMessage - No timestamp found in XML: ");
+                    errorMessage += " [!!!] ERROR: getUserObjectFromXmlMessage - No timestamp found in XML:\n";
                     allGood = false;
                 }
             }
         }
 
-        if (errorMessage == "") {
+        if (errorMessage == "" ) {
             userObject = new User(0, entityVersion, active, timestamp, uuid, lastName, firstName, phoneNumber, email, street, houseNr, city, postalCode, country, company, userType, false);
             return userObject;
-        } else {
+        }
+        else {
             //4. String xmlHeaderDescription, SourceType Source_type, String timestamp;
-            String headerDescription = errorMessage;
+            String headerDescription = errorMessage+"\nMessage source: "+messageSource;
             SourceType Source_type = SourceType.Planning;
 
             // 5. Parse user object to xml String
             try {
                 xmlTotalMessage = getXmlForErrorMessage(headerDescription, Source_type);
-            } catch (JAXBException e) {
-                System.out.print("ERROR: parser for getXmlForErrorMessage: " + e);
+            } catch (JAXBException e){
+                System.out.print("ERROR: getUserObjectFromXmlMessage - parser for getXmlForErrorMessage: " + e);
             }
 
             // 6. Send
 
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue", xmlTotalMessage);
+                Sender.publishXmlMessageToQueue("monitor-queue",xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
-                System.out.print("ERROR: message sender for errorMessage: " + e);
+                System.out.print("ERROR: getUserObjectFromXmlMessage - message sender for errorMessage: " + e);
             }
             return null;
         }
-
     }
 
 
@@ -2946,7 +3085,6 @@ public interface Helper {
         String xmlTotalMessage = sessionMessage.generateXML();
         return xmlTotalMessage;
     }
-
     // Session: Object => XML
     static String getXmlFromSessionObject(String headerDescription, SourceType Source_type, Session newSession) throws JAXBException {
 
@@ -2973,13 +3111,11 @@ public interface Helper {
         String xmlTotalMessage = xmlReservationMessage.generateXML();
         return xmlTotalMessage;
     }
-
     // Session: XML => Object
     static Session getSessionObjectFromXmlMessage(String xmlMessage) {
 
         boolean allGood = true;
         Session sessionObject = null;
-
         String sessionUUID = "false";
         String eventUUID = "false";
         String sessionName = "false";
@@ -2997,86 +3133,81 @@ public interface Helper {
         String timestamp = "false";
         String errorMessage = "";
         String xmlTotalMessage = "";
+        String messageSource = getSafeXmlProperty(xmlMessage, "source");
 
         // xmlMessage parsing
-
         sessionUUID = getSafeXmlProperty(xmlMessage, "uuid");
-
         if (sessionUUID == "false") {
-
             sessionUUID = getSafeXmlProperty(xmlMessage, "UUID");
-
             if (sessionUUID == "false") {
-
                 sessionUUID = getSafeXmlProperty(xmlMessage, "sessionUUID");
-
                 if (sessionUUID == "false") {
-                    System.out.println(" [!!!] ERROR: No sessionUUID found in XML: ");
-                    errorMessage += " [!!!] ERROR: No sessionUUID found in XML:\n";
+                    System.out.println(" [!!!] ERROR: getSessionObjectFromXmlMessage - No sessionUUID found in XML: ");
+                    errorMessage += " [!!!] ERROR: getSessionObjectFromXmlMessage - No sessionUUID found in XML:\n";
                     allGood = false;
                 }
             }
         }
         eventUUID = getSafeXmlProperty(xmlMessage, "eventUuid");
         if (eventUUID == "false") {
-            System.out.println(" [!!!] ERROR: No eventUUID found in XML: ");
-            errorMessage += " [!!!] ERROR: No eventUUID found in XML:\n";
+            System.out.println(" [!!!] ERROR: getSessionObjectFromXmlMessage - No eventUUID found in XML: ");
+            errorMessage += " [!!!] ERROR: getSessionObjectFromXmlMessage - No eventUUID found in XML:\n";
             allGood = false;
         }
         sessionName = getSafeXmlProperty(xmlMessage, "sessionName");
         if (sessionName == "false") {
-            System.out.println(" [!!!] ERROR: No sessionName found in XML: ");
-            errorMessage += " [!!!] ERROR: No sessionName found in XML:\n";
+            System.out.println(" [!!!] ERROR: getSessionObjectFromXmlMessage - No sessionName found in XML: ");
+            errorMessage += " [!!!] ERROR: getSessionObjectFromXmlMessage - No sessionName found in XML:\n";
             allGood = false;
         }
 
         try {
             maxAttendees = Integer.parseInt(getSafeXmlProperty(xmlMessage, "maxAttendees"));
         } catch (NumberFormatException e) {
-            System.out.println(" [!!!] ERROR(intc): No maxAttendees found in XML: ");
-            errorMessage += " [!!!] ERROR(intc): No maxAttendees found in XML:\n";
+            System.out.println(" [!!!] ERROR(intc): getSessionObjectFromXmlMessage - No maxAttendees found in XML: ");
+            errorMessage += " [!!!] ERROR(intc): getSessionObjectFromXmlMessage - No maxAttendees found in XML:\n";
             allGood = false;
         }
 
         if (maxAttendees < 0) {
-            System.out.println(" [!!!] ERROR: No maxAttendees found in XML: ");
-            errorMessage += " [!!!] ERROR: No maxAttendees found in XML:\n";
+            System.out.println(" [!!!] ERROR: getSessionObjectFromXmlMessage - No maxAttendees found in XML: ");
+            errorMessage += " [!!!] ERROR: getSessionObjectFromXmlMessage - No maxAttendees found in XML:\n";
             allGood = false;
         }
         description = getSafeXmlProperty(xmlMessage, "description");
         if (description == "false") {
-            System.out.println(" [!!!] ERROR: No description found in XML: ");
-            errorMessage += " [!!!] ERROR: No description found in XML:\n";
+            System.out.println(" [!!!] ERROR: getSessionObjectFromXmlMessage - No description found in XML: ");
+            errorMessage += " [!!!] ERROR: getSessionObjectFromXmlMessage - No description found in XML:\n";
             allGood = false;
         }
         summary = getSafeXmlProperty(xmlMessage, "summary");
         if (summary == "false") {
-            System.out.println(" [!!!] ERROR: No summary found in XML: ");
-            errorMessage += " [!!!] ERROR: No summary found in XML:\n";
+            System.out.println(" [!!!] ERROR: getSessionObjectFromXmlMessage - No summary found in XML: ");
+            errorMessage += " [!!!] ERROR: getSessionObjectFromXmlMessage - No summary found in XML:\n";
             allGood = false;
         }
         location = getSafeXmlProperty(xmlMessage, "location");
         if (location == "false") {
-            System.out.println(" [!!!] ERROR: No location found in XML: ");
-            errorMessage += " [!!!] ERROR: No location found in XML:\n";
+            System.out.println(" [!!!] ERROR: getSessionObjectFromXmlMessage - No location found in XML: ");
+            errorMessage += " [!!!] ERROR: getSessionObjectFromXmlMessage - No location found in XML:\n";
             allGood = false;
         }
         speaker = getSafeXmlProperty(xmlMessage, "speaker");
         if (speaker == "false") {
-            System.out.println(" [!!!] ERROR: No speaker found in XML: ");
-            errorMessage += " [!!!] ERROR: No speaker found in XML:\n";
+            System.out.println(" [!!!] ERROR: getSessionObjectFromXmlMessage - No speaker found in XML: ");
+            errorMessage += " [!!!] ERROR: getSessionObjectFromXmlMessage - No speaker found in XML:\n";
             allGood = false;
         }
         dateTimeStart = getSafeXmlProperty(xmlMessage, "dateTimeStart");
         if (dateTimeStart == "false") {
-            System.out.println(" [!!!] ERROR: No dateTimeStart found in XML: ");
-            errorMessage += " [!!!] ERROR: No dateTimeStart found in XML:\n";
+            System.out.println(" [!!!] ERROR: getSessionObjectFromXmlMessage - No dateTimeStart found in XML: ");
+            errorMessage += " [!!!] ERROR: getSessionObjectFromXmlMessage - No dateTimeStart found in XML:\n";
             allGood = false;
         }
         dateTimeEnd = getSafeXmlProperty(xmlMessage, "dateTimeEnd");
         if (dateTimeEnd == "false") {
-            System.out.println(" [!!!] ERROR: No dateTimeEnd found in XML: ");
-            errorMessage += " [!!!] ERROR: No dateTimeEnd found in XML:\n";
+            System.out.println(" [!!!] ERROR: getSessionObjectFromXmlMessage - No dateTimeEnd found in XML: ");
+            errorMessage += " [!!!] ERROR: getSessionObjectFromXmlMessage - No dateTimeEnd found in XML:\n";
             allGood = false;
         }
         sessionType = getSafeXmlProperty(xmlMessage, "sessionType");
@@ -3085,8 +3216,8 @@ public interface Helper {
             sessionType = getSafeXmlProperty(xmlMessage, "type");
 
             if (sessionType == "false") {
-                System.out.println(" [!!!] ERROR: No sessionType/type found in XML: ");
-                errorMessage += " [!!!] ERROR: No sessionType/type found in XML\n";
+                System.out.println(" [!!!] ERROR: getSessionObjectFromXmlMessage - No sessionType/type found in XML: ");
+                errorMessage += " [!!!] ERROR: getSessionObjectFromXmlMessage - No sessionType/type found in XML\n";
                 allGood = false;
             }
 
@@ -3094,27 +3225,27 @@ public interface Helper {
         try {
             price = Float.parseFloat(getSafeXmlProperty(xmlMessage, "price"));
         } catch (NumberFormatException e) {
-            System.out.println(" [!!!] ERROR: price = Float.parseFloat(getSafeXmlProperty(xmlMessage, \"price\")); FAIL");
-            errorMessage += " [!!!] ERROR: price = Float.parseFloat(getSafeXmlProperty(xmlMessage, \"price\")); FAIL \n";
+            System.out.println(" [!!!] ERROR: getSessionObjectFromXmlMessage - price = Float.parseFloat(getSafeXmlProperty(xmlMessage, \"price\")); FAIL");
+            errorMessage += " [!!!] ERROR: getSessionObjectFromXmlMessage - price = Float.parseFloat(getSafeXmlProperty(xmlMessage, \"price\")); FAIL \n";
             e.printStackTrace();
             price = -1;
         }
         if (price < 0) {
-            System.out.println(" [!!!] ERROR: No price found in XML: ");
-            errorMessage += " [!!!] ERROR: No price found in XML:\n";
+            System.out.println(" [!!!] ERROR: getSessionObjectFromXmlMessage - No price found in XML: ");
+            errorMessage += " [!!!] ERROR: getSessionObjectFromXmlMessage - No price found in XML:\n";
             allGood = false;
         }
         try {
             entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, "entityVersion"));
         } catch (NumberFormatException e) {
-            System.out.println(" [!!!] ERROR: entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, \"entityVersion\")); FAIL");
-            errorMessage += " [!!!] ERROR: entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, \"entityVersion\")); FAIL\n";
+            System.out.println(" [!!!] ERROR: getSessionObjectFromXmlMessage - entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, \"entityVersion\")); FAIL");
+            errorMessage += " [!!!] ERROR: getSessionObjectFromXmlMessage - entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, \"entityVersion\")); FAIL\n";
             e.printStackTrace();
             price = -1;
         }
         if (entityVersion < 0) {
-            System.out.println(" [!!!] ERROR: No entityVersion found in XML: ");
-            errorMessage += " [!!!] ERROR: No entityVersion found in XML:\n";
+            System.out.println(" [!!!] ERROR: getSessionObjectFromXmlMessage - No entityVersion found in XML: ");
+            errorMessage += " [!!!] ERROR: getSessionObjectFromXmlMessage - No entityVersion found in XML:\n";
             allGood = false;
         }
 
@@ -3133,48 +3264,40 @@ public interface Helper {
             }
         }
         if (active < 0) {
-
-            System.out.println(" [!!!] ERROR: No active found in XML: ");
-            errorMessage += " [!!!] ERROR: No active found in XML:\n";
+            System.out.println(" [!!!] ERROR: getSessionObjectFromXmlMessage - No active found in XML: ");
+            errorMessage += " [!!!] ERROR: getSessionObjectFromXmlMessage - No active found in XML:\n";
             allGood = false;
-
         }
         timestamp = getSafeXmlProperty(xmlMessage, "timestamp");
         if (timestamp == "false") {
-
             timestamp = getSafeXmlProperty(xmlMessage, "Timestamp");
-
             if (timestamp == "false") {
-
                 timestamp = getSafeXmlProperty(xmlMessage, "TimeStamp");
-
                 if (timestamp == "false") {
-
-                    System.out.println(" [!!!] ERROR: No timestamp found in XML: ");
-                    errorMessage += " [!!!] ERROR: No timestamp found in XML:\n";
+                    System.out.println(" [!!!] ERROR: getSessionObjectFromXmlMessage - No timestamp found in XML: ");
+                    errorMessage += " [!!!] ERROR: getSessionObjectFromXmlMessage - No timestamp found in XML:\n";
                     allGood = false;
                 }
             }
         }
-        if (errorMessage == "") {
+        if(errorMessage == "") {
             sessionObject = new Session(0, entityVersion, active, timestamp, sessionUUID, eventUUID, sessionName, maxAttendees, description, summary, location, speaker, dateTimeStart, dateTimeEnd, sessionType, "", "", price, false);
             return sessionObject;
-        } else {
+        }else {
             //4. String xmlHeaderDescription, SourceType Source_type, String timestamp;
-            String headerDescription = errorMessage;
+            String headerDescription = errorMessage+"\nMessage source: "+messageSource;
             SourceType Source_type = SourceType.Planning;
 
             // 5. Parse session object to xml String
             try {
                 xmlTotalMessage = getXmlForErrorMessage(headerDescription, Source_type);
-            } catch (JAXBException e) {
+            } catch (JAXBException e){
                 System.out.print("ERROR: parser for getXmlForErrorMessage: " + e.toString());
             }
 
             // 6. Send
-
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue", xmlTotalMessage);
+                Sender.publishXmlMessageToQueue("monitor-queue",xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
                 System.out.print("ERROR: message sender for errorMessage: " + e.toString());
             }
@@ -3192,14 +3315,13 @@ public interface Helper {
         // form xml
         XmlMessage.Header header = new XmlMessage.Header(messageType, xmlHeaderDescription + ", made on " + getCurrentDateTimeStamp(), Source_type.toString());
         // set datastructure
-        XmlMessage.TaskStructure TaskStructure = new XmlMessage.TaskStructure(taskUuid, eventUuid, taskName, description, dateTimeStart, dateTimeEnd, entityVersion, active, getCurrentDateTimeStamp());
+        XmlMessage.TaskStructure TaskStructure = new XmlMessage.TaskStructure(taskUuid, eventUuid, taskName, description,  dateTimeStart, dateTimeEnd, entityVersion, active, getCurrentDateTimeStamp());
         // steek header en datastructure (TaskStructure) in message klasse
 
         XmlMessage.TaskMessage TaskMessage = new XmlMessage.TaskMessage(header, TaskStructure);
         String xmlTotalMessage = TaskMessage.generateXML();
         return xmlTotalMessage;
     }
-
     // Task: Object => XML
     static String getXmlFromTaskObject(String headerDescription, SourceType Source_type, Task newTask) throws JAXBException {
 
@@ -3220,13 +3342,11 @@ public interface Helper {
         String xmlTotalMessage = xmlReservationMessage.generateXML();
         return xmlTotalMessage;
     }
-
     // Task: XML => Object
     static Task getTaskObjectFromXmlMessage(String xmlMessage) {
 
         boolean allGood = true;
         Task taskObject = null;
-
         String taskUuid = "false";
         String eventUuid = "false";
         String taskName = "false";
@@ -3238,29 +3358,26 @@ public interface Helper {
         String timestamp = "false";
         String errorMessage = "";
         String xmlTotalMessage = "";
+        String messageSource = getSafeXmlProperty(xmlMessage, "source");
 
         // xmlMessage parsing
 
         taskUuid = getSafeXmlProperty(xmlMessage, "uuid");
-
         if (taskUuid == "false") {
-
             taskUuid = getSafeXmlProperty(xmlMessage, "UUID");
-
             if (taskUuid == "false") {
-
                 taskUuid = getSafeXmlProperty(xmlMessage, "taskUUID");
                 if (taskUuid == "false") {
-                    System.out.println(" [!!!] ERROR: No sessionUUID found in XML: ");
-                    errorMessage += " [!!!] ERROR: No sessionUUID found in XML:\n";
+                    System.out.println(" [!!!] ERROR: getTaskObjectFromXmlMessage - No sessionUUID found in XML: ");
+                    errorMessage += " [!!!] ERROR: getTaskObjectFromXmlMessage - No sessionUUID found in XML:\n";
                     allGood = false;
                 }
             }
         }
         eventUuid = getSafeXmlProperty(xmlMessage, "eventUuid");
         if (eventUuid == "false") {
-            System.out.println(" [!!!] ERROR: No eventUUID found in XML: ");
-            errorMessage += " [!!!] ERROR: No eventUUID found in XML:\n";
+            System.out.println(" [!!!] ERROR: getTaskObjectFromXmlMessage - No eventUUID found in XML: ");
+            errorMessage += " [!!!] ERROR: getTaskObjectFromXmlMessage - No eventUUID found in XML:\n";
             allGood = false;
         }
 
@@ -3273,32 +3390,34 @@ public interface Helper {
 
         description = getSafeXmlProperty(xmlMessage, "description");
         if (description == "false") {
-            System.out.println(" [!!!] ERROR: No description found in XML: ");
-            errorMessage += " [!!!] ERROR: No description found in XML:\n";
+            System.out.println(" [!!!] ERROR: getTaskObjectFromXmlMessage - No description found in XML: ");
+            errorMessage += " [!!!] ERROR: getTaskObjectFromXmlMessage - No description found in XML:\n";
             allGood = false;
         }
 
         dateTimeStart = getSafeXmlProperty(xmlMessage, "dateTimeStart");
         if (dateTimeStart == "false") {
-            System.out.println(" [!!!] ERROR: No dateTimeStart found in XML: ");
-            errorMessage += " [!!!] ERROR: No dateTimeStart found in XML:\n";
+            System.out.println(" [!!!] ERROR: getTaskObjectFromXmlMessage - No dateTimeStart found in XML: ");
+            errorMessage += " [!!!] ERROR: getTaskObjectFromXmlMessage - No dateTimeStart found in XML:\n";
             allGood = false;
         }
         dateTimeEnd = getSafeXmlProperty(xmlMessage, "dateTimeEnd");
         if (dateTimeEnd == "false") {
-            System.out.println(" [!!!] ERROR: No dateTimeEnd found in XML: ");
-            errorMessage += " [!!!] ERROR: No dateTimeEnd found in XML:\n";
+            System.out.println(" [!!!] ERROR: getTaskObjectFromXmlMessage - No dateTimeEnd found in XML: ");
+            errorMessage += " [!!!] ERROR: getTaskObjectFromXmlMessage - No dateTimeEnd found in XML:\n";
             allGood = false;
         }
 
         try {
             entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, "entityVersion"));
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            System.out.println(" [!!!] ERROR: getTaskObjectFromXmlMessage - NumberFormatException on entityVersion found in XML: ");
+            errorMessage += " [!!!] ERROR: getTaskObjectFromXmlMessage - NumberFormatException on entityVersion found in XML:\n";
+            //e.printStackTrace();
         }
         if (entityVersion < 0) {
-            System.out.println(" [!!!] ERROR: No entityVersion found in XML: ");
-            errorMessage += " [!!!] ERROR: No entityVersion found in XML:\n";
+            System.out.println(" [!!!] ERROR: getTaskObjectFromXmlMessage - No entityVersion found in XML: ");
+            errorMessage += " [!!!] ERROR: getTaskObjectFromXmlMessage - No entityVersion found in XML:\n";
             allGood = false;
         }
 
@@ -3317,49 +3436,47 @@ public interface Helper {
             }
         }
         if (active < 0) {
-
-            System.out.println(" [!!!] ERROR: No active found in XML: ");
+            System.out.println(" [!!!] ERROR: getTaskObjectFromXmlMessage - No active found in XML: ");
+            errorMessage += " [!!!] ERROR: getTaskObjectFromXmlMessage - No active found in XML:\n";
             allGood = false;
-
         }
+
         timestamp = getSafeXmlProperty(xmlMessage, "timestamp");
         if (timestamp == "false") {
-
             timestamp = getSafeXmlProperty(xmlMessage, "Timestamp");
 
             if (timestamp == "false") {
-
                 timestamp = getSafeXmlProperty(xmlMessage, "TimeStamp");
 
                 if (timestamp == "false") {
-
-                    System.out.println(" [!!!] ERROR: No timestamp found in XML: ");
-                    errorMessage += " [!!!] ERROR: No timestamp found in XML:\n";
+                    System.out.println(" [!!!] ERROR: getTaskObjectFromXmlMessage - No timestamp found in XML: ");
+                    errorMessage += " [!!!] ERROR: getTaskObjectFromXmlMessage - No timestamp found in XML:\n";
                     allGood = false;
                 }
             }
         }
-        if (errorMessage == "") {
+
+        if(errorMessage == "") {
             taskObject = new Task(0, entityVersion, active, timestamp, taskUuid, eventUuid, description, dateTimeStart, dateTimeEnd, "", "", false);
             return taskObject;
         } else {
             //4. String xmlHeaderDescription, SourceType Source_type, String timestamp;
-            String headerDescription = errorMessage;
+            String headerDescription = errorMessage+"\nMessage source: "+messageSource;
             SourceType Source_type = SourceType.Planning;
 
             // 5. Parse Task object to xml String
             try {
                 xmlTotalMessage = getXmlForErrorMessage(headerDescription, Source_type);
-            } catch (JAXBException e) {
-                System.out.print("ERROR: parser for getXmlForErrorMessage: " + e.toString());
+            } catch (JAXBException e){
+                System.out.print("ERROR: getTaskObjectFromXmlMessage - parser for getXmlForErrorMessage: " + e.toString());
             }
 
             // 6. Send
 
             try {
-                Sender.publishXmlMessageToQueue("monitor-queue", xmlTotalMessage);
+                Sender.publishXmlMessageToQueue("monitor-queue",xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
-                System.out.print("ERROR: message sender for errorMessage: " + e.toString());
+                System.out.print("ERROR: getTaskObjectFromXmlMessage - message sender for errorMessage: " + e.toString());
             }
             return null;
         }
@@ -3379,7 +3496,6 @@ public interface Helper {
         String xmlTotalMessage = xmlReservationMessage.generateXML();
         return xmlTotalMessage;
     }
-
     // Event: Object => XML
     static String getXmlFromEventObject(String headerDescription, SourceType Source_type, Event
             newEvent) throws
@@ -3407,13 +3523,11 @@ public interface Helper {
         String xmlTotalMessage = xmlReservationMessage.generateXML();
         return xmlTotalMessage;
     }
-
     // Event: XML => Object
     static Event getEventObjectFromXmlMessage(String xmlMessage) {
 
         boolean allGood = true;
         Event eventObject = null;
-
         String uuid = "false";
         String eventName = "false";
         int maxAttendees = 0;
@@ -3430,25 +3544,24 @@ public interface Helper {
         String timestamp = "false";
         String errorMessage = "";
         String xmlTotalMessage = "";
+        String messageSource = getSafeXmlProperty(xmlMessage, "source");
 
         // xmlMessage parsing
 
         uuid = getSafeXmlProperty(xmlMessage, "uuid");
         if (uuid == "false") {
-
             uuid = getSafeXmlProperty(xmlMessage, "eventUuid");
             if (uuid == "false") {
-                System.out.println(" [!!!] ERROR: No eventUUID found in XML: ");
-                errorMessage += " [!!!] ERROR: No eventUUID found in XML:\n";
+                System.out.println(" [!!!] ERROR: getEventObjectFromXmlMessage - No eventUUID found in XML: ");
+                errorMessage += " [!!!] ERROR: getEventObjectFromXmlMessage - No eventUUID found in XML:\n";
                 allGood = false;
             }
         }
 
-
         eventName = getSafeXmlProperty(xmlMessage, "eventName");
         if (eventName == "false") {
-            System.out.println(" [!!!] ERROR: No eventUUID found in XML: ");
-            errorMessage += " [!!!] ERROR: No eventUUID found in XML:\n";
+            System.out.println(" [!!!] ERROR: getEventObjectFromXmlMessage - No eventUUID found in XML: ");
+            errorMessage += " [!!!] ERROR: getEventObjectFromXmlMessage - No eventUUID found in XML:\n";
             allGood = false;
         }
 
@@ -3456,19 +3569,19 @@ public interface Helper {
             maxAttendees = Integer.parseInt(getSafeXmlProperty(xmlMessage, "maxAttendees"));
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            System.out.println(" [!!!] ERROR: Something went wrong parsing maxAttendees found in XML: ");
-            errorMessage += " [!!!] ERROR: Something went wrong parsing maxAttendees found in XML:\n";
+            System.out.println(" [!!!] ERROR: getEventObjectFromXmlMessage - Something went wrong parsing maxAttendees found in XML:\n"+e.toString());
+            errorMessage += " [!!!] ERROR: getEventObjectFromXmlMessage - Something went wrong parsing maxAttendees found in XML:\n"+e.toString()+"\n";
         }
 
         if (maxAttendees < 0) {
-            System.out.println(" [!!!] ERROR: No maxAttendees found in XML: ");
-            errorMessage += " [!!!] ERROR: No maxAttendees found in XML:\n";
+            System.out.println(" [!!!] ERROR: getEventObjectFromXmlMessage - No maxAttendees found in XML: ");
+            errorMessage += " [!!!] ERROR: getEventObjectFromXmlMessage - No maxAttendees found in XML:\n";
             allGood = false;
         }
         description = getSafeXmlProperty(xmlMessage, "description");
         if (description == "false") {
-            System.out.println(" [!!!] ERROR: No description found in XML: ");
-            errorMessage += " [!!!] ERROR: No description found in XML:\n";
+            System.out.println(" [!!!] ERROR: getEventObjectFromXmlMessage - No description found in XML: ");
+            errorMessage += " [!!!] ERROR: getEventObjectFromXmlMessage - No description found in XML:\n";
             allGood = false;
         } else {
             description = "Name: '" + eventName + " " + description;
@@ -3476,43 +3589,41 @@ public interface Helper {
 
         summary = getSafeXmlProperty(xmlMessage, "summary");
         if (summary == "false") {
-            System.out.println(" [!!!] ERROR: No summary found in XML: ");
-            errorMessage += " [!!!] ERROR: No summary found in XML:\n";
+            System.out.println(" [!!!] ERROR: getEventObjectFromXmlMessage - No summary found in XML: ");
+            errorMessage += " [!!!] ERROR: getEventObjectFromXmlMessage - No summary found in XML:\n";
             allGood = false;
         }
         location = getSafeXmlProperty(xmlMessage, "location");
         if (location == "false") {
-            System.out.println(" [!!!] ERROR: No location found in XML: ");
-            errorMessage += " [!!!] ERROR: No location found in XML:\n";
+            System.out.println(" [!!!] ERROR: getEventObjectFromXmlMessage - No location found in XML: ");
+            errorMessage += " [!!!] ERROR: getEventObjectFromXmlMessage - No location found in XML:\n";
             allGood = false;
         }
         contactPerson = getSafeXmlProperty(xmlMessage, "contactPerson");
         if (contactPerson == "false") {
-            System.out.println(" [!!!] ERROR: No contactPerson found in XML: ");
-            errorMessage += " [!!!] ERROR: No contactPerson found in XML:\n";
+            System.out.println(" [!!!] ERROR: getEventObjectFromXmlMessage - No contactPerson found in XML: ");
+            errorMessage += " [!!!] ERROR: getEventObjectFromXmlMessage - No contactPerson found in XML:\n";
             allGood = false;
         }
         dateTimeStart = getSafeXmlProperty(xmlMessage, "dateTimeStart");
         if (dateTimeStart == "false") {
-            System.out.println(" [!!!] ERROR: No dateTimeStart found in XML: ");
-            errorMessage += " [!!!] ERROR: No dateTimeStart found in XML:\n";
+            System.out.println(" [!!!] ERROR: getEventObjectFromXmlMessage - No dateTimeStart found in XML: ");
+            errorMessage += " [!!!] ERROR: getEventObjectFromXmlMessage - No dateTimeStart found in XML:\n";
             allGood = false;
         }
         dateTimeEnd = getSafeXmlProperty(xmlMessage, "dateTimeEnd");
         if (dateTimeEnd == "false") {
-            System.out.println(" [!!!] ERROR: No dateTimeEnd found in XML: ");
-            errorMessage += " [!!!] ERROR: No dateTimeEnd found in XML:\n";
+            System.out.println(" [!!!] ERROR: getEventObjectFromXmlMessage - No dateTimeEnd found in XML: ");
+            errorMessage += " [!!!] ERROR: getEventObjectFromXmlMessage - No dateTimeEnd found in XML:\n";
             allGood = false;
         }
         type = getSafeXmlProperty(xmlMessage, "eventType");
 
         if (type == "false") {
-
             type = getSafeXmlProperty(xmlMessage, "type");
-
             if (type == "false") {
-                System.out.println(" [!!!] ERROR: No type found in XML: ");
-                errorMessage += " [!!!] ERROR: No type found in XML:\n";
+                System.out.println(" [!!!] ERROR: getEventObjectFromXmlMessage - No type found in XML: ");
+                errorMessage += " [!!!] ERROR: getEventObjectFromXmlMessage - No type found in XML:\n";
                 allGood = false;
             }
 
@@ -3521,46 +3632,47 @@ public interface Helper {
             price = Float.parseFloat(getSafeXmlProperty(xmlMessage, "price"));
         } catch (NumberFormatException e) {
             //e.printStackTrace();
-            System.out.println(" [!!!] ERROR: No price found in XML: " + e);
-            errorMessage += " [!!!] ERROR: No price found in XML:\n";
+            System.out.println(" [!!!] ERROR: getEventObjectFromXmlMessage - No price found in XML: " + e);
+            errorMessage += " [!!!] ERROR: getEventObjectFromXmlMessage - No price found in XML:\n";
             allGood = false;
         }
         if (price < 0) {
-            System.out.println(" [!!!] ERROR: Negative price found in XML: ");
-            errorMessage += " [!!!] ERROR: Negative price found in XML:\n";
+            System.out.println(" [!!!] ERROR: getEventObjectFromXmlMessage - Negative price found in XML: ");
+            errorMessage += " [!!!] ERROR: getEventObjectFromXmlMessage - Negative price found in XML:\n";
             allGood = false;
         }
         entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, "entityVersion"));
         if (entityVersion <= 0) {
-            System.out.println(" [!!!] ERROR: No entityVersion found in XML: ");
-            errorMessage += " [!!!] ERROR: No entityVersion found in XML:\n";
+            System.out.println(" [!!!] ERROR: getEventObjectFromXmlMessage - No entityVersion found in XML: ");
+            errorMessage += " [!!!] ERROR: getEventObjectFromXmlMessage - No entityVersion found in XML:\n";
             allGood = false;
         }
         active = Integer.parseInt(getSafeXmlProperty(xmlMessage, "active"));
         if (active < 0) {
-            System.out.println(" [!!!] ERROR: No active found in XML: ");
-            errorMessage += " [!!!] ERROR: No active found in XML:\n";
+            System.out.println(" [!!!] ERROR: getEventObjectFromXmlMessage - No active found in XML: ");
+            errorMessage += " [!!!] ERROR: getEventObjectFromXmlMessage - No active found in XML:\n";
             allGood = false;
         }
         timestamp = getSafeXmlProperty(xmlMessage, "timestamp");
         if (timestamp == "false") {
-            System.out.println(" [!!!] ERROR: No timestamp found in XML: ");
-            errorMessage += " [!!!] ERROR: No timestamp found in XML:\n";
+            System.out.println(" [!!!] ERROR: getEventObjectFromXmlMessage - No timestamp found in XML: ");
+            errorMessage += " [!!!] ERROR: getEventObjectFromXmlMessage - No timestamp found in XML:\n";
             allGood = false;
         }
-        if (errorMessage == "") {
+
+        if(errorMessage=="") {
             eventObject = new Event(0, entityVersion, active, timestamp, uuid, eventName, maxAttendees, description, summary, location, contactPerson, dateTimeStart, dateTimeEnd, type, price, false);
             return eventObject;
         } else {
             //4. String xmlHeaderDescription, SourceType Source_type, String timestamp;
-            String headerDescription = errorMessage;
+            String headerDescription = errorMessage+"\nMessage source: "+messageSource;
             SourceType Source_type = SourceType.Planning;
 
             // 5. Parse event object to xml String
             try {
                 xmlTotalMessage = getXmlForErrorMessage(headerDescription, Source_type);
-            } catch (JAXBException e) {
-                System.out.print("ERROR: parser for getXmlForErrorMessage: " + e.toString());
+            } catch (JAXBException e){
+                System.out.print("ERROR: getEventObjectFromXmlMessage - parser for getXmlForErrorMessage: " + e.toString());
             }
 
             // 6. Send
@@ -3568,7 +3680,7 @@ public interface Helper {
             try {
                 Sender.publishXmlMessageToQueue("monitor-queue", xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
-                System.out.print("ERROR: message sender for errorMessage: " + e.toString());
+                System.out.print("ERROR: getEventObjectFromXmlMessage - message sender for errorMessage: " + e.toString());
             }
             return null;
         }
@@ -3594,7 +3706,6 @@ public interface Helper {
         //System.out.println("xmlTotalMessage: "+xmlTotalMessage);
         return xmlTotalMessage;
     }
-
     // Reservation_Session: object => XML
     static String getXmlFromReservation_SessionObject(String xmlHeaderDescription, SourceType
             Source_type, Reservation_Session thisReservationObject) throws JAXBException {
@@ -3612,13 +3723,11 @@ public interface Helper {
         //System.out.println("xmlTotalMessage: "+xmlTotalMessage);
         return xmlTotalMessage;
     }
-
     // Reservation_Session: XML => Object
     static Reservation_Session getReservation_SessionObjectFromXmlMessage(String xmlMessage) {
 
         boolean allGood = true;
         Reservation_Session reservationSessionObject = null;
-
         String reservationUUID = "false";
         String userUUID = "false";
         String sessionUUID = "false";
@@ -3628,98 +3737,97 @@ public interface Helper {
         String timestamp = "false";
         String errorMessage = "";
         String xmlTotalMessage = "";
+        String messageSource = getSafeXmlProperty(xmlMessage, "source");
 
         // xmlMessage parsing
 
         reservationUUID = getSafeXmlProperty(xmlMessage, "uuid");
         if (reservationUUID == "false") {
-
             reservationUUID = getSafeXmlProperty(xmlMessage, "reservationUuid");
-
             if (reservationUUID == "false") {
-
                 reservationUUID = getSafeXmlProperty(xmlMessage, "reservationUUID");
-
                 if (reservationUUID == "false") {
-                    System.out.println(" [!!!] ERROR: No reservationUUID found in XML: ");
-                    errorMessage += " [!!!] ERROR: No reservationUUID found in XML:\n";
+                    System.out.println(" [!!!] ERROR: getReservation_SessionObjectFromXmlMessage - No reservationUUID found in XML: ");
+                    errorMessage += " [!!!] ERROR: getReservation_SessionObjectFromXmlMessage - No reservationUUID found in XML:\n";
                     allGood = false;
                 }
             }
         }
         userUUID = getSafeXmlProperty(xmlMessage, "userUuid");
         if (userUUID == "false") {
-            System.out.println(" [!!!] ERROR: No userUUID found in XML: ");
-            errorMessage += " [!!!] ERROR: No userUUID found in XML:\n";
+            System.out.println(" [!!!] ERROR: getReservation_SessionObjectFromXmlMessage - No userUUID found in XML: ");
+            errorMessage += " [!!!] ERROR: getReservation_SessionObjectFromXmlMessage - No userUUID found in XML:\n";
             allGood = false;
         }
 
         sessionUUID = getSafeXmlProperty(xmlMessage, "sessionUuid");
         if (sessionUUID == "false") {
-            System.out.println(" [!!!] ERROR: No sessionUUID found in XML: ");
-            errorMessage += " [!!!] ERROR: No sessionUUID found in XML:\n";
+            System.out.println(" [!!!] ERROR: getReservation_SessionObjectFromXmlMessage - No sessionUUID found in XML: ");
+            errorMessage += " [!!!] ERROR: getReservation_SessionObjectFromXmlMessage - No sessionUUID found in XML:\n";
             allGood = false;
         }
 
         try {
             paid = Float.parseFloat(getSafeXmlProperty(xmlMessage, "paid"));
         } catch (NumberFormatException e) {
-            // e.printStackTrace();
-            System.out.println(" [!!!] ERROR: No paid found in XML: ");
-            errorMessage += " [!!!] ERROR: No paid found in XML:\n";
+           // e.printStackTrace();
+            System.out.println(" [!!!] ERROR: getReservation_SessionObjectFromXmlMessage - No paid found in XML: ");
+            errorMessage += " [!!!] ERROR: getReservation_SessionObjectFromXmlMessage - No paid found in XML:\n";
             allGood = false;
         }
 
         try {
             entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, "entityVersion"));
         } catch (NumberFormatException e) {
-            System.out.println(" [!!!] ERROR(in tc): No entityVersion found in XML:");
-            errorMessage += " [!!!] ERROR(in tc): No entityVersion found in XML:\n";
-            //e.printStackTrace();
+            System.out.println(" [!!!] ERROR(in tc): getReservation_SessionObjectFromXmlMessage - No entityVersion found in XML:\n"+e.toString());
+            errorMessage += " [!!!] ERROR(in tc): getReservation_SessionObjectFromXmlMessage - No entityVersion found in XML:\n"+e.toString()+"\n";
+           //e.printStackTrace();
             allGood = false;
         }
 
         if (entityVersion == 0) {
-            System.out.println(" [!!!] ERROR: No entityVersion found in XML: ");
-            errorMessage += " [!!!] ERROR: No entityVersion found in XML:\n";
+            System.out.println(" [!!!] ERROR: getReservation_SessionObjectFromXmlMessage - No entityVersion found in XML: ");
+            errorMessage += " [!!!] ERROR: getReservation_SessionObjectFromXmlMessage - No entityVersion found in XML:\n";
             allGood = false;
         }
 
         active = Integer.parseInt(getSafeXmlProperty(xmlMessage, "active"));
         if (active == 0) {
-            System.out.println(" [!!!] ERROR: No active found in XML: ");
-            errorMessage += " [!!!] ERROR: No active found in XML:\n";
+            System.out.println(" [!!!] ERROR: getReservation_SessionObjectFromXmlMessage - No active found in XML: ");
+            errorMessage += " [!!!] ERROR: getReservation_SessionObjectFromXmlMessage - No active found in XML:\n";
             allGood = false;
         }
 
         timestamp = getSafeXmlProperty(xmlMessage, "timestamp");
         if (timestamp == "false") {
-            System.out.println(" [!!!] ERROR: No timestamp found in XML: ");
-            errorMessage += " [!!!] ERROR: No timestamp found in XML:\n";
+            System.out.println(" [!!!] ERROR: getReservation_SessionObjectFromXmlMessage - No timestamp found in XML: ");
+            errorMessage += " [!!!] ERROR: getReservation_SessionObjectFromXmlMessage - No timestamp found in XML:\n";
             allGood = false;
         }
 
         if (errorMessage == "") {
             reservationSessionObject = new Reservation_Session(0, entityVersion, active, timestamp, reservationUUID, userUUID, sessionUUID, paid, false);
             return reservationSessionObject;
-        } else {
+        }
+        else {
             //4. String xmlHeaderDescription, SourceType Source_type, String timestamp;
-            String headerDescription = errorMessage;
+            String headerDescription = errorMessage+"\nMessage source: "+messageSource;
             SourceType Source_type = SourceType.Planning;
 
             // 5. Parse Reservation_Session object to xml String
             try {
                 xmlTotalMessage = getXmlForErrorMessage(headerDescription, Source_type);
-            } catch (JAXBException e) {
-                System.out.print("ERROR: parser for getXmlForErrorMessage: " + e);
+            } catch (JAXBException e){
+                System.out.print("ERROR: getReservation_SessionObjectFromXmlMessage - parser for getXmlForErrorMessage: " + e.toString());
+                e.printStackTrace();
             }
 
             // 6. Send
-
             try {
                 Sender.publishXmlMessageToQueue("monitor-queue", xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
-                System.out.print("ERROR: message sender for errorMessage: " + e);
+                System.out.print("ERROR: getReservation_SessionObjectFromXmlMessage - message sender for errorMessage: " + e.toString());
+                e.printStackTrace();
             }
             return null;
         }
@@ -3745,7 +3853,6 @@ public interface Helper {
         //System.out.println("xmlTotalMessage: "+xmlTotalMessage);
         return xmlTotalMessage;
     }
-
     // Assign_Task: object => XML
     static String getXmlFromAssign_TaskObject(String xmlHeaderDescription, SourceType
             Source_type, Assign_Task thisAssignTaskObject) throws JAXBException {
@@ -3763,13 +3870,11 @@ public interface Helper {
         //System.out.println("xmlTotalMessage: "+xmlTotalMessage);
         return xmlTotalMessage;
     }
-
     // Assign_Task: XML => Object
     static Assign_Task getAssign_TaskObjectFromXmlMessage(String xmlMessage) {
 
         boolean allGood = true;
         Assign_Task assignTaskObject = null;
-
         String assignTaskUuid = "false";
         String userUuid = "false";
         String taskUuid = "false";
@@ -3779,62 +3884,59 @@ public interface Helper {
         String timestamp = "false";
         String errorMessage = "";
         String xmlTotalMessage = "";
+        String messageSource = getSafeXmlProperty(xmlMessage, "source");
 
         // xmlMessage parsing
 
         assignTaskUuid = getSafeXmlProperty(xmlMessage, "uuid");
         if (assignTaskUuid == "false") {
-
             assignTaskUuid = getSafeXmlProperty(xmlMessage, "assignTaskUuid");
-
             if (assignTaskUuid == "false") {
-
                 assignTaskUuid = getSafeXmlProperty(xmlMessage, "assignTaskUUID");
-
                 if (assignTaskUuid == "false") {
-                    System.out.println(" [!!!] ERROR: No reservationUUID found in XML");
-                    errorMessage += " [!!!] ERROR: No reservationUUID found in XML\n ";
+                    System.out.println(" [!!!] ERROR: getAssign_TaskObjectFromXmlMessage - No reservationUUID found in XML");
+                    errorMessage += " [!!!] ERROR: getAssign_TaskObjectFromXmlMessage - No reservationUUID found in XML\n ";
                     allGood = false;
                 }
             }
         }
         userUuid = getSafeXmlProperty(xmlMessage, "userUuid");
         if (userUuid == "false") {
-            System.out.println(" [!!!] ERROR: No userUuid found in XML");
-            errorMessage += " [!!!] ERROR: No userUuid found in XML\n ";
+            System.out.println(" [!!!] ERROR: getAssign_TaskObjectFromXmlMessage - No userUuid found in XML");
+            errorMessage += " [!!!] ERROR: getAssign_TaskObjectFromXmlMessage - No userUuid found in XML\n ";
             allGood = false;
         }
         taskUuid = getSafeXmlProperty(xmlMessage, "taskUuid");
         if (taskUuid == "false") {
-            System.out.println(" [!!!] ERROR: No taskUuid found in XML:");
-            errorMessage += " [!!!] ERROR: No taskUuid found in XML:\n";
+            System.out.println(" [!!!] ERROR: getAssign_TaskObjectFromXmlMessage - No taskUuid found in XML:");
+            errorMessage += " [!!!] ERROR: getAssign_TaskObjectFromXmlMessage - No taskUuid found in XML:\n";
             allGood = false;
         }
 
         try {
             entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, "entityVersion"));
         } catch (NumberFormatException e) {
-            System.out.println(" [!!!] ERROR(in tc): No entityVersion found in XML:");
-            errorMessage += " [!!!] ERROR(in tc): No entityVersion found in XML:\n";
+            System.out.println(" [!!!] ERROR(in tc): getAssign_TaskObjectFromXmlMessage - No entityVersion found in XML:\n"+e.toString());
+            errorMessage += " [!!!] ERROR(in tc): getAssign_TaskObjectFromXmlMessage - No entityVersion found in XML:\n"+e.toString()+"\n";
             //e.printStackTrace();
             allGood = false;
         }
 
         if (entityVersion == 0) {
-            System.out.println(" [!!!] ERROR: No entityVersion found in XML:");
-            errorMessage += " [!!!] ERROR: No entityVersion found in XML:\n";
+            System.out.println(" [!!!] ERROR: getAssign_TaskObjectFromXmlMessage - No entityVersion found in XML:");
+            errorMessage +=" [!!!] ERROR: getAssign_TaskObjectFromXmlMessage - No entityVersion found in XML:\n";
             allGood = false;
         }
         active = Integer.parseInt(getSafeXmlProperty(xmlMessage, "active"));
         if (active == 0) {
-            System.out.println(" [!!!] ERROR: No active found in XML:");
-            errorMessage += " [!!!] ERROR: No active found in XML:\n";
+            System.out.println(" [!!!] ERROR: getAssign_TaskObjectFromXmlMessage - No active found in XML:");
+            errorMessage += " [!!!] ERROR: getAssign_TaskObjectFromXmlMessage - No active found in XML:\n";
             allGood = false;
         }
         timestamp = getSafeXmlProperty(xmlMessage, "timestamp");
         if (timestamp == "false") {
-            System.out.println(" [!!!] ERROR: No timestamp found in XML:");
-            errorMessage += " [!!!] ERROR: No timestamp found in XML:\n";
+            System.out.println(" [!!!] ERROR: getAssign_TaskObjectFromXmlMessage - No timestamp found in XML:");
+            errorMessage += " [!!!] ERROR: getAssign_TaskObjectFromXmlMessage - No timestamp found in XML:\n";
             allGood = false;
         }
 
@@ -3843,24 +3945,23 @@ public interface Helper {
             return assignTaskObject;
         } else {
             //4. String xmlHeaderDescription, SourceType Source_type, String timestamp;
-            String headerDescription = errorMessage;
+            String headerDescription = errorMessage+"\nMessage source: "+messageSource;
             SourceType Source_type = SourceType.Planning;
 
             // 5. Parse Assign_Task object to xml String
             try {
                 xmlTotalMessage = getXmlForErrorMessage(headerDescription, Source_type);
-            } catch (JAXBException e) {
-                System.out.print("ERROR: parser for getXmlForErrorMessage: " + e);
-                //e.printStackTrace();
+            } catch (JAXBException e){
+                System.out.print("ERROR: getAssign_TaskObjectFromXmlMessage - parser for getXmlForErrorMessage: " + e.toString());
+                e.printStackTrace();
             }
 
             // 6. Send
-
             try {
                 Sender.publishXmlMessageToQueue("monitor-queue", xmlTotalMessage);
             } catch (TimeoutException | IOException | JAXBException e) {
-                System.out.print("ERROR: message sender for errorMessage: " + e);
-                //e.printStackTrace();
+                System.out.print("ERROR: getAssign_TaskObjectFromXmlMessage - message sender for errorMessage: " + e.toString());
+                e.printStackTrace();
             }
             return null;
         }
@@ -3911,7 +4012,6 @@ public interface Helper {
 
         boolean allGood = true;
         Reservation_Event reservationEventObject = null;
-
         String reservationUUID = "false";
         String userUUID = "false";
         String eventUUID = "false";
@@ -3923,43 +4023,40 @@ public interface Helper {
         String timestamp = "false";
         String errorMessage = "";
         String xmlTotalMessage = "";
+        String messageSource = getSafeXmlProperty(xmlMessage,"source");
 
         // xmlMessage parsing
 
         reservationUUID = getSafeXmlProperty(xmlMessage, "uuid");
         if (reservationUUID == "false") {
-
             reservationUUID = getSafeXmlProperty(xmlMessage, "reservationUUID");
-
             if (reservationUUID == "false") {
-
                 reservationUUID = getSafeXmlProperty(xmlMessage, "UUID");
-
                 if (reservationUUID == "false") {
-                    System.out.println(" [!!!] ERROR: No reservationUUID found in XML:");
-                    errorMessage += " [!!!] ERROR: No reservationUUID found in XML:\n";
+                    System.out.println(" [!!!] ERROR: getReservation_EventObjectFromXmlMessage - No reservationUUID found in XML:");
+                    errorMessage += " [!!!] ERROR: getReservation_EventObjectFromXmlMessage - No reservationUUID found in XML:\n";
                     allGood = false;
                 }
             }
         }
         userUUID = getSafeXmlProperty(xmlMessage, "userUuid");
         if (userUUID == "false") {
-            System.out.println(" [!!!] ERROR: No userUUID found in XML:");
-            errorMessage += " [!!!] ERROR: No userUUID found in XML:\n";
+            System.out.println(" [!!!] ERROR: getReservation_EventObjectFromXmlMessage - No userUUID found in XML:");
+            errorMessage += " [!!!] ERROR: getReservation_EventObjectFromXmlMessage - No userUUID found in XML:\n";
             allGood = false;
         }
         eventUUID = getSafeXmlProperty(xmlMessage, "eventUuid");
         if (eventUUID == "false") {
-            System.out.println(" [!!!] ERROR: No eventUUID found in XML:");
-            errorMessage += " [!!!] ERROR: No eventUUID found in XML:\n";
+            System.out.println(" [!!!] ERROR: getReservation_EventObjectFromXmlMessage - No eventUUID found in XML:");
+            errorMessage += " [!!!] ERROR: getReservation_EventObjectFromXmlMessage - No eventUUID found in XML:\n";
             allGood = false;
         }
 
         try {
             paid = Float.parseFloat(getSafeXmlProperty(xmlMessage, "paid"));
         } catch (NumberFormatException e) {
-            System.out.println(" [!!!] ERROR: No paid found in XML:");
-            errorMessage += " [!!!] ERROR: No paid found in XML:\n";
+            System.out.println(" [!!!] ERROR: getReservation_EventObjectFromXmlMessage - No paid found in XML:\n"+e.toString());
+            errorMessage += " [!!!] ERROR: getReservation_EventObjectFromXmlMessage - No paid found in XML:\n"+e.toString()+"\n";
             //e.printStackTrace();
             allGood = false;
         }
@@ -3967,26 +4064,26 @@ public interface Helper {
         try {
             entityVersion = Integer.parseInt(getSafeXmlProperty(xmlMessage, "entityVersion"));
         } catch (NumberFormatException e) {
-            System.out.println(" [!!!] ERROR: NumberFormatException");
-            errorMessage += " [!!!] ERROR: NumberFormatException\n";
+            System.out.println(" [!!!] ERROR: getReservation_EventObjectFromXmlMessage - NumberFormatException");
+            errorMessage += " [!!!] ERROR: getReservation_EventObjectFromXmlMessage - NumberFormatException\n";
             //e.printStackTrace();
         }
 
         if (entityVersion == 0) {
-            System.out.println(" [!!!] ERROR: No entityVersion found in XML:");
-            errorMessage += " [!!!] ERROR: No entityVersion found in XML:\n";
+            System.out.println(" [!!!] ERROR: getReservation_EventObjectFromXmlMessage - No entityVersion found in XML:");
+            errorMessage += " [!!!] ERROR: getReservation_EventObjectFromXmlMessage - No entityVersion found in XML:\n";
             allGood = false;
         }
         active = Integer.parseInt(getSafeXmlProperty(xmlMessage, "active"));
         if (active < 0) {
-            System.out.println(" [!!!] ERROR: No active found in XML:");
-            errorMessage += " [!!!] ERROR: No active found in XML:\n";
+            System.out.println(" [!!!] ERROR: getReservation_EventObjectFromXmlMessage - No active found in XML:");
+            errorMessage += " [!!!] ERROR: getReservation_EventObjectFromXmlMessage - No active found in XML:\n";
             allGood = false;
         }
         timestamp = getSafeXmlProperty(xmlMessage, "timestamp");
         if (timestamp == "false") {
-            System.out.println(" [!!!] ERROR: No timestamp found in XML:");
-            errorMessage += " [!!!] ERROR: No timestamp found in XML:\n";
+            System.out.println(" [!!!] ERROR: getReservation_EventObjectFromXmlMessage - No timestamp found in XML:");
+            errorMessage += " [!!!] ERROR: getReservation_EventObjectFromXmlMessage - No timestamp found in XML:\n";
             allGood = false;
         }
 
@@ -4031,7 +4128,6 @@ public interface Helper {
         // ## start new pingSender thread
         pingThread.start();
     }
-
     static String getXmlForPingMessage(String messageType, SourceType Source_type) throws JAXBException {
 
         // form xml
@@ -4046,7 +4142,6 @@ public interface Helper {
         //System.out.println("xmlTotalMessage: "+xmlTotalMessage);
         return xmlTotalMessage;
     }
-
     static String getXmlForTestMessage(String messageType, SourceType sourceType) throws JAXBException {
 
         XmlMessage.Header header = new XmlMessage.Header(messageType, "", sourceType.toString());
@@ -4057,7 +4152,6 @@ public interface Helper {
         return xmlTotalMessage;
 
     }
-
     static String getPropertyFromXml(String xml, String property) throws ParserConfigurationException,
             SAXException, IOException, NullPointerException {
 
@@ -4611,7 +4705,6 @@ public interface Helper {
         return continueMocking;
 
     }
-
     // Mock Message functionality
     static boolean xmlMessageMocker() {
 
@@ -5794,7 +5887,6 @@ public interface Helper {
         }
         return continueMocking;
     }
-
     //https://stackoverflow.com/a/8345074
     static String getCurrentDateTimeStamp() {
         Date date = new Date();
