@@ -308,36 +308,32 @@ public class DatabaseBackupChecker implements Runnable {
 
                             float thisSessionPrice = 0;
 
-                            System.out.println("objectProperties[11]: "+objectProperties[11]);
-                            if (objectProperties[11] == "0" || objectProperties[11] == null) {
+                            System.out.println("objectProperties[13]: "+objectProperties[12]);
+                            if (objectProperties[12] == "0" || objectProperties[12] == null) {
                                 sessionFromDashboard.setPrice(0);
                             } else {
                                 try {
-                                    thisSessionPrice = Float.parseFloat(objectProperties[11]);
+                                    thisSessionPrice = Float.parseFloat(objectProperties[12]);
                                 } catch (NumberFormatException e) {
-
                                     errorMessage += "[.!.] ERROR: setting Session object:\n" + e + "\n";
                                     e.printStackTrace();
                                     break;
-
                                 }
                             }
                             try {
-
                                 sessionFromDashboard = new Session(Integer.parseInt(objectProperties[0]), 1, 1, Helper.getCurrentDateTimeStamp(),
                                         objectProperties[1], objectProperties[2], objectProperties[3], Integer.parseInt(objectProperties[4]),
                                         objectProperties[5], objectProperties[6], objectProperties[7], objectProperties[8], objectProperties[9],
-                                        objectProperties[10], objectProperties[14], objectProperties[15], objectProperties[16], thisSessionPrice, false);
-
+                                        objectProperties[13], objectProperties[14], objectProperties[15], objectProperties[16], thisSessionPrice, false);
                             } catch (NumberFormatException e) {
-
 
                                 errorMessage += "[.!.] ERROR: setting Session object:\n" + e + "\n";
                                 e.printStackTrace();
                                 break;
-
                             }
                             //User userFromDashboard = new User(objectProperties[0],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1])
+
+                            // 1.2 check if active == 0 and if entity_version > 1
 
                             // 2. send to rmq
                             xmlMessage = "";
@@ -590,11 +586,8 @@ public class DatabaseBackupChecker implements Runnable {
                             System.out.println("Getting entities for table '" + table + "' is not worked out yet!");
 
                             break;
-                        /**/
 
                     }
-
-
                     // last: update EntitiesToAdd record 'status' to UPTODATE
                     if(errorMessage=="") {
                         try {
@@ -604,6 +597,27 @@ public class DatabaseBackupChecker implements Runnable {
                             }
                         } catch (Exception e) {
                             errorMessage += "[.!.] ERROR: Exception during updateTablePropertyValue:\n " + e + "\n ";
+                            e.printStackTrace();
+                        }
+                    }else {
+                        String headerDescription = errorMessage;
+
+                        Helper.SourceType Source_type = Helper.SourceType.Planning;
+
+                        String xmlTotalMessage = "";
+                        // 5. Parse user object to xml String
+                        try {
+                            xmlTotalMessage = Helper.getXmlForErrorMessage(headerDescription, Source_type);
+                        } catch (JAXBException e) {
+                            System.out.print("\nERROR: parser for getXmlForErrorMessage:\n");
+                            e.printStackTrace();
+                        }
+
+                        // 6. Send
+                        try {
+                            Sender.publishXmlMessageToQueue("monitor-queue", xmlTotalMessage);
+                        } catch (TimeoutException | IOException | JAXBException e) {
+                            System.out.print("\nERROR: message sender for errorMessage:\n");
                             e.printStackTrace();
                         }
                     }

@@ -158,7 +158,7 @@ public class BaseEntityDAO extends BaseDAO{
                         thisRowString+=columnValue;
 
                         resultStringArray[resultCounter] = thisRowString;
-                        System.out.println(i+". "+thisRowString);
+                        //System.out.println(i+". "+thisRowString);
 
                         if (i < columnsNumber){
                             thisRowString+="', '";
