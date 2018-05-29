@@ -407,9 +407,23 @@ public class DatabaseBackupChecker implements Runnable {
 
                             Reservation_Event reservation_EventFromDashboard = null;
 
+                            float thisReservation_EventPrice = 0;
+
+                            if (objectProperties[4] == "0" || objectProperties[4] == null) {
+                                System.out.println("Float.parseFloat(objectProperties[4]): "+Float.parseFloat(objectProperties[4]));
+                                reservation_EventFromDashboard.setPaid(0);
+                            } else {
+                                try {
+                                    thisReservation_EventPrice = Float.parseFloat(objectProperties[4]);
+                                } catch (NumberFormatException e) {
+                                    errorMessage += "[.!.] ERROR: setting Session object:\n" + e + "\n";
+                                    e.printStackTrace();
+                                    break;
+                                }
+                            }
                             try {
                                 reservation_EventFromDashboard = new Reservation_Event(Integer.parseInt(objectProperties[0]), thisEntityToAdd.getEntity_version(), thisEntityToAdd.getActive(), Helper.getCurrentDateTimeStamp(),
-                                        objectProperties[1], objectProperties[2], objectProperties[3], Float.parseFloat(objectProperties[4]),false);
+                                        objectProperties[1], objectProperties[2], objectProperties[3], thisReservation_EventPrice,false);
                             } catch (NumberFormatException e) {
                                 errorMessage += "[.!.] ERROR: setting Reservation_Event object:\n" + e + "\n";
                                 e.printStackTrace();
@@ -460,6 +474,20 @@ public class DatabaseBackupChecker implements Runnable {
 
                             Reservation_Session reservation_SessionFromDashboard = null;
 
+                            float thisReservation_SessionPrice = 0;
+
+                            if (objectProperties[4] == "0" || objectProperties[4] == null) {
+                                System.out.println("Float.parseFloat(objectProperties[4]): "+Float.parseFloat(objectProperties[4]));
+                                reservation_SessionFromDashboard.setPaid(0);
+                            } else {
+                                try {
+                                    thisReservation_EventPrice = Float.parseFloat(objectProperties[4]);
+                                } catch (NumberFormatException e) {
+                                    errorMessage += "[.!.] ERROR: setting Session object:\n" + e + "\n";
+                                    e.printStackTrace();
+                                    break;
+                                }
+                            }
                             try {
                                 reservation_SessionFromDashboard = new Reservation_Session(Integer.parseInt(objectProperties[0]), thisEntityToAdd.getEntity_version(), thisEntityToAdd.getActive(), Helper.getCurrentDateTimeStamp(),
                                         objectProperties[1], objectProperties[2], objectProperties[3], Float.parseFloat(objectProperties[4]),false);
