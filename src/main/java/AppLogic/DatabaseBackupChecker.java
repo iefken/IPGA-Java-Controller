@@ -171,7 +171,6 @@ public class DatabaseBackupChecker implements Runnable {
 
                             // 1.2. Check if active = 0
 
-
                             try {
                                 userFromDashboard = new User(Integer.parseInt(objectProperties[0]), 1, 1, Helper.getCurrentDateTimeStamp(),
                                         objectProperties[1], objectProperties[2], objectProperties[3], objectProperties[4],
@@ -187,7 +186,7 @@ public class DatabaseBackupChecker implements Runnable {
                                     "userFromDashboard.toString(): "+userFromDashboard.toString());
                             // 2. send to rmq
                             String xmlMessage = "";
-/*
+
                             try {
                                 xmlMessage = Helper.getXmlFromUserObject("", thisSourceType, userFromDashboard);
                             } catch (JAXBException e) {
@@ -202,6 +201,7 @@ public class DatabaseBackupChecker implements Runnable {
                                 errorMessage += "[.!.] ERROR: Something went wrong publishing user xml message to the exchange:\n" + e + "\n";
                                 e.printStackTrace();
                             }
+                            System.out.println("Show xml: \n"+xmlMessage);
 
                             // 3. check if an error was catched
 
@@ -220,7 +220,7 @@ public class DatabaseBackupChecker implements Runnable {
                                     errorMessage += "[.!.] ERROR: Something went wrong publishing error xml message to the exchange:\n" + e + "\n";
                                     e.printStackTrace();
                                 }
-                            }*/
+                            }
 
                             break;
 

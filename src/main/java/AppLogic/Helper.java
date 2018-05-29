@@ -39,6 +39,8 @@ public interface Helper {
 
     enum SourceType {Front_End, Planning, Monitor, Kassa, CRM, Facturatie}
 
+    public SourceType messageSource = SourceType.Planning;
+
     //String TASK_QUEUE_NAME = "planning-queue";
     String EXCHANGE_NAME = "rabbitexchange";
     String HOST_NAME_LINK = "10.3.50.38";
@@ -1125,7 +1127,7 @@ public interface Helper {
 
         if (errorMessage == "") {
             if(!isPingMessage) {
-                System.out.println("\n [.V.] No error message sent.");
+                //System.out.println("\n [.V.] No error message sent.");
             }
         } else {
             System.out.println("\n [.!.] Error-message sent.");
@@ -1244,6 +1246,21 @@ public interface Helper {
                         allGood = false;
                     }
 
+                    // 3. update uuid master
+
+                    int updateUuidRecordVersionResponse = 0;
+                    if (allGood) {
+                        try {
+                            updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, userUuid);
+                        } catch (IOException | TimeoutException | JAXBException e) {
+                            errorMessage += " [!!!] ERROR: updateUuidRecordVersion FAILED \n" + e.toString() + "\n";
+                            System.out.println(" [!!!] ERROR: updateUuidRecordVersion FAILED \n" + e.toString());
+                        }
+                    } else {
+                        errorMessage +=" [!!!] ERROR: updatingUserByObject FAILED\n";
+                        System.out.println(" [!!!] ERROR: updatingUserByObject FAILED");
+                    }
+
                 } else {
 
                     // 2.2.2. get the entityVersion from idUser
@@ -1281,21 +1298,40 @@ public interface Helper {
 
                         // 2.3.3. updateUuidRecordVersion() (To UUID master)
 
+                        int updateUuidRecordVersionResponse = 0;
+                        if (allGood) {
+                            try {
+                                updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, userUuid);
+                            } catch (IOException | TimeoutException | JAXBException e) {
+                                errorMessage += " [!!!] ERROR: updateUuidRecordVersion FAILED \n" + e.toString() + "\n";
+                                System.out.println(" [!!!] ERROR: updateUuidRecordVersion FAILED \n" + e.toString());
+                            }
+                        } else {
+                            errorMessage +=" [!!!] ERROR: updatingUserByObject FAILED\n";
+                            System.out.println(" [!!!] ERROR: updatingUserByObject FAILED");
+                        }
 
                     } else {
-                        System.out.println("We already had this [User] with entityVersion: '" + localEntityVersion + "'");
-                    }
-                    int updateUuidRecordVersionResponse = 0;
-                    if (allGood) {
-                        try {
-                            updateUuidRecordVersionResponse = Sender.updateUuidRecordVersion("", Source_type, userUuid);
-                        } catch (IOException | TimeoutException | JAXBException e) {
-                            errorMessage += " [!!!] ERROR: updateUuidRecordVersion FAILED \n" + e.toString() + "\n";
-                            System.out.println(" [!!!] ERROR: updateUuidRecordVersion FAILED \n" + e.toString());
+
+                        if(localEntityVersion==1)
+                        {
+                            String messageSource = getSafeXmlProperty(task, "messageSource");
+
+                            if(messageSource!="false"&&messageSource!="0"&&messageSource!=null)
+                            {
+
+                            }else{
+                                if(messageSource=="Planning")
+                                {
+                                    System.out.println("Message seems to represent a record made in our back-up dashboard!");
+                                }
+                            }
+
+                        }else{
+
+                            System.out.println("We already had this [User] with entityVersion: '" + localEntityVersion + "'");
                         }
-                    } else {
-                        errorMessage +=" [!!!] ERROR: updatingUserByObject FAILED\n";
-                        System.out.println(" [!!!] ERROR: updatingUserByObject FAILED");
+                        //if(localEntityVersion==1 && messageSource == Source_type.Pl)
                     }
                     System.out.println("We had this [User] with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisUserInMessage.getEntityVersion() + "'");
 
@@ -1424,7 +1460,6 @@ public interface Helper {
                         errorMessage += " [!!!] ERROR: handleNewMessageEvent - softDelete FAIL :\n"+e.toString()+"\n";
                         //e.printStackTrace();
                     }
-
 
                     // 3. updateUuidRecordVersion() (To UUID master)
                     int updateUuidRecordVersionResponse = 0;
@@ -1846,7 +1881,6 @@ public interface Helper {
                     }
 
                     boolean allGood = true;
-
 
                     if (localEntityVersion < thisTaskInMessage.getEntityVersion()) {
 
