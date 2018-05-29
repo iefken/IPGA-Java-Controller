@@ -530,7 +530,7 @@ public class DatabaseBackupChecker implements Runnable {
                 // Full message Ping sleeping for 'timeBetweenPings' seconds
                 // System.out.println("Ping ("+i+"/"+numberOfPings+")! 'Sleeping' for '"+this.timeBetweenPings/1000+"' seconds...");
 
-                System.out.print("...Starting to sleep...");
+                System.out.print(".");
                 Thread.sleep(this.timeBetweenChecks);
 
             } catch (InterruptedException e) {

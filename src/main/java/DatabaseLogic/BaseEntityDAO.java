@@ -136,7 +136,7 @@ public class BaseEntityDAO extends BaseDAO{
                 throw new IllegalStateException("ERROR 01: Connection seems to be closed...");
             }
 
-            System.out.println("Sqlquery: "+sql);
+            //System.out.println("Sqlquery: "+sql);
             rs = s.executeQuery(sql);
             ResultSetMetaData rsmd = rs.getMetaData();
 

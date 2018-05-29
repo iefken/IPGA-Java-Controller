@@ -1257,7 +1257,7 @@ public interface Helper {
 
                     try {
                         thisUserInMessage.setEntityId(Integer.parseInt(selectResults[0]));
-                        System.out.println("thisUserInMessage.getIdUser(): " + thisUserInMessage.getIdUser());
+                        //System.out.println("thisUserInMessage.getIdUser(): " + thisUserInMessage.getIdUser());
                     } catch (NumberFormatException e) {
                         System.out.println("get the entityVersion from idUser FAILED\n"+e.toString());
                         errorMessage += "get the entityVersion from idUser FAILED\n"+e.toString()+"\n";
