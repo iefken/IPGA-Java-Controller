@@ -138,8 +138,15 @@ public class DatabaseBackupChecker implements Runnable {
                     System.out.println("selectresults.length: " + selectResult.length);
                     System.out.println("selectresults['last']: " + selectResult[selectResult.length-1]);
                     */
-                    String objectString = selectResult[selectResult.length - 1];
-                    String[] objectProperties = objectString.split("', '");
+                    String[] objectProperties = new String[0];
+                    try {
+                        String objectString = selectResult[selectResult.length - 1];
+
+                        objectProperties = objectString.split("\', \'");
+                    } catch (Exception e) {
+                        System.out.println("Error: "+e);
+                        e.printStackTrace();
+                    }
 /*
                     int counter=0;
                     for(String property: objectProperties)
