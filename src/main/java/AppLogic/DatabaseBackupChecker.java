@@ -132,11 +132,11 @@ public class DatabaseBackupChecker implements Runnable {
                         errorMessage += "[.!.] ERROR: getting select * from id[Table]: " + e + "\n";
                         e.printStackTrace();
                     }
-
-                    System.out.println("3. Check: " + i);
-
-                    System.out.println("selectresults.length: " + selectResult.length);
-                    System.out.println("selectresults['last']: " + selectResult[selectResult.length-1]);
+//
+//                    System.out.println("3. Check: " + i);
+//
+//                    System.out.println("selectresults.length: " + selectResult.length);
+//                    System.out.println("selectresults['last']: " + selectResult[selectResult.length-1]);
 
                     String[] objectProperties = new String[0];
                     try {
@@ -147,14 +147,14 @@ public class DatabaseBackupChecker implements Runnable {
                         System.out.println("Error: "+e);
                         e.printStackTrace();
                     }
-
-                    int counter=0;
-                    for(String property: objectProperties)
-                    {
-                        counter++;
-
-                        System.out.println(counter+". property: "+property);
-                    }
+//
+//                    int counter=0;
+//                    for(String property: objectProperties)
+//                    {
+//                        counter++;
+//
+//                        System.out.println(counter+". property: "+property);
+//                    }
 
                     // send rabbitMQ message
 
