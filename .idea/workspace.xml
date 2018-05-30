@@ -73,8 +73,25 @@
             <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="12714">
-                    <caret line="2068" column="25" lean-forward="true" selection-start-line="2018" selection-start-column="24" selection-end-line="2068" selection-end-column="25" />
+                  <state relative-caret-position="416">
+                    <caret line="2036" column="72" lean-forward="true" selection-start-line="2036" selection-start-column="72" selection-end-line="2036" selection-end-column="72" />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+    <window id="3">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="DatabaseBackupChecker.java" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="542">
+                    <caret line="276" column="77" selection-start-line="276" selection-start-column="72" selection-end-line="276" selection-end-column="77" />
                   </state>
                 </provider>
               </entry>
@@ -88,23 +105,14 @@
     <favorites_list name="cli-java-controller" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5875077">
+    <splitter split-orientation="horizontal" split-proportion="0.3685838">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="DatabaseBackupChecker.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="DatabaseBackupChecker.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="468">
+                <state relative-caret-position="519">
                   <caret line="348" column="100" lean-forward="true" selection-start-line="348" selection-start-column="100" selection-end-line="348" selection-end-column="100" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Helper.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="413">
-                  <caret line="1801" column="13" selection-start-line="1801" selection-start-column="13" selection-end-line="1801" selection-end-column="13" />
                 </state>
               </provider>
             </entry>
@@ -127,11 +135,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Session_DAO.java" pinned="false" current-in-tab="false">
+          <file leaf-file-name="Session_DAO.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="408">
-                  <caret line="58" column="66" lean-forward="true" selection-start-line="58" selection-start-column="66" selection-end-line="60" selection-end-column="83" />
+                <state relative-caret-position="79">
+                  <caret line="46" column="19" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -164,8 +172,8 @@
           <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="652">
-                  <caret line="1539" lean-forward="true" selection-start-line="1539" selection-end-line="1539" />
+                <state relative-caret-position="346">
+                  <caret line="1492" column="37" lean-forward="true" selection-start-line="1492" selection-start-column="37" selection-end-line="1492" selection-end-column="37" />
                 </state>
               </provider>
             </entry>
@@ -183,9 +191,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>System</find>
-      <find>system.</find>
-      <find>in T</find>
       <find>[.V.] No error message s</find>
       <find>&quot;userm</find>
       <find>join</find>
@@ -212,7 +217,10 @@
       <find>&quot;eventm</find>
       <find>/ 3. updateUuidRecordVersion() (To UUID master)</find>
       <find>handlenewmessagee</find>
+      <find>event</find>
       <find>handlenewmessages</find>
+      <find>// we h</find>
+      <find>sess</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -245,8 +253,8 @@
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Task_DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" />
         <option value="$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java" />
+        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" />
       </list>
     </option>
   </component>
@@ -493,7 +501,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="193934000" />
+    <option name="totallyTimeSpent" value="194832000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3528" y="-8" width="1936" height="1056" extended-state="6" />
@@ -507,10 +515,10 @@
       <window_info anchor="right" id="Maven Projects" order="5" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5424403" weight="0.39651415" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5424403" visible="true" weight="0.17320262" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.4989339" weight="0.41463414" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.73519737" visible="true" weight="0.1380597" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.73519737" visible="true" weight="0.1380597" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info id="Structure" order="1" sideWeight="0.26480263" side_tool="true" weight="0.1625964" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -867,16 +875,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="58" column="66" lean-forward="true" selection-start-line="58" selection-start-column="66" selection-end-line="60" selection-end-column="83" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Task_DAO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -884,17 +882,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="1801" column="13" selection-start-line="1801" selection-start-column="13" selection-end-line="1801" selection-end-column="13" />
+        <state relative-caret-position="519">
+          <caret line="348" column="100" lean-forward="true" selection-start-line="348" selection-start-column="100" selection-end-line="348" selection-end-column="100" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="348" column="100" lean-forward="true" selection-start-line="348" selection-start-column="100" selection-end-line="348" selection-end-column="100" />
+        <state relative-caret-position="79">
+          <caret line="46" column="19" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="2036" column="72" lean-forward="true" selection-start-line="2036" selection-start-column="72" selection-end-line="2036" selection-end-column="72" />
         </state>
       </provider>
     </entry>

@@ -1477,42 +1477,38 @@ public interface Helper {
                     } else {
                         // we have the latest version...
 
-                        System.out.println("UTD!");
 
 //                        if (localEntityVersion == 1) {
 
-                            System.out.println("1. !");
-                            messageSource = getSafeXmlProperty(task, "source");
+                        messageSource = getSafeXmlProperty(task, "source");
 
-                            System.out.println("2. messageSource: "+messageSource);
+                        if (messageSource != "false" && messageSource != "0" && messageSource != null) {
 
-                            if (messageSource != "false" && messageSource != "0" && messageSource != null) {
+                            System.out.println("3. messageSource: " + messageSource);
+                            if (messageSource.equals("Planning")) {
+                                System.out.println("Message seems to represent an Event record made in our back-up dashboard!");
 
-                                System.out.println("3. messageSource: "+messageSource);
-                                if (messageSource.equals("Planning")) {
-                                    System.out.println("Message seems to represent an Event record made in our back-up dashboard!");
+                                System.out.println("3. messageSource: " + messageSource);
+                                String newEventHtmlLinkAndId = null;
+                                try {
+                                    newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromEventObject(thisEventInMessage);
 
-                                    System.out.println("3. messageSource: "+messageSource);
-                                    String newEventHtmlLinkAndId = null;
-                                    try {
-                                        newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromEventObject(thisEventInMessage);
+                                    System.out.println("newEvHtmLlinkid: " + newEventHtmlLinkAndId);
+                                    String[] newEventProperties = newEventHtmlLinkAndId.split("-=-");
+                                    thisEventInMessage.setGCAEventId(newEventProperties[1]);
+                                    thisEventInMessage.setGCAEventLink(newEventProperties[0]);
+                                    System.out.println("ThisEventMsg: " + thisEventInMessage.toString());
+                                } catch (IOException e) {
+                                    System.out.println(" [!!!] ERROR: handleNewMessageEvent - adding event to Google calendar API:\n" + e.toString());
+                                    errorMessage += " [!!!] ERROR: handleNewMessageEvent - adding event to Google calendar API:\n" + e.toString() + "\n";
+                                    //e.printStackTrace();
+                                }
+                                // 2.4.2. insert new event into local db
+                                int messageEventInsertReturner = 0;
 
-                                        System.out.println("newEvHtmLlinkid: "+newEventHtmlLinkAndId);
-                                        String[] newEventProperties = newEventHtmlLinkAndId.split("-=-");
-                                        thisEventInMessage.setGCAEventId(newEventProperties[1]);
-                                        thisEventInMessage.setGCAEventLink(newEventProperties[0]);
-                                        System.out.println("ThisEventMsg: "+thisEventInMessage.toString());
-                                    } catch (IOException e) {
-                                        System.out.println(" [!!!] ERROR: handleNewMessageEvent - adding event to Google calendar API:\n" + e.toString());
-                                        errorMessage += " [!!!] ERROR: handleNewMessageEvent - adding event to Google calendar API:\n" + e.toString() + "\n";
-                                        //e.printStackTrace();
-                                    }
-                                    // 2.4.2. insert new event into local db
-                                    int messageEventInsertReturner = 0;
+                                if (new Event_DAO().updateEventByObject(thisEventInMessage)) {
 
-                                    if (new Event_DAO().updateEventByObject(thisEventInMessage)) {
-
-                                        System.out.println("Task seems to be added succesfully!");
+                                    System.out.println("Task seems to be added succesfully!");
 /*
                                         // 3. updateUuidRecordVersion() (To UUID master)
                                         int updateUuidRecordVersionResponse = 0;
@@ -1523,20 +1519,20 @@ public interface Helper {
                                             errorMessage += " [!!!] ERROR: handleNewMessageSession - softDelete FAILED:\n" + e.toString() + "\n";
                                             //e.printStackTrace();
                                         }*/
-                                    } else {
+                                } else {
 
-                                        System.out.println(" [!!!] ERROR: handleNewMessageEvent - 2.4.2. insert new event into local db FAILED:\n");
-                                        errorMessage += " [!!!] ERROR: handleNewMessageEvent - 2.4.2. insert new event into local db FAILED:\n";
-                                        //e.printStackTrace();
-                                    }
-
+                                    System.out.println(" [!!!] ERROR: handleNewMessageEvent - 2.4.2. insert new event into local db FAILED:\n");
+                                    errorMessage += " [!!!] ERROR: handleNewMessageEvent - 2.4.2. insert new event into local db FAILED:\n";
+                                    //e.printStackTrace();
                                 }
+
                             }
+                        }
 
 //                        } else {
-                            System.out.println("We already had this [Event] with entityVersion: '" + localEntityVersion + "'");
-                        }
+                        System.out.println("We already had this [Event] with entityVersion: '" + localEntityVersion + "'");
                     }
+                }
 
 
             } else {
@@ -1749,30 +1745,31 @@ public interface Helper {
                         // we have the latest version...
 //                        if (localEntityVersion == 1) {
 
-                            messageSource = getSafeXmlProperty(task, "source");
+                        messageSource = getSafeXmlProperty(task, "source");
 
-                            if (messageSource != "false" && messageSource != "0" && messageSource != null) {
+                        if (messageSource != "false" && messageSource != "0" && messageSource != null) {
 
-                                if (messageSource == "Planning") {
-                                    System.out.println("Message seems to represent a Session record made in our back-up dashboard!");
+                            if (messageSource.equals("Planning")) {
+                                System.out.println("Message seems to represent a Session record made in our back-up dashboard!");
 
-                                    String newEventSessionHtmlLinkAndId = null;
-                                    try {
-                                        newEventSessionHtmlLinkAndId = GoogleCalenderApi.createEventFromSessionObject(thisSessionInMessage);
-                                        String[] newEventProperties = newEventSessionHtmlLinkAndId.split("-=-");
-                                        thisSessionInMessage.setGCAEventId(newEventProperties[1]);
-                                        thisSessionInMessage.setGCAEventLink(newEventProperties[0]);
-                                    } catch (IOException e) {
-                                        System.out.println(" [!!!] ERROR: handleNewMessageSession - adding event to Google calendar API:\n" + e.toString());
-                                        errorMessage += " [!!!] ERROR: handleNewMessageSession - adding event to Google calendar API:\n" + e.toString() + "\n";
-                                        //e.printStackTrace();
-                                    }
-                                    // 2.4.2. insert new event into local db
-                                    int messageEventInsertReturner = 0;
+                                String newEventSessionHtmlLinkAndId = null;
+                                try {
+                                    newEventSessionHtmlLinkAndId = GoogleCalenderApi.createEventFromSessionObject(thisSessionInMessage);
+                                    String[] newEventProperties = newEventSessionHtmlLinkAndId.split("-=-");
+                                    thisSessionInMessage.setGCAEventId(newEventProperties[1]);
+                                    thisSessionInMessage.setGCAEventLink(newEventProperties[0]);
+                                } catch (IOException e) {
+                                    System.out.println(" [!!!] ERROR: handleNewMessageSession - adding event to Google calendar API:\n" + e.toString());
+                                    errorMessage += " [!!!] ERROR: handleNewMessageSession - adding event to Google calendar API:\n" + e.toString() + "\n";
+                                    //e.printStackTrace();
+                                }
+                                // 2.4.2. insert new event into local db
+                                int messageEventInsertReturner = 0;
+                                System.out.println("thisSessionInMessage: " + thisSessionInMessage.toString());
 
-                                    if (new Session_DAO().updateSessionByObject(thisSessionInMessage)) {
+                                if (new Session_DAO().updateSessionByObject(thisSessionInMessage)) {
 
-                                        System.out.println("Task seems to be added succesfully!");
+                                    System.out.println("Session seems to be added succesfully!");
 /*
                                         // 3. updateUuidRecordVersion() (To UUID master)
                                         int updateUuidRecordVersionResponse = 0;
@@ -1783,18 +1780,18 @@ public interface Helper {
                                             errorMessage += " [!!!] ERROR: handleNewMessageSession - softDelete FAILED:\n" + e.toString() + "\n";
                                             //e.printStackTrace();
                                         }*/
-                                        //e.printStackTrace();
-                                    } else {
+                                    //e.printStackTrace();
+                                } else {
 
-                                        System.out.println(" [!!!] ERROR: handleNewMessageSession - 2.4.2. insert new session into local db FAILED:\n");
-                                        errorMessage += " [!!!] ERROR: handleNewMessageSession - 2.4.2. insert new session into local db FAILED:\n";
-                                    }
-
+                                    System.out.println(" [!!!] ERROR: handleNewMessageSession - 2.4.2. insert new session into local db FAILED:\n");
+                                    errorMessage += " [!!!] ERROR: handleNewMessageSession - 2.4.2. insert new session into local db FAILED:\n";
                                 }
+
                             }
+                        }
 
 //                        } else {
-                            System.out.println("We already had this [Session] with entityVersion: '" + localEntityVersion + "'");
+                        System.out.println("We already had this [Session] with entityVersion: '" + localEntityVersion + "'");
 //                        }
                     }
                 }
@@ -2016,32 +2013,32 @@ public interface Helper {
                     } else {
                         // we have the latest version...
 
-                        if (localEntityVersion == 1) {
+//                        if (localEntityVersion == 1) {
 
-                            messageSource = getSafeXmlProperty(task, "source");
+                        messageSource = getSafeXmlProperty(task, "source");
 
 
-                            if (messageSource != "false" && messageSource != "0" && messageSource != null) {
+                        if (messageSource != "false" && messageSource != "0" && messageSource != null) {
 
-                                if (messageSource == "Planning") {
-                                    System.out.println("Message seems to represent an Task record made in our back-up dashboard!");
+                            if (messageSource.equals("Planning")) {
+                                System.out.println("Message seems to represent an Task record made in our back-up dashboard!");
 
-                                    String newEventHtmlLinkAndId = null;
-                                    try {
-                                        newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromTaskObject(thisTaskInMessage);
-                                        String[] newEventProperties = newEventHtmlLinkAndId.split("-=-");
-                                        thisTaskInMessage.setGCAEventId(newEventProperties[1]);
-                                        thisTaskInMessage.setGCAEventLink(newEventProperties[0]);
-                                    } catch (IOException e) {
-                                        System.out.println(" [!!!] ERROR: handleNewMessageTask - adding event to Google calendar API:\n" + e.toString());
-                                        errorMessage += " [!!!] ERROR: handleNewMessageTask - adding event to Google calendar API:\n" + e.toString() + "\n";
-                                        //e.printStackTrace();
-                                    }
-                                    // 2.4.2. insert new event into local db
-                                    int messageEventInsertReturner = 0;
+                                String newEventHtmlLinkAndId = null;
+                                try {
+                                    newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromTaskObject(thisTaskInMessage);
+                                    String[] newEventProperties = newEventHtmlLinkAndId.split("-=-");
+                                    thisTaskInMessage.setGCAEventId(newEventProperties[1]);
+                                    thisTaskInMessage.setGCAEventLink(newEventProperties[0]);
+                                } catch (IOException e) {
+                                    System.out.println(" [!!!] ERROR: handleNewMessageTask - adding event to Google calendar API:\n" + e.toString());
+                                    errorMessage += " [!!!] ERROR: handleNewMessageTask - adding event to Google calendar API:\n" + e.toString() + "\n";
+                                    //e.printStackTrace();
+                                }
+                                // 2.4.2. insert new event into local db
+                                int messageEventInsertReturner = 0;
 
-                                    if (new Task_DAO().updateTaskByObject(thisTaskInMessage)) {
-                                        System.out.println("Task seems to be added succesfully!");
+                                if (new Task_DAO().updateTaskByObject(thisTaskInMessage)) {
+                                    System.out.println("Task seems to be added succesfully!");
 /*
                                         // 3. updateUuidRecordVersion() (To UUID master)
                                         int updateUuidRecordVersionResponse = 0;
@@ -2053,19 +2050,18 @@ public interface Helper {
                                             //e.printStackTrace();
                                         }
                                         */
-                                    } else {
+                                } else {
 
-                                        System.out.println(" [!!!] ERROR: handleNewMessageTask - 2.4.2. insert new event into local db FAILED:\n");
-                                        errorMessage += " [!!!] ERROR: handleNewMessageTask - 2.4.2. insert new event into local db FAILED:\n";
-                                        //e.printStackTrace();
-                                    }
-
+                                    System.out.println(" [!!!] ERROR: handleNewMessageTask - 2.4.2. insert new event into local db FAILED:\n");
+                                    errorMessage += " [!!!] ERROR: handleNewMessageTask - 2.4.2. insert new event into local db FAILED:\n";
+                                    //e.printStackTrace();
                                 }
 
-                            } else {
-                                System.out.println("We already had this [Task] with entityVersion: '" + localEntityVersion + "'");
                             }
+
+//                            } else {
                             System.out.println("We already had this [Task] with entityVersion: '" + localEntityVersion + "'");
+
                         }
 
 

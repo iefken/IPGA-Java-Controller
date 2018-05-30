@@ -368,7 +368,7 @@ public class DatabaseBackupChecker implements Runnable {
                                 System.out.println("[.V.] Session Xml message seems to be published correctly!");
                             } catch (IOException | TimeoutException | JAXBException e) {
 
-                                errorMessage += "[.!.] ERROR: Something went wrong publishing event xml message to the exchange:\n" + e + "\n";
+                                errorMessage += "[.!.] ERROR: Something went wrong publishing session xml message to the exchange:\n" + e + "\n";
                                 e.printStackTrace();
 
                             }
