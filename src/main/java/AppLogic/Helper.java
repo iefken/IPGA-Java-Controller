@@ -2345,6 +2345,8 @@ public interface Helper {
 
             // uuid doesn't exit locally yet
 
+            System.out.println("new reservation_event.tostring(): "+newReservation_EventObjectFromXml.toString());
+
             // 1. Add user to google calendar api event
             try {
                 GoogleCalenderApi.addAttendeeForEvent(newReservation_EventObjectFromXml.getEventUUID(), newReservation_EventObjectFromXml.getUserUUID());

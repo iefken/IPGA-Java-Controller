@@ -66,7 +66,7 @@
     <favorites_list name="cli-java-controller" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5411311">
+    <splitter split-orientation="horizontal" split-proportion="0.779563">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="DatabaseBackupChecker.java" pinned="false" current-in-tab="false">
@@ -81,8 +81,8 @@
           <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-306">
-                  <caret line="1479" column="65" lean-forward="true" selection-start-line="1479" selection-start-column="65" selection-end-line="1479" selection-end-column="65" />
+                <state relative-caret-position="272">
+                  <caret line="2347" column="112" selection-start-line="2347" selection-start-column="112" selection-end-line="2347" selection-end-column="112" />
                 </state>
               </provider>
             </entry>
@@ -148,8 +148,8 @@
           <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="374">
-                  <caret line="1831" column="72" lean-forward="true" selection-start-line="1831" selection-start-column="72" selection-end-line="1831" selection-end-column="72" />
+                <state relative-caret-position="-646">
+                  <caret line="2037" column="25" lean-forward="true" selection-start-line="2037" selection-start-column="25" selection-end-line="2037" selection-end-column="25" />
                 </state>
               </provider>
             </entry>
@@ -167,9 +167,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>EntityToAddStatus</find>
-      <find>&quot;t</find>
-      <find>thisEntityToAdd</find>
       <find>messagesou</find>
       <find>message seems to</find>
       <find>&quot;res</find>
@@ -197,6 +194,9 @@
       <find>taskm</find>
       <find>task</find>
       <find>handlenewmessagee</find>
+      <find>&quot;taskm</find>
+      <find>&quot;reservation_</find>
+      <find>&quot;reservation_e</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -456,7 +456,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4916000" />
+    <option name="totallyTimeSpent" value="5547000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -862,8 +862,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-306">
-          <caret line="1479" column="65" lean-forward="true" selection-start-line="1479" selection-start-column="65" selection-end-line="1479" selection-end-column="65" />
+        <state relative-caret-position="272">
+          <caret line="2347" column="112" selection-start-line="2347" selection-start-column="112" selection-end-line="2347" selection-end-column="112" />
         </state>
       </provider>
     </entry>
