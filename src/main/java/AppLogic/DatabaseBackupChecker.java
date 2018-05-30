@@ -261,7 +261,7 @@ public class DatabaseBackupChecker implements Runnable {
                                 }
                             }
 
-                            System.out.println("Prop[0] (id): " + objectProperties[0] + " , prop[1]: " + objectProperties[1]);
+                           // System.out.println("Prop[0] (id): " + objectProperties[0] + " , prop[1]: " + objectProperties[1]);
 
                             try {
                                 eventFromDashboard = new Event(Integer.parseInt(objectProperties[0]), thisEntityToAdd.getEntity_version(), thisEntityToAdd.getActive(), Helper.getCurrentDateTimeStamp(),

@@ -8,13 +8,52 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e99f31c8-cb7f-4ef1-b01f-5fbda4bb66e6" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/cli_java_controller_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/cli_java_controller_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/cli_java_main_controller_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/cli_java_main_controller_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-models/old/AssignTask-2018-05-27-14-05-51.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/old/AssignTask-2018-05-27-14-05-51.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v3.1.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v3.1.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v3.2.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v3.2.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v3.3.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v3.3.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v3.4.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v3.4.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v3.5.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v3.5.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v4.1.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v4.1.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v4.2.2.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v4.2.2.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v4.2.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v4.2.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v4.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/old/Local-Planning-Db-v4.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-models/old/Task-2018-05-27-14-06-00.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/old/Task-2018-05-27-14-06-00.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-models/old/emptyTableQuery-Db-v4.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/old/emptyTableQuery-Db-v4.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-models/old/mysqltest-1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/old/mysqltest-1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-models/old/mysqltest-2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/old/mysqltest-2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-models/old/mysqltest-3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/db-models/old/mysqltest-3.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/AppLogic/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AppLogic/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AppLogic/Receiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/AppLogic/Sender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AppLogic/Sender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Assign_Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Assign_Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Assign_Task_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Assign_Task_DAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseLogic/User_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DatabaseLogic/User_DAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/cred/client_secret.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/cred/client_secret.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/HttpRequest/UUID_updateUuidRecordVersion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HttpRequest/UUID_updateUuidRecordVersion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.mf" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.mf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/XmlMessage/AssignTaskMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/AssignTaskMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/XmlMessage/AssignTaskStructure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/AssignTaskStructure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/XmlMessage/ErrorMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/ErrorMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/XmlMessage/ErrorStructure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/ErrorStructure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/XmlMessage/Footer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/Footer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/XmlMessage/MessageMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/MessageMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationEventStructure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationEventStructure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationSessionStructure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/ReservationSessionStructure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/XmlMessage/TaskMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XmlMessage/TaskMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/random/logic/ReceiverPlanning.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/random/logic/ReceiverPlanning.java.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/DatabaseLogic/BaseEntityDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DatabaseLogic/BaseEntityDAO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/GoogleCalendarApi/GoogleCalenderApi.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GoogleCalendarApi/GoogleCalenderApi.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GoogleCalendarApi/cred/client_secret.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GoogleCalendarApi/cred/client_secret.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,46 +64,20 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DockManager">
-    <window id="1">
+    <window id="2">
       <content type="file-editors">
         <state>
-          <splitter split-orientation="horizontal" split-proportion="0.70208335">
-            <split-first>
-              <leaf>
-                <file leaf-file-name="DatabaseBackupChecker.java" pinned="false" current-in-tab="false">
-                  <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
-                    <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="1224">
-                        <caret line="299" column="36" lean-forward="true" selection-start-line="299" selection-start-column="36" selection-end-line="299" selection-end-column="36" />
-                      </state>
-                    </provider>
-                  </entry>
-                </file>
-                <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
-                  <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
-                    <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="364">
-                        <caret line="1494" column="91" selection-start-line="1494" selection-start-column="91" selection-end-line="1494" selection-end-column="91" />
-                      </state>
-                    </provider>
-                  </entry>
-                </file>
-              </leaf>
-            </split-first>
-            <split-second>
-              <leaf>
-                <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
-                  <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
-                    <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="458">
-                        <caret line="2297" lean-forward="true" selection-start-line="2297" selection-end-line="2297" />
-                      </state>
-                    </provider>
-                  </entry>
-                </file>
-              </leaf>
-            </split-second>
-          </splitter>
+          <leaf>
+            <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="12612">
+                    <caret line="2059" column="25" lean-forward="true" selection-start-line="2011" selection-start-column="24" selection-end-line="2059" selection-end-column="25" />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
         </state>
       </content>
     </window>
@@ -74,20 +87,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BaseEntityDAO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java">
+      <file leaf-file-name="DatabaseBackupChecker.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="103" selection-start-line="103" selection-end-line="103" />
+            <state relative-caret-position="451">
+              <caret line="263" column="29" selection-start-line="263" selection-start-column="29" selection-end-line="263" selection-end-column="29" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GoogleCalenderApi.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
+      <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="535">
-              <caret line="107" column="31" lean-forward="true" selection-start-line="107" selection-start-column="31" selection-end-line="107" selection-end-column="31" />
+            <state relative-caret-position="349">
+              <caret line="1482" lean-forward="true" selection-start-line="1482" selection-end-line="1482" />
             </state>
           </provider>
         </entry>
@@ -103,9 +116,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>thisUserInMessage.getIdU</find>
-      <find>transform xml to u</find>
-      <find>new mess</find>
       <find>gettas</find>
       <find>Start of</find>
       <find>System</find>
@@ -125,14 +135,17 @@
       <find>&quot;_&quot;</find>
       <find>assign</find>
       <find>getPropertyValueByTableAndProperty</find>
-      <find>id+</find>
       <find>cred</find>
       <find>RROR: setting Reservation_Ev</find>
       <find>oat thi</find>
       <find>Test</find>
       <find>&quot;Planning&quot;</find>
       <find>event&quot;</find>
+      <find>&quot;test&quot;</find>
+      <find>credentials s</find>
+      <find>id+</find>
       <find>&quot;eventm</find>
+      <find>] newEventProperties = newEventHtmlLinkAndId.</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -165,8 +178,8 @@
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/EntitiesToAdd.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" />
-        <option value="$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java" />
         <option value="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java" />
       </list>
     </option>
   </component>
@@ -234,14 +247,6 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="AppLogic" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cli-java-controller" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PLANNING" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="GoogleCalendarApi" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -413,7 +418,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="189829000" />
+    <option name="totallyTimeSpent" value="190110000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3528" y="-8" width="1936" height="1056" extended-state="6" />
@@ -797,13 +802,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1224">
-          <caret line="299" column="36" lean-forward="true" selection-start-line="299" selection-start-column="36" selection-end-line="299" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="535">
@@ -811,10 +809,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="451">
+          <caret line="263" column="29" selection-start-line="263" selection-start-column="29" selection-end-line="263" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="1494" column="91" selection-start-line="1494" selection-start-column="91" selection-end-line="1494" selection-end-column="91" />
+        <state relative-caret-position="349">
+          <caret line="1482" lean-forward="true" selection-start-line="1482" selection-end-line="1482" />
         </state>
       </provider>
     </entry>

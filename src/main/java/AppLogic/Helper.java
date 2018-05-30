@@ -1489,7 +1489,7 @@ public interface Helper {
                             if (messageSource != "false" && messageSource != "0" && messageSource != null) {
 
                                 System.out.println("3. messageSource: "+messageSource);
-                                if (messageSource == "Planning") {
+                                if (messageSource.equals("Planning")) {
                                     System.out.println("Message seems to represent an Event record made in our back-up dashboard!");
 
                                     System.out.println("3. messageSource: "+messageSource);
