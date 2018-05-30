@@ -1512,6 +1512,8 @@ public interface Helper {
 
                                     if (new Event_DAO().updateEventByObject(thisEventInMessage)) {
 
+                                        System.out.println("Task seems to be added succesfully!");
+/*
                                         // 3. updateUuidRecordVersion() (To UUID master)
                                         int updateUuidRecordVersionResponse = 0;
                                         try {
@@ -1520,7 +1522,7 @@ public interface Helper {
                                             System.out.println(" [!!!] ERROR: handleNewMessageSession - softDelete FAILED:\n" + e.toString());
                                             errorMessage += " [!!!] ERROR: handleNewMessageSession - softDelete FAILED:\n" + e.toString() + "\n";
                                             //e.printStackTrace();
-                                        }
+                                        }*/
                                     } else {
 
                                         System.out.println(" [!!!] ERROR: handleNewMessageEvent - 2.4.2. insert new event into local db FAILED:\n");
@@ -1770,6 +1772,8 @@ public interface Helper {
 
                                     if (new Session_DAO().updateSessionByObject(thisSessionInMessage)) {
 
+                                        System.out.println("Task seems to be added succesfully!");
+/*
                                         // 3. updateUuidRecordVersion() (To UUID master)
                                         int updateUuidRecordVersionResponse = 0;
                                         try {
@@ -1778,7 +1782,7 @@ public interface Helper {
                                             System.out.println(" [!!!] ERROR: handleNewMessageSession - softDelete FAILED:\n" + e.toString());
                                             errorMessage += " [!!!] ERROR: handleNewMessageSession - softDelete FAILED:\n" + e.toString() + "\n";
                                             //e.printStackTrace();
-                                        }
+                                        }*/
                                         //e.printStackTrace();
                                     } else {
 
@@ -2037,7 +2041,8 @@ public interface Helper {
                                     int messageEventInsertReturner = 0;
 
                                     if (new Task_DAO().updateTaskByObject(thisTaskInMessage)) {
-
+                                        System.out.println("Task seems to be added succesfully!");
+/*
                                         // 3. updateUuidRecordVersion() (To UUID master)
                                         int updateUuidRecordVersionResponse = 0;
                                         try {
@@ -2047,6 +2052,7 @@ public interface Helper {
                                             errorMessage += " [!!!] ERROR: handleNewMessageTask - softDelete FAILED:\n" + e.toString() + "\n";
                                             //e.printStackTrace();
                                         }
+                                        */
                                     } else {
 
                                         System.out.println(" [!!!] ERROR: handleNewMessageTask - 2.4.2. insert new event into local db FAILED:\n");
@@ -2284,6 +2290,9 @@ public interface Helper {
                 } else {
                     // we have the latest version...
                     System.out.println("We already had this Reservation_Event with entityVersion: '" + localEntityVersion + "'");
+
+                    // TODO
+
                 }
             }
         } else {
@@ -2501,6 +2510,8 @@ public interface Helper {
                 } else {
                     // we have the latest version...
                     System.out.println("We already had this Reservation_Session with entityVersion: '" + localEntityVersion + "'");
+
+                    // TODO
                 }
             }
 
@@ -2719,6 +2730,8 @@ public interface Helper {
                 } else {
                     // we have the latest version...
                     System.out.println("We already had this Assign_Task with entityVersion: '" + localEntityVersion + "'");
+
+                    // TODO
                 }
             }
 
