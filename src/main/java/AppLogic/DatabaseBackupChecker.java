@@ -478,7 +478,7 @@ public class DatabaseBackupChecker implements Runnable {
 
                             float thisReservation_SessionPrice = 0;
 
-                            if (objectProperties[4] == "0" || objectProperties[4] == null) {
+                            if (objectProperties[4] == "0" || objectProperties[4] == null || objectProperties[4].equals("null")) {
                                 //System.out.println("Float.parseFloat(objectProperties[4]): " + Float.parseFloat(objectProperties[4]));
                                 thisReservation_SessionPrice=0;
                             } else {
