@@ -51,6 +51,8 @@ public class Event_DAO extends BaseEntityDAO {
                 "dateTimeStart=\""+newEventFromMessage.getDateTimeStart()+"\", " +
                 "dateTimeEnd=\""+newEventFromMessage.getDateTimeEnd()+"\", " +
                 "type=\""+newEventFromMessage.getType()+"\", " +
+                "GCAEventId=\"" +newEventFromMessage.getGCAEventId()+"\", " +
+                "GCAEventLink=\"" +newEventFromMessage.getGCAEventLink()+"\", " +
                 "price="+newEventFromMessage.getPrice()+" " +
 
                 "WHERE uuid=\""+newEventFromMessage.getEventUUID()+"\" " +

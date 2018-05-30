@@ -57,6 +57,8 @@ public class Session_DAO extends BaseEntityDAO {
                 "dateTimeStart=\""+newSessionFromMessage.getDateTimeStart()+"\", " +
                 "dateTimeEnd=\""+newSessionFromMessage.getDateTimeEnd()+"\", " +
                 "type=\""+newSessionFromMessage.getType()+"\", " +
+                "GCAEventId=\"" +newSessionFromMessage.getGCAEventId()+"\", " +
+                "GCAEventLink=\"" +newSessionFromMessage.getGCAEventLink()+"\", " +
                 "price="+newSessionFromMessage.getPrice()+" " +
 
                 "WHERE uuid=\""+newSessionFromMessage.getSessionUUID()+"\" " +
