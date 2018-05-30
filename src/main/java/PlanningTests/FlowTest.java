@@ -1,12 +1,5 @@
 package PlanningTests;
 
-import AppLogic.*;
-import DatabaseLogic.*;
-import GoogleCalendarApi.*;
-import HttpRequest.*;
-import XmlMessage.*;
-
-
 public class FlowTest {
 
     enum EntityType {EMPTY, User, Event, Session, ReservationEvent, ReservationSession, Product, Purchase}

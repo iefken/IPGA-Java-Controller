@@ -1,6 +1,5 @@
 package DatabaseLogic;
 
-import java.sql.SQLException;
 import java.util.Objects;
 
 public class EntitiesToAdd {

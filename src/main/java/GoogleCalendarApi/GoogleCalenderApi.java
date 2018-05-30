@@ -1,7 +1,10 @@
 package GoogleCalendarApi;
 
 import AppLogic.Helper;
-import DatabaseLogic.*;
+import DatabaseLogic.Assign_Task;
+import DatabaseLogic.BaseEntityDAO;
+import DatabaseLogic.Reservation_Event;
+import DatabaseLogic.Reservation_Session;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -14,6 +17,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
 import com.google.api.client.util.store.FileDataStoreFactory;
+import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.*;
 
@@ -21,14 +25,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Scanner;
-
-import com.google.api.services.calendar.Calendar;
-import com.google.api.services.calendar.model.Event;
 
 public class GoogleCalenderApi {
 
@@ -947,6 +944,35 @@ public class GoogleCalenderApi {
         String table = "Event";
         String[] selectors = {"uuid"};
         String[] values = {cancelEventObject.getEventUUID()};
+        String GCAEventId = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0];
+
+        cancelEventObject.setGCAEventId(GCAEventId);
+
+        String eventId = cancelEventObject.getGCAEventId();
+        // 2. Delete the event through the API
+        try {
+            service.events().delete("primary", eventId).execute();
+            System.out.println("Success cancelling event with id: " + cancelEventObject.getGCAEventId() + "!");
+        } catch (IOException e) {
+            System.out.print("Error: Something went wrong executing delete event with GCAID: '" + cancelEventObject.getGCAEventId() + "':\n=> ");
+            //e.printStackTrace();
+        }
+    }
+
+    public static void cancelTaskWithTaskObject(DatabaseLogic.Task cancelEventObject) {
+        // 1. Initialize Calendar service with valid OAuth credentials
+        Calendar service = null;
+        try {
+            service = getCalendarService();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 1. get GCAEventId from uuid
+        String[] propertiesToSelect = {"GCAEventId"};
+        String table = "Event";
+        String[] selectors = {"uuid"};
+        String[] values = {cancelEventObject.getTaskUuid()};
         String GCAEventId = new BaseEntityDAO().getPropertyValueByTableAndProperty(propertiesToSelect, table, selectors, values)[0];
 
         cancelEventObject.setGCAEventId(GCAEventId);

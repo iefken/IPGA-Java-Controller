@@ -1,8 +1,7 @@
 package AppLogic;
 
-import DatabaseLogic.*;
-
-import com.rabbitmq.client.*;
+import DatabaseLogic.BaseRMQ;
+import com.rabbitmq.client.Channel;
 
 public class Receiver {
 

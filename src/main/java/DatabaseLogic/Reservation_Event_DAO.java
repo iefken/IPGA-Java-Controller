@@ -1,11 +1,7 @@
 package DatabaseLogic;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
-import java.sql.Statement;
 
 
 public class Reservation_Event_DAO extends BaseEntityDAO{

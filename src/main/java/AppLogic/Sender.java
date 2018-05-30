@@ -1,13 +1,12 @@
 package AppLogic;
 
+import HttpRequest.UUID_insertUuidRecord;
+import HttpRequest.UUID_updateUuidRecordVersionResponse;
 import JsonMessage.JSONException;
-
 import com.google.gson.Gson;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-
-import HttpRequest.*;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;

@@ -3,7 +3,6 @@ package DatabaseLogic;
 import AppLogic.Helper;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class BaseEntityDAO extends BaseDAO{
 

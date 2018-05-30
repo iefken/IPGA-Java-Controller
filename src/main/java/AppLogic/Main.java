@@ -6,17 +6,6 @@ package AppLogic;
 // running the project .jar files: java -jar <jarfilename>.jar
 
 
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Scanner;
-import java.util.concurrent.TimeoutException;
-
-import DatabaseLogic.*;
-import GoogleCalendarApi.GoogleCalenderApi;
-
-import static GoogleCalendarApi.GoogleCalenderApi.getCalendarService;
-
 public class Main {
     public static void main(String[] argv) throws Exception {
         System.out.println(" [ooo] _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_ [ooo]");

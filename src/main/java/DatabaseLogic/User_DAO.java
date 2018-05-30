@@ -1,12 +1,9 @@
 package DatabaseLogic;
 
-import AppLogic.*;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 
 public class User_DAO extends BaseEntityDAO {

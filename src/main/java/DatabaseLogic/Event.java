@@ -1,7 +1,5 @@
 package DatabaseLogic;
 
-import AppLogic.Helper;
-
 import java.util.Objects;
 
 public class Event extends BaseEntity{
