@@ -28,7 +28,7 @@
     <window id="1">
       <content type="file-editors">
         <state>
-          <splitter split-orientation="horizontal" split-proportion="0.38072917">
+          <splitter split-orientation="horizontal" split-proportion="0.4890625">
             <split-first>
               <leaf>
                 <file leaf-file-name="DatabaseBackupChecker.java" pinned="false" current-in-tab="false">
@@ -43,8 +43,8 @@
                 <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
                   <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="412">
-                        <caret line="2003" lean-forward="true" selection-start-line="2003" selection-end-line="2003" />
+                      <state relative-caret-position="449">
+                        <caret line="1481" column="54" lean-forward="true" selection-start-line="1481" selection-start-column="54" selection-end-line="1481" selection-end-column="54" />
                       </state>
                     </provider>
                   </entry>
@@ -56,8 +56,8 @@
                 <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
                   <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="186">
-                        <caret line="2274" column="52" lean-forward="true" selection-start-line="2274" selection-start-column="52" selection-end-line="2274" selection-end-column="52" />
+                      <state relative-caret-position="458">
+                        <caret line="2293" lean-forward="true" selection-start-line="2293" selection-end-line="2293" />
                       </state>
                     </provider>
                   </entry>
@@ -86,8 +86,8 @@
       <file leaf-file-name="GoogleCalenderApi.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="331">
-              <caret line="95" column="27" lean-forward="true" selection-start-line="95" selection-start-column="27" selection-end-line="95" selection-end-column="27" />
+            <state relative-caret-position="535">
+              <caret line="107" column="31" lean-forward="true" selection-start-line="107" selection-start-column="31" selection-end-line="107" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -103,8 +103,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>case &quot;11</find>
-      <find>Exception 1</find>
       <find>thisUserInMessage.getIdU</find>
       <find>transform xml to u</find>
       <find>new mess</find>
@@ -133,6 +131,8 @@
       <find>oat thi</find>
       <find>Test</find>
       <find>&quot;Planning&quot;</find>
+      <find>event&quot;</find>
+      <find>&quot;eventm</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -413,10 +413,11 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="189263000" />
+    <option name="totallyTimeSpent" value="189628000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3528" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32897604" />
@@ -796,6 +797,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="535">
+          <caret line="107" column="31" lean-forward="true" selection-start-line="107" selection-start-column="31" selection-end-line="107" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1224">
@@ -805,15 +813,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="2003" lean-forward="true" selection-start-line="2003" selection-end-line="2003" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="95" column="27" lean-forward="true" selection-start-line="95" selection-start-column="27" selection-end-line="95" selection-end-column="27" />
+        <state relative-caret-position="449">
+          <caret line="1481" column="54" lean-forward="true" selection-start-line="1481" selection-start-column="54" selection-end-line="1481" selection-end-column="54" />
         </state>
       </provider>
     </entry>
