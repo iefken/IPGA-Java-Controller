@@ -33,8 +33,8 @@
                 <file leaf-file-name="DatabaseBackupChecker.java" pinned="false" current-in-tab="true">
                   <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="593">
-                        <caret line="437" column="76" selection-start-line="437" selection-start-column="76" selection-end-line="437" selection-end-column="76" />
+                      <state relative-caret-position="67">
+                        <caret line="239" lean-forward="true" selection-start-line="239" selection-end-line="239" />
                       </state>
                     </provider>
                   </entry>
@@ -85,8 +85,8 @@
       <file leaf-file-name="GoogleCalenderApi.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
-              <caret line="55" column="5" lean-forward="true" selection-start-line="55" selection-start-column="5" selection-end-line="55" selection-end-column="5" />
+            <state relative-caret-position="-230">
+              <caret line="62" lean-forward="true" selection-start-line="62" selection-end-line="62" />
             </state>
           </provider>
         </entry>
@@ -102,8 +102,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getXmlForNewT</find>
-      <find>getXmlForNew</find>
       <find>headerDescription</find>
       <find>upd</find>
       <find>case &quot;11</find>
@@ -132,6 +130,8 @@
       <find>getPropertyValueByTableAndProperty</find>
       <find>id+</find>
       <find>cred</find>
+      <find>RROR: setting Reservation_Ev</find>
+      <find>oat thi</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -261,7 +261,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.DatabaseBackupChecker">
     <configuration name="DatabaseBackupChecker" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="AppLogic.DatabaseBackupChecker" />
       <module name="cli-java-controller" />
@@ -359,9 +359,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.DatabaseBackupChecker" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Receiver" />
-        <item itemvalue="Application.DatabaseBackupChecker" />
         <item itemvalue="JAR Application.cli-java-controller.jar" />
         <item itemvalue="Application.GoogleCalenderApi" />
       </list>
@@ -412,11 +412,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="185456000" />
+    <option name="totallyTimeSpent" value="186164000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3528" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32897604" />
@@ -803,17 +802,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="55" column="5" lean-forward="true" selection-start-line="55" selection-start-column="5" selection-end-line="55" selection-end-column="5" />
+        <state relative-caret-position="67">
+          <caret line="239" lean-forward="true" selection-start-line="239" selection-end-line="239" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="593">
-          <caret line="437" column="76" selection-start-line="437" selection-start-column="76" selection-end-line="437" selection-end-column="76" />
+        <state relative-caret-position="-230">
+          <caret line="62" lean-forward="true" selection-start-line="62" selection-end-line="62" />
         </state>
       </provider>
     </entry>

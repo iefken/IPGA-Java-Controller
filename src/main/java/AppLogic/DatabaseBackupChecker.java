@@ -246,9 +246,9 @@ public class DatabaseBackupChecker implements Runnable {
                             Event eventFromDashboard = null;
                             float thisEventPrice = 0;
 
-                            System.out.println("objectProperties[11]: " + objectProperties[11]);
-                            if (objectProperties[11] == "0" || objectProperties[11] == null) {
-                                eventFromDashboard.setPrice(0);
+                            //System.out.println("objectProperties[11]: " + objectProperties[11]);
+                            if (objectProperties[11] == "0" || objectProperties[11] == null || objectProperties[11].equals("null")) {
+                                thisEventPrice=0;
                             } else {
                                 try {
                                     thisEventPrice = Float.parseFloat(objectProperties[11]);
@@ -328,8 +328,8 @@ public class DatabaseBackupChecker implements Runnable {
                             float thisSessionPrice = 0;
 
                             System.out.println("objectProperties[12]: " + objectProperties[12]);
-                            if (objectProperties[12] == "0" || objectProperties[12] == null) {
-                                sessionFromDashboard.setPrice(0);
+                            if (objectProperties[12] == "0" || objectProperties[12] == null || objectProperties[12].equals("null")) {
+                                thisSessionPrice=0; //sessionFromDashboard.setPrice(0);
                             } else {
                                 try {
                                     thisSessionPrice = Float.parseFloat(objectProperties[12]);
@@ -410,15 +410,16 @@ public class DatabaseBackupChecker implements Runnable {
 
                             try {
 
-                                if (objectProperties[4] == "0" || objectProperties[4] == null) {
+                                if (objectProperties[4] == "0" || objectProperties[4] == null || objectProperties[4].equals("null")) {
                                     //System.out.println("Float.parseFloat(objectProperties[4]): "+Float.parseFloat(objectProperties[4]));
-                                    reservation_EventFromDashboard.setPaid(0);
+                                    thisReservation_EventPrice=0;
                                 } else {
+                                    System.out.println("Error: "+objectProperties[4]);
                                     thisReservation_EventPrice = Float.parseFloat(objectProperties[4]);
                                 }
 
                             } catch (NumberFormatException e) {
-                                errorMessage += "[.!.] ERROR: setting Reservation_Event object:\n" + e + "\n";
+                                errorMessage += "[.X.] ERROR: setting Reservation_Event object PRICE PROPERTY:\n" + e + "\n";
                                 e.printStackTrace();
                                 break;
                             }
@@ -427,7 +428,7 @@ public class DatabaseBackupChecker implements Runnable {
                                 reservation_EventFromDashboard = new Reservation_Event(Integer.parseInt(objectProperties[0]), thisEntityToAdd.getEntity_version(), thisEntityToAdd.getActive(), Helper.getCurrentDateTimeStamp(),
                                         objectProperties[1], objectProperties[2], objectProperties[3], thisReservation_EventPrice, false);
                             } catch (NumberFormatException e) {
-                                errorMessage += "[.!.] ERROR: setting Reservation_Event object:\n" + e + "\n";
+                                errorMessage += "[.x.] ERROR: setting Reservation_Event object:\n" + e + "\n";
                                 e.printStackTrace();
                                 break;
                             }
@@ -478,8 +479,8 @@ public class DatabaseBackupChecker implements Runnable {
                             float thisReservation_SessionPrice = 0;
 
                             if (objectProperties[4] == "0" || objectProperties[4] == null) {
-                                System.out.println("Float.parseFloat(objectProperties[4]): " + Float.parseFloat(objectProperties[4]));
-                                reservation_SessionFromDashboard.setPaid(0);
+                                //System.out.println("Float.parseFloat(objectProperties[4]): " + Float.parseFloat(objectProperties[4]));
+                                thisReservation_SessionPrice=0;
                             } else {
                                 try {
                                     thisReservation_SessionPrice = Float.parseFloat(objectProperties[4]);
