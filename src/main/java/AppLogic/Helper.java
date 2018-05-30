@@ -1753,6 +1753,7 @@ public interface Helper {
                         }
                         System.out.println("We had this [Session] with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisSessionInMessage.getEntityVersion() + "'");
                     } else {
+                        System.out.println("We have latest version... ");
                         // we have the latest version...
 //                        if (localEntityVersion == 1) {
 
@@ -3571,7 +3572,7 @@ public interface Helper {
         }
 
         taskName = getSafeXmlProperty(xmlMessage, "taskName");
-        if (description == "false") {
+        if (taskName == "false") {
             System.out.println(" [!!!] ERROR: No taskName found in XML: ");
             errorMessage += " [!!!] ERROR: No taskName found in XML:\n";
             allGood = false;
