@@ -72,7 +72,7 @@
               <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
                 <provider selected="true" editor-type-id="text-editor">
                   <state relative-caret-position="12612">
-                    <caret line="2059" column="25" lean-forward="true" selection-start-line="2011" selection-start-column="24" selection-end-line="2059" selection-end-column="25" />
+                    <caret line="2062" column="25" lean-forward="true" selection-start-line="2014" selection-start-column="24" selection-end-line="2062" selection-end-column="25" />
                   </state>
                 </provider>
               </entry>
@@ -99,8 +99,17 @@
       <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
-              <caret line="1482" lean-forward="true" selection-start-line="1482" selection-end-line="1482" />
+            <state relative-caret-position="332">
+              <caret line="1499" column="77" selection-start-line="1499" selection-start-column="77" selection-end-line="1499" selection-end-column="77" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GoogleCalenderApi.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-179">
+              <caret line="197" column="25" selection-start-line="197" selection-start-column="25" selection-end-line="197" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -144,8 +153,8 @@
       <find>&quot;test&quot;</find>
       <find>credentials s</find>
       <find>id+</find>
-      <find>&quot;eventm</find>
       <find>] newEventProperties = newEventHtmlLinkAndId.</find>
+      <find>&quot;eventm</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -178,8 +187,8 @@
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/EntitiesToAdd.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" />
-        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" />
         <option value="$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java" />
+        <option value="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" />
       </list>
     </option>
   </component>
@@ -418,7 +427,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="190110000" />
+    <option name="totallyTimeSpent" value="190655000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3528" y="-8" width="1936" height="1056" extended-state="6" />
@@ -802,13 +811,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="535">
-          <caret line="107" column="31" lean-forward="true" selection-start-line="107" selection-start-column="31" selection-end-line="107" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="451">
@@ -816,10 +818,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-179">
+          <caret line="197" column="25" selection-start-line="197" selection-start-column="25" selection-end-line="197" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="1482" lean-forward="true" selection-start-line="1482" selection-end-line="1482" />
+        <state relative-caret-position="332">
+          <caret line="1499" column="77" selection-start-line="1499" selection-start-column="77" selection-end-line="1499" selection-end-column="77" />
         </state>
       </provider>
     </entry>

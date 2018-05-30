@@ -1496,9 +1496,12 @@ public interface Helper {
                                     String newEventHtmlLinkAndId = null;
                                     try {
                                         newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromEventObject(thisEventInMessage);
+
+                                        System.out.println("newEvHtmLlinkid: "+newEventHtmlLinkAndId);
                                         String[] newEventProperties = newEventHtmlLinkAndId.split("-=-");
                                         thisEventInMessage.setGCAEventId(newEventProperties[1]);
                                         thisEventInMessage.setGCAEventLink(newEventProperties[0]);
+                                        System.out.println("ThisEventMsg: "+thisEventInMessage.toString());
                                     } catch (IOException e) {
                                         System.out.println(" [!!!] ERROR: handleNewMessageEvent - adding event to Google calendar API:\n" + e.toString());
                                         errorMessage += " [!!!] ERROR: handleNewMessageEvent - adding event to Google calendar API:\n" + e.toString() + "\n";
