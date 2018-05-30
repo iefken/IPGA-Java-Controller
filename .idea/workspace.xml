@@ -52,7 +52,7 @@
               <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
                 <provider selected="true" editor-type-id="text-editor">
                   <state relative-caret-position="191">
-                    <caret line="1784" column="70" lean-forward="true" selection-start-line="1784" selection-start-column="70" selection-end-line="1784" selection-end-column="70" />
+                    <caret line="1803" column="70" lean-forward="true" selection-start-line="1803" selection-start-column="70" selection-end-line="1803" selection-end-column="70" />
                   </state>
                 </provider>
               </entry>
@@ -66,7 +66,7 @@
     <favorites_list name="cli-java-controller" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.7930591">
+    <splitter split-orientation="horizontal" split-proportion="0.5411311">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="DatabaseBackupChecker.java" pinned="false" current-in-tab="false">
@@ -81,8 +81,8 @@
           <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="272">
-                  <caret line="1502" column="98" selection-start-line="1502" selection-start-column="98" selection-end-line="1502" selection-end-column="98" />
+                <state relative-caret-position="-306">
+                  <caret line="1479" column="65" lean-forward="true" selection-start-line="1479" selection-start-column="65" selection-end-line="1479" selection-end-column="65" />
                 </state>
               </provider>
             </entry>
@@ -148,8 +148,8 @@
           <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state>
-                  <caret line="1758" column="28" lean-forward="true" selection-start-line="1758" selection-start-column="28" selection-end-line="1759" selection-end-column="73" />
+                <state relative-caret-position="374">
+                  <caret line="1831" column="72" lean-forward="true" selection-start-line="1831" selection-start-column="72" selection-end-line="1831" selection-end-column="72" />
                 </state>
               </provider>
             </entry>
@@ -456,7 +456,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3454000" />
+    <option name="totallyTimeSpent" value="4916000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -862,8 +862,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="1502" column="98" selection-start-line="1502" selection-start-column="98" selection-end-line="1502" selection-end-column="98" />
+        <state relative-caret-position="-306">
+          <caret line="1479" column="65" lean-forward="true" selection-start-line="1479" selection-start-column="65" selection-end-line="1479" selection-end-column="65" />
         </state>
       </provider>
     </entry>

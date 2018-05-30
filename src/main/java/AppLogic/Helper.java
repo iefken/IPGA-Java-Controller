@@ -1514,6 +1514,12 @@ public interface Helper {
                                             thisEventInMessage.setGCAEventId(newEventProperties[1]);
                                             thisEventInMessage.setGCAEventLink(newEventProperties[0]);
                                             System.out.println("ThisEventMsg: " + thisEventInMessage.toString());
+
+
+                                            if (new Event_DAO().updateEventByObject(thisEventInMessage)) {
+
+                                                System.out.println("Event seems to be updated succesfully!");
+                                            }
                                         } catch (IOException e) {
                                             System.out.println(" [!!!] ERROR: handleNewMessageEvent - adding event to Google calendar API:\n" + e.toString());
                                             errorMessage += " [!!!] ERROR: handleNewMessageEvent - adding event to Google calendar API:\n" + e.toString() + "\n";
@@ -1526,6 +1532,19 @@ public interface Helper {
                                         if (new Event_DAO().updateEventByObject(thisEventInMessage)) {
 
                                             System.out.println("Event seems to be updated succesfully!");
+
+
+                                            GoogleCalenderApi.updateEventWithEventObject(thisEventInMessage);
+
+                                            try {
+                                                xmlTotalMessage = getXmlFromEventObject("",Source_type,thisEventInMessage);
+                                                Sender.publishXmlMessageToExchange(EXCHANGE_NAME, xmlTotalMessage);
+                                            } catch (JAXBException | TimeoutException e) {
+                                                e.printStackTrace();
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+
 /*
                                         // 3. updateUuidRecordVersion() (To UUID master)
                                         int updateUuidRecordVersionResponse = 0;
@@ -1783,7 +1802,9 @@ public interface Helper {
                                     try {
                                         String newEventSessionHtmlLinkAndId = null;
                                         if (localEntityVersion == 1) {
+
                                             newEventSessionHtmlLinkAndId = GoogleCalenderApi.createEventFromSessionObject(thisSessionInMessage);
+
                                             String[] newEventProperties = newEventSessionHtmlLinkAndId.split("-=-");
                                             thisSessionInMessage.setGCAEventId(newEventProperties[1]);
                                             thisSessionInMessage.setGCAEventLink(newEventProperties[0]);
@@ -1797,8 +1818,20 @@ public interface Helper {
                                                 errorMessage += " [!!!] ERROR: handleNewMessageSession - 2.4.2. insert new session into local db FAILED:\n";
                                             }
                                         } else {
-                                            GoogleCalenderApi.updateSessionWithSessionObject(thisSessionInMessage);
 
+                                            if (new Session_DAO().updateSessionByObject(thisSessionInMessage)) {
+
+                                                GoogleCalenderApi.updateSessionWithSessionObject(thisSessionInMessage);
+
+                                                try {
+                                                    xmlTotalMessage = getXmlFromSessionObject("",Source_type,thisSessionInMessage);
+                                                    Sender.publishXmlMessageToExchange(EXCHANGE_NAME, xmlTotalMessage);
+                                                } catch (JAXBException | TimeoutException e) {
+                                                    e.printStackTrace();
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
                                         }
                                     } catch (IOException e) {
                                         System.out.println(" [!!!] ERROR: handleNewMessageSession - adding event to Google calendar API:\n" + e.toString());
