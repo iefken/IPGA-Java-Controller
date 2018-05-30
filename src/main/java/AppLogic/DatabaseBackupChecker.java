@@ -416,7 +416,7 @@ public class DatabaseBackupChecker implements Runnable {
                                 try {
                                     thisReservation_EventPrice = Float.parseFloat(objectProperties[4]);
                                 } catch (NumberFormatException e) {
-                                    errorMessage += "[.!.] ERROR: setting Session object:\n" + e + "\n";
+                                    errorMessage += "[.!.] ERROR: setting Reservation_Event object:\n" + e + "\n";
                                     e.printStackTrace();
                                     break;
                                 }
@@ -481,16 +481,16 @@ public class DatabaseBackupChecker implements Runnable {
                                 reservation_SessionFromDashboard.setPaid(0);
                             } else {
                                 try {
-                                    thisReservation_EventPrice = Float.parseFloat(objectProperties[4]);
+                                    thisReservation_SessionPrice = Float.parseFloat(objectProperties[4]);
                                 } catch (NumberFormatException e) {
-                                    errorMessage += "[.!.] ERROR: setting Session object:\n" + e + "\n";
+                                    errorMessage += "[.!.] ERROR: setting Reservation_Session object:\n" + e + "\n";
                                     e.printStackTrace();
                                     break;
                                 }
                             }
                             try {
                                 reservation_SessionFromDashboard = new Reservation_Session(Integer.parseInt(objectProperties[0]), thisEntityToAdd.getEntity_version(), thisEntityToAdd.getActive(), Helper.getCurrentDateTimeStamp(),
-                                        objectProperties[1], objectProperties[2], objectProperties[3], Float.parseFloat(objectProperties[4]),false);
+                                        objectProperties[1], objectProperties[2], objectProperties[3], thisReservation_SessionPrice,false);
 
 
                             } catch (NumberFormatException e) {
