@@ -1481,14 +1481,18 @@ public interface Helper {
 
                         if (localEntityVersion == 1) {
 
+                            System.out.println("1. !");
                             messageSource = getSafeXmlProperty(task, "source");
 
+                            System.out.println("2. messageSource: "+messageSource);
 
                             if (messageSource != "false" && messageSource != "0" && messageSource != null) {
 
+                                System.out.println("3. messageSource: "+messageSource);
                                 if (messageSource == "Planning") {
                                     System.out.println("Message seems to represent an Event record made in our back-up dashboard!");
 
+                                    System.out.println("3. messageSource: "+messageSource);
                                     String newEventHtmlLinkAndId = null;
                                     try {
                                         newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromEventObject(thisEventInMessage);
