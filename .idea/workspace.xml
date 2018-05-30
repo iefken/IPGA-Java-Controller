@@ -88,7 +88,7 @@
     <favorites_list name="cli-java-controller" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6289425">
+    <splitter split-orientation="horizontal" split-proportion="0.3030303">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="DatabaseBackupChecker.java" pinned="false" current-in-tab="false">
@@ -164,8 +164,8 @@
           <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="196">
-                  <caret line="2292" selection-start-line="2292" selection-end-line="2292" />
+                <state relative-caret-position="425">
+                  <caret line="1571" column="55" selection-start-line="1571" selection-start-column="55" selection-end-line="1571" selection-end-column="55" />
                 </state>
               </provider>
             </entry>
@@ -194,7 +194,6 @@
       <find>EntityToAddStatus</find>
       <find>&quot;t</find>
       <find>thisEntityToAdd</find>
-      <find>handlenewmessagee</find>
       <find>messagesou</find>
       <find>message seems to</find>
       <find>&quot;res</find>
@@ -213,6 +212,7 @@
       <find>] newEventProperties = newEventHtmlLinkAndId.</find>
       <find>&quot;eventm</find>
       <find>/ 3. updateUuidRecordVersion() (To UUID master)</find>
+      <find>handlenewmessagee</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -493,7 +493,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="191982000" />
+    <option name="totallyTimeSpent" value="192910000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3528" y="-8" width="1936" height="1056" extended-state="6" />
@@ -893,8 +893,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="2826" lean-forward="true" selection-start-line="2826" selection-end-line="2826" />
+        <state relative-caret-position="425">
+          <caret line="1571" column="55" selection-start-line="1571" selection-start-column="55" selection-end-line="1571" selection-end-column="55" />
         </state>
       </provider>
     </entry>

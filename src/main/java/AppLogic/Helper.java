@@ -1479,7 +1479,7 @@ public interface Helper {
 
                         System.out.println("UTD!");
 
-                        if (localEntityVersion == 1) {
+//                        if (localEntityVersion == 1) {
 
                             System.out.println("1. !");
                             messageSource = getSafeXmlProperty(task, "source");
@@ -1533,11 +1533,11 @@ public interface Helper {
                                 }
                             }
 
-                        } else {
+//                        } else {
                             System.out.println("We already had this [Event] with entityVersion: '" + localEntityVersion + "'");
                         }
                     }
-                }
+
 
             } else {
                 // New event record
@@ -1747,7 +1747,7 @@ public interface Helper {
                         System.out.println("We had this [Session] with entityVersion: '" + localEntityVersion + "'. Updated to latest version with entityVersion: '" + thisSessionInMessage.getEntityVersion() + "'");
                     } else {
                         // we have the latest version...
-                        if (localEntityVersion == 1) {
+//                        if (localEntityVersion == 1) {
 
                             messageSource = getSafeXmlProperty(task, "source");
 
@@ -1793,9 +1793,9 @@ public interface Helper {
                                 }
                             }
 
-                        } else {
+//                        } else {
                             System.out.println("We already had this [Session] with entityVersion: '" + localEntityVersion + "'");
-                        }
+//                        }
                     }
                 }
 
