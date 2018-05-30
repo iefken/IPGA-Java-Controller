@@ -46,7 +46,7 @@ public class Task_DAO extends BaseEntityDAO {
                 "taskName=\""+newTaskFromMessage.getTaskName()+"\", " +
                 "dateTimeStart=\""+newTaskFromMessage.getDateTimeStart()+"\", " +
                 "dateTimeEnd=\""+newTaskFromMessage.getDateTimeEnd()+"\", " +
-                "eventUuid=\""+newTaskFromMessage.getEventUuid()+"\" " +
+                "eventUuid=\""+newTaskFromMessage.getEventUuid()+"\", " +
 
                 "GCAEventId=\"" +newTaskFromMessage.getGCAEventId()+"\", " +
                 "GCAEventLink=\"" +newTaskFromMessage.getGCAEventLink()+"\", " +

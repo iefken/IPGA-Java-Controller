@@ -47,8 +47,8 @@ public class Reservation_Session_DAO extends BaseEntityDAO {
 
         String sqlQuery = " UPDATE PlanningDB.Reservation_Session SET " +
                 "sessionUuid=\""+newReservationSessionFromMessage.getSessionUUID()+"\", " +
-                "userUuid="+newReservationSessionFromMessage.getUserUUID()+", " +
-                "paid=\""+newReservationSessionFromMessage.getPaid()+"\" " +
+                "userUuid=\""+newReservationSessionFromMessage.getUserUUID()+"\", " +
+                "paid="+newReservationSessionFromMessage.getPaid()+" " +
 
                 "WHERE uuid=\""+newReservationSessionFromMessage.getReservationUUID()+"\" " +
                 ";";
