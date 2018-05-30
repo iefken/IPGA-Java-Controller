@@ -1475,6 +1475,8 @@ public interface Helper {
                     } else {
                         // we have the latest version...
 
+                        System.out.println("We have latest version... ");
+
                         messageSource = getSafeXmlProperty(task, "source");
 
                         if (messageSource != "false" && messageSource != "0" && messageSource != null) {
@@ -1492,11 +1494,13 @@ public interface Helper {
                                     try {
                                         GoogleCalenderApi.cancelEventWithEventObject(thisEventInMessage);
                                     } catch (Exception e) {
-                                        System.out.println(" [!!!] ERROR: handleNewMessageEvent - cancelSessionGCA FAIL :\n" + e.toString());
-                                        errorMessage += " [!!!] ERROR: handleNewMessageEvent - cancelSessionGCA FAIL :\n" + e.toString() + "\n";
+                                        System.out.println(" [!!!] ERROR: handleNewMessageEvent - cancelSessionGCA FAILED :\n" + e.toString());
+                                        errorMessage += " [!!!] ERROR: handleNewMessageEvent - cancelSessionGCA FAILED :\n" + e.toString() + "\n";
                                         //e.printStackTrace();
                                     }
                                 } else {
+
+                                    System.out.println("new event: "+thisEventInMessage.toString());
 
                                     String newEventHtmlLinkAndId = null;
                                     if(localEntityVersion == 1) {
