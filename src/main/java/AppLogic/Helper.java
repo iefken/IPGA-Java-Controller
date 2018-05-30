@@ -1493,6 +1493,16 @@ public interface Helper {
                                     // 1. Cancel Google Calendar event
                                     try {
                                         GoogleCalenderApi.cancelEventWithEventObject(thisEventInMessage);
+
+
+                                        try {
+                                            xmlTotalMessage = getXmlFromEventObject("",Source_type,thisEventInMessage);
+                                            Sender.publishXmlMessageToExchange(EXCHANGE_NAME, xmlTotalMessage);
+                                        } catch (JAXBException | TimeoutException e) {
+                                            e.printStackTrace();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
                                     } catch (Exception e) {
                                         System.out.println(" [!!!] ERROR: handleNewMessageEvent - cancelSessionGCA FAILED :\n" + e.toString());
                                         errorMessage += " [!!!] ERROR: handleNewMessageEvent - cancelSessionGCA FAILED :\n" + e.toString() + "\n";
@@ -1500,7 +1510,7 @@ public interface Helper {
                                     }
                                 } else {
 
-                                    System.out.println("new event: "+thisEventInMessage.toString());
+                                    System.out.println("updated event: "+thisEventInMessage.toString());
 
                                     String newEventHtmlLinkAndId = null;
                                     if(localEntityVersion == 1) {
@@ -1519,13 +1529,23 @@ public interface Helper {
                                             if (new Event_DAO().updateEventByObject(thisEventInMessage)) {
 
                                                 System.out.println("Event seems to be updated succesfully!");
+
+                                                GoogleCalenderApi.updateEventWithEventObject(thisEventInMessage);
+                                                try {
+                                                    xmlTotalMessage = getXmlFromEventObject("",Source_type,thisEventInMessage);
+                                                    Sender.publishXmlMessageToExchange(EXCHANGE_NAME, xmlTotalMessage);
+                                                } catch (JAXBException | TimeoutException e) {
+                                                    e.printStackTrace();
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
                                             }
                                         } catch (IOException e) {
                                             System.out.println(" [!!!] ERROR: handleNewMessageEvent - adding event to Google calendar API:\n" + e.toString());
                                             errorMessage += " [!!!] ERROR: handleNewMessageEvent - adding event to Google calendar API:\n" + e.toString() + "\n";
                                             //e.printStackTrace();
                                         }
-                                    }else {
+                                    } else {
                                         // 2.4.2. insert new event into local db
                                         int messageEventInsertReturner = 0;
 
@@ -2088,28 +2108,44 @@ public interface Helper {
                                         //e.printStackTrace();
                                     }
                                 } else {
-                                    String newEventHtmlLinkAndId = null;
-                                    try {
-                                        newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromTaskObject(thisTaskInMessage);
-                                        String[] newEventProperties = newEventHtmlLinkAndId.split("-=-");
-                                        thisTaskInMessage.setGCAEventId(newEventProperties[1]);
-                                        thisTaskInMessage.setGCAEventLink(newEventProperties[0]);
-                                    } catch (IOException e) {
-                                        System.out.println(" [!!!] ERROR: handleNewMessageTask - adding event to Google calendar API:\n" + e.toString());
-                                        errorMessage += " [!!!] ERROR: handleNewMessageTask - adding event to Google calendar API:\n" + e.toString() + "\n";
-                                        //e.printStackTrace();
-                                    }
-                                    // 2.4.2. insert new event into local db
-                                    int messageEventInsertReturner = 0;
 
-                                    if (new Task_DAO().updateTaskByObject(thisTaskInMessage)) {
-                                        System.out.println("Task seems to be added succesfully!");
 
-                                    } else {
+                                    System.out.println("updated task: "+thisTaskInMessage.toString());
 
-                                        System.out.println(" [!!!] ERROR: handleNewMessageTask - 2.4.2. insert new event into local db FAILED:\n");
-                                        errorMessage += " [!!!] ERROR: handleNewMessageTask - 2.4.2. insert new event into local db FAILED:\n";
-                                        //e.printStackTrace();
+                                    if(localEntityVersion ==1) {
+                                        String newEventHtmlLinkAndId = null;
+                                        try {
+                                            newEventHtmlLinkAndId = GoogleCalenderApi.createEventFromTaskObject(thisTaskInMessage);
+                                            String[] newEventProperties = newEventHtmlLinkAndId.split("-=-");
+                                            thisTaskInMessage.setGCAEventId(newEventProperties[1]);
+                                            thisTaskInMessage.setGCAEventLink(newEventProperties[0]);
+                                        } catch (IOException e) {
+                                            System.out.println(" [!!!] ERROR: handleNewMessageTask - adding event to Google calendar API:\n" + e.toString());
+                                            errorMessage += " [!!!] ERROR: handleNewMessageTask - adding event to Google calendar API:\n" + e.toString() + "\n";
+                                            //e.printStackTrace();
+                                        }
+                                        // 2.4.2. insert new event into local db
+                                        int messageEventInsertReturner = 0;
+
+                                        if (new Task_DAO().updateTaskByObject(thisTaskInMessage)) {
+                                            System.out.println("Task seems to be added succesfully!");
+
+                                            GoogleCalenderApi.updateTaskWithTaskObject(thisTaskInMessage);
+
+                                            try {
+                                                xmlTotalMessage = getXmlFromTaskObject("",Source_type,thisTaskInMessage);
+                                                Sender.publishXmlMessageToExchange(EXCHANGE_NAME, xmlTotalMessage);
+                                            } catch (JAXBException | TimeoutException e) {
+                                                e.printStackTrace();
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        } else {
+
+                                            System.out.println(" [!!!] ERROR: handleNewMessageTask - 2.4.2. insert new event into local db FAILED:\n");
+                                            errorMessage += " [!!!] ERROR: handleNewMessageTask - 2.4.2. insert new event into local db FAILED:\n";
+                                            //e.printStackTrace();
+                                        }
                                     }
                                 }
                             }
@@ -3613,7 +3649,8 @@ public interface Helper {
         taskName = getSafeXmlProperty(xmlMessage, "taskName");
         if (taskName == "false") {
             System.out.println(" [!!!] ERROR: No taskName found in XML: ");
-            errorMessage += " [!!!] ERROR: No taskName found in XML:\n";
+            errorMessage += " [!!!] WARNING: No taskName found in XML-message:\n";
+            taskName="";
             allGood = false;
         }
 
