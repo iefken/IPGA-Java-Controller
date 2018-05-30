@@ -56,7 +56,9 @@ public class GoogleCalenderApi {
     // private static final java.io.File DATA_STORE_DIR = new java.io.File( "C:/Users/ief.falot/Documents/GitHub/PLANNING/out/calendar-integration-groupA-java");
 
     // For server deployment
-    private static java.io.File DATA_STORE_DIR = new java.io.File(thisRepo + "/../../calendar-integration-groupA-java");
+
+    private static java.io.File DATA_STORE_DIR = new java.io.File(thisRepo + "/../../calendar-integration-groupA-java/old_ief");
+
 
     /**
      * Global instance of the {@link FileDataStoreFactory}.
@@ -125,10 +127,10 @@ public class GoogleCalenderApi {
                 in = new FileInputStream(DATA_STORE_DIR2.getAbsolutePath() + "/client_secret.json");
             } catch (FileNotFoundException ee) {
                 System.out.print("\n<Exception 2:> " + ee);
-                System.out.println("3. TC: "+in.toString()+"\n");
+                //System.out.println("3. TC: "+in.toString()+"\n");
                 try{
 
-                    java.io.File DATA_STORE_DIR2 = new java.io.File(thisRepo + "/calendar-integration-groupA-java");
+                    java.io.File DATA_STORE_DIR2 = new java.io.File(thisRepo + "/out/calendar-integration-groupA-java");
                     System.out.println("4. TC 'LOCAL FORCED BY SET AND SERVER FAILED': "+DATA_STORE_DIR2.getAbsolutePath()+"\n");
                     in = new FileInputStream(DATA_STORE_DIR2.getAbsolutePath() + "/client_secret.json");
                 }catch (FileNotFoundException eee) {
