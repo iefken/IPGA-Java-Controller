@@ -124,17 +124,16 @@ public class DatabaseBackupChecker implements Runnable {
                     String table = thisEntityToAdd.getTable();
 
                     String tableForId = table;
-                    if(tableForId.equals("Reservation_Event") || tableForId.equals("Reservation_Session") || tableForId.equals("Assign_Task")  )
-                    {
+                    if (tableForId.equals("Reservation_Event") || tableForId.equals("Reservation_Session") || tableForId.equals("Assign_Task")) {
                         String[] splitter = table.split("_");
-                        tableForId = splitter[0]+splitter[1];
-                        System.out.println("tableForId: "+tableForId);
+                        tableForId = splitter[0] + splitter[1];
+                        System.out.println("tableForId: " + tableForId);
                     }
 
                     String[] selectors = {"id" + tableForId};
                     String[] values = {"" + thisEntityToAdd.getIdEntitiesToAdd()};
 
-                    System.out.println("thisEntityToAdd: "+thisEntityToAdd.toString()+" table: "+table);
+                    System.out.println("thisEntityToAdd: " + thisEntityToAdd.toString() + " table: " + table);
 
                     String[] selectResult = new String[0];
                     try {
@@ -158,7 +157,7 @@ public class DatabaseBackupChecker implements Runnable {
                         //System.out.println("ObjectSTring: "+objectString);
                         objectProperties = objectString.split("', '");
                     } catch (Exception e) {
-                        System.out.println("Error: "+e);
+                        System.out.println("Error: " + e);
                         e.printStackTrace();
                     }
 //
@@ -187,7 +186,7 @@ public class DatabaseBackupChecker implements Runnable {
                                 userFromDashboard = new User(Integer.parseInt(objectProperties[0]), thisEntityToAdd.getEntity_version(), thisEntityToAdd.getActive(), Helper.getCurrentDateTimeStamp(),
                                         objectProperties[1], objectProperties[2], objectProperties[3], objectProperties[4],
                                         objectProperties[5], objectProperties[6], objectProperties[7], objectProperties[8], objectProperties[9],
-                                        objectProperties[10], objectProperties[11],objectProperties[12], false);
+                                        objectProperties[10], objectProperties[11], objectProperties[12], false);
                             } catch (NumberFormatException e) {
                                 errorMessage += "[.!.] ERROR: setting User object:\n" + e + "\n";
                                 e.printStackTrace();
@@ -195,7 +194,7 @@ public class DatabaseBackupChecker implements Runnable {
                             }
 
                             System.out.println("User object from Dashboard (planning db EntitiesToAdd) => RabbitMQ:\n" +
-                                    "userFromDashboard.toString(): "+userFromDashboard.toString());
+                                    "userFromDashboard.toString(): " + userFromDashboard.toString());
 
                             // 1.2. Check if active = 0
 
@@ -216,7 +215,7 @@ public class DatabaseBackupChecker implements Runnable {
                                 errorMessage += "[.!.] ERROR: Something went wrong publishing user xml message to the exchange:\n" + e + "\n";
                                 e.printStackTrace();
                             }
-                            System.out.println("Show xml: \n"+xmlMessage);
+                            System.out.println("Show xml: \n" + xmlMessage);
 
                             // 3. check if an error was catched
 
@@ -247,7 +246,7 @@ public class DatabaseBackupChecker implements Runnable {
                             Event eventFromDashboard = null;
                             float thisEventPrice = 0;
 
-                            System.out.println("objectProperties[11]: "+objectProperties[11]);
+                            System.out.println("objectProperties[11]: " + objectProperties[11]);
                             if (objectProperties[11] == "0" || objectProperties[11] == null) {
                                 eventFromDashboard.setPrice(0);
                             } else {
@@ -262,7 +261,7 @@ public class DatabaseBackupChecker implements Runnable {
                                 }
                             }
 
-                            System.out.println("Prop[0] (id): "+objectProperties[0]+" , prop[1]: "+objectProperties[1]);
+                            System.out.println("Prop[0] (id): " + objectProperties[0] + " , prop[1]: " + objectProperties[1]);
 
                             try {
                                 eventFromDashboard = new Event(Integer.parseInt(objectProperties[0]), thisEntityToAdd.getEntity_version(), thisEntityToAdd.getActive(), Helper.getCurrentDateTimeStamp(),
@@ -275,7 +274,7 @@ public class DatabaseBackupChecker implements Runnable {
                                 break;
                             }
                             System.out.println("Event object from Dashboard (planning db EntitiesToAdd) => RabbitMQ:\n" +
-                                    "eventFromDashboard.toString(): "+eventFromDashboard.toString());
+                                    "eventFromDashboard.toString(): " + eventFromDashboard.toString());
 
                             // 1.2. Check if active = 0
 
@@ -328,7 +327,7 @@ public class DatabaseBackupChecker implements Runnable {
 
                             float thisSessionPrice = 0;
 
-                            System.out.println("objectProperties[12]: "+objectProperties[12]);
+                            System.out.println("objectProperties[12]: " + objectProperties[12]);
                             if (objectProperties[12] == "0" || objectProperties[12] == null) {
                                 sessionFromDashboard.setPrice(0);
                             } else {
@@ -354,7 +353,7 @@ public class DatabaseBackupChecker implements Runnable {
                             //User userFromDashboard = new User(objectProperties[0],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1])
 
                             System.out.println("Session object from Dashboard (planning db EntitiesToAdd) => RabbitMQ:\n" +
-                                    "sessionFromDashboard.toString(): "+sessionFromDashboard.toString());
+                                    "sessionFromDashboard.toString(): " + sessionFromDashboard.toString());
                             // 2. send to rmq
                             xmlMessage = "";
                             try {
@@ -409,28 +408,31 @@ public class DatabaseBackupChecker implements Runnable {
 
                             float thisReservation_EventPrice = 0;
 
-                            if (objectProperties[4] == "0" || objectProperties[4] == null) {
-                                //System.out.println("Float.parseFloat(objectProperties[4]): "+Float.parseFloat(objectProperties[4]));
-                                reservation_EventFromDashboard.setPaid(0);
-                            } else {
-                                try {
+                            try {
+
+                                if (objectProperties[4] == "0" || objectProperties[4] == null) {
+                                    //System.out.println("Float.parseFloat(objectProperties[4]): "+Float.parseFloat(objectProperties[4]));
+                                    reservation_EventFromDashboard.setPaid(0);
+                                } else {
                                     thisReservation_EventPrice = Float.parseFloat(objectProperties[4]);
-                                } catch (NumberFormatException e) {
-                                    errorMessage += "[.!.] ERROR: setting Reservation_Event object:\n" + e + "\n";
-                                    e.printStackTrace();
-                                    break;
                                 }
+
+                            } catch (NumberFormatException e) {
+                                errorMessage += "[.!.] ERROR: setting Reservation_Event object:\n" + e + "\n";
+                                e.printStackTrace();
+                                break;
                             }
+
                             try {
                                 reservation_EventFromDashboard = new Reservation_Event(Integer.parseInt(objectProperties[0]), thisEntityToAdd.getEntity_version(), thisEntityToAdd.getActive(), Helper.getCurrentDateTimeStamp(),
-                                        objectProperties[1], objectProperties[2], objectProperties[3], thisReservation_EventPrice,false);
+                                        objectProperties[1], objectProperties[2], objectProperties[3], thisReservation_EventPrice, false);
                             } catch (NumberFormatException e) {
                                 errorMessage += "[.!.] ERROR: setting Reservation_Event object:\n" + e + "\n";
                                 e.printStackTrace();
                                 break;
                             }
                             System.out.println("Reservation_Event object from Dashboard (planning db EntitiesToAdd) => RabbitMQ:\n" +
-                                    "reservation_EventFromDashboard.toString(): "+reservation_EventFromDashboard.toString());
+                                    "reservation_EventFromDashboard.toString(): " + reservation_EventFromDashboard.toString());
                             // 2. send to rmq
 
                             xmlMessage = "";
@@ -442,13 +444,12 @@ public class DatabaseBackupChecker implements Runnable {
                                 break;
                             }
                             // 3. check if an error was catched
-                            if(errorMessage!="")
-                            {
+                            if (errorMessage != "") {
                                 // 4. Parse error object to xml String
                                 try {
                                     xmlMessage = Helper.getXmlForErrorMessage(errorMessage, thisSourceType);
                                 } catch (JAXBException e) {
-                                    errorMessage+="[.!.] ERROR: Something went wrong getting error xml message:\n"+e+"\n";
+                                    errorMessage += "[.!.] ERROR: Something went wrong getting error xml message:\n" + e + "\n";
                                     e.printStackTrace();
                                 }
 
@@ -457,7 +458,7 @@ public class DatabaseBackupChecker implements Runnable {
                                 try {
                                     Sender.sendMessage(xmlMessage);
                                 } catch (TimeoutException | IOException | JAXBException e) {
-                                    errorMessage+="[.!.] ERROR: Something went wrong publishing error xml message to the exchange:\n"+e+"\n";
+                                    errorMessage += "[.!.] ERROR: Something went wrong publishing error xml message to the exchange:\n" + e + "\n";
                                     e.printStackTrace();
                                 }
                             }
@@ -477,7 +478,7 @@ public class DatabaseBackupChecker implements Runnable {
                             float thisReservation_SessionPrice = 0;
 
                             if (objectProperties[4] == "0" || objectProperties[4] == null) {
-                                System.out.println("Float.parseFloat(objectProperties[4]): "+Float.parseFloat(objectProperties[4]));
+                                System.out.println("Float.parseFloat(objectProperties[4]): " + Float.parseFloat(objectProperties[4]));
                                 reservation_SessionFromDashboard.setPaid(0);
                             } else {
                                 try {
@@ -490,7 +491,7 @@ public class DatabaseBackupChecker implements Runnable {
                             }
                             try {
                                 reservation_SessionFromDashboard = new Reservation_Session(Integer.parseInt(objectProperties[0]), thisEntityToAdd.getEntity_version(), thisEntityToAdd.getActive(), Helper.getCurrentDateTimeStamp(),
-                                        objectProperties[1], objectProperties[2], objectProperties[3], thisReservation_SessionPrice,false);
+                                        objectProperties[1], objectProperties[2], objectProperties[3], thisReservation_SessionPrice, false);
 
 
                             } catch (NumberFormatException e) {
@@ -501,7 +502,7 @@ public class DatabaseBackupChecker implements Runnable {
                             //User userFromDashboard = new User(objectProperties[0],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1])
 
                             System.out.println("Reservation_Session object from Dashboard (planning db EntitiesToAdd) => RabbitMQ:\n" +
-                                    "reservation_SessionFromDashboard.toString(): "+reservation_SessionFromDashboard.toString());
+                                    "reservation_SessionFromDashboard.toString(): " + reservation_SessionFromDashboard.toString());
                             // 2. send to rmq
 
                             xmlMessage = "";
@@ -513,13 +514,12 @@ public class DatabaseBackupChecker implements Runnable {
                                 break;
                             }
                             // 3. check if an error was catched
-                            if(errorMessage!="")
-                            {
+                            if (errorMessage != "") {
                                 // 4. Parse error object to xml String
                                 try {
                                     xmlMessage = Helper.getXmlForErrorMessage(errorMessage, thisSourceType);
                                 } catch (JAXBException e) {
-                                    errorMessage+="[.!.] ERROR: Something went wrong getting error xml message:\n"+e+"\n";
+                                    errorMessage += "[.!.] ERROR: Something went wrong getting error xml message:\n" + e + "\n";
                                     e.printStackTrace();
                                 }
 
@@ -528,7 +528,7 @@ public class DatabaseBackupChecker implements Runnable {
                                 try {
                                     Sender.sendMessage(xmlMessage);
                                 } catch (TimeoutException | IOException | JAXBException e) {
-                                    errorMessage+="[.!.] ERROR: Something went wrong publishing error xml message to the exchange:\n"+e+"\n";
+                                    errorMessage += "[.!.] ERROR: Something went wrong publishing error xml message to the exchange:\n" + e + "\n";
                                     e.printStackTrace();
                                 }
                             }
@@ -555,7 +555,7 @@ public class DatabaseBackupChecker implements Runnable {
                             }
 
                             System.out.println("Task object from Dashboard (planning db EntitiesToAdd) => RabbitMQ:\n" +
-                                    "taskFromDashboard.toString(): "+taskFromDashboard.toString());
+                                    "taskFromDashboard.toString(): " + taskFromDashboard.toString());
                             // 2. send to rmq
                             xmlMessage = "";
                             try {
@@ -566,13 +566,12 @@ public class DatabaseBackupChecker implements Runnable {
                                 break;
                             }
                             // 3. check if an error was catched
-                            if(errorMessage!="")
-                            {
+                            if (errorMessage != "") {
                                 // 4. Parse error object to xml String
                                 try {
                                     xmlMessage = Helper.getXmlForErrorMessage(errorMessage, thisSourceType);
                                 } catch (JAXBException e) {
-                                    errorMessage+="[.!.] ERROR: Something went wrong getting error xml message:\n"+e+"\n";
+                                    errorMessage += "[.!.] ERROR: Something went wrong getting error xml message:\n" + e + "\n";
                                     e.printStackTrace();
                                 }
 
@@ -581,7 +580,7 @@ public class DatabaseBackupChecker implements Runnable {
                                 try {
                                     Sender.sendMessage(xmlMessage);
                                 } catch (TimeoutException | IOException | JAXBException e) {
-                                    errorMessage+="[.!.] ERROR: Something went wrong publishing error xml message to the exchange:\n"+e+"\n";
+                                    errorMessage += "[.!.] ERROR: Something went wrong publishing error xml message to the exchange:\n" + e + "\n";
                                     e.printStackTrace();
                                 }
                             }
@@ -609,7 +608,7 @@ public class DatabaseBackupChecker implements Runnable {
                             //User userFromDashboard = new User(objectProperties[0],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1],objectProperties[1])
 
                             System.out.println("Assign_Task object from Dashboard (planning db EntitiesToAdd) => RabbitMQ:\n" +
-                                    "assign_TaskFromDashboard.toString(): "+assign_TaskFromDashboard.toString());
+                                    "assign_TaskFromDashboard.toString(): " + assign_TaskFromDashboard.toString());
                             // 2. send to rmq
 
                             xmlMessage = "";
@@ -621,13 +620,12 @@ public class DatabaseBackupChecker implements Runnable {
                                 break;
                             }
                             // 3. check if an error was catched
-                            if(errorMessage!="")
-                            {
+                            if (errorMessage != "") {
                                 // 4. Parse error object to xml String
                                 try {
                                     xmlMessage = Helper.getXmlForErrorMessage(errorMessage, thisSourceType);
                                 } catch (JAXBException e) {
-                                    errorMessage+="[.!.] ERROR: Something went wrong getting error xml message:\n"+e+"\n";
+                                    errorMessage += "[.!.] ERROR: Something went wrong getting error xml message:\n" + e + "\n";
                                     e.printStackTrace();
                                 }
 
@@ -636,7 +634,7 @@ public class DatabaseBackupChecker implements Runnable {
                                 try {
                                     Sender.sendMessage(xmlMessage);
                                 } catch (TimeoutException | IOException | JAXBException e) {
-                                    errorMessage+="[.!.] ERROR: Something went wrong publishing error xml message to the exchange:\n"+e+"\n";
+                                    errorMessage += "[.!.] ERROR: Something went wrong publishing error xml message to the exchange:\n" + e + "\n";
                                     e.printStackTrace();
                                 }
                             }
@@ -647,7 +645,7 @@ public class DatabaseBackupChecker implements Runnable {
 
                     }
                     // last: update EntitiesToAdd record 'status' to UPTODATE
-                    if(errorMessage=="") {
+                    if (errorMessage == "") {
                         try {
                             // updateTablePropertyValue(String table, String property, String value, String valueType, String whereProperty, String whereValue) {
                             if (!new BaseEntityDAO().updateTablePropertyValue("EntitiesToAdd", "status", "UPTODATE", "String", "idEntitiesToAdd", "" + thisEntityToAdd.getIdEntitiesToAdd())) {
@@ -657,7 +655,7 @@ public class DatabaseBackupChecker implements Runnable {
                             errorMessage += "[.!.] ERROR: Exception during updateTablePropertyValue:\n " + e + "\n ";
                             e.printStackTrace();
                         }
-                    }else {
+                    } else {
                         String headerDescription = errorMessage;
 
                         Helper.SourceType Source_type = Helper.SourceType.Planning;
