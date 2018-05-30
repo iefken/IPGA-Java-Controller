@@ -343,7 +343,7 @@ public class DatabaseBackupChecker implements Runnable {
                                 sessionFromDashboard = new Session(Integer.parseInt(objectProperties[0]), thisEntityToAdd.getEntity_version(), thisEntityToAdd.getActive(), Helper.getCurrentDateTimeStamp(),
                                         objectProperties[1], objectProperties[2], objectProperties[3], Integer.parseInt(objectProperties[4]),
                                         objectProperties[5], objectProperties[6], objectProperties[7], objectProperties[8], objectProperties[9],
-                                        objectProperties[13], objectProperties[14], objectProperties[15], objectProperties[16], thisSessionPrice, false);
+                                        objectProperties[10], objectProperties[11], objectProperties[13], objectProperties[14], thisSessionPrice, false);
                             } catch (NumberFormatException e) {
 
                                 errorMessage += "[.!.] ERROR: setting Session object:\n" + e + "\n";

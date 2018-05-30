@@ -88,23 +88,23 @@
     <favorites_list name="cli-java-controller" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.3030303">
+    <splitter split-orientation="horizontal" split-proportion="0.5875077">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="DatabaseBackupChecker.java" pinned="false" current-in-tab="false">
+          <file leaf-file-name="DatabaseBackupChecker.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="451">
-                  <caret line="263" column="29" selection-start-line="263" selection-start-column="29" selection-end-line="263" selection-end-column="29" />
+                <state relative-caret-position="468">
+                  <caret line="348" column="100" lean-forward="true" selection-start-line="348" selection-start-column="100" selection-end-line="348" selection-end-column="100" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="Helper.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="532">
-                  <caret line="2826" lean-forward="true" selection-start-line="2826" selection-end-line="2826" />
+                <state relative-caret-position="413">
+                  <caret line="1801" column="13" selection-start-line="1801" selection-start-column="13" selection-end-line="1801" selection-end-column="13" />
                 </state>
               </provider>
             </entry>
@@ -164,8 +164,8 @@
           <file leaf-file-name="Helper.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="425">
-                  <caret line="1571" column="55" selection-start-line="1571" selection-start-column="55" selection-end-line="1571" selection-end-column="55" />
+                <state relative-caret-position="652">
+                  <caret line="1539" lean-forward="true" selection-start-line="1539" selection-end-line="1539" />
                 </state>
               </provider>
             </entry>
@@ -183,7 +183,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Start of</find>
       <find>System</find>
       <find>system.</find>
       <find>in T</find>
@@ -213,6 +212,7 @@
       <find>&quot;eventm</find>
       <find>/ 3. updateUuidRecordVersion() (To UUID master)</find>
       <find>handlenewmessagee</find>
+      <find>handlenewmessages</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -242,11 +242,11 @@
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/EntitiesToAdd.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/BaseEntityDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java" />
-        <option value="$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Event_DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Session_DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/DatabaseLogic/Task_DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/AppLogic/Helper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java" />
       </list>
     </option>
   </component>
@@ -493,7 +493,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="192910000" />
+    <option name="totallyTimeSpent" value="193934000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3528" y="-8" width="1936" height="1056" extended-state="6" />
@@ -501,7 +501,7 @@
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32897604" />
-      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49307036" weight="0.45424837" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49307036" weight="0.08061002" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.45755967" side_tool="true" weight="0.8518519" />
       <window_info anchor="right" id="Maven Projects" order="5" />
@@ -846,13 +846,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="263" column="29" selection-start-line="263" selection-start-column="29" selection-end-line="263" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/GoogleCalendarApi/GoogleCalenderApi.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-179">
@@ -893,8 +886,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/Helper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="1571" column="55" selection-start-line="1571" selection-start-column="55" selection-end-line="1571" selection-end-column="55" />
+        <state relative-caret-position="413">
+          <caret line="1801" column="13" selection-start-line="1801" selection-start-column="13" selection-end-line="1801" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/AppLogic/DatabaseBackupChecker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="348" column="100" lean-forward="true" selection-start-line="348" selection-start-column="100" selection-end-line="348" selection-end-column="100" />
         </state>
       </provider>
     </entry>
